@@ -1,0 +1,347 @@
+[
+  {
+    "emp_id": 1,
+    "first_name": "Jarrett",
+    "last_name": "Caddie",
+    "primary_contact_no": "453-592-8185",
+    "job_profile": "Graphic Designer",
+    "reporting_to": "Jarrett Caddie"
+  },{
+    "emp_id": 2,
+    "first_name": "Antonin",
+    "last_name": "Stanistreet",
+    "primary_contact_no": "902-992-4031",
+    "job_profile": "Budget/Accounting Analyst IV",
+    "reporting_to": "Antonin Stanistreet"
+  },{
+    "emp_id": 3,
+    "first_name": "Terrel",
+    "last_name": "Poff",
+    "primary_contact_no": "447-143-9545",
+    "job_profile": "Budget/Accounting Analyst I",
+    "reporting_to": "Terrel Poff"
+  },{
+    "emp_id": 4,
+    "first_name": "Bennie",
+    "last_name": "Lilleycrop",
+    "primary_contact_no": "770-288-9274",
+    "job_profile": "VP Quality Control",
+    "reporting_to": "Bennie Lilleycrop"
+  },{
+    "emp_id": 5,
+    "first_name": "Decca",
+    "last_name": "Prazer",
+    "primary_contact_no": "656-204-1044",
+    "job_profile": "Budget/Accounting Analyst I",
+    "reporting_to": "Decca Prazer"
+  },{
+    "emp_id": 6,
+    "first_name": "Gerome",
+    "last_name": "Beaver",
+    "primary_contact_no": "930-553-1965",
+    "job_profile": "Structural Analysis Engineer",
+    "reporting_to": "Gerome Beaver"
+  },{
+    "emp_id": 7,
+    "first_name": "Sig",
+    "last_name": "Soldner",
+    "primary_contact_no": "239-787-5069",
+    "job_profile": "Paralegal",
+    "reporting_to": "Sig Soldner"
+  },{
+    "emp_id": 8,
+    "first_name": "Clair",
+    "last_name": "Halesworth",
+    "primary_contact_no": "164-464-0998",
+    "job_profile": "VP Marketing",
+    "reporting_to": "Clair Halesworth"
+  },{
+    "emp_id": 9,
+    "first_name": "Ase",
+    "last_name": "Birdwhistle",
+    "primary_contact_no": "435-692-6723",
+    "job_profile": "Engineer II",
+    "reporting_to": "Ase Birdwhistle"
+  },{
+    "emp_id": 10,
+    "first_name": "Frayda",
+    "last_name": "McKoy",
+    "primary_contact_no": "666-128-6078",
+    "job_profile": "Librarian",
+    "reporting_to": "Frayda McKoy"
+  },{
+    "emp_id": 11,
+    "first_name": "Paulie",
+    "last_name": "Ojeda",
+    "primary_contact_no": "541-899-3950",
+    "job_profile": "Operator",
+    "reporting_to": "Paulie Ojeda"
+  },{
+    "emp_id": 12,
+    "first_name": "Raleigh",
+    "last_name": "Oxenford",
+    "primary_contact_no": "879-213-2144",
+    "job_profile": "Budget/Accounting Analyst IV",
+    "reporting_to": "Raleigh Oxenford"
+  },{
+    "emp_id": 13,
+    "first_name": "Elise",
+    "last_name": "Beddoes",
+    "primary_contact_no": "674-660-5540",
+    "job_profile": "Office Assistant IV",
+    "reporting_to": "Elise Beddoes"
+  },{
+    "emp_id": 14,
+    "first_name": "Berty",
+    "last_name": "Enterlein",
+    "primary_contact_no": "773-566-2271",
+    "job_profile": "Financial Analyst",
+    "reporting_to": "Berty Enterlein"
+  },{
+    "emp_id": 15,
+    "first_name": "Zebulon",
+    "last_name": "Kirtlan",
+    "primary_contact_no": "593-243-9435",
+    "job_profile": "Payment Adjustment Coordinator",
+    "reporting_to": "Zebulon Kirtlan"
+  },{
+    "emp_id": 16,
+    "first_name": "Jarad",
+    "last_name": "Dowrey",
+    "primary_contact_no": "358-628-3488",
+    "job_profile": "Research Associate",
+    "reporting_to": "Jarad Dowrey"
+  },{
+    "emp_id": 17,
+    "first_name": "Tomkin",
+    "last_name": "ducarme",
+    "primary_contact_no": "597-457-1325",
+    "job_profile": "Librarian",
+    "reporting_to": "Tomkin ducarme"
+  },{
+    "emp_id": 18,
+    "first_name": "Franz",
+    "last_name": "Dawid",
+    "primary_contact_no": "744-335-0150",
+    "job_profile": "Financial Analyst",
+    "reporting_to": "Franz Dawid"
+  },{
+    "emp_id": 19,
+    "first_name": "Lizbeth",
+    "last_name": "Cuesta",
+    "primary_contact_no": "966-955-5478",
+    "job_profile": "Graphic Designer",
+    "reporting_to": "Lizbeth Cuesta"
+  },{
+    "emp_id": 20,
+    "first_name": "Leola",
+    "last_name": "Loynes",
+    "primary_contact_no": "614-763-7414",
+    "job_profile": "Compensation Analyst",
+    "reporting_to": "Leola Loynes"
+  },{
+    "emp_id": 21,
+    "first_name": "Frederic",
+    "relation": "father",
+    "gender": "Female",
+    "ten": "Custom List",
+    "job_profile": "Physical Therapy Assistant",
+    "reporting_to": "Maximilien Wolpert"
+  },{
+    "emp_id": 23,
+    "first_name": "Field",
+    "last_name": "Culy",
+    "primary_contact_no": "169-844-9481",
+    "job_profile": "Account Executive",
+    "reporting_to": "Field Culy"
+  },{
+    "emp_id": 24,
+    "first_name": "Patty",
+    "last_name": "Canny",
+    "primary_contact_no": "185-751-0580",
+    "job_profile": "Product Engineer",
+    "reporting_to": "Patty Canny"
+  },{
+    "emp_id": 25,
+    "first_name": "Shirlene",
+    "last_name": "Goundsy",
+    "primary_contact_no": "318-925-7527",
+    "job_profile": "Systems Administrator IV",
+    "reporting_to": "Shirlene Goundsy"
+  },{
+    "emp_id": 26,
+    "first_name": "Gradey",
+    "last_name": "Joan",
+    "primary_contact_no": "635-348-4406",
+    "job_profile": "Paralegal",
+    "reporting_to": "Gradey Joan"
+  },{
+    "emp_id": 27,
+    "first_name": "Catlaina",
+    "last_name": "Dufore",
+    "primary_contact_no": "396-968-7415",
+    "job_profile": "Occupational Therapist",
+    "reporting_to": "Catlaina Dufore"
+  },{
+    "emp_id": 28,
+    "first_name": "Adamo",
+    "last_name": "Swinney",
+    "primary_contact_no": "757-127-0655",
+    "job_profile": "Marketing Manager",
+    "reporting_to": "Adamo Swinney"
+  },{
+    "emp_id": 29,
+    "first_name": "Leif",
+    "last_name": "Reggiani",
+    "primary_contact_no": "645-369-8320",
+    "job_profile": "Engineer I",
+    "reporting_to": "Leif Reggiani"
+  },{
+    "emp_id": 30,
+    "first_name": "Gonzales",
+    "last_name": "Santo",
+    "primary_contact_no": "462-504-2364",
+    "job_profile": "Web Designer I",
+    "reporting_to": "Gonzales Santo"
+  },{
+    "emp_id": 31,
+    "first_name": "Zacharie",
+    "last_name": "Grenshiels",
+    "primary_contact_no": "917-168-4859",
+    "job_profile": "Speech Pathologist",
+    "reporting_to": "Zacharie Grenshiels"
+  },{
+    "emp_id": 32,
+    "first_name": "Evanne",
+    "last_name": "Singyard",
+    "primary_contact_no": "222-784-5400",
+    "job_profile": "Chemical Engineer",
+    "reporting_to": "Evanne Singyard"
+  },{
+    "emp_id": 33,
+    "first_name": "Mignonne",
+    "last_name": "De Bischop",
+    "primary_contact_no": "166-270-3862",
+    "job_profile": "Clinical Specialist",
+    "reporting_to": "Mignonne De Bischop"
+  },{
+    "emp_id": 34,
+    "first_name": "Pamella",
+    "last_name": "Clutram",
+    "primary_contact_no": "756-443-8957",
+    "job_profile": "Administrative Assistant III",
+    "reporting_to": "Pamella Clutram"
+  },{
+    "emp_id": 35,
+    "first_name": "Anica",
+    "last_name": "Twelvetree",
+    "primary_contact_no": "645-278-4395",
+    "job_profile": "Electrical Engineer",
+    "reporting_to": "Anica Twelvetree"
+  },{
+    "emp_id": 36,
+    "first_name": "Jerrine",
+    "last_name": "Astle",
+    "primary_contact_no": "933-544-0964",
+    "job_profile": "Structural Analysis Engineer",
+    "reporting_to": "Jerrine Astle"
+  },{
+    "emp_id": 37,
+    "first_name": "Anetta",
+    "last_name": "Thoumasson",
+    "primary_contact_no": "278-133-2431",
+    "job_profile": "Biostatistician III",
+    "reporting_to": "Anetta Thoumasson"
+  },{
+    "emp_id": 38,
+    "first_name": "Gayle",
+    "last_name": "Verdon",
+    "primary_contact_no": "539-409-5411",
+    "job_profile": "Structural Engineer",
+    "reporting_to": "Gayle Verdon"
+  },{
+    "emp_id": 39,
+    "first_name": "Maryjo",
+    "last_name": "Scotchmer",
+    "primary_contact_no": "389-171-4885",
+    "job_profile": "Assistant Professor",
+    "reporting_to": "Maryjo Scotchmer"
+  },{
+    "emp_id": 40,
+    "first_name": "Margret",
+    "last_name": "Wankel",
+    "primary_contact_no": "902-129-2676",
+    "job_profile": "Cost Accountant",
+    "reporting_to": "Margret Wankel"
+  },{
+    "emp_id": 41,
+    "first_name": "Christan",
+    "last_name": "Tottman",
+    "primary_contact_no": "151-486-9728",
+    "job_profile": "Assistant Manager",
+    "reporting_to": "Christan Tottman"
+  },{
+    "emp_id": 42,
+    "first_name": "Clay",
+    "last_name": "Oxtoby",
+    "primary_contact_no": "934-225-7222",
+    "job_profile": "Financial Analyst",
+    "reporting_to": "Clay Oxtoby"
+  },{
+    "emp_id": 43,
+    "first_name": "Findley",
+    "last_name": "Jeanel",
+    "primary_contact_no": "789-717-3894",
+    "job_profile": "Geological Engineer",
+    "reporting_to": "Findley Jeanel"
+  },{
+    "emp_id": 44,
+    "first_name": "Lilllie",
+    "last_name": "Hawk",
+    "primary_contact_no": "742-489-6658",
+    "job_profile": "Systems Administrator IV",
+    "reporting_to": "Lilllie Hawk"
+  },{
+    "emp_id": 45,
+    "first_name": "Jared",
+    "last_name": "Penwright",
+    "primary_contact_no": "670-303-3741",
+    "job_profile": "Operator",
+    "reporting_to": "Jared Penwright"
+  },{
+    "emp_id": 46,
+    "first_name": "Reamonn",
+    "last_name": "Lawty",
+    "primary_contact_no": "531-591-7205",
+    "job_profile": "VP Sales",
+    "reporting_to": "Reamonn Lawty"
+  },{
+    "emp_id": 47,
+    "first_name": "Tedra",
+    "last_name": "Saffon",
+    "primary_contact_no": "803-309-1724",
+    "job_profile": "Paralegal",
+    "reporting_to": "Tedra Saffon"
+  },{
+    "emp_id": 48,
+    "first_name": "Teresita",
+    "last_name": "Lipson",
+    "primary_contact_no": "710-753-6006",
+    "job_profile": "Associate Professor",
+    "reporting_to": "Teresita Lipson"
+  },{
+    "emp_id": 49,
+    "first_name": "Benji",
+    "last_name": "Sarra",
+    "primary_contact_no": "252-331-0345",
+    "job_profile": "Junior Executive",
+    "reporting_to": "Benji Sarra"
+  },{
+    "emp_id": 50,
+    "first_name": "Thibaut",
+    "last_name": "Meeny",
+    "primary_contact_no": "698-324-2140",
+    "job_profile": "Senior Developer",
+    "reporting_to": "Thibaut Meeny"
+  }
+]
