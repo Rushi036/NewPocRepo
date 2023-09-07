@@ -16,7 +16,7 @@ const Layout: React.FC<LayoutProps> = ({ children }: any) => {
         <div>
         <Navbar />
         </div>
-        <main className={`${state ? "w-4/5" : "w-auto ml-10"} my-20 pl-6 w-4/5 ml-auto pb-16 pr-6`}>{children}</main>
+        <main className={`${state ? "w-4/5" : "w-auto ml-12"} my-20 pl-6 w-4/5 ml-auto pb-16 pr-6`}>{children}</main>
       </div>
     </div>
   );

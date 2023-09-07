@@ -1,0 +1,49 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Admin",
+      "email": "admin@gmail.com",
+      "password": "admin@123",
+      "role": "admin"
+    },
+    {
+      "id": 2,
+      "name": "ABG",
+      "email": "ABG@gmail.com",
+      "password": "abg@123",
+      "role": "bu"
+    }
+  ],
+  "topology_table_data": [
+    {
+      "id": 1,
+      "title": "topology title 1",
+      "bu": "ABG",
+      "bu_id": 2,
+      "cloud_server": "AWS",
+      "status": "Draft",
+      "created_date": "07-08-2023",
+      "topology_id": 1
+    },
+    {
+      "id": 2,
+      "title": "topology title 2",
+      "bu": "ABG",
+      "bu_id": 2,
+      "cloud_server": "Azure",
+      "status": "Active",
+      "created_date": "06-08-2023",
+      "topology_id": 2
+    }
+  ],
+  "topology": [
+    {
+      "id": 1,
+      "bu_id": 1,
+      "flowChart": "",
+      "title": "topology title 1",
+      "cloud_server": "AWS"
+    }
+  ]
+}

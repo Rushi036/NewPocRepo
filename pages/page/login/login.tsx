@@ -2,10 +2,14 @@ import Link from "next/link";
 import React, { useState } from "react";
 import Image from "next/image";
 import Layout from "@/pages/Components/bLayout";
+import { login } from "@/pages/api/login";
+import { useRouter } from 'next/router';
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [link, setLink] = useState("");
+  const router = useRouter();
 
   const isFormValid = email !== "" && password !== "";
 
@@ -23,9 +27,18 @@ const Login = () => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
+    async function dataFetch() {
+      const data = await login(email, password);
+      if (data?.data[0]) {
+        if (data.data[0].role != "admin") {
+          localStorage.setItem('role',data.data[0].role)
+          localStorage.setItem('bu_id',data.data[0].id)
+        }
+        router.push('/page/Dashboard/Dashboard');
+      }
+    }
 
-    // Perform form submission logic here
-    console.log("Form submitted");
+    dataFetch();
   };
 
   return (
@@ -72,16 +85,17 @@ const Login = () => {
                 required
               />
             </div>
-            <Link href="/page/Dashboard/Dashboard">
-              <button
-                type="submit"
-                className="w-full mt-7 text-white bg-red-800 hover:bg-primary-700 focus:ring-4 focus:outline-none
+            {/* <Link href={link}> */}
+            <button
+              type="submit"
+              onClick={handleSubmit}
+              className="z-70 cursor-pointer w-full mt-7 text-white bg-red-800 hover:bg-primary-700 focus:ring-4 focus:outline-none
                focus:ring-primary-300 font-medium rounded-lg text-sm my-4 px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                disabled={!isFormValid}
-              >
-                Sign in
-              </button>
-            </Link>
+              // disabled={!isFormValid}
+            >
+              Sign in
+            </button>
+            {/* </Link> */}
           </form>
         </div>
       </div>

@@ -12,6 +12,12 @@ const Sidebar = () => {
   const toggleStateHere = () => {
     toggleState();
   };
+  const [activeLink, setActiveLink] = useState(null);
+
+  // Function to handle link clicks and set the active link
+  const handleLinkClick = (index: any) => {
+    setActiveLink(index);
+  };
 
   const Footer = () => {
     return (
@@ -54,7 +60,7 @@ const Sidebar = () => {
         <div
           className={`${
             !state && "rotate-180"
-          }  absolute mr-1.5 text-xl bg-white fill-slate-800 rounded-full cursor-pointer top-6 -right-4 dark:fill-gray-400 dark:bg-gray-800`}
+          }  absolute mr-1.5 text-xl bg-white fill-slate-800 rounded-full cursor-pointer top-6 -right-4`}
           onClick={toggleStateHere}
         >
           <BsArrowLeftCircle />
@@ -64,9 +70,10 @@ const Sidebar = () => {
           <li>
             <Link
               href="/page/Dashboard/Dashboard"
-              className="flex items-center gap-x-3.5 py-2 px-2.5 text-base
+              className={`flex items-center gap-x-3.5 py-2 px-2.5 text-base
              text-slate-700 rounded-md hover:bg-gray-100 dark:text-black
-             "
+             ${activeLink === 0 ? "bg-gray-100" : ""}`}
+              onClick={() => handleLinkClick(0)}
             >
               <DashboardIcon />
               <span className={`${!state && "hidden"} origin-left hover:block`}>
@@ -77,9 +84,10 @@ const Sidebar = () => {
           <li className="hs-accordion" id="users-accordion">
             <Link
               href="/Components/Assets"
-              className="flex items-center gap-x-3.5 py-2 px-2.5 text-base
+              className={`flex items-center gap-x-3.5 py-2 px-2.5 text-base
               text-slate-700 rounded-md hover:bg-gray-100 dark:text-black
-              "
+              ${activeLink === 1 ? "bg-gray-100" : ""}`}
+              onClick={() => handleLinkClick(1)}
             >
               <DeviceHubIcon />
               <span className={`${!state && "hidden"} origin-left hover:block`}>
@@ -87,13 +95,13 @@ const Sidebar = () => {
               </span>
             </Link>
           </li>
-
           <li>
             <Link
               href="/Components/Observability"
-              className="flex items-center gap-x-3.5 py-2 px-2.5 text-base
+              className={`flex items-center gap-x-3.5 py-2 px-2.5 text-base
               text-slate-700 rounded-md hover:bg-gray-100 dark:text-black
-              "
+              ${activeLink === 2 ? "bg-gray-100" : ""}`}
+              onClick={() => handleLinkClick(2)}
             >
               <TabIcon />
               <span className={`${!state && "hidden"} origin-left hover:block`}>
@@ -104,9 +112,10 @@ const Sidebar = () => {
           <li className="hs-accordion" id="account-accordion">
             <Link
               href="/Components/FinOps"
-              className="flex items-center gap-x-3.5 py-2 px-2.5 text-base
-             text-slate-700 rounded-md hover:bg-gray-100 dark:text-black
-             "
+              className={`flex items-center gap-x-3.5 py-2 px-2.5 text-base
+              text-slate-700 rounded-md hover:bg-gray-100 dark:text-black
+              ${activeLink === 3 ? "bg-gray-100" : ""}`}
+              onClick={() => handleLinkClick(3)}
             >
               <SpaceDashboardIcon />
               <span className={`${!state && "hidden"} origin-left hover:block`}>
@@ -114,6 +123,7 @@ const Sidebar = () => {
               </span>
             </Link>
           </li>
+          {/* Repeat similar code for other links */}
         </ul>
       </div>
       <Footer />
