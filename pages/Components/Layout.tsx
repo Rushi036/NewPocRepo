@@ -35,7 +35,7 @@ const Layout: React.FC<LayoutProps> = ({ children }: any) => {
   return (
     <div
       id="appLayout"
-      className="flex text-black h-screen bg-gray-100 dark:bg-gray-900"
+      className="flex text-black h-screen bg-gray-100"
     >
       <Sidebar />
       <div className="flex-auto relative ">

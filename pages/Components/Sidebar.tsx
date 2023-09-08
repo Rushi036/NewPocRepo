@@ -48,7 +48,7 @@ const Sidebar = () => {
             <Link
               href="/page/Dashboard/Dashboard"
               className={`flex items-center gap-x-3.5 py-2 px-2.5 text-base
-             text-slate-700 rounded-md hover:bg-gray-100 dark:text-black
+             text-slate-700 rounded-md hover:bg-gray-100
              ${activeLink === 0 ? "bg-gray-100" : ""}`}
               onClick={() => handleLinkClick(0)}
             >
@@ -62,7 +62,7 @@ const Sidebar = () => {
             <Link
               href="/Components/Assets"
               className={`flex items-center gap-x-3.5 py-2 px-2.5 text-base
-              text-slate-700 rounded-md hover:bg-gray-100 dark:text-black
+              text-slate-700 rounded-md hover:bg-gray-100
               ${activeLink === 1 ? "bg-gray-100" : ""}`}
               onClick={() => handleLinkClick(1)}
             >
@@ -76,7 +76,7 @@ const Sidebar = () => {
             <Link
               href="/Components/Observability"
               className={`flex items-center gap-x-3.5 py-2 px-2.5 text-base
-              text-slate-700 rounded-md hover:bg-gray-100 dark:text-black
+              text-slate-700 rounded-md hover:bg-gray-100
               ${activeLink === 2 ? "bg-gray-100" : ""}`}
               onClick={() => handleLinkClick(2)}
             >
@@ -90,7 +90,7 @@ const Sidebar = () => {
             <Link
               href="/Components/FinOps"
               className={`flex items-center gap-x-3.5 py-2 px-2.5 text-base
-              text-slate-700 rounded-md hover:bg-gray-100 dark:text-black
+              text-slate-700 rounded-md hover:bg-gray-100
               ${activeLink === 3 ? "bg-gray-100" : ""}`}
               onClick={() => handleLinkClick(3)}
             >

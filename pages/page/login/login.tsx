@@ -29,8 +29,10 @@ const Login = () => {
     e.preventDefault();
     async function dataFetch() {
       const data = await login(email, password);
+      console.log("------------------",data)
       if (data?.data[0]) {
         if (data.data[0].role != "admin") {
+          localStorage.setItem('userName',data.data[0].name)
           localStorage.setItem('role',data.data[0].role)
           localStorage.setItem('bu_id',data.data[0].id)
         }
@@ -45,13 +47,13 @@ const Login = () => {
     <div className="flex flex-col items-center justify-center px-6 mx-auto my-16 lg:py-0">
       <a
         href="#"
-        className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
+        className="flex items-center mb-6 text-2xl font-semibold text-gray-900"
       >
         {/* image */}
       </a>
-      <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+      <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-          <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+          <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
             Sign in to your account
           </h1>
           <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
@@ -63,7 +65,7 @@ const Login = () => {
                 type="text"
                 id="field1"
                 name="field1"
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+                className="text-black w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
                 placeholder="Enter Email"
                 onChange={handleEmailChange}
                 value={email}
@@ -78,7 +80,7 @@ const Login = () => {
                 type="text"
                 id="field1"
                 name="field1"
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+                className="text-black w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
                 placeholder="Enter Password"
                 onChange={handlePasswordChange}
                 value={password}
@@ -90,7 +92,7 @@ const Login = () => {
               type="submit"
               onClick={handleSubmit}
               className="z-70 cursor-pointer w-full mt-7 text-white bg-red-800 hover:bg-primary-700 focus:ring-4 focus:outline-none
-               focus:ring-primary-300 font-medium rounded-lg text-sm my-4 px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+               focus:ring-primary-300 font-medium rounded-lg text-sm my-4 px-5 py-2.5 text-center"
               // disabled={!isFormValid}
             >
               Sign in

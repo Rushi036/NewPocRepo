@@ -20,19 +20,19 @@ const Assets = () => {
   console.log(data);
   return (
     <div className="">
-      <div className="text-xl border-b-2 border-slate-400 pb-2 flex justify-between items-center">
+      <div className="text-xl px-4 border-b-2 border-slate-400 pb-2 flex justify-between items-center">
         <span>Assets</span>
       </div>
-      <div className="flex justify-between">
+      <div className="flex justify-between px-4 pt-4">
         <div></div>
         <button className="btn bg-red-700 rounded-sm  px-4 py-1 mt-6 text-white font-semibold hover:bg-red-800">
           Add New
         </button>
       </div>
-      <div className="items-center">
+      <div className="items-center pb-4 px-4 ">
         <div className="relative overflow-x-auto mt-6">
-          <table className="w-full text-sm text-center text-gray-800 dark:text-gray-400">
-            <thead className="text-xs text-white uppercase bg-red-800 dark:bg-gray-700 dark:text-gray-400">
+          <table className="w-full text-sm text-center text-gray-800 ">
+            <thead className="text-xs text-white uppercase bg-red-800 ">
               <tr>
                 <th scope="col" className="px-auto py-3">
                   Sr.No.
@@ -55,12 +55,12 @@ const Assets = () => {
               </tr>
             </thead>
             <tbody>
-              {data &&
+              {data && data.length != 0 ? (
                 data.map((d: any, i: any) => {
                   return (
                     <tr
                       key={i}
-                      className="bg-white border-b text-center dark:bg-gray-800 dark:border-gray-700"
+                      className="bg-white border-b text-center"
                     >
                       <td className="px-auto py-3">{i + 1}</td>
                       <td className="px-auto py-3">{d.title}</td>
@@ -79,7 +79,12 @@ const Assets = () => {
                       </td>
                     </tr>
                   );
-                })}
+                })
+              ) : (
+                <tr className="bg-white border-b text-center ">
+                  <td className="px-auto py-3 " colSpan={6}>No Data Found</td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
