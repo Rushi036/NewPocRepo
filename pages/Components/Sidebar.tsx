@@ -19,37 +19,14 @@ const Sidebar = () => {
     setActiveLink(index);
   };
 
-  const Footer = () => {
-    return (
-      <footer className="footer bg-white text-neutral-content  bottom-0 w-full fixed z-10">
-        <div className="container mx-auto flex justify-between items-center h-16">
-          <div
-            className={`${state ? "mx-60" : ""} flex items-center text-black`}
-          >
-            <p className="mr-2 stroke--black">
-              {" "}
-              2023 - All Rights Reserved,{" "}
-              <strong className="text-red-800">
-                Aditya Birla Management Corporation Pvt. Ltd
-              </strong>
-            </p>
-          </div>
-          <div className="flex gap-4 text-black">
-            <div>About Us</div>
-            <div>Help</div>
-            <div>Contact Us</div>
-          </div>
-        </div>
-      </footer>
-    );
-  };
+ 
 
   return (
     <>
       <div
         className={`${
           state ? "w-1/5" : "w-fit"
-        } bottom-0 z-30 top-0 hidden shadow-2xl sm:block fixed  transition-all duration-300 bg-white border-r`}
+        } bottom-0 z-30 top-0 hidden relative shadow-2xl sm:block  transition-all duration-300 bg-white border-r`}
       >
         <img
           src="/abgLogo.jpg"
@@ -126,7 +103,6 @@ const Sidebar = () => {
           {/* Repeat similar code for other links */}
         </ul>
       </div>
-      <Footer />
     </>
   );
 };

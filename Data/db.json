@@ -1,18 +1,46 @@
 {
   "users": [
-    {
+    { 
       "id": 1,
-      "name": "Admin",
-      "email": "admin@gmail.com",
-      "password": "admin@123",
-      "role": "admin"
+      "name": "Grasim Chemical",
+      "email": "ABG1@gmail.com",
+      "password": "abg@123",
+      "role": "BU"
     },
     {
       "id": 2,
-      "name": "ABG",
+      "name": "PnF",
+      "email": "ABG2@gmail.com",
+      "password": "abg@123",
+      "role": "BU"
+    },
+    {
+      "id": 3,
+      "name": "Birla Carbon",
+      "email": "ABG3@gmail.com",
+      "password": "abg@123",
+      "role": "BU"
+    },
+    {
+      "id": 4,
+      "name": "UTCL",
+      "email": "ABG4@gmail.com",
+      "password": "abg@123",
+      "role": "BU"
+    },
+    {
+      "id": 5,
+      "name": "ABMCPL",
+      "email": "ABG5@gmail.com",
+      "password": "abg@123",
+      "role": "BU"
+    },
+    {
+      "id": 6,
+      "name": "BMCSPL",
       "email": "ABG@gmail.com",
       "password": "abg@123",
-      "role": "bu"
+      "role": "BU"
     }
   ],
   "topology_table_data": [
@@ -44,6 +72,35 @@
       "flowChart": "",
       "title": "topology title 1",
       "cloud_server": "AWS"
+    }
+  ],
+  "finops":[
+    {
+      "user_id": 1,
+      "link": "http://65.108.85.82:5601/app/dashboards#/view/e6776b10-1534-11ea-841c-01bf20a6c8ba?_g=(filters:!(),refreshInterval:(pause:!t,value:60000),time:(from:now-7d%2Fd,to:now))"
+    },
+    {
+      "user_id": 2,
+      "link": "http://65.108.85.82:5601/app/dashboards#/view/e6776b10-1534-11ea-841c-01bf20a6c8ba?_g=(filters:!(),refreshInterval:(pause:!t,value:60000),time:(from:now-7d%2Fd,to:now))"
+    },{
+      "user_id": 3,
+      "link": "http://65.108.85.82:5601/app/dashboards#/view/e6776b10-1534-11ea-841c-01bf20a6c8ba?_g=(filters:!(),refreshInterval:(pause:!t,value:60000),time:(from:now-7d%2Fd,to:now))"
+    },{
+      "user_id": 4,
+      "link": "http://65.108.85.82:5601/app/dashboards#/view/e6776b10-1534-11ea-841c-01bf20a6c8ba?_g=(filters:!(),refreshInterval:(pause:!t,value:60000),time:(from:now-7d%2Fd,to:now))"
+    },{
+      "user_id": 5,
+      "link": "http://65.108.85.82:5601/app/dashboards#/view/e6776b10-1534-11ea-841c-01bf20a6c8ba?_g=(filters:!(),refreshInterval:(pause:!t,value:60000),time:(from:now-7d%2Fd,to:now))"
+    },{
+      "user_id": 6,
+      "link": "http://65.108.85.82:5601/app/dashboards#/view/e6776b10-1534-11ea-841c-01bf20a6c8ba?_g=(filters:!(),refreshInterval:(pause:!t,value:60000),time:(from:now-7d%2Fd,to:now))"
+    }
+  ]
+  ,
+  "reports":[
+    {
+      "user_id": 1,
+      "link": "http://65.108.85.82:5601/app/dashboards#/view/e6776b10-1534-11ea-841c-01bf20a6c8ba?_g=(filters:!(),refreshInterval:(pause:!t,value:60000),time:(from:now-7d%2Fd,to:now))"
     }
   ]
 }

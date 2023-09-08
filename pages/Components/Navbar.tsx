@@ -21,7 +21,7 @@ const Navbar = () => {
   }, []);
   return (
     <div onClick={handleOutsideClick}>
-    <nav className="bg-white border-gray-700 shadow-lg dark:bg-gray-900 fixed w-full z-20 h-16 flex">
+    <nav className="bg-white border-gray-700 shadow-lg dark:bg-gray-900 w-full z-20 h-16 flex">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between p-4">
         <a href="/" className="flex items-center"></a>
       </div>
