@@ -26,3 +26,102 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+.topology-editor {
+  display: flex;
+  height: auto;
+  margin: 25px 15px 0;
+}
+.topology-editor .creator {
+  background-color: whitesmoke;
+  height: auto;
+  width: 75%;
+  margin: 0 20px 0 0;
+  border-radius: 10px;
+  position: relative;
+  border: 1px solid #c5d3ef;
+}
+.topology-editor .creator .open-modal {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #fff;
+  cursor: pointer;
+  z-index: 9999;
+}
+.topology-editor .creator .wrapper {
+  width: 100%;
+  height: 100%;
+}
+.topology-editor .editor-options {
+  width: 25%;
+  background: whitesmoke;
+  border-radius: 10px;
+  border: 1px solid #c5d3ef;
+}
+.topology-editor .editor-options .modal {
+  width: 95%;
+  margin: auto;
+  border-radius: 0 0 10px 10px;
+}
+.topology-editor .editor-options .modal ul {
+  list-style: none;
+  display: flex;
+  color: #000;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  align-content: center;
+  padding: 0;
+}
+.topology-editor .editor-options .modal ul li {
+  width: 135px;
+  text-align: center;
+  cursor: pointer;
+  margin: 10px 0;
+}
+.topology-editor .editor-options .modal .close-modal {
+  position: absolute;
+  background: #fff;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 100px;
+}
+.topology-editor .editor-options .selected-node {
+  border: 1px solid #b5cedf;
+  background: #e1e7f4;
+  border-radius: 10px;
+}
+
+.custom-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.editor-options ul li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 5px;
+}
+.editor-options ul li img {
+  height: 25px;
+}
+
+.topology-editor .editor-options .modal ul li {
+  width: 100%;
+  padding: 5px;
+}
+
+.editor-options {
+  overflow-y: auto;
+  padding: 0 15px;
+  border: 1px solid #e2e7f1;
+}
+
+.editor-options input, .editor-options button{
+    border: 1px solid #e2e7f1;
+
+}

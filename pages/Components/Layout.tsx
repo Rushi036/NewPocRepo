@@ -9,7 +9,7 @@ interface LayoutProps {
 const Footer = () => {
   const { state, toggleState } = useAppContext();
   return (
-    <footer className="px-4 flex footer bg-white absolute bottom-0 text-neutral-content w-full z-10">
+    <footer className="px-4 flex footer bg-white bottom-0 text-neutral-content w-full z-10">
       <div className="flex justify-between  w-full items-center h-16">
         <div className={` flex items-center text-black`}>
           <p className="mr-2 stroke--black">
@@ -38,9 +38,9 @@ const Layout: React.FC<LayoutProps> = ({ children }: any) => {
       className="flex text-black h-screen bg-gray-100"
     >
       <Sidebar />
-      <div className="flex-auto relative ">
+      <div className="flex-auto relative h-[100vh] bg-gray-100 overflow-auto">
         <Navbar />
-        <main className="mt-4">{children}</main>
+        <main className="mt-16 overflow-auto">{children}</main>
         <Footer />
       </div>
     </div>
