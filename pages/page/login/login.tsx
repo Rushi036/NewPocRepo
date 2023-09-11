@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Layout from "@/pages/Components/bLayout";
 import { login } from "@/pages/api/login";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,14 +29,14 @@ const Login = () => {
     e.preventDefault();
     async function dataFetch() {
       const data = await login(email, password);
-      console.log("------------------",data)
+      console.log("------------------", data);
       if (data?.data[0]) {
         if (data.data[0].role != "admin") {
-          localStorage.setItem('userName',data.data[0].name)
-          localStorage.setItem('role',data.data[0].role)
-          localStorage.setItem('bu_id',data.data[0].id)
+          localStorage.setItem("userName", data.data[0].name);
+          localStorage.setItem("role", data.data[0].role);
+          localStorage.setItem("bu_id", data.data[0].id);
         }
-        router.push('/page/Dashboard/Dashboard');
+        router.push("/page/Dashboard/Dashboard");
       }
     }
 
@@ -44,27 +44,27 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center px-6 mx-auto my-16 lg:py-0">
-      <a
-        href="#"
-        className="flex items-center mb-6 text-2xl font-semibold text-gray-900"
-      >
-        {/* image */}
-      </a>
-      <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
-        <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-          <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
+    <div className="flex w-auto justify-center items-center bord h-fit mt-12">
+        <div className="bg-white shadow-xl p-4 w-full max-w-md">
+          <img
+            src="/abgLogo.jpg"
+            height={150}
+            width={350}
+            alt="Logo"
+            className="mx-auto mb-4"
+          />
+          {/* <h1 className="text-xl font-bold pb-4 leading-tight tracking-tight text-gray-900 ">
             Sign in to your account
-          </h1>
-          <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
+          </h1> */}
+          <form className="md:space-y-4" onSubmit={handleSubmit}>
             <div className="mb-4">
-              <label htmlFor="field1" className="block pb-2 text-gray-600">
-                Your Email
+              <label htmlFor="email" className="block pb-2 text-gray-600">
+                Email Address
               </label>
               <input
-                type="text"
-                id="field1"
-                name="field1"
+                type="email"
+                id="email"
+                name="email"
                 className="text-black w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
                 placeholder="Enter Email"
                 onChange={handleEmailChange}
@@ -73,13 +73,13 @@ const Login = () => {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="field1" className=" pb-2 block text-gray-600">
-                Your Passowrd
+              <label htmlFor="password" className="pb-2 block text-gray-600">
+                Password
               </label>
               <input
-                type="text"
-                id="field1"
-                name="field1"
+                type="password"
+                id="password"
+                name="password"
                 className="text-black w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
                 placeholder="Enter Password"
                 onChange={handlePasswordChange}
@@ -87,19 +87,23 @@ const Login = () => {
                 required
               />
             </div>
-            {/* <Link href={link}> */}
             <button
               type="submit"
-              onClick={handleSubmit}
-              className="z-70 cursor-pointer w-full mt-7 text-white bg-red-800 hover:bg-primary-700 focus:ring-4 focus:outline-none
-               focus:ring-primary-300 font-medium rounded-lg text-sm my-4 px-5 py-2.5 text-center"
-              // disabled={!isFormValid}
+              className="cursor-pointer w-full text-white bg-red-800 hover:bg-primary-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+              style={{ marginTop: '34px' }}
             >
               Sign in
             </button>
-            {/* </Link> */}
           </form>
-        </div>
+      </div>
+      <div className="shadow-xl">
+        <img
+          src="/auth-bg.jpg"
+          // height={450}
+          width={331}
+          alt="Image"
+          className="h-auto max-w-md"
+        />
       </div>
     </div>
   );

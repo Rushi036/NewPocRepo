@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { BsArrowLeftCircle } from "react-icons/bs";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import PreviewIcon from '@mui/icons-material/Preview';
 import TabIcon from "@mui/icons-material/Tab";
 import Link from "next/link";
 import DeviceHubIcon from "@mui/icons-material/DeviceHub";
 import { useAppContext } from "./AppContext";
+import HomeIcon from '@mui/icons-material/Home';
 import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
 
 const Sidebar = () => {
@@ -26,7 +28,7 @@ const Sidebar = () => {
       <div
         className={`${
           state ? "w-1/5" : "w-fit"
-        } bottom-0 z-30 top-0 hidden relative shadow-2xl sm:block  transition-all duration-300 bg-white border-r`}
+        } bottom-0 z-30 top-0 hidden relative shadow-2xl sm:block transition-all duration-300 bg-white border-r`}
       >
         <img
           src="/abgLogo.jpg"
@@ -52,7 +54,7 @@ const Sidebar = () => {
              ${activeLink === 0 ? "bg-gray-100" : ""}`}
               onClick={() => handleLinkClick(0)}
             >
-              <DashboardIcon />
+              <HomeIcon className="h-7 w-7" />
               <span className={`${!state && "hidden"} origin-left hover:block`}>
                 Dashboard
               </span>
@@ -66,7 +68,7 @@ const Sidebar = () => {
               ${activeLink === 1 ? "bg-gray-100" : ""}`}
               onClick={() => handleLinkClick(1)}
             >
-              <DeviceHubIcon />
+              <DeviceHubIcon className="h-7 w-7"/>
               <span className={`${!state && "hidden"} origin-left hover:block`}>
                 Assets
               </span>
@@ -80,7 +82,7 @@ const Sidebar = () => {
               ${activeLink === 2 ? "bg-gray-100" : ""}`}
               onClick={() => handleLinkClick(2)}
             >
-              <TabIcon />
+              <PreviewIcon className="h-7 w-7"/>
               <span className={`${!state && "hidden"} origin-left hover:block`}>
                 Observability
               </span>
@@ -94,7 +96,7 @@ const Sidebar = () => {
               ${activeLink === 3 ? "bg-gray-100" : ""}`}
               onClick={() => handleLinkClick(3)}
             >
-              <SpaceDashboardIcon />
+              <SpaceDashboardIcon className="h-7 w-7"/>
               <span className={`${!state && "hidden"} origin-left hover:block`}>
                 FinOps
               </span>
