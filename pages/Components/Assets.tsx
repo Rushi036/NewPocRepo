@@ -23,11 +23,13 @@ const Assets = () => {
       <div className="text-xl px-4 border-b-2 border-slate-400 pb-2 flex justify-between items-center">
         <span>Assets</span>
       </div>
-      <div className="flex justify-end px-4 pt-6">
-        {/* <div></div> */}
-        <button className="btn bg-red-700 rounded-sm  px-4 py-1 text-white font-semibold hover:bg-red-800">
-          Add New
-        </button>
+      <div className="flex justify-between px-4 pt-4">
+        <div></div>
+        <Link href={"../page/AddTopology/addTopology"}>
+          <button className="btn bg-red-700 rounded-sm  px-4 py-1 mt-6 text-white font-semibold hover:bg-red-800">
+            Add New
+          </button>
+        </Link>
       </div>
       <div className="items-center pb-4 px-4 ">
         <div className="relative overflow-x-auto mt-6">

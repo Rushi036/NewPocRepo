@@ -1,14 +1,22 @@
 import Link from "next/link";
+
 import React, { useState } from "react";
+
 import Image from "next/image";
+
 import Layout from "@/pages/Components/bLayout";
+
 import { login } from "@/pages/api/login";
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
 const Login = () => {
   const [email, setEmail] = useState("");
+
   const [password, setPassword] = useState("");
+
   const [rememberMe, setRememberMe] = useState(false);
+
   const [link, setLink] = useState("");
+
   const router = useRouter();
 
   const isFormValid = email !== "" && password !== "";
@@ -27,6 +35,7 @@ const Login = () => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
+
     async function dataFetch() {
       const data = await login(email, password);
       console.log("------------------", data);
@@ -58,13 +67,13 @@ const Login = () => {
           </h1> */}
           <form className="md:space-y-4" onSubmit={handleSubmit}>
             <div className="mb-4">
-              <label htmlFor="email" className="block pb-2 text-gray-600">
-                Email Address
+              <label htmlFor="field1" className="block pb-2 text-gray-600">
+                Your Email
               </label>
               <input
-                type="email"
-                id="email"
-                name="email"
+                type="text"
+                id="field1"
+                name="field1"
                 className="text-black w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
                 placeholder="Enter Email"
                 onChange={handleEmailChange}
@@ -73,13 +82,13 @@ const Login = () => {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="password" className="pb-2 block text-gray-600">
-                Password
+              <label htmlFor="field1" className=" pb-2 block text-gray-600">
+                Your Passowrd
               </label>
               <input
-                type="password"
-                id="password"
-                name="password"
+                type="text"
+                id="field1"
+                name="field1"
                 className="text-black w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
                 placeholder="Enter Password"
                 onChange={handlePasswordChange}
@@ -87,23 +96,19 @@ const Login = () => {
                 required
               />
             </div>
+            {/* <Link href={link}> */}
             <button
               type="submit"
-              className="cursor-pointer w-full text-white bg-red-800 hover:bg-primary-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-              style={{ marginTop: '34px' }}
+              onClick={handleSubmit}
+              className="z-70 cursor-pointer w-full mt-7 text-white bg-red-800 hover:bg-primary-700 focus:ring-4 focus:outline-none
+               focus:ring-primary-300 font-medium rounded-lg text-sm my-4 px-5 py-2.5 text-center"
+              // disabled={!isFormValid}
             >
               Sign in
             </button>
+            {/* </Link> */}
           </form>
-      </div>
-      <div className="shadow-xl">
-        <img
-          src="/auth-bg.jpg"
-          // height={450}
-          width={331}
-          alt="Image"
-          className="h-auto max-w-md"
-        />
+        </div>
       </div>
     </div>
   );
