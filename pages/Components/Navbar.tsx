@@ -1,16 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
+
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+
 import Link from "next/link";
 
 const Navbar = () => {
   const [isPopupOpen, setPopupOpen] = useState(false);
+
   const [isSignOutModalOpen, setSignOutModalOpen] = useState(false);
+
   const [uname, setUname] = useState<any>(false);
-  ;
-  
+
   useEffect(() => {
-    setUname(localStorage.getItem("userName"))
+    setUname(localStorage.getItem("userName"));
   }, []);
+
   const handleClientNameClick = () => {
     setPopupOpen(!isPopupOpen);
   };
@@ -21,7 +25,9 @@ const Navbar = () => {
 
   const handleSignOutConfirm = () => {
     // Perform sign-out logic here
+
     localStorage.clear();
+
     setSignOutModalOpen(false);
   };
 
@@ -65,8 +71,10 @@ const Navbar = () => {
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between p-4">
           <a href="/" className="flex items-center"></a>
         </div>
+
         <div className="flex ml-auto mr-5 items-center">
           <AccountCircleIcon className="w-8 h-8 mr-2" />
+
           <div className="relative">
             <span
               className="cursor-pointer"
@@ -74,6 +82,7 @@ const Navbar = () => {
             >
               {uname}
             </span>
+
             {isPopupOpen && (
               <div
                 ref={popupRef}
@@ -94,10 +103,12 @@ const Navbar = () => {
       </nav>
 
       {/* Sign Out Confirmation Modal */}
+
       {isSignOutModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div className="bg-white p-5 rounded-lg shadow-lg">
-            <p>Are you sure you want to sign out?</p>
+          <div className="bg-white border-2 border-gray-600 px-7 py-4 rounded-lg shadow-xl">
+            <p className="text-lg">Are you sure you want to sign out?</p>
+
             <div className="mt-4 flex justify-end">
               <Link href="/">
                 <button
@@ -107,6 +118,7 @@ const Navbar = () => {
                   Yes
                 </button>
               </Link>
+
               <button
                 className="px-4 py-1 bg-gray-300 text-gray-700 rounded-lg"
                 onClick={handleSignOutCancel}

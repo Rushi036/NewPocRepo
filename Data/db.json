@@ -12,7 +12,7 @@
       "name": "PnF",
       "email": "ABG2@gmail.com",
       "password": "abg@123",
-      "role": "BU"
+      "role": "admin"
     },
     {
       "id": 3,
@@ -63,6 +63,26 @@
       "status": "Active",
       "created_date": "06-08-2023",
       "topology_id": 2
+    },
+    {
+      "id": 3,
+      "title": "topology title 3",
+      "bu": "Ultratech",
+      "bu_id": 3,
+      "cloud_server": "AWS",
+      "status": "Active",
+      "created_date": "06-08-2023",
+      "topology_id": 3
+    },
+    {
+      "id": 4,
+      "title": "topology title 4",
+      "bu": "datech",
+      "bu_id": 4,
+      "cloud_server": "AWS",
+      "status": "Active",
+      "created_date": "06-08-2023",
+      "topology_id": 4
     }
   ],
   "topology": [

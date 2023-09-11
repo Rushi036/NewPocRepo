@@ -1,11 +1,15 @@
 import React, { ReactNode } from "react";
+
 import Sidebar from "./Sidebar";
+
 import Navbar from "./Navbar";
+
 import { useAppContext } from "./AppContext";
 
 interface LayoutProps {
   children: ReactNode;
 }
+
 const Footer = () => {
   const { state, toggleState } = useAppContext();
   return (
@@ -20,27 +24,22 @@ const Footer = () => {
             </strong>
           </p>
         </div>
-        <div className="flex gap-4 text-black">
-          <div>About Us</div>
-          <div>Help</div>
-          <div>Contact Us</div>
-        </div>
+      
       </div>
     </footer>
   );
 };
+
 const Layout: React.FC<LayoutProps> = ({ children }: any) => {
   const { state, toggleState } = useAppContext();
 
   return (
-    <div
-      id="appLayout"
-      className="flex text-black h-screen bg-gray-100"
-    >
+    <div id="appLayout" className="flex text-black h-screen bg-gray-100">
+      <title>ABG-Automation</title>
       <Sidebar />
       <div className="flex-auto relative h-[100vh] bg-gray-100 overflow-auto">
         <Navbar />
-        <main className="mt-16 overflow-auto">{children}</main>
+        <main className="mt-16 overflow-auto p-4">{children}</main>
         <Footer />
       </div>
     </div>
