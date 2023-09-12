@@ -151,7 +151,7 @@ const AddNodeOnEdgeDrop = (props: any) => {
   );
 };
 
-function Topology() {
+function Topology(props:any) {
   const [network_icons, setNetworkIcons] = useState<any>(null);
   const [initialNodes, setInitialNodes] = useState<any>(null);
 
@@ -181,7 +181,7 @@ function Topology() {
         <div className="creator">
           {network_icons ? 
             <ReactFlowProvider>
-              <AddNodeOnEdgeDrop network_icons={network_icons} initialNodes={initialNodes} />
+              <AddNodeOnEdgeDrop network_icons={network_icons} initialNodes={initialNodes} setRfInstance={props.setRfInstance} topology={props.topology} />
             </ReactFlowProvider>
             :
             <>no data found</>
