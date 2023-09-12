@@ -8,7 +8,7 @@ import DeviceHubIcon from "@mui/icons-material/DeviceHub";
 import { useAppContext } from "./AppContext";
 import HomeIcon from "@mui/icons-material/Home";
 import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
-import SettingsIcon from '@mui/icons-material/Settings';
+import SettingsIcon from "@mui/icons-material/Settings";
 const Sidebar = () => {
   const { state, toggleState } = useAppContext();
 

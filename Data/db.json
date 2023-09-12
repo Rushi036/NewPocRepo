@@ -1,6 +1,6 @@
 {
   "users": [
-    { 
+    {
       "id": 1,
       "name": "Grasim Chemical",
       "email": "ABG1@gmail.com",
@@ -94,7 +94,7 @@
       "cloud_server": "AWS"
     }
   ],
-  "finops":[
+  "finops": [
     {
       "user_id": 1,
       "link": "http://65.108.85.82:5601/app/dashboards#/view/e6776b10-1534-11ea-841c-01bf20a6c8ba?_g=(filters:!(),refreshInterval:(pause:!t,value:60000),time:(from:now-7d%2Fd,to:now))"
@@ -102,25 +102,58 @@
     {
       "user_id": 2,
       "link": "http://65.108.85.82:5601/app/dashboards#/view/e6776b10-1534-11ea-841c-01bf20a6c8ba?_g=(filters:!(),refreshInterval:(pause:!t,value:60000),time:(from:now-7d%2Fd,to:now))"
-    },{
+    },
+    {
       "user_id": 3,
       "link": "http://65.108.85.82:5601/app/dashboards#/view/e6776b10-1534-11ea-841c-01bf20a6c8ba?_g=(filters:!(),refreshInterval:(pause:!t,value:60000),time:(from:now-7d%2Fd,to:now))"
-    },{
+    },
+    {
       "user_id": 4,
       "link": "http://65.108.85.82:5601/app/dashboards#/view/e6776b10-1534-11ea-841c-01bf20a6c8ba?_g=(filters:!(),refreshInterval:(pause:!t,value:60000),time:(from:now-7d%2Fd,to:now))"
-    },{
+    },
+    {
       "user_id": 5,
       "link": "http://65.108.85.82:5601/app/dashboards#/view/e6776b10-1534-11ea-841c-01bf20a6c8ba?_g=(filters:!(),refreshInterval:(pause:!t,value:60000),time:(from:now-7d%2Fd,to:now))"
-    },{
+    },
+    {
       "user_id": 6,
       "link": "http://65.108.85.82:5601/app/dashboards#/view/e6776b10-1534-11ea-841c-01bf20a6c8ba?_g=(filters:!(),refreshInterval:(pause:!t,value:60000),time:(from:now-7d%2Fd,to:now))"
     }
-  ]
-  ,
-  "reports":[
+  ],
+  "reports": [
     {
       "user_id": 1,
       "link": "http://65.108.85.82:5601/app/dashboards#/view/e6776b10-1534-11ea-841c-01bf20a6c8ba?_g=(filters:!(),refreshInterval:(pause:!t,value:60000),time:(from:now-7d%2Fd,to:now))"
+    }
+  ],
+  "network_icons": [
+    {
+      "Name": "Cisco Router",
+      "Path": "/network_icons/router.png"
+    },
+    {
+      "Name": "Wifi Router",
+      "Path": "/network_icons/wifi_router.png"
+    },
+    {
+      "Name": "Switch",
+      "Path": "/network_icons/switch.png"
+    },
+    {
+      "Name": "Remote Desktop",
+      "Path": "/network_icons/remote_desktop.png"
+    },
+    {
+      "Name": "Hub",
+      "Path": "/network_icons/hub.png"
+    },
+    {
+      "Name": "Voip",
+      "Path": "/network_icons/voip.png"
+    },
+    {
+      "Name": "Database Server",
+      "Path": "/network_icons/database_server.png"
     }
   ]
 }
