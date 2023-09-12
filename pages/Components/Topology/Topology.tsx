@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState, } from 'react';
+import React, { useCallback, useEffect, useRef, useState, } from 'react';
 import ReactFlow, {
   useNodesState,
   useEdgesState,
@@ -63,23 +63,23 @@ const fitViewOptions = {
 };
 const nodeTypes = { selectorNode: DynamicNode };
 
-const AddNodeOnEdgeDrop = () => {
+const AddNodeOnEdgeDrop = (props: any) => {
   const reactFlowWrapper = useRef<any>(null);
   const connectingNodeId = useRef(null);
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-  const { project,setViewport } = useReactFlow();
-  const onConnect = useCallback((params:any) => setEdges((eds: any) => addEdge(params, eds)), []);
+  const { project, setViewport } = useReactFlow();
+  const onConnect = useCallback((params: any) => setEdges((eds: any) => addEdge(params, eds)), []);
 
   const flowKey = 'example-flow';
   const [rfInstance, setRfInstance] = useState<any>(null);
 
-  const onConnectStart = useCallback((_:any, { nodeId }:any) => {
+  const onConnectStart = useCallback((_: any, { nodeId }: any) => {
     connectingNodeId.current = nodeId;
   }, []);
 
   const onConnectEnd = useCallback(
-    (event:any) => {
+    (event: any) => {
       const targetIsPane = event.target.classList.contains('react-flow__pane');
 
       if (targetIsPane) {
@@ -101,18 +101,10 @@ const AddNodeOnEdgeDrop = () => {
     [project]
   );
 
-
-  const onSave = useCallback(() => {
-    if (rfInstance) {
-      const flow = rfInstance.toObject();
-      localStorage.setItem(flowKey, JSON.stringify(flow));
-    }
-  }, [rfInstance]);
-  
   const onRestore = useCallback(() => {
     const restoreFlow = async () => {
-      let flow : any;
-      flow = JSON.parse(localStorage.getItem(flowKey) || "{}");
+      let flow: any;
+      flow = JSON.parse(props.topology || "{}");
 
       if (flow) {
         const { x = 0, y = 0, zoom = 1 } = flow.viewport;
@@ -123,7 +115,12 @@ const AddNodeOnEdgeDrop = () => {
     };
 
     restoreFlow();
-  }, [setNodes, setViewport]);
+  }, [props.topology, setEdges, setNodes, setViewport]);
+
+  // console.log(props.topology)
+  useEffect(() => {
+    props.topology && onRestore()
+  }, [props.topology])
 
   return (
     <div className="wrapper" ref={reactFlowWrapper}>
@@ -138,7 +135,7 @@ const AddNodeOnEdgeDrop = () => {
         onConnect={onConnect}
         onConnectStart={onConnectStart}
         onConnectEnd={onConnectEnd}
-        onInit={setRfInstance}
+        onInit={props.setRfInstance}
         proOptions={proOptions}
         fitView
         fitViewOptions={fitViewOptions}
@@ -147,7 +144,7 @@ const AddNodeOnEdgeDrop = () => {
   );
 };
 
-function Topology() {
+function Topology(props: any) {
   const [Node, setNode] = useState(3);
 
 
@@ -156,14 +153,14 @@ function Topology() {
       <div className='topology-editor'>
         <div className='creator'>
           <ReactFlowProvider>
-            <AddNodeOnEdgeDrop />
+            <AddNodeOnEdgeDrop setRfInstance={props.setRfInstance} topology={props.topology} />
           </ReactFlowProvider>
         </div>
         <div className='editor-options'>
           <div className='modal' style={{ display: "contents" }}>
             <ul>
               {network_icons.map((x: any, i: any) => {
-                return <li onClick={() => { selectedNode = i; setNode(i) }} key={i} className={Node === i ? 'selected-node' : ''}><img src={x.Path}/> <p>{x.Name}</p></li>
+                return <li onClick={() => { selectedNode = i; setNode(i) }} key={i} className={Node === i ? 'selected-node' : ''}><img src={x.Path} /> <p>{x.Name}</p></li>
               })}
             </ul>
           </div>

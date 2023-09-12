@@ -32,12 +32,12 @@ const Login = () => {
       const data = await login(email, password);
       console.log("------------------", data);
       if (data?.data[0]) {
-        // if (data.data[0].role != "admin") {
-          localStorage.setItem("userName", data.data[0].name);
-          localStorage.setItem("role", data.data[0].role);
+        localStorage.setItem("userName", data.data[0].name);
+        localStorage.setItem("role", data.data[0].role);
+        if (data.data[0].role != "admin") {
           localStorage.setItem("bu_id", data.data[0].id);
+        }
         // }else {
-        // }
         router.push("/page/Dashboard/Dashboard");
       } else {
         window.alert(

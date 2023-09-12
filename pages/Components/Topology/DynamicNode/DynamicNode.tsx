@@ -6,6 +6,7 @@ import Modal from 'react-modal';
 const handleStyle = { left: 10 };
 
 const memoTopo = ((data: any) => {
+  console.log("dy data", data)
   let subtitle: any;
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { deleteElements } = useReactFlow();
@@ -63,7 +64,7 @@ const memoTopo = ((data: any) => {
         )
       }
       <Handle type="source" position={Position.Bottom} id="a" />
-      <Modal
+      {/* <Modal
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
@@ -80,7 +81,7 @@ const memoTopo = ((data: any) => {
           <input type='text' placeholder='name' />
           <input type='text' placeholder='name' />
         </form>
-      </Modal>
+      </Modal> */}
     </>
   );
 })
