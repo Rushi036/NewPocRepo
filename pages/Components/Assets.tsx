@@ -70,7 +70,7 @@ const Assets = () => {
                       <td className="px-auto py-3">{d.status}</td>
                       <td className="px-auto py-3">{d.created_date}</td>
                       <td className="px-auto py-3 space-x-2">
-                        <Link href={"topology?id=" + d.topology_id}>
+                        <Link href={"../page/ViewTopology/ViewTopology?id=" + d.topology_id}>
                           <button className="btn bg-blue-400 px-2 py-1 rounded-sm text-white font-medium">
                             View
                           </button>

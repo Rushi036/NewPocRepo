@@ -140,7 +140,7 @@ const memoTopo = (data: any) => {
         </div>
       )}
       <Handle type="source" position={Position.Bottom} id="a" />
-      <Modal
+      {/* <Modal
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
@@ -157,7 +157,7 @@ const memoTopo = (data: any) => {
           <input type="text" placeholder="name" />
           <input type="text" placeholder="name" />
         </form>
-      </Modal>
+      </Modal> */}
     </>
   );
 };

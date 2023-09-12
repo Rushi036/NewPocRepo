@@ -83,15 +83,73 @@
       "status": "Active",
       "created_date": "06-08-2023",
       "topology_id": 4
+    },
+    {
+      "title": "topology title 5",
+      "bu": "Grasim Chemical",
+      "bu_id": "1",
+      "cloud_server": "Azure",
+      "status": "Draft",
+      "created_date": "12/09/2023",
+      "topology_id": 3,
+      "id": 5
+    },
+    {
+      "title": "kjasebd",
+      "bu": "Grasim Chemical",
+      "bu_id": "1",
+      "cloud_server": "AWS",
+      "status": "Draft",
+      "created_date": "12/09/2023",
+      "topology_id": 4,
+      "id": 6
+    },
+    {
+      "title": "12q",
+      "bu": "Grasim Chemical",
+      "bu_id": "1",
+      "cloud_server": "Azure",
+      "status": "Draft",
+      "created_date": "12/09/2023",
+      "topology_id": 5,
+      "id": 7
     }
   ],
   "topology": [
     {
       "id": 1,
       "bu_id": 1,
-      "flowChart": "",
+      "flowChart": "{\"nodes\":[{\"width\":117,\"height\":72,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Remote Desktop\",\"Path\":\"/network_icons/remote_desktop.png\"}},\"position\":{\"x\":258.69999999999993,\"y\":-182.70000000000005},\"selected\":false,\"positionAbsolute\":{\"x\":258.69999999999993,\"y\":-182.70000000000005},\"dragging\":false},{\"width\":48,\"height\":96,\"id\":\"1\",\"type\":\"selectorNode\",\"position\":{\"x\":428.7893371582031,\"y\":-2.58057098388671},\"data\":{\"label\":\"Node 1\",\"Path\":{\"Name\":\"Switch\",\"Path\":\"/network_icons/switch.png\"}},\"positionAbsolute\":{\"x\":428.7893371582031,\"y\":-2.58057098388671}},{\"width\":79,\"height\":96,\"id\":\"2\",\"type\":\"selectorNode\",\"position\":{\"x\":23.189337158203124,\"y\":-11.68057098388671},\"data\":{\"label\":\"Node 2\",\"Path\":{\"Name\":\"Wifi Router\",\"Path\":\"/network_icons/wifi_router.png\"}},\"positionAbsolute\":{\"x\":23.189337158203124,\"y\":-11.68057098388671}}],\"edges\":[{\"id\":\"1\",\"source\":\"0\",\"target\":\"1\",\"animated\":true},{\"id\":\"2\",\"source\":\"0\",\"target\":\"2\",\"animated\":true}],\"viewport\":{\"x\":135,\"y\":172.84615384615384,\"zoom\":0.7692307692307693}}",
       "title": "topology title 1",
       "cloud_server": "AWS"
+    },
+    {
+      "bu_id": "1",
+      "flowChart": "{\"nodes\":[{\"width\":117,\"height\":72,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Remote Desktop\",\"Path\":\"/network_icons/remote_desktop.png\"}},\"position\":{\"x\":258.69999999999993,\"y\":-182.70000000000005},\"selected\":false,\"positionAbsolute\":{\"x\":258.69999999999993,\"y\":-182.70000000000005},\"dragging\":false},{\"width\":48,\"height\":96,\"id\":\"1\",\"type\":\"selectorNode\",\"position\":{\"x\":428.7893371582031,\"y\":-2.58057098388671},\"data\":{\"label\":\"Node 1\",\"Path\":{\"Name\":\"Switch\",\"Path\":\"/network_icons/switch.png\"}},\"positionAbsolute\":{\"x\":428.7893371582031,\"y\":-2.58057098388671}},{\"width\":79,\"height\":96,\"id\":\"2\",\"type\":\"selectorNode\",\"position\":{\"x\":23.189337158203124,\"y\":-11.68057098388671},\"data\":{\"label\":\"Node 2\",\"Path\":{\"Name\":\"Wifi Router\",\"Path\":\"/network_icons/wifi_router.png\"}},\"positionAbsolute\":{\"x\":23.189337158203124,\"y\":-11.68057098388671}}],\"edges\":[{\"id\":\"1\",\"source\":\"0\",\"target\":\"1\",\"animated\":true},{\"id\":\"2\",\"source\":\"0\",\"target\":\"2\",\"animated\":true}],\"viewport\":{\"x\":135,\"y\":172.84615384615384,\"zoom\":0.7692307692307693}}",
+      "title": "topology title 5",
+      "cloud_server": "AWS",
+      "id": 2
+    },
+    {
+      "bu_id": "1",
+      "flowChart": "{\"nodes\":[{\"width\":117,\"height\":72,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Remote Desktop\",\"Path\":\"/network_icons/remote_desktop.png\"}},\"position\":{\"x\":258.69999999999993,\"y\":-182.70000000000005},\"selected\":false,\"positionAbsolute\":{\"x\":258.69999999999993,\"y\":-182.70000000000005},\"dragging\":false},{\"width\":48,\"height\":96,\"id\":\"1\",\"type\":\"selectorNode\",\"position\":{\"x\":428.7893371582031,\"y\":-2.58057098388671},\"data\":{\"label\":\"Node 1\",\"Path\":{\"Name\":\"Switch\",\"Path\":\"/network_icons/switch.png\"}},\"positionAbsolute\":{\"x\":428.7893371582031,\"y\":-2.58057098388671}},{\"width\":79,\"height\":96,\"id\":\"2\",\"type\":\"selectorNode\",\"position\":{\"x\":23.189337158203124,\"y\":-11.68057098388671},\"data\":{\"label\":\"Node 2\",\"Path\":{\"Name\":\"Wifi Router\",\"Path\":\"/network_icons/wifi_router.png\"}},\"positionAbsolute\":{\"x\":23.189337158203124,\"y\":-11.68057098388671}}],\"edges\":[{\"id\":\"1\",\"source\":\"0\",\"target\":\"1\",\"animated\":true},{\"id\":\"2\",\"source\":\"0\",\"target\":\"2\",\"animated\":true}],\"viewport\":{\"x\":135,\"y\":172.84615384615384,\"zoom\":0.7692307692307693}}",
+      "title": "topology title 5",
+      "cloud_server": "Azure",
+      "id": 3
+    },
+    {
+      "bu_id": "1",
+      "flowChart": "{\"nodes\":[{\"width\":117,\"height\":72,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Remote Desktop\",\"Path\":\"/network_icons/remote_desktop.png\"}},\"position\":{\"x\":-2.238341968911925,\"y\":-10.435233160621777},\"selected\":false,\"positionAbsolute\":{\"x\":-2.238341968911925,\"y\":-10.435233160621777},\"dragging\":false},{\"width\":48,\"height\":96,\"id\":\"1\",\"type\":\"selectorNode\",\"position\":{\"x\":82.25474113503887,\"y\":97.08807404671309},\"data\":{\"label\":\"Node 1\",\"Path\":{\"Name\":\"Switch\",\"Path\":\"/network_icons/switch.png\"}},\"positionAbsolute\":{\"x\":82.25474113503887,\"y\":97.08807404671309}}],\"edges\":[{\"id\":\"1\",\"source\":\"0\",\"target\":\"1\",\"animated\":true}],\"viewport\":{\"x\":291.59375,\"y\":77.73611111111111,\"zoom\":1.3402777777777777}}",
+      "title": "kjasebd",
+      "cloud_server": "AWS",
+      "id": 4
+    },
+    {
+      "bu_id": "1",
+      "flowChart": "{\"nodes\":[{\"width\":117,\"height\":72,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Remote Desktop\",\"Path\":\"/network_icons/remote_desktop.png\"}},\"position\":{\"x\":-9.699481865284952,\"y\":-54.45595854922283},\"selected\":false,\"positionAbsolute\":{\"x\":-9.699481865284952,\"y\":-54.45595854922283},\"dragging\":false},{\"width\":89,\"height\":96,\"id\":\"1\",\"type\":\"selectorNode\",\"position\":{\"x\":167.3117359536917,\"y\":41.129524823915155},\"data\":{\"label\":\"Node 1\",\"Path\":{\"Name\":\"Cisco Router\",\"Path\":\"/network_icons/router.png\"}},\"positionAbsolute\":{\"x\":167.3117359536917,\"y\":41.129524823915155}},{\"width\":79,\"height\":96,\"id\":\"2\",\"type\":\"selectorNode\",\"position\":{\"x\":-149.04059565252592,\"y\":65.75128648194625},\"data\":{\"label\":\"Node 2\",\"Path\":{\"Name\":\"Wifi Router\",\"Path\":\"/network_icons/wifi_router.png\"}},\"positionAbsolute\":{\"x\":-149.04059565252592,\"y\":65.75128648194625}},{\"width\":48,\"height\":96,\"id\":\"3\",\"type\":\"selectorNode\",\"position\":{\"x\":-13.993963528173577,\"y\":163.4922191244333},\"data\":{\"label\":\"Node 3\",\"Path\":{\"Name\":\"Switch\",\"Path\":\"/network_icons/switch.png\"}},\"positionAbsolute\":{\"x\":-13.993963528173577,\"y\":163.4922191244333}},{\"width\":48,\"height\":96,\"id\":\"4\",\"type\":\"selectorNode\",\"position\":{\"x\":241.17702092778498,\"y\":185.87563881355248},\"data\":{\"label\":\"Node 4\",\"Path\":{\"Name\":\"Hub\",\"Path\":\"/network_icons/hub.png\"}},\"positionAbsolute\":{\"x\":241.17702092778498,\"y\":185.87563881355248}},{\"width\":48,\"height\":96,\"id\":\"5\",\"type\":\"selectorNode\",\"position\":{\"x\":-409.06172649471233,\"y\":237.56432385825667},\"data\":{\"label\":\"Node 5\",\"Path\":{\"Name\":\"Voip\",\"Path\":\"/network_icons/voip.png\"}},\"positionAbsolute\":{\"x\":-409.06172649471233,\"y\":237.56432385825667}},{\"width\":114,\"height\":96,\"id\":\"6\",\"type\":\"selectorNode\",\"position\":{\"x\":-255.4145559125175,\"y\":274.5534575169332},\"data\":{\"label\":\"Node 6\",\"Path\":{\"Name\":\"Database Server\",\"Path\":\"/network_icons/database_server.png\"}},\"positionAbsolute\":{\"x\":-255.4145559125175,\"y\":274.5534575169332}}],\"edges\":[{\"id\":\"1\",\"source\":\"0\",\"target\":\"1\",\"animated\":true},{\"id\":\"2\",\"source\":\"0\",\"target\":\"2\",\"animated\":true},{\"id\":\"3\",\"source\":\"1\",\"target\":\"3\",\"animated\":true},{\"id\":\"4\",\"source\":\"1\",\"target\":\"4\",\"animated\":true},{\"id\":\"5\",\"source\":\"2\",\"target\":\"5\",\"animated\":true},{\"id\":\"6\",\"source\":\"3\",\"target\":\"6\",\"animated\":true}],\"viewport\":{\"x\":366.3711766068219,\"y\":124.87496549613014,\"zoom\":0.7029091365026114}}",
+      "title": "12q",
+      "cloud_server": "Azure",
+      "id": 5
     }
   ],
   "finops": [

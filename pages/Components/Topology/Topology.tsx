@@ -108,17 +108,10 @@ const AddNodeOnEdgeDrop = (props: any) => {
     [project]
   );
 
-  const onSave = useCallback(() => {
-    if (rfInstance) {
-      const flow = rfInstance.toObject();
-      localStorage.setItem(flowKey, JSON.stringify(flow));
-    }
-  }, [rfInstance]);
-
   const onRestore = useCallback(() => {
     const restoreFlow = async () => {
       let flow: any;
-      flow = JSON.parse(localStorage.getItem(flowKey) || "{}");
+      flow = JSON.parse(props.topology || "{}");
 
       if (flow) {
         const { x = 0, y = 0, zoom = 1 } = flow.viewport;
@@ -129,7 +122,12 @@ const AddNodeOnEdgeDrop = (props: any) => {
     };
 
     restoreFlow();
-  }, [setNodes, setViewport]);
+  }, [props.topology, setEdges, setNodes, setViewport]);
+
+  // console.log(props.topology)
+  useEffect(() => {
+    props.topology && onRestore()
+  }, [props.topology])
 
   return (
     <div className="wrapper" ref={reactFlowWrapper}>
@@ -144,7 +142,7 @@ const AddNodeOnEdgeDrop = (props: any) => {
         onConnect={onConnect}
         onConnectStart={onConnectStart}
         onConnectEnd={onConnectEnd}
-        onInit={setRfInstance}
+        onInit={props.setRfInstance}
         proOptions={proOptions}
         fitView
         fitViewOptions={fitViewOptions}
