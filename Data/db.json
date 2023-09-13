@@ -211,7 +211,7 @@
     },
     {
       "Name": "VNET",
-      "Path": "/network_icons/database_server.png"
+      "Path": "/network_icons/vnet.png"
     }
   ]
 }

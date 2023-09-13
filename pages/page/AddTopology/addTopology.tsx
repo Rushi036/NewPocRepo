@@ -5,6 +5,7 @@ import { addTableData, addTopologyData } from "@/pages/api/addTopology";
 import React, { useState } from "react";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import Link from "next/link";
+import { Checkbox, FormControlLabel, FormGroup } from "@mui/material";
 const addTopology = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [rfInstance, setRfInstance] = useState<any>(null);
@@ -16,7 +17,16 @@ const addTopology = () => {
   const [topology, setTopology] = useState<any>(null);
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [open, setOpen] = useState(false);
-
+  const [selectedClouds, setSelectedClouds] = useState<any>([]);
+  const bothCloud = ["AWS", "Azure"];
+  const handleCheckboxChange = (e: any) => {
+    const value = e.target.value;
+    if (selectedClouds.includes(value)) {
+      setSelectedClouds(selectedClouds.filter((cloud: any) => cloud !== value));
+    } else {
+      setSelectedClouds([...selectedClouds, value]);
+    }
+  };
   const saveTopology = async (e: any) => {
     // alert(process.env.NODE_ENV === 'development' ? process.env.REACT_APP_JSON_SERVER:'hi')
     async function dataFetch() {
@@ -61,30 +71,58 @@ const addTopology = () => {
           <span className="ml-2">Add Topology</span>
         </div>
         <div className="mt-4 p-2 box-border w-full bg-white">
-          <div className="flex flex-row justify-between px-2">
-            <label htmlFor="">
-              Topology Name :
-              <input
-                type="text"
-                onChange={(e) => setTopologyTitle(e.target.value)}
-                required
-                className="border-slate-600 border-2 rounded ml-2 w-[10rem]"
-              />
-            </label>
-            <label htmlFor="">
-              Cloud :
-              <select
-                onChange={(e) => setCloud(e.target.value)}
-                required
-                className="border-slate-600 border-2 rounded ml-2 w-[10rem]"
-              >
-                <option value="" selected disabled>
-                  Select Cloud
-                </option>
-                <option value="AWS">AWS</option>
-                <option value="Azure">Azure</option>
-              </select>
-            </label>
+          <div className=" px-2 space-y-3">
+            <div className="flex">
+              <label htmlFor="" className="font-semibold text-base">
+                Topology Name :
+                <input
+                  type="text"
+                  onChange={(e) => setTopologyTitle(e.target.value)}
+                  required
+                  className="border-slate-600 border-2 rounded ml-2 w-[10rem]"
+                />
+              </label>
+              
+              <label htmlFor="" className="font-semibold text-base">
+                Business Name :
+                <input
+                  type="text"
+                  onChange={(e) => setTopologyTitle(e.target.value)}
+                  required
+                  className="border-slate-600 border-2 rounded ml-2 w-[10rem]"
+                />
+              </label>
+            </div>
+            <div className="flex">
+              <label className="font-semibold text-base">Cloud :</label>
+              <div className="mx-3 flex space-x-4">
+                <div className="space-x-1">
+                  <input
+                    name="checkbox1"
+                    type="checkbox"
+                    value="AWS"
+                    onChange={handleCheckboxChange}
+                    checked={selectedClouds.includes("AWS")}
+                  />
+                  <label htmlFor="checkbox1 " className="font-semibold">
+                    AWS
+                  </label>
+                </div>
+                <div className="space-x-1">
+                  <input
+                    name="checkbox2"
+                    type="checkbox"
+                    value="Azure"
+                    onChange={handleCheckboxChange}
+                    checked={selectedClouds.includes("Azure")}
+                  />
+                  <label htmlFor="checkbox2" className="font-semibold">
+                    AZURE
+                  </label>
+                </div>
+              </div>
+              {/* <div>Selected Clouds: {selectedClouds.join(", ")}</div> */}
+            </div>
           </div>
           <div className="relative overflow-hidden">
             <Topology setRfInstance={setRfInstance} editable={true} />

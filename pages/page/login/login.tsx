@@ -111,14 +111,6 @@ const Login = () => {
           </form>
           <br></br>
         </div>
-        {/* <div className="shadow-xl">
-        <img
-          src="/auth-bg.jpg"
-                 
-          alt="Image"
-          className="h-auto max-w-md"
-        />
-      </div> */}
       </div>
       <br></br>
     </div>
