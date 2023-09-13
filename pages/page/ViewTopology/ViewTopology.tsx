@@ -35,7 +35,7 @@ const viewTopology = () => {
         <>
             <form className='m-4'>
                 <div className="text-xl px-4 border-b-2 border-slate-400 pb-2 flex justify-between items-center">
-                    <span>Add Topology</span>
+                    <span>View Topology</span>
                 </div>
                 <div className="mt-4 p-2 box-border w-full bg-white">
                     <div className="flex flex-row justify-between px-2">

@@ -151,15 +151,13 @@ const AddNodeOnEdgeDrop = (props: any) => {
   );
 };
 
-function Topology(props:any) {
+function Topology(props: any) {
   const [network_icons, setNetworkIcons] = useState<any>(null);
   const [initialNodes, setInitialNodes] = useState<any>(null);
 
   useEffect(() => {
-    console.log('data')
     async function dataFetch() {
       await getIcons().then((res) => {
-        console.log('data',res.data)
         setNetworkIcons(res.data);
         setInitialNodes([
           {
@@ -179,7 +177,7 @@ function Topology(props:any) {
     <>
       <div className="topology-editor">
         <div className="creator">
-          {network_icons ? 
+          {network_icons ?
             <ReactFlowProvider>
               <AddNodeOnEdgeDrop network_icons={network_icons} initialNodes={initialNodes} setRfInstance={props.setRfInstance} topology={props.topology} />
             </ReactFlowProvider>
@@ -187,26 +185,28 @@ function Topology(props:any) {
             <>no data found</>
           }
         </div>
-        <div className="editor-options">
-          <div className="modal" style={{ display: "contents" }}>
-            <ul>
-              {network_icons &&
-                network_icons.map((x: any, i: any) => {
-                  return (
-                    <li
-                      onClick={() => {
-                        selectedNode = i;
-                        setNode(i);
-                      }}
-                      key={i}
-                      className={Node === i ? "selected-node" : ""}
-                    >
-                      <img src={x.Path} /> <p>{x.Name}</p>
-                    </li>
-                  );
-                })}
-            </ul>
-          </div>
+        <div className="editor-options min-h-[50vh]">
+          {props.editable &&
+            <div className="modal" style={{ display: "contents" }}>
+              <ul>
+                {network_icons &&
+                  network_icons.map((x: any, i: any) => {
+                    return (
+                      <li
+                        onClick={() => {
+                          selectedNode = i;
+                          setNode(i);
+                        }}
+                        key={i}
+                        className={Node === i ? "selected-node" : ""}
+                      >
+                        <img src={x.Path} /> <p>{x.Name}</p>
+                      </li>
+                    );
+                  })}
+              </ul>
+            </div>
+          }
         </div>
       </div>
     </>

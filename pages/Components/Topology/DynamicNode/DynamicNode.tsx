@@ -7,7 +7,9 @@ import Link from "next/link";
 const handleStyle = { left: 10 };
 
 const memoTopo = (data: any) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [dialogOpen, setDialogOpen] = useState(false);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [formData, setFormData] = useState({
     input1: "",
     input2: "",
@@ -79,13 +81,13 @@ const memoTopo = (data: any) => {
       {data.id === "0" ? (
         <div className="custom-node" onClick={openModal}>
           {data.id === "0" ? "" : <button onClick={onDelete}>x</button>}
-          <img onMouseEnter={openDialog} src={data.data.Path.Path} alt="" />
+          <img src={data.data.Path.Path} alt="" />
           <p>{data.data.Path.Name}</p>
         </div>
       ) : (
         <div className="custom-node">
           {data.id === "0" ? "" : <button onClick={onDelete}>x</button>}
-          <img onMouseEnter={openDialog} src={data.data.Path.Path} alt="" />
+          <img src={data.data.Path.Path} alt="" />
           <p>{data.data.Path.Name}</p>
         </div>
       )}
