@@ -60,17 +60,25 @@ const Assets = () => {
               {data && data.length != 0 ? (
                 data.map((d: any, i: any) => {
                   return (
-                    <tr
-                      key={i}
-                      className="bg-white border-b text-center"
-                    >
+                    <tr key={i} className="bg-white border-b text-center">
                       <td className="px-auto py-3">{i + 1}</td>
                       <td className="px-auto py-3">{d.title}</td>
-                      <td className="px-auto py-3">{d.cloud_server}</td>
                       <td className="px-auto py-3">{d.status}</td>
+                      {d.cloud_server && d.cloud_server.length > 1 ? (
+                        <td className="px-auto py-3">
+                          {d.cloud_server[0]} {d.cloud_server[1]}
+                        </td>
+                      ) : (
+                        <td className="px-auto py-3">{d.cloud_server}</td>
+                      )}
                       <td className="px-auto py-3">{d.created_date}</td>
                       <td className="px-auto py-3 space-x-2">
-                        <Link href={"../page/ViewTopology/ViewTopology?id=" + d.topology_id}>
+                        <Link
+                          href={
+                            "../page/ViewTopology/ViewTopology?id=" +
+                            d.topology_id
+                          }
+                        >
                           <button className="btn bg-blue-400 px-2 py-1 rounded-sm text-white font-medium">
                             View
                           </button>
@@ -84,7 +92,9 @@ const Assets = () => {
                 })
               ) : (
                 <tr className="bg-white border-b text-center ">
-                  <td className="px-auto py-3 " colSpan={6}>No Data Found</td>
+                  <td className="px-auto py-3 " colSpan={6}>
+                    No Data Found
+                  </td>
                 </tr>
               )}
             </tbody>

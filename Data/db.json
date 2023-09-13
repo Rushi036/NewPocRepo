@@ -123,6 +123,123 @@
       "created_date": "13/09/2023",
       "topology_id": 6,
       "id": 8
+    },
+    {
+      "title": "topo",
+      "bu": "Grasim Chemical",
+      "bu_id": "1",
+      "cloud_server": null,
+      "status": "Draft",
+      "created_date": "13/09/2023",
+      "topology_id": 7,
+      "business_sponser": "wegwerg",
+      "server_owner": "wegweg",
+      "application_owner": "efgeg",
+      "resource_owner": "wegerg",
+      "selected_clouds": [
+        "Azure"
+      ],
+      "id": 9
+    },
+    {
+      "title": "sdbhj",
+      "bu": "Grasim Chemical",
+      "bu_id": "1",
+      "cloud_server": null,
+      "status": "Draft",
+      "created_date": "13/09/2023",
+      "topology_id": 8,
+      "business_sponser": "efef",
+      "server_owner": "scdc",
+      "application_owner": "eefc",
+      "resource_owner": "sdcsd",
+      "selected_clouds": [
+        "Azure"
+      ],
+      "id": 10
+    },
+    {
+      "title": "sdfjisd",
+      "bu": "Grasim Chemical",
+      "bu_id": "1",
+      "cloud_server": [
+        "AWS"
+      ],
+      "status": "Draft",
+      "created_date": "13/09/2023",
+      "topology_id": 9,
+      "business_sponser": "hebfheb",
+      "server_owner": "ewjifbjwe",
+      "application_owner": "efhhje",
+      "resource_owner": "bib",
+      "id": 11
+    },
+    {
+      "title": "ssd",
+      "bu": "Grasim Chemical",
+      "bu_id": "1",
+      "cloud_server": [
+        "AWS",
+        "Azure"
+      ],
+      "status": "Draft",
+      "created_date": "13/09/2023",
+      "topology_id": 10,
+      "business_sponser": "dvdvsdvv",
+      "server_owner": "vhhj",
+      "application_owner": "sdvdsv",
+      "resource_owner": "hhjb",
+      "id": 12
+    },
+    {
+      "title": "topo",
+      "bu": "Grasim Chemical",
+      "bu_id": "1",
+      "cloud_server": [
+        "AWS",
+        "Azure"
+      ],
+      "status": "Draft",
+      "created_date": "13/09/2023",
+      "topology_id": 11,
+      "business_sponser": null,
+      "server_owner": null,
+      "application_owner": null,
+      "resource_owner": null,
+      "id": 13
+    },
+    {
+      "title": "sejknfjk",
+      "bu": "Grasim Chemical",
+      "bu_id": "1",
+      "cloud_server": [
+        "AWS"
+      ],
+      "status": "Draft",
+      "created_date": "13/09/2023",
+      "topology_id": 12,
+      "business_sponser": null,
+      "server_owner": null,
+      "application_owner": null,
+      "resource_owner": null,
+      "id": 14
+    },
+    {
+      "title": "sdjksdkv",
+      "bu": "Grasim Chemical",
+      "bu_id": "1",
+      "cloud_server": [
+        "Azure",
+        "AWS"
+      ],
+      "status": "Draft",
+      "created_date": "13/09/2023",
+      "topology_id": 13,
+      "business_sponser": null,
+      "server_owner": null,
+      "application_owner": null,
+      "resource_owner": null,
+      "id": 15
     }
   ],
   "topology": [
@@ -131,7 +248,10 @@
       "bu_id": 1,
       "flowChart": "{\"nodes\":[{\"width\":117,\"height\":72,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Remote Desktop\",\"Path\":\"/network_icons/remote_desktop.png\"}},\"position\":{\"x\":258.69999999999993,\"y\":-182.70000000000005},\"selected\":false,\"positionAbsolute\":{\"x\":258.69999999999993,\"y\":-182.70000000000005},\"dragging\":false},{\"width\":48,\"height\":96,\"id\":\"1\",\"type\":\"selectorNode\",\"position\":{\"x\":428.7893371582031,\"y\":-2.58057098388671},\"data\":{\"label\":\"Node 1\",\"Path\":{\"Name\":\"Switch\",\"Path\":\"/network_icons/switch.png\"}},\"positionAbsolute\":{\"x\":428.7893371582031,\"y\":-2.58057098388671}},{\"width\":79,\"height\":96,\"id\":\"2\",\"type\":\"selectorNode\",\"position\":{\"x\":23.189337158203124,\"y\":-11.68057098388671},\"data\":{\"label\":\"Node 2\",\"Path\":{\"Name\":\"Wifi Router\",\"Path\":\"/network_icons/wifi_router.png\"}},\"positionAbsolute\":{\"x\":23.189337158203124,\"y\":-11.68057098388671}}],\"edges\":[{\"id\":\"1\",\"source\":\"0\",\"target\":\"1\",\"animated\":true},{\"id\":\"2\",\"source\":\"0\",\"target\":\"2\",\"animated\":true}],\"viewport\":{\"x\":135,\"y\":172.84615384615384,\"zoom\":0.7692307692307693}}",
       "title": "topology title 1",
-      "node_details": ["remote server", "database"],
+      "node_details": [
+        "remote server",
+        "database"
+      ],
       "cloud_server": "AWS"
     },
     {
@@ -178,6 +298,123 @@
       "title": "title",
       "cloud_server": "AWS",
       "id": 6
+    },
+    {
+      "bu_id": "1",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":343.89864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "topo",
+      "cloud_server": null,
+      "business_sponser": "wegwerg",
+      "server_owner": "wegweg",
+      "application_owner": "efgeg",
+      "resource_owner": "wegerg",
+      "selected_clouds": [
+        "Azure"
+      ],
+      "id": 7
+    },
+    {
+      "bu_id": "1",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "sdbhj",
+      "cloud_server": null,
+      "business_sponser": "efef",
+      "server_owner": "scdc",
+      "application_owner": "eefc",
+      "resource_owner": "sdcsd",
+      "selected_clouds": [
+        "Azure"
+      ],
+      "id": 8
+    },
+    {
+      "bu_id": "1",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":343.89864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "sdfjisd",
+      "cloud_server": [
+        "AWS"
+      ],
+      "business_sponser": "hebfheb",
+      "server_owner": "ewjifbjwe",
+      "application_owner": "efhhje",
+      "resource_owner": "bib",
+      "id": 9
+    },
+    {
+      "bu_id": "1",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":343.89864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "ssd",
+      "cloud_server": [
+        "AWS",
+        "Azure"
+      ],
+      "business_sponser": "dvdvsdvv",
+      "server_owner": "vhhj",
+      "application_owner": "sdvdsv",
+      "resource_owner": "hhjb",
+      "id": 10
+    },
+    {
+      "bu_id": "1",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "topo",
+      "cloud_server": [
+        "AWS",
+        "Azure"
+      ],
+      "business_sponser": null,
+      "server_owner": null,
+      "application_owner": null,
+      "resource_owner": null,
+      "id": 11
+    },
+    {
+      "bu_id": "1",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "sejknfjk",
+      "cloud_server": [
+        "AWS"
+      ],
+      "business_sponser": null,
+      "server_owner": null,
+      "application_owner": null,
+      "resource_owner": null,
+      "id": 12
+    },
+    {
+      "bu_id": "1",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "sdjksdkv",
+      "cloud_server": [
+        "Azure",
+        "AWS"
+      ],
+      "business_sponser": null,
+      "server_owner": null,
+      "application_owner": null,
+      "resource_owner": null,
+      "id": 13
     }
   ],
   "finops": [
