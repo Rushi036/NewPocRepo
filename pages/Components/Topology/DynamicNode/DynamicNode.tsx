@@ -7,7 +7,9 @@ import Link from "next/link";
 const handleStyle = { left: 10 };
 
 const memoTopo = (data: any) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [dialogOpen, setDialogOpen] = useState(false);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [formData, setFormData] = useState({
     input1: "",
     input2: "",
