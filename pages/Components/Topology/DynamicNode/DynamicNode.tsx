@@ -79,13 +79,13 @@ const memoTopo = (data: any) => {
       {data.id === "0" ? (
         <div className="custom-node" onClick={openModal}>
           {data.id === "0" ? "" : <button onClick={onDelete}>x</button>}
-          <img onMouseEnter={openDialog} src={data.data.Path.Path} alt="" />
+          <img height={100} width={100} src={data.data.Path.Path} alt="" />
           <p>{data.data.Path.Name}</p>
         </div>
       ) : (
         <div className="custom-node">
           {data.id === "0" ? "" : <button onClick={onDelete}>x</button>}
-          <img onMouseEnter={openDialog} src={data.data.Path.Path} alt="" />
+          <img height={100} width={100}  src={data.data.Path.Path} alt="" />
           <p>{data.data.Path.Name}</p>
         </div>
       )}

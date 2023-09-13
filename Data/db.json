@@ -186,32 +186,33 @@
   ],
   "network_icons": [
     {
-      "Name": "Cisco Router",
-      "Path": "/network_icons/router.png"
+      "Name": "Database",
+      "Path": "/network_icons/database.png"
     },
     {
-      "Name": "Wifi Router",
-      "Path": "/network_icons/wifi_router.png"
+      "Name": "App Load Balancer",
+      "Path": "/network_icons/appLoadBalancer.png"
     },
     {
-      "Name": "Switch",
-      "Path": "/network_icons/switch.png"
+      "Name": "RDMS",
+      "Path": "/network_icons/rdms.png"
     },
     {
-      "Name": "Remote Desktop",
-      "Path": "/network_icons/remote_desktop.png"
+      "Name": "Server",
+      "Path": "/network_icons/server.png"
     },
     {
-      "Name": "Hub",
-      "Path": "/network_icons/hub.png"
+      "Name": "Storage",
+      "Path": "/network_icons/storage1.png"
     },
     {
-      "Name": "Voip",
-      "Path": "/network_icons/voip.png"
+      "Name": "Container",
+      "Path": "/network_icons/container2.png"
     },
     {
-      "Name": "Database Server",
+      "Name": "VNET",
       "Path": "/network_icons/database_server.png"
     }
   ]
 }
+

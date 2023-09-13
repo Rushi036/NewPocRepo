@@ -18,7 +18,7 @@ const AssetsForAdmin = () => {
       <div className="text-xl px-4 border-b-2 border-slate-400 pb-2 flex justify-between items-center">
         <span>Service Request</span>
       </div>
-   
+
       <div className="items-center pb-4 px-4 ">
         <div className="relative overflow-x-auto mt-6">
           <table className="w-full text-sm text-center text-gray-800 ">
@@ -59,12 +59,16 @@ const AssetsForAdmin = () => {
                       <td className="px-auto py-3">{d.cloud_server}</td>
                       <td className="px-auto py-3">{d.created_date}</td>
                       <td className="px-auto py-3 space-x-2">
-                        <Link href={"topology?id=" + d.topology_id}>
+                        <Link
+                          href={
+                            "../page/ViewTopology/ViewTopology?id=" +
+                            d.topology_id
+                          }
+                        >
                           <button className="btn bg-blue-400 px-2 py-1 rounded-sm text-white font-medium">
                             View
                           </button>
                         </Link>
-                  
                       </td>
                     </tr>
                   );

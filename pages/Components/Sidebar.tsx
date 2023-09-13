@@ -103,7 +103,7 @@ const Sidebar = () => {
           {uRole == "admin" && (
             <li>
               <Link
-                href="/Components/Observability"
+                href="/Components/Manage"
                 className={`flex items-center gap-x-3.5 py-2 px-2.5 text-base
               text-slate-700 rounded-md hover:bg-gray-100
               ${activeLink === 2 ? "bg-gray-100" : ""}`}
