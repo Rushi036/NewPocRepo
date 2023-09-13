@@ -18,16 +18,23 @@ const addTopology = () => {
   const [open, setOpen] = useState(false);
 
   const saveTopology = async (e: any) => {
+    // e.preventDefault();
     // alert(process.env.NODE_ENV === 'development' ? process.env.REACT_APP_JSON_SERVER:'hi')
     async function dataFetch() {
       let flow: any;
       if (rfInstance) {
         flow = rfInstance.toObject();
-        JSON.stringify(flow);
       }
+      let arr: any[] = []
+      flow.nodes.map((data: any)=>{
+        arr.push(data.data.Path.Name);
+        // console.log()
+      })
+      flow = JSON.stringify(flow);
       let topologyData = {
         bu_id: localStorage.getItem("bu_id"),
-        flowChart: JSON.stringify(flow),
+        flowChart: flow,
+        node_details: arr,
         title: topologyTitle,
         cloud_server: cloud,
       };

@@ -1,4 +1,4 @@
-import Topology from "@/pages/Components/Topology/Topology";
+// import Topology from "@/pages/Components/TopologyView/Topology";
 // import { addTableData, addTopologyData } from '@/pages/api/addTopology';
 import { getTopologyData } from "@/pages/api/viewTopology";
 import { viewTopologyForAdmin } from "@/pages/api/viewTopologyForAdmin";
@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import Link from "next/link";
+import Topology from "@/pages/Components/TopologyView/Topology";
 const viewTopology = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [rfInstance, setRfInstance] = useState<any>(null);
@@ -18,11 +19,13 @@ const viewTopology = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [topology, setTopology] = useState<any>(null);
   const { id } = router.query;
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [role, setRole] = useState<any>();
   //  eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     setRole(localStorage.getItem("role"));
   });
+  //  eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     async function dataFetch() {
       let buId = localStorage.getItem("bu_id");
@@ -93,8 +96,9 @@ const viewTopology = () => {
             </label>
           </div>
           <div className="relative overflow-hidden">
-            {topology && (
+            {topology && ( 
               <Topology
+              // <Topology
                 editable={false}
                 topology={topology}
                 setRfInstance={setRfInstance}
