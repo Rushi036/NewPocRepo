@@ -176,7 +176,9 @@ function Topology(props: any) {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [topology, setTopology] = useState<any>(null);
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [role, setRole] = useState<any>();
+  const [role, setRole] = useState<any>(null);
+  let arole: any = "";
+
   const [topoDetails, setTopoDetails] = useState<any>([]);
   const getUniqueVm = (vmData: any) => {
     if (vmData) {
@@ -197,6 +199,13 @@ function Topology(props: any) {
     setUniqueProductsPrices(productPrices);
     setApiHit(true);
   };
+
+  useEffect(() => {
+    arole = localStorage.getItem("role");
+  }, []);
+  useEffect(() => {
+    setRole(arole);
+  }, [arole]);
   useEffect(() => {
     fetchData();
   }, [id]);
@@ -291,11 +300,21 @@ function Topology(props: any) {
               </ul>
             </div>
           ) : (
-            <div className="">
+            <div className={role=='admin'?"":'hidden'}>
               <div className="flex justify-center">
                 <button
-                  className={`btn ${apiHit && uniqueProductPrices && Object.keys(uniqueProductPrices)[0] ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-600'} rounded-md px-4 py-1 mt-6 font-semibold`}
-                  disabled={apiHit && uniqueProductPrices && Object.keys(uniqueProductPrices)[0]}
+                  className={`btn ${
+                    apiHit &&
+                    uniqueProductPrices &&
+                    Object.keys(uniqueProductPrices)[0]
+                      ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                      : "bg-blue-500 text-white hover:bg-blue-600"
+                  } rounded-md px-4 py-1 mt-6 font-semibold`}
+                  disabled={
+                    apiHit &&
+                    uniqueProductPrices &&
+                    Object.keys(uniqueProductPrices)[0]
+                  }
                   onClick={(e: any) => getallVMs(e)}
                 >
                   Calculate Estimation
@@ -334,7 +353,9 @@ function Topology(props: any) {
                               )}
                             </select>
                           </td>
-                          <td className="px-4 py-2 text-center">{serverCount}</td>
+                          <td className="px-4 py-2 text-center">
+                            {serverCount}
+                          </td>
                           <td className="px-4 py-2">
                             <p className="border-b-2">
                               {uniqueProductPrices && selectedProduct

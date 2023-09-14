@@ -18,7 +18,7 @@
       "name": "PnF",
       "email": "ABG2@gmail.com",
       "password": "abg@123",
-      "role": "BU"
+      "role": "admin"
     },
     {
       "id": 3,
@@ -49,8 +49,46 @@
       "role": "BU"
     }
   ],
-  "topology_table_data": [],
-  "topology":[],
+  "topology_table_data": [
+    {
+      "title": "topo",
+      "bu": "PnF",
+      "bu_id": "2",
+      "cloud_server": [
+        "AWS",
+        "Azure"
+      ],
+      "status": "Approval Pending",
+      "created_date": "14/09/2023",
+      "topology_id": 1,
+      "business_sponser": "hbhb",
+      "server_owner": "bjkbjk",
+      "application_owner": "uihu",
+      "resource_owner": "jbjb",
+      "selected_environment": "Production",
+      "id": 1
+    }
+  ],
+  "topology": [
+    {
+      "bu_id": "2",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "topo",
+      "cloud_server": [
+        "AWS",
+        "Azure"
+      ],
+      "business_sponser": "hbhb",
+      "server_owner": "bjkbjk",
+      "application_owner": "uihu",
+      "resource_owner": "jbjb",
+      "selected_environment": "Production",
+      "id": 1
+    }
+  ],
   "finops": [
     {
       "user_id": 1,
@@ -113,5 +151,28 @@
       "Path": "/network_icons/vnet.png"
     }
   ],
-  "resourse_data": []
+  "resourse_data": [
+    {
+      "node_name": null,
+      "fields": {
+        "Description": "cghc",
+        "VM_type": "",
+        "Series": "",
+        "vCPUs": "",
+        "RAM": "",
+        "OS_version": "Ubuntu 20.04",
+        "License": "BYOL",
+        "OS_Disk_size": "bhjbjb",
+        "Disk_partition": "bjbj",
+        "Storage_Disk_Size": "bjbjb",
+        "Storage_Disk": "yes",
+        "Storage_Disk_Value": "fvf",
+        "Compute_options": "yes",
+        "Compute": "rdtfv",
+        "Internet_facing": "no",
+        "NATting": "no"
+      },
+      "id": 1
+    }
+  ]
 }
