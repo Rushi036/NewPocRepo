@@ -9,6 +9,10 @@ import ReactFlow, {
 import DynamicNode from "./DynamicNode/DynamicNode";
 import "reactflow/dist/style.css";
 import { getIcons } from "@/pages/api/getIcons";
+import { GetAllVMs } from "@/pages/api/getallVMs";
+import { table } from "console";
+import router, { useRouter } from "next/router";
+import { viewTopologyForAdmin } from "@/pages/api/viewTopologyForAdmin";
 
 // import './Topology.css';
 
@@ -91,7 +95,10 @@ const AddNodeOnEdgeDrop = (props: any) => {
             x: event.clientX - left - 75,
             y: event.clientY - top,
           }),
-          data: { label: `Node ${id}`, Path: props.network_icons[selectedNode] },
+          data: {
+            label: `Node ${id}`,
+            Path: props.network_icons[selectedNode],
+          },
         };
 
         setNodes((nds: any) => nds.concat(newNode));
@@ -126,8 +133,8 @@ const AddNodeOnEdgeDrop = (props: any) => {
 
   // console.log(props.topology)
   useEffect(() => {
-    props.topology && onRestore()
-  }, [props.topology])
+    props.topology && onRestore();
+  }, [props.topology]);
 
   return (
     <div className="wrapper" ref={reactFlowWrapper}>
@@ -152,9 +159,71 @@ const AddNodeOnEdgeDrop = (props: any) => {
 };
 
 function Topology(props: any) {
+  const { id } = router.query;
   const [network_icons, setNetworkIcons] = useState<any>(null);
   const [initialNodes, setInitialNodes] = useState<any>(null);
+  let getVMData: any[];
+  const [vmData, setVMData] = useState<any>(null);
+  const uniqueProductNames = new Set();
+  const productPrices: any = {};
+  const [uniqueProductPrices, setUniqueProductsPrices] = useState<any>({});
+  const first5UniqueProductNames = [];
+  const [apiHit, setApiHit] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState("");
+  const [title, setTitle] = useState<any>(null);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [cloud, setCloud] = useState<any>(null);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [topology, setTopology] = useState<any>(null);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [role, setRole] = useState<any>();
+  const [topoDetails, setTopoDetails] = useState<any>([]);
+  const getUniqueVm = (vmData: any) => {
+    if (vmData) {
+      for (const item of vmData) {
+        if (uniqueProductNames.size < 5) {
+          uniqueProductNames.add(item.productName);
+          if (uniqueProductNames.size <= 5) {
+            productPrices[item.productName] = item.unitPrice;
+          }
+        } else {
+          break;
+        }
+      }
+    }
+    // setVMData(uniqueProductNames);
+    console.log("unique after sorting", uniqueProductNames);
+    console.log("unique prices after sorting", productPrices);
+    setUniqueProductsPrices(productPrices);
+    setApiHit(true);
+  };
+  useEffect(() => {
+    fetchData();
+  }, [id]);
+  async function fetchData() {
+    await viewTopologyForAdmin(id).then((res) => {
+      setTitle(res.data[0].title);
+      setCloud(res.data[0].cloud_server);
+      setTopology(res.data[0].flowChart);
+      setTopoDetails(res.data[0].node_details);
+    });
+  }
+  const selectedPrice =
+    (uniqueProductPrices && uniqueProductPrices[selectedProduct]) || 0;
+  const serverCount =
+    topoDetails && topoDetails.filter((item: any) => item === "Server").length;
+  const totalPrice = serverCount && serverCount * selectedPrice;
+  console.log("node details in the topo", topoDetails);
+  const getData = async () => {
+    getVMData = await GetAllVMs();
+    getUniqueVm(getVMData);
+    setVMData(getVMData);
+  };
 
+  const getallVMs = (e: any) => {
+    e.preventDefault();
+    getData();
+  };
   useEffect(() => {
     async function dataFetch() {
       await getIcons().then((res) => {
@@ -171,22 +240,37 @@ function Topology(props: any) {
     }
     dataFetch();
   }, []);
+  const handleProductChange = (e: any) => {
+    setSelectedProduct(e.target.value);
+  };
+
   const [Node, setNode] = useState(3);
 
   return (
     <>
       <div className="topology-editor">
-        <div className="creator">
-          {network_icons ?
+        <div
+          className="creator"
+          style={{ width: Object.keys(uniqueProductPrices)[0] ? "50%" : "75%" }}
+        >
+          {network_icons ? (
             <ReactFlowProvider>
-              <AddNodeOnEdgeDrop network_icons={network_icons} initialNodes={initialNodes} setRfInstance={props.setRfInstance} topology={props.topology} />
+              <AddNodeOnEdgeDrop
+                network_icons={network_icons}
+                initialNodes={initialNodes}
+                setRfInstance={props.setRfInstance}
+                topology={props.topology}
+              />
             </ReactFlowProvider>
-            :
+          ) : (
             <>no data found</>
-          }
+          )}
         </div>
-        <div className="editor-options min-h-[50vh]">
-          {props.editable &&
+        <div
+          className="editor-options min-h-[50vh]"
+          style={{ width: Object.keys(uniqueProductPrices)[0] ? "50%" : "25%" }}
+        >
+          {props.editable ? (
             <div className="modal" style={{ display: "contents" }}>
               <ul>
                 {network_icons &&
@@ -206,7 +290,71 @@ function Topology(props: any) {
                   })}
               </ul>
             </div>
-          }
+          ) : (
+            <div className="">
+              <div className="flex justify-center">
+                <button
+                  className={`btn ${apiHit && uniqueProductPrices && Object.keys(uniqueProductPrices)[0] ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-600'} rounded-md px-4 py-1 mt-6 font-semibold`}
+                  disabled={apiHit && uniqueProductPrices && Object.keys(uniqueProductPrices)[0]}
+                  onClick={(e: any) => getallVMs(e)}
+                >
+                  Calculate Estimation
+                </button>
+              </div>{" "}
+              {apiHit &&
+                uniqueProductPrices &&
+                Object.keys(uniqueProductPrices)[0] && (
+                  <div className="mt-4 w-full bg-white border rounded-lg overflow-hidden">
+                    <table className="w-full">
+                      <thead className="bg-blue-500 text-white">
+                        <tr>
+                          <th className="font-medium">Product</th>
+                          <th className="font-medium">Quantity</th>
+                          <th className="font-medium">Price</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            <select
+                              id="productDropdown"
+                              onChange={handleProductChange}
+                              value={selectedProduct}
+                              className="px-4 py-1 border mb-2 rounded-lg"
+                            >
+                              <option value="" disabled>
+                                Select a product
+                              </option>
+                              {Object.keys(uniqueProductPrices).map(
+                                (productName) => (
+                                  <option key={productName} value={productName}>
+                                    {productName}
+                                  </option>
+                                )
+                              )}
+                            </select>
+                          </td>
+                          <td className="px-4 py-2 text-center">{serverCount}</td>
+                          <td className="px-4 py-2">
+                            <p className="border-b-2">
+                              {uniqueProductPrices && selectedProduct
+                                ? `$${uniqueProductPrices[selectedProduct]}`
+                                : "N/A"}
+                            </p>
+                          </td>
+                        </tr>
+                        {/* Add more rows as needed */}
+                      </tbody>
+                    </table>
+
+                    {/* Total Price Block */}
+                    <div className="total-price px-4 py-2 text-lg font-semibold">
+                      Total Price: ${totalPrice}
+                    </div>
+                  </div>
+                )}
+            </div>
+          )}
         </div>
       </div>
     </>

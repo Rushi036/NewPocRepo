@@ -7,6 +7,9 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import Link from "next/link";
 import { Checkbox, FormControlLabel, FormGroup } from "@mui/material";
 import { title } from "process";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+// import "/toastify-custom.css";
 const addTopology = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [rfInstance, setRfInstance] = useState<any>(null);
@@ -45,7 +48,7 @@ const addTopology = () => {
       if (
         topologyTitle &&
         businessSponser &&
-        selectedClouds &&
+        selectedClouds.length > 0 &&
         serverOwner &&
         applicationOwner &&
         resourceOwner &&
@@ -75,16 +78,22 @@ const addTopology = () => {
         };
 
         console.log("topo data---------------", topologyData);
-        window.alert("Topology created successfully!");
+        toast.success("Topology created successfully!", {
+          position: "bottom-right", 
+          autoClose: 3000,
+        });
         return await addTopologyData(topologyData);
-      } else window.alert("Please fill out all the fields!");
+      } else toast.error("Please fill out all the fields!", {
+        position: "bottom-right",
+        autoClose: 3000,
+      });
     }
     // await dataFetch();
     await dataFetch().then(async (res: any) => {
       if (
         topologyTitle &&
         businessSponser &&
-        selectedClouds &&
+        selectedClouds.length > 0 &&
         serverOwner &&
         applicationOwner &&
         resourceOwner &&
@@ -119,9 +128,9 @@ const addTopology = () => {
           <Link href="/Components/Assets">
             <ArrowBackIosIcon className="flex items-center h-full" />
           </Link>
-
           <span className="ml-2">Add Topology</span>
         </div>
+        <ToastContainer />
         <div className="mt-4 p-2 box-border w-full bg-white">
           <div className=" pl-4 space-y-5 pt-4">
             <div className="flex justify-around">

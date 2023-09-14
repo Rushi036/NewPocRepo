@@ -7,6 +7,9 @@ import React, { useEffect, useState } from "react";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import Link from "next/link";
 import Topology from "@/pages/Components/TopologyView/Topology";
+import { getOldData, sendEstimation } from "@/pages/api/sendEstimation";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const viewTopology = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [rfInstance, setRfInstance] = useState<any>(null);
@@ -21,6 +24,7 @@ const viewTopology = () => {
   const { id } = router.query;
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [role, setRole] = useState<any>();
+  const [topoDetails, setTopoDetails] = useState<any>([]);
   //  eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     setRole(localStorage.getItem("role"));
@@ -40,12 +44,30 @@ const viewTopology = () => {
             setTitle(res.data[0].title);
             setCloud(res.data[0].cloud_server);
             setTopology(res.data[0].flowChart);
+            setTopoDetails(res.data[0].node_details);
           });
     }
 
     id && dataFetch();
   }, [id]);
-  // console.log(topology)
+
+  const sendEstimationToUser = async (e: any) => {
+    e.preventDefault();
+    await getOldData(id).then(async (res) => {
+      let data = res.data[0];
+      data = {
+        ...data,
+        status: "Approval Pending",
+      };
+      await sendEstimation(data.id, data).then(() =>
+        toast.success("Estimation sent successfully!", {
+          position: "bottom-right",
+          autoClose: 3000,
+        })
+      );
+    });
+  };
+  //   console.log("---------------------------------------",topoDetails)
   //     // await fetchTopology;
   return (
     <>
@@ -63,42 +85,30 @@ const viewTopology = () => {
 
           <span className="ml-2">View Topology</span>
         </div>
+        <ToastContainer />
         <div className="mt-4 p-2 box-border w-full bg-white">
-          <div className="flex flex-row justify-between px-2">
-            <label htmlFor="">
-              Topology Name :
-              <input
-                type="text"
-                required
-                onChange={(e) => {
-                  setTitle(e.target.value);
-                }}
-                value={title || ""}
-                className="border-slate-600 border-2 rounded ml-2 w-[10rem]"
-              />
-            </label>
-            <label htmlFor="">
-              Cloud :
-              <select
-                onChange={(e) => {
-                  setCloud(e.target.value);
-                }}
-                required
-                value={cloud || ""}
-                className="border-slate-600 border-2 rounded ml-2 w-[10rem]"
-              >
-                <option value="" disabled>
-                  Select Cloud
-                </option>
-                <option value="AWS">AWS</option>
-                <option value="Azure">Azure</option>
-              </select>
-            </label>
+          <div className="flex flex-row justify-between px-4 pt-4">
+            <div className="flex">
+              <label htmlFor="" className="font-semibold">
+                Topology Name :
+              </label>
+              <p className="border-b-2 border-slate-600 rounded-md ml-2">
+                {title}
+              </p>
+            </div>
+            <div className="flex">
+              <label htmlFor="" className="font-semibold">
+                Cloud :
+              </label>
+              <p className="border-b-2 border-slate-600 rounded-md ml-2">
+                {cloud}
+              </p>
+            </div>
           </div>
           <div className="relative overflow-hidden">
-            {topology && ( 
+            {topology && (
               <Topology
-              // <Topology
+                // <Topology
                 editable={false}
                 topology={topology}
                 setRfInstance={setRfInstance}
@@ -109,8 +119,9 @@ const viewTopology = () => {
             <button
               type="submit"
               className="bg-red-700 text-white px-6 py-2 rounded "
+              onClick={sendEstimationToUser}
             >
-              Save
+              Send Estimation
             </button>
           </div>
         </div>

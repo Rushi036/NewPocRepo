@@ -45,137 +45,7 @@
   ],
   "topology_table_data": [
     {
-      "id": 1,
-      "title": "topology title 1",
-      "bu": "ABG",
-      "bu_id": 2,
-      "cloud_server": "AWS",
-      "status": "Draft",
-      "created_date": "07-08-2023",
-      "topology_id": 1
-    },
-    {
-      "id": 2,
-      "title": "topology title 2",
-      "bu": "ABG",
-      "bu_id": 2,
-      "cloud_server": "Azure",
-      "status": "Active",
-      "created_date": "06-08-2023",
-      "topology_id": 2
-    },
-    {
-      "id": 3,
-      "title": "topology title 3",
-      "bu": "Ultratech",
-      "bu_id": 3,
-      "cloud_server": "AWS",
-      "status": "Active",
-      "created_date": "06-08-2023",
-      "topology_id": 3
-    },
-    {
-      "id": 4,
-      "title": "topology title 4",
-      "bu": "datech",
-      "bu_id": 4,
-      "cloud_server": "AWS",
-      "status": "Active",
-      "created_date": "06-08-2023",
-      "topology_id": 4
-    },
-    {
-      "title": "topology title 5",
-      "bu": "Grasim Chemical",
-      "bu_id": "1",
-      "cloud_server": "Azure",
-      "status": "Draft",
-      "created_date": "12/09/2023",
-      "topology_id": 3,
-      "id": 5
-    },
-    {
-      "title": "kjasebd",
-      "bu": "Grasim Chemical",
-      "bu_id": "1",
-      "cloud_server": "AWS",
-      "status": "Draft",
-      "created_date": "12/09/2023",
-      "topology_id": 4,
-      "id": 6
-    },
-    {
-      "title": "12q",
-      "bu": "Grasim Chemical",
-      "bu_id": "1",
-      "cloud_server": "Azure",
-      "status": "Draft",
-      "created_date": "12/09/2023",
-      "topology_id": 5,
-      "id": 7
-    },
-    {
-      "title": "title",
-      "bu": "Grasim Chemical",
-      "bu_id": "1",
-      "cloud_server": "AWS",
-      "status": "Draft",
-      "created_date": "13/09/2023",
-      "topology_id": 6,
-      "id": 8
-    },
-    {
-      "title": "topo",
-      "bu": "Grasim Chemical",
-      "bu_id": "1",
-      "cloud_server": null,
-      "status": "Draft",
-      "created_date": "13/09/2023",
-      "topology_id": 7,
-      "business_sponser": "wegwerg",
-      "server_owner": "wegweg",
-      "application_owner": "efgeg",
-      "resource_owner": "wegerg",
-      "selected_clouds": [
-        "Azure"
-      ],
-      "id": 9
-    },
-    {
-      "title": "sdbhj",
-      "bu": "Grasim Chemical",
-      "bu_id": "1",
-      "cloud_server": null,
-      "status": "Draft",
-      "created_date": "13/09/2023",
-      "topology_id": 8,
-      "business_sponser": "efef",
-      "server_owner": "scdc",
-      "application_owner": "eefc",
-      "resource_owner": "sdcsd",
-      "selected_clouds": [
-        "Azure"
-      ],
-      "id": 10
-    },
-    {
-      "title": "sdfjisd",
-      "bu": "Grasim Chemical",
-      "bu_id": "1",
-      "cloud_server": [
-        "AWS"
-      ],
-      "status": "Draft",
-      "created_date": "13/09/2023",
-      "topology_id": 9,
-      "business_sponser": "hebfheb",
-      "server_owner": "ewjifbjwe",
-      "application_owner": "efhhje",
-      "resource_owner": "bib",
-      "id": 11
-    },
-    {
-      "title": "ssd",
+      "title": "demoTopo",
       "bu": "Grasim Chemical",
       "bu_id": "1",
       "cloud_server": [
@@ -183,97 +53,34 @@
         "Azure"
       ],
       "status": "Draft",
-      "created_date": "13/09/2023",
-      "topology_id": 10,
-      "business_sponser": "dvdvsdvv",
-      "server_owner": "vhhj",
-      "application_owner": "sdvdsv",
-      "resource_owner": "hhjb",
-      "id": 12
-    },
-    {
-      "title": "topo",
-      "bu": "Grasim Chemical",
-      "bu_id": "1",
-      "cloud_server": [
-        "AWS",
-        "Azure"
-      ],
-      "status": "Draft",
-      "created_date": "13/09/2023",
-      "topology_id": 11,
-      "business_sponser": null,
-      "server_owner": null,
-      "application_owner": null,
-      "resource_owner": null,
-      "id": 13
-    },
-    {
-      "title": "sejknfjk",
-      "bu": "Grasim Chemical",
-      "bu_id": "1",
-      "cloud_server": [
-        "AWS"
-      ],
-      "status": "Draft",
-      "created_date": "13/09/2023",
-      "topology_id": 12,
-      "business_sponser": null,
-      "server_owner": null,
-      "application_owner": null,
-      "resource_owner": null,
-      "id": 14
-    },
-    {
-      "title": "sdjksdkv",
-      "bu": "Grasim Chemical",
-      "bu_id": "1",
-      "cloud_server": [
-        "Azure",
-        "AWS"
-      ],
-      "status": "Draft",
-      "created_date": "13/09/2023",
-      "topology_id": 13,
-      "business_sponser": null,
-      "server_owner": null,
-      "application_owner": null,
-      "resource_owner": null,
-      "id": 15
-    },
-    {
-      "title": "x",
-      "bu": "Grasim Chemical",
-      "bu_id": "1",
-      "cloud_server": [],
-      "status": "Draft",
       "created_date": "14/09/2023",
-      "topology_id": 14,
-      "business_sponser": null,
-      "server_owner": null,
-      "application_owner": null,
-      "resource_owner": null,
-      "id": 16
-    },
-    {
-      "title": "xx",
-      "bu": "Grasim Chemical",
-      "bu_id": "1",
-      "cloud_server": [
-        "AWS"
-      ],
-      "status": "Draft",
-      "created_date": "14/09/2023",
-      "topology_id": 15,
-      "business_sponser": "xx",
-      "server_owner": "xx",
-      "application_owner": "xxx",
-      "resource_owner": "xx",
+      "topology_id": 27,
+      "business_sponser": "demo",
+      "server_owner": "demo",
+      "application_owner": "demo",
+      "resource_owner": "demo",
       "selected_environment": "Production",
-      "id": 17
+      "id": 1
     },
     {
-      "title": "xyx",
+      "title": "topo",
+      "bu": "Grasim Chemical",
+      "bu_id": "1",
+      "cloud_server": [
+        "AWS"
+      ],
+      "status": "Approval Pending",
+      "created_date": "14/09/2023",
+      "topology_id": 28,
+      "business_sponser": "bjbj",
+      "server_owner": "bjbjb",
+      "application_owner": "hjfje",
+      "resource_owner": "bhjbjh",
+      "selected_environment": "Production",
+      "id": 2
+    },
+    {
+      "title": "demoTopo",
       "bu": "Grasim Chemical",
       "bu_id": "1",
       "cloud_server": [
@@ -281,13 +88,13 @@
       ],
       "status": "Draft",
       "created_date": "14/09/2023",
-      "topology_id": 16,
-      "business_sponser": "birlra",
-      "server_owner": "birla",
-      "application_owner": "birla",
-      "resource_owner": "birla",
-      "selected_environment": "Development",
-      "id": 18
+      "topology_id": 29,
+      "business_sponser": "demo",
+      "server_owner": "demo",
+      "application_owner": "demo",
+      "resource_owner": "demo",
+      "selected_environment": "Production",
+      "id": 3
     }
   ],
   "topology": [
@@ -511,6 +318,227 @@
       "resource_owner": "birla",
       "selected_environment": "Development",
       "id": 16
+    },
+    {
+      "bu_id": "1",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "vsdfv",
+      "cloud_server": [
+        "AWS"
+      ],
+      "business_sponser": "dffsb",
+      "server_owner": "bjhj",
+      "application_owner": "sdvdv",
+      "resource_owner": "jbj",
+      "selected_environment": "Production",
+      "id": 17
+    },
+    {
+      "bu_id": "1",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":326.5483129708758,\"y\":152.28827238729176,\"zoom\":0.6997947137632992}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "vsdfv",
+      "cloud_server": [
+        "AWS"
+      ],
+      "business_sponser": "dffsb",
+      "server_owner": "bjhj",
+      "application_owner": "sdvdv",
+      "resource_owner": "jbj",
+      "selected_environment": "Production",
+      "id": 18
+    },
+    {
+      "bu_id": "1",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":343.89864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "sdvsdv",
+      "cloud_server": [
+        "Azure"
+      ],
+      "business_sponser": "dvfdv",
+      "server_owner": "dxvfv",
+      "application_owner": "sdvdssdvsv",
+      "resource_owner": "dvsdv",
+      "selected_environment": "Test",
+      "id": 19
+    },
+    {
+      "bu_id": "1",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "sdvsdvsdvsdv",
+      "cloud_server": [
+        "Azure"
+      ],
+      "business_sponser": "bbhjhj",
+      "server_owner": "bhjbj",
+      "application_owner": "vvhj",
+      "resource_owner": "hjbj",
+      "selected_environment": "Production",
+      "id": 20
+    },
+    {
+      "bu_id": "1",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "sev",
+      "cloud_server": [
+        "Azure"
+      ],
+      "business_sponser": "jbjbj",
+      "server_owner": "bjbjk",
+      "application_owner": "sdv",
+      "resource_owner": "bjkbjk",
+      "selected_environment": "Production",
+      "id": 21
+    },
+    {
+      "bu_id": "1",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "sgv",
+      "cloud_server": [
+        "Azure"
+      ],
+      "business_sponser": "dfdfbdfbfdb",
+      "server_owner": "hbhb",
+      "application_owner": " jj",
+      "resource_owner": "vubuv",
+      "selected_environment": "Production",
+      "id": 22
+    },
+    {
+      "bu_id": "1",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "dfvfdf",
+      "cloud_server": [],
+      "business_sponser": "f ",
+      "server_owner": "dfv",
+      "application_owner": "dsvvdsvd",
+      "resource_owner": "dsv",
+      "selected_environment": "Production",
+      "id": 23
+    },
+    {
+      "bu_id": "1",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "webfjebjk",
+      "cloud_server": [
+        "Azure"
+      ],
+      "business_sponser": "hhjhj",
+      "server_owner": "hbjbjb",
+      "application_owner": "vsdvvfdsv",
+      "resource_owner": "hjbj",
+      "selected_environment": "Test",
+      "id": 24
+    },
+    {
+      "bu_id": "1",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "webfjebjk",
+      "cloud_server": [],
+      "business_sponser": "hhjhj",
+      "server_owner": "hbjbjb",
+      "application_owner": "vsdvvfdsv",
+      "resource_owner": "hjbj",
+      "selected_environment": "Test",
+      "id": 25
+    },
+    {
+      "bu_id": "1",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "sdvjkjk",
+      "cloud_server": [
+        "Azure"
+      ],
+      "business_sponser": "jkk",
+      "server_owner": "jnnjkjk",
+      "application_owner": "jjkjkb",
+      "resource_owner": "jkjk",
+      "selected_environment": "Production",
+      "id": 26
+    },
+    {
+      "bu_id": "1",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "demoTopo",
+      "cloud_server": [
+        "AWS",
+        "Azure"
+      ],
+      "business_sponser": "demo",
+      "server_owner": "demo",
+      "application_owner": "demo",
+      "resource_owner": "demo",
+      "selected_environment": "Production",
+      "id": 27
+    },
+    {
+      "bu_id": "1",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}},{\"width\":100,\"height\":148,\"id\":\"1\",\"type\":\"selectorNode\",\"position\":{\"x\":-232.4525355205635,\"y\":299.3257436801733},\"data\":{\"label\":\"Node 1\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"positionAbsolute\":{\"x\":-232.4525355205635,\"y\":299.3257436801733}}],\"edges\":[{\"id\":\"1\",\"source\":\"0\",\"target\":\"1\",\"animated\":true}],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
+      "node_details": [
+        "Server",
+        "Server"
+      ],
+      "title": "topo",
+      "cloud_server": [
+        "AWS"
+      ],
+      "business_sponser": "bjbj",
+      "server_owner": "bjbjb",
+      "application_owner": "hjfje",
+      "resource_owner": "bhjbjh",
+      "selected_environment": "Production",
+      "id": 28
+    },
+    {
+      "bu_id": "1",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":-15.523169504138764,\"y\":-224.9818597876017},\"selected\":false,\"positionAbsolute\":{\"x\":-15.523169504138764,\"y\":-224.9818597876017},\"dragging\":false},{\"width\":100,\"height\":148,\"id\":\"1\",\"type\":\"selectorNode\",\"position\":{\"x\":-194.8737251789277,\"y\":-7.1871334765286425},\"data\":{\"label\":\"Node 1\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"positionAbsolute\":{\"x\":-194.8737251789277,\"y\":-7.1871334765286425}},{\"width\":100,\"height\":148,\"id\":\"2\",\"type\":\"selectorNode\",\"position\":{\"x\":115.5896649038484,\"y\":29.40319464036997},\"data\":{\"label\":\"Node 2\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"positionAbsolute\":{\"x\":115.5896649038484,\"y\":29.40319464036997}}],\"edges\":[{\"id\":\"1\",\"source\":\"0\",\"target\":\"1\",\"animated\":true},{\"id\":\"2\",\"source\":\"0\",\"target\":\"2\",\"animated\":true}],\"viewport\":{\"x\":433.58557490731675,\"y\":223.79903863307845,\"zoom\":0.9018776736456626}}",
+      "node_details": [
+        "Server",
+        "Server",
+        "Server"
+      ],
+      "title": "demoTopo",
+      "cloud_server": [
+        "AWS"
+      ],
+      "business_sponser": "demo",
+      "server_owner": "demo",
+      "application_owner": "demo",
+      "resource_owner": "demo",
+      "selected_environment": "Production",
+      "id": 29
     }
   ],
   "finops": [
