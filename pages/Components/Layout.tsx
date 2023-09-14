@@ -16,13 +16,13 @@ const Footer = () => {
     <footer
       className={`px-4 flex footer bg-white bottom-0 text-neutral-content w-full z-10`}
     >
-      <div className="flex justify-between  w-full items-center h-16">
+      <div className="flex justify-center  w-full items-center h-16">
         <div className={` flex items-center text-black`}>
           <p className="mr-2 stroke--black">
             {" "}
-            2023 - All Rights Reserved,{" "}
+            &copy;2023 - All Rights Reserved,{" "}
             <strong className="text-red-800">
-              Aditya Birla Management Corporation Pvt. Ltd
+            Aditya Birla Group
             </strong>
           </p>
         </div>
