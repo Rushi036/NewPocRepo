@@ -19,3 +19,7 @@ export async function getLastTopologyData() {
 export async function addTableData(data: any) {
     return await axios.post(baseURL + "topology_table_data", data)
 }
+
+export async function addResourseData(data: any) {
+    return await axios.post(baseURL + "resourse_data", data)
+}

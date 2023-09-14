@@ -121,3 +121,47 @@ body {
     border: 1px solid #e2e7f1;
 
 }
+
+.loader{
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgb(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loader::before{
+  content: '';
+  width: 50px;
+  height: 50px;
+  border: 5px solid ;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  animation: spin 1s infinite;
+}
+
+@keyframes spin {
+  100%{
+    transform: rotateZ(360deg);
+  }
+  
+}
+
+.form-inputs input[type="text"], .form-inputs select, .form-inputs textarea{
+  border-color:transparent ;
+  border-bottom-color:rgb(0, 0, 58) ;
+  border-radius: 2px;
+  border-width: 1px;
+  margin: 5px 0;
+}
+.form-inputs input[type="text"]:focus, .form-inputs select:focus, .form-inputs textarea:focus{
+  outline: none;
+}
+.form-inputs input[type="text"]:disabled, .form-inputs select:disabled, .form-inputs textarea:disabled{
+  background: rgb(0, 0, 0, 0.1);
+}
