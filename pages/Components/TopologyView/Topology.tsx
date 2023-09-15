@@ -388,7 +388,24 @@ function Topology(props: any) {
                     <tbody>
                       <tr>
                         <td className="pl-4">
-                          Server
+                          <div className="font-bold">Server</div>
+                          <div className="text-sm">Virtual Machines D Series Windows</div>
+                        </td>
+                        <td className="px-4 py-2 text-center">
+                          {serverCount}
+                        </td>
+                        <td className="px-4 py-2">
+                          <p className="border-b-2">
+                            {uniqueProductPrices && selectedProduct
+                              ? `$${uniqueProductPrices[selectedProduct]}`
+                              : "N/A"}
+                          </p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="pl-4">
+                          <div className="font-bold">Server</div>
+                          <div className="text-sm">Virtual Machines D Series Windows</div>
                         </td>
                         <td className="px-4 py-2 text-center">
                           {serverCount}
