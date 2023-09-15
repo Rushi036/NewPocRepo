@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { tableData } from "../api/tableData";
 import Link from "next/link";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Assets = () => {
   let role;
@@ -18,8 +20,15 @@ const Assets = () => {
     setData(res.data);
   }
   console.log(data);
+  const noDelete = () => {
+    toast.error("This action is not Permitted!", {
+      position: "bottom-right",
+      autoClose: 2000,
+    });
+  }
   return (
     <div className="">
+      <ToastContainer />
       <div className="text-xl px-4 border-b-2 border-slate-400 pb-2 flex justify-between items-center">
         <span>Assets</span>
       </div>
@@ -32,6 +41,7 @@ const Assets = () => {
         </Link>
       </div>
       <div className="items-center pb-4 px-4 ">
+
         <div className="relative overflow-x-auto mt-6">
           <table className="w-full text-sm text-center text-gray-800 ">
             <thead className="text-xs text-white uppercase bg-red-800 ">
@@ -83,7 +93,7 @@ const Assets = () => {
                             View
                           </button>
                         </Link>
-                        <button className="btn bg-red-400 px-2 py-1 rounded-sm text-white font-medium">
+                        <button className="btn bg-red-400 px-2 py-1 rounded-sm text-white font-medium" onClick={noDelete}>
                           Delete
                         </button>
                       </td>

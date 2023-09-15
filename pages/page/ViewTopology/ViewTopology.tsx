@@ -10,6 +10,7 @@ import Topology from "@/pages/Components/TopologyView/Topology";
 import { getOldData, sendEstimation } from "@/pages/api/sendEstimation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useAppContext } from "@/pages/Components/AppContext";
 const viewTopology = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [rfInstance, setRfInstance] = useState<any>(null);
@@ -32,6 +33,10 @@ const viewTopology = () => {
   const [selectedClouds, setSelectedClouds] = useState<any>([]);
   const [allNodes, setAllNodes] = useState<any>(null);
   const [selectedEnvironment, setSelectedEnvironment] = useState("");
+  const { estimateCalc, toggleEstimateCalc } = useAppContext();
+  const toggleEst = () => {
+    toggleEstimateCalc();
+  };
   //  eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     setRole(localStorage.getItem("role"));
@@ -57,7 +62,7 @@ const viewTopology = () => {
             setSelectedEnvironment(res.data[0].selected_environment);
             setbusinessSponser(res.data[0].business_sponser);
             setServerOwner(res.data[0].server_owner);
-            console.log("res", res.data[0]);
+            // console.log("res", res.data[0]);
           });
     }
 
@@ -66,21 +71,22 @@ const viewTopology = () => {
 
   const sendEstimationToUser = async (e: any) => {
     e.preventDefault();
-    await getOldData(id).then(async (res) => {
-      let data = res.data[0];
-      data = {
-        ...data,
-        status: "Approval Pending",
-      };
-      await sendEstimation(data.id, data).then(() =>
-        toast.success("Estimation sent successfully!", {
-          position: "bottom-right",
-          autoClose: 3000,
-        })
-      );
-    });
+    toggleEst();
+    // await getOldData(id).then(async (res) => {
+    //   let data = res.data[0];
+    //   data = {
+    //     ...data,
+    //     status: "Approval Pending",
+    //   };
+    //   await sendEstimation(data.id, data).then(() => {
+    //     toast.success("Estimation sent successfully!", {
+    //       position: "bottom-right",
+    //       autoClose: 3000,
+    //     });
+    //   });
+    // });
   };
-  //   console.log("---------------------------------------",topoDetails)
+    console.log("-------------------estimatecalc--------------------",estimateCalc)
   //     // await fetchTopology;
   return (
     <>
@@ -220,7 +226,7 @@ const viewTopology = () => {
             <div className="mt-4 flex justify-end">
               <button
                 type="submit"
-                className="bg-red-700 text-white px-6 py-2 rounded "
+                className="bg-red-700 text-white px-6 py-1 rounded "
                 onClick={sendEstimationToUser}
               >
                 Send Estimation

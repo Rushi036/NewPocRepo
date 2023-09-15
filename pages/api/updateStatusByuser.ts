@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const baseURL = "http://localhost:8000/";
-export async function sendEstimation(id: any, data: any) {
+export async function updateStatus(id: any, data: any) {
   await axios.put(
     baseURL + "topology_table_data/" + id,
     data
