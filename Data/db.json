@@ -228,6 +228,40 @@
       "resource_owner": "demo",
       "selected_environment": "Test",
       "id": 10
+    },
+    {
+      "title": "qwertyu",
+      "bu": "Grasim Chemical",
+      "bu_id": "1",
+      "cloud_server": [
+        "AWS"
+      ],
+      "status": "Approval Pending",
+      "created_date": "15/09/2023",
+      "topology_id": 12,
+      "business_sponser": "qw",
+      "server_owner": "qw",
+      "application_owner": "qwertu",
+      "resource_owner": "werg",
+      "selected_environment": "Production",
+      "id": 11
+    },
+    {
+      "title": "q",
+      "bu": "Grasim Chemical",
+      "bu_id": "1",
+      "cloud_server": [
+        "AWS"
+      ],
+      "status": "Draft",
+      "created_date": "15/09/2023",
+      "topology_id": 13,
+      "business_sponser": "q",
+      "server_owner": "q",
+      "application_owner": "q",
+      "resource_owner": "q",
+      "selected_environment": "Production",
+      "id": 12
     }
   ],
   "topology": [
@@ -424,6 +458,40 @@
       "resource_owner": "demo",
       "selected_environment": "Test",
       "id": 11
+    },
+    {
+      "bu_id": "1",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "qwertyu",
+      "cloud_server": [
+        "AWS"
+      ],
+      "business_sponser": "qw",
+      "server_owner": "qw",
+      "application_owner": "qwertu",
+      "resource_owner": "werg",
+      "selected_environment": "Production",
+      "id": 12
+    },
+    {
+      "bu_id": "1",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "q",
+      "cloud_server": [
+        "AWS"
+      ],
+      "business_sponser": "q",
+      "server_owner": "q",
+      "application_owner": "q",
+      "resource_owner": "q",
+      "selected_environment": "Production",
+      "id": 13
     }
   ],
   "finops": [
@@ -678,6 +746,64 @@
         "NATting": "no"
       },
       "id": 7
+    },
+    {
+      "topology_id": 12,
+      "node_name": null,
+      "fields": {
+        "subcriptionId": "bbe9815b-b792-4f3d-a601-94380a26964d",
+        "vnet": "GRCD-AZ-SAP-PP-VNT-01",
+        "CIDR": "10.47.48.0/22",
+        "Subnet": "10.47.48.0/22",
+        "ResourceGRP": "NetworkWatcherRG",
+        "Region": "Asia-Center",
+        "Description": "uyg",
+        "VM_type": "1",
+        "Series": "1",
+        "vCPUs": "1",
+        "RAM": "1",
+        "OS_version": "Ubuntu 20.04",
+        "License": "BYOL",
+        "OS_Disk_size": "dfgh",
+        "Disk_partition": "dfghj",
+        "Storage_Disk_Size": "wert",
+        "Storage_Disk": "yes",
+        "Storage_Disk_Value": "wedrfg",
+        "Compute_options": "yes",
+        "Compute": "sdfghj",
+        "Internet_facing": "no",
+        "NATting": "no"
+      },
+      "id": 8
+    },
+    {
+      "topology_id": 13,
+      "node_name": "Server",
+      "fields": {
+        "subcriptionId": "bbe9815b-b792-4f3d-a601-94380a26964d",
+        "vnet": "GRCD-AZ-SAP-PP-VNT-01",
+        "CIDR": "10.47.48.0/22",
+        "Subnet": "10.47.48.0/22",
+        "ResourceGRP": "NetworkWatcherRG",
+        "Region": "Asia-Center",
+        "Description": "",
+        "VM_type": "",
+        "Series": "",
+        "vCPUs": "",
+        "RAM": "",
+        "OS_version": "",
+        "License": "",
+        "OS_Disk_size": "",
+        "Disk_partition": "",
+        "Storage_Disk_Size": "",
+        "Storage_Disk": "no",
+        "Storage_Disk_Value": "",
+        "Compute_options": "no",
+        "Compute": "",
+        "Internet_facing": "no",
+        "NATting": "no"
+      },
+      "id": 9
     }
   ]
 }

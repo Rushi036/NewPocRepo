@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 // import Topology from "@/pages/Components/TopologyView/Topology";
 // import { addTableData, addTopologyData } from '@/pages/api/addTopology';
 import { getTopologyData } from "@/pages/api/viewTopology";
@@ -10,19 +11,14 @@ import Topology from "@/pages/Components/TopologyView/Topology";
 import { getOldData, sendEstimation } from "@/pages/api/sendEstimation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getFormData, updateFormData } from "@/pages/api/getForData";
 const viewTopology = () => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [rfInstance, setRfInstance] = useState<any>(null);
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const router = useRouter();
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [title, setTitle] = useState<any>(null);
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [cloud, setCloud] = useState<any>(null);
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [topology, setTopology] = useState<any>(null);
   const { id } = router.query;
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [role, setRole] = useState<any>();
   const [topoDetails, setTopoDetails] = useState<any>([]);
   const [businessSponser, setbusinessSponser] = useState<any>(null);
@@ -32,33 +28,87 @@ const viewTopology = () => {
   const [selectedClouds, setSelectedClouds] = useState<any>([]);
   const [allNodes, setAllNodes] = useState<any>(null);
   const [selectedEnvironment, setSelectedEnvironment] = useState("");
-  //  eslint-disable-next-line react-hooks/rules-of-hooks
+  let sd = {
+    subcriptionId: "",
+    vnet: "",
+    CIDR: "",
+    Subnet: "",
+    ResourceGRP: "",
+    Region: "",
+    Description: "",
+    VM_type: "",
+    Series: "",
+    vCPUs: "",
+    RAM: "",
+    OS_version: "",
+    License: "",
+    OS_Disk_size: "",
+    Disk_partition: "",
+    Storage_Disk_Size: "",
+    Storage_Disk: "no",
+    Storage_Disk_Value: "",
+    Compute_options: "no",
+    Compute: "",
+    Internet_facing: "no",
+    NATting: "no",
+  };
+  const [serverData, setServerData] = useState<any>(sd);
   useEffect(() => {
     setRole(localStorage.getItem("role"));
-  });
-  //  eslint-disable-next-line react-hooks/rules-of-hooks
+  }, []);
   useEffect(() => {
     async function dataFetch() {
       let buId = localStorage.getItem("bu_id");
       let userRole = localStorage.getItem("role");
       userRole != "admin"
         ? await getTopologyData(buId, id).then((res) => {
-            setTitle(res.data[0].title);
-            setCloud(res.data[0].cloud_server);
-            setTopology(res.data[0].flowChart);
-          })
+          setTitle(res.data[0].title);
+          setCloud(res.data[0].cloud_server);
+          setTopology(res.data[0].flowChart);
+        })
         : await viewTopologyForAdmin(id).then((res) => {
-            setTitle(res.data[0].title);
-            setCloud(res.data[0].cloud_server);
-            setTopology(res.data[0].flowChart);
-            setTopoDetails(res.data[0].node_details);
-            setApplicationOwner(res.data[0].application_owner);
-            setResourceOwner(res.data[0].resource_owner);
-            setSelectedEnvironment(res.data[0].selected_environment);
-            setbusinessSponser(res.data[0].business_sponser);
-            setServerOwner(res.data[0].server_owner);
-            console.log("res", res.data[0]);
-          });
+          setTitle(res.data[0].title);
+          setCloud(res.data[0].cloud_server);
+          setTopology(res.data[0].flowChart);
+          setTopoDetails(res.data[0].node_details);
+          setApplicationOwner(res.data[0].application_owner);
+          setResourceOwner(res.data[0].resource_owner);
+          setSelectedEnvironment(res.data[0].selected_environment);
+          setbusinessSponser(res.data[0].business_sponser);
+          setServerOwner(res.data[0].server_owner);
+          console.log("res", res.data[0]);
+        });
+
+      await getFormData(id).then((data: any) => {
+        let res = data.data[0].fields;
+        let sd = {
+          subcriptionId: res.subcriptionId,
+          vnet: res.vnet,
+          CIDR: res.CIDR,
+          Subnet: res.Subnet,
+          ResourceGRP: res.ResourceGRP,
+          Region: res.Region,
+          Description: res.Description,
+          VM_type: res.VM_type,
+          Series: res.Series,
+          vCPUs: res.vCPUs,
+          RAM: res.RAM,
+          OS_version: res.OS_version,
+          License: res.License,
+          OS_Disk_size: res.OS_Disk_size,
+          Disk_partition: res.Disk_partition,
+          Storage_Disk_Size: res.Storage_Disk_Size,
+          Storage_Disk: res.Storage_Disk,
+          Storage_Disk_Value: res.Storage_Disk_Value,
+          Compute_options: res.Compute_options,
+          Compute: res.Compute,
+          Internet_facing: res.Internet_facing,
+          NATting: res.NATting,
+        };
+
+        setServerData(sd);
+        console.log(res)
+      })
     }
 
     id && dataFetch();
@@ -78,6 +128,14 @@ const viewTopology = () => {
           autoClose: 3000,
         })
       );
+      await getFormData(id).then(async (res:any)=>{
+        let rs = res.data[0];
+        let data = {
+          ...rs,
+          fields: serverData
+        }
+        await updateFormData(rs.id,data)
+      })
     });
   };
   //   console.log("---------------------------------------",topoDetails)
@@ -216,7 +274,507 @@ const viewTopology = () => {
               />
             )}
           </div>
+
+          <form className={"overflow-hidden w-full z-10"}>
+            {/* <div className={loading ? "loader" : "hidden"}></div> */}
+            <div className="mt-4 p-2 box-border w-full bg-white">
+              <div className="form-inputs px-2 space-y-5">
+                <div className="flex justify-evenly pt-4">
+                  <h1 className="text-xl font-semibold border-b-2 border-slate-600">Additional Info - {allNodes}</h1>
+                  <div className="flex items-center pb-2">
+                    <label
+                      htmlFor=""
+                      className="font-semibold text-base flex flex-col justify-start mr-2"
+                    >
+                      Subscription Id :
+                    </label>
+                    <div className="font-semibold border-b-2 h-6 border-slate-600 bg-gray-200 px-1">
+                      {serverData?.subcriptionId}
+                    </div>
+                    {/* <input
+                      type="text"
+                      required
+                      disabled
+                      value={serverData?.subcriptionId}
+                      className="w-[20rem]"
+                    /> */}
+                  </div>
+                  <div className="flex">
+                    <label
+                      htmlFor=""
+                      className="font-semibold text-base flex flex-col justify-start mr-2"
+                    >
+                      VNET :
+                    </label>
+                    {/* <input
+                      type="text"
+                      disabled
+                      required
+                      value={serverData?.vnet}
+                      className="w-[14rem]"
+                    /> */}
+                    <div className="font-semibold border-b-2 h-6 border-slate-600 bg-gray-200 px-1">
+                      {serverData?.vnet}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex justify-around">
+                  <label
+                    htmlFor=""
+                    className="font-semibold text-base flex flex-col justify-start"
+                  >
+                    <div>CIDR :</div>
+                    <div
+                      className="w-[14rem] border-b-2"
+                    >
+                      {serverData?.CIDR}
+                    </div>
+                  </label>
+                  <label
+                    htmlFor=""
+                    className="font-semibold text-base flex flex-col justify-start"
+                  >
+                    <div>Subnet :</div>
+                    <div
+                      className="w-[14rem] border-b-2"
+                    >
+                      {serverData?.Subnet}
+                    </div>
+                  </label>
+                  <label
+                    htmlFor=""
+                    className="font-semibold text-base flex flex-col justify-start"
+                  >
+                    <div>ResourceGRP :</div>
+                    <div
+                      className="w-[14rem] border-b-2"
+                      >
+                      {serverData?.ResourceGRP}
+                    </div>
+                  </label>
+                  <label
+                    htmlFor=""
+                    className="font-semibold text-base flex flex-col justify-start"
+                    >
+                    <div>Region :</div>
+                    <div 
+                      className="w-[14rem] border-b-2"
+                      >
+                      {serverData?.Region}
+                    </div>
+                  </label>
+                </div>
+
+                <div className="flex justify-around">
+                  <label
+                    htmlFor=""
+                    className="font-semibold text-base flex flex-col justify-start"
+                  >
+                    <div>Internet facing :</div>
+                    <select
+                      value={serverData?.Internet_facing}
+                      onChange={(e) => {
+                        setServerData({
+                          ...serverData,
+                          Internet_facing: e.target.value,
+                        });
+                      }}
+                      className="w-[14rem]"
+                    >
+                      <option value="" disabled>
+                        Select Options
+                      </option>
+                      <option value="yes">Yes</option>
+                      <option value="no">No</option>
+                    </select>
+                  </label>
+                  <label
+                    htmlFor=""
+                    className="font-semibold text-base flex flex-col justify-start"
+                  >
+                    <div>NATting :</div>
+                    <select
+                      value={serverData?.NATting}
+                      onChange={(e) => {
+                        setServerData({
+                          ...serverData,
+                          NATting: e.target.value,
+                        });
+                      }}
+                      className="w-[14rem]"
+                    >
+                      <option value="" disabled>
+                        Select Options
+                      </option>
+                      <option value="yes">Yes</option>
+                      <option value="no">No</option>
+                    </select>
+                  </label>
+                  {/* <label
+                    htmlFor=""
+                    className="font-semibold text-base flex flex-col justify-start"
+                  >
+                    <div>ResourceGRP :</div>
+                    <input
+                      type="text"
+                      disabled
+                      required
+                      value={serverData?.ResourceGRP}
+                      className="w-[14rem]"
+                    />
+                  </label>
+                  <label
+                    htmlFor=""
+                    className="font-semibold text-base flex flex-col justify-start"
+                  >
+                    <div>Region :</div>
+                    <input
+                      type="text"
+                      disabled
+                      required
+                      value={serverData?.Region}
+                      className="w-[14rem]"
+                    />
+                  </label> */}
+                  <label
+                    htmlFor=""
+                    className="font-semibold text-base flex flex-col justify-start"
+                  >
+                    <div>Description :</div>
+                    <textarea
+                      className="w-[14rem] min-h-[1.7rem] h-[1.7rem]"
+                      onChange={(e) => {
+                        setServerData({
+                          ...serverData,
+                          Description: e.target.value,
+                        });
+                      }}
+                      value={serverData?.Description}
+                    />
+                  </label>
+                  <label
+                    htmlFor=""
+                    className="font-semibold text-base flex flex-col justify-start"
+                  >
+                    <div>VM type :</div>
+                    <input
+                      type="text"
+                      required
+                      value={serverData?.VM_type}
+                      onChange={(e) => {
+                        setServerData({
+                          ...serverData,
+                          VM_type: e.target.value,
+                        });
+                      }}
+                      disabled={role == "admin" ? false : true}
+                      className="w-[14rem]"
+                    />
+                  </label>
+                </div>
+
+                <div className="flex justify-around">
+                  <label
+                    htmlFor=""
+                    className="font-semibold text-base flex flex-col justify-start"
+                  >
+                    <div>Series :</div>
+                    <input
+                      type="text"
+                      disabled={role == "admin" ? false : true}
+                      required
+                      value={serverData?.Series}
+                      onChange={(e) => {
+                        setServerData({
+                          ...serverData,
+                          Series: e.target.value,
+                        });
+                      }}
+                      className="w-[14rem]"
+                    />
+                  </label>
+                  <label
+                    htmlFor=""
+                    className="font-semibold text-base flex flex-col justify-start"
+                  >
+                    <div>vCPUs :</div>
+                    <input
+                      type="text"
+                      disabled={role == "admin" ? false : true}
+                      required
+                      value={serverData?.vCPUs}
+                      onChange={(e) => {
+                        setServerData({
+                          ...serverData,
+                          vCPUs: e.target.value,
+                        });
+                      }}
+                      className="w-[14rem]"
+                    />
+                  </label>
+                  <label
+                    htmlFor=""
+                    className="font-semibold text-base flex flex-col justify-start"
+                  >
+                    <div>RAM :</div>
+                    <input
+                      type="text"
+                      disabled={role == "admin" ? false : true}
+                      required
+                      value={serverData?.RAM}
+                      onChange={(e) => {
+                        setServerData({
+                          ...serverData,
+                          RAM: e.target.value,
+                        });
+                      }}
+                      className="w-[14rem]"
+                    />
+                  </label>
+                  <label
+                    htmlFor=""
+                    className="font-semibold text-base flex flex-col justify-start"
+                  >
+                    <div>OS version :</div>
+                    <select
+                      value={serverData?.OS_version}
+                      onChange={(e) => {
+                        setServerData({
+                          ...serverData,
+                          OS_version: e.target.value,
+                        });
+                      }}
+                      className="w-[14rem]"
+                    >
+                      <option value="" disabled>
+                        Select OS
+                      </option>
+                      <option value="Ubuntu 20.04">Ubuntu 20.04</option>
+                      <option value="Ubuntu 18.04">Ubuntu 18.04</option>
+                      <option value="RHEL8.6">RHEL8.6</option>
+                      <option value="Windows2019">Windows2019</option>
+                      <option value="Centos7">Centos7</option>
+                    </select>
+                  </label>
+                </div>
+
+                <div className="flex justify-around">
+                  <label
+                    htmlFor=""
+                    className="font-semibold text-base flex flex-col justify-start"
+                  >
+                    <div>License :</div>
+                    <select
+                      value={serverData?.License}
+                      onChange={(e) => {
+                        setServerData({
+                          ...serverData,
+                          License: e.target.value,
+                        });
+                      }}
+                      className="w-[14rem]"
+                    >
+                      <option value="" disabled>
+                        Select License
+                      </option>
+                      <option value="BYOL">BYOL</option>
+                      <option value="Azure Hybrid Benefit">
+                        Azure Hybrid Benefit
+                      </option>
+                    </select>
+                  </label>
+                  <label
+                    htmlFor=""
+                    className="font-semibold text-base flex flex-col justify-start"
+                  >
+                    <div>OS Disk size :</div>
+                    <input
+                      type="text"
+                      required
+                      value={serverData?.OS_Disk_size}
+                      onChange={(e) => {
+                        setServerData({
+                          ...serverData,
+                          OS_Disk_size: e.target.value,
+                        });
+                      }}
+                      className="w-[14rem]"
+                    />
+                  </label>
+                  <label
+                    htmlFor=""
+                    className="font-semibold text-base flex flex-col justify-start"
+                  >
+                    <div>Disk partition :</div>
+                    <textarea
+                      onChange={(e) => {
+                        setServerData({
+                          ...serverData,
+                          Disk_partition: e.target.value,
+                        });
+                      }}
+                      value={serverData?.Disk_partition}
+                      className="w-[14rem] min-h-[1.7rem] h-[1.7rem]"
+                    />
+                  </label>
+                  <label
+                    htmlFor=""
+                    className="font-semibold text-base flex flex-col justify-start"
+                  >
+                    <div>Storage Disk Size :</div>
+                    <input
+                      type="text"
+                      required
+                      value={serverData?.Storage_Disk_Size}
+                      onChange={(e) => {
+                        setServerData({
+                          ...serverData,
+                          Storage_Disk_Size: e.target.value,
+                        });
+                      }}
+                      className="w-[14rem]"
+                    />
+                  </label>
+                </div>
+
+                <div className="flex justify-around">
+                  <label
+                    htmlFor=""
+                    className="font-semibold text-base flex flex-col justify-start"
+                  >
+                    <div>Storage Disk :</div>
+                    <select
+                      value={serverData?.Storage_Disk}
+                      onChange={(e) => {
+                        setServerData({
+                          ...serverData,
+                          Storage_Disk: e.target.value,
+                        });
+                      }}
+                      className="w-[14rem]"
+                    >
+                      <option value="" disabled>
+                        Select Disk
+                      </option>
+                      <option value="yes">Yes</option>
+                      <option value="no">No</option>
+                    </select>
+                  </label>
+                  <label
+                    htmlFor=""
+                    className="font-semibold text-base flex flex-col justify-start"
+                  >
+                    <div>Storage Disk Value:</div>
+                    <input
+                      type="text"
+                      value={serverData?.Storage_Disk_Value}
+                      disabled={serverData?.Storage_Disk == "no" ? true : false}
+                      onChange={(e) => {
+                        setServerData({
+                          ...serverData,
+                          Storage_Disk_Value: e.target.value,
+                        });
+                      }}
+                      className="w-[14rem]"
+                    />
+                  </label>
+                  <label
+                    htmlFor=""
+                    className="font-semibold text-base flex flex-col justify-start"
+                  >
+                    <div>Compute options :</div>
+                    <select
+                      value={serverData?.Compute_options}
+                      onChange={(e) => {
+                        setServerData({
+                          ...serverData,
+                          Compute_options: e.target.value,
+                        });
+                      }}
+                      className="w-[14rem]"
+                    >
+                      <option value="" disabled>
+                        Select Options
+                      </option>
+                      <option value="yes">Yes</option>
+                      <option value="no">No</option>
+                    </select>
+                  </label>
+                  <label
+                    htmlFor=""
+                    className="font-semibold text-base flex flex-col justify-start"
+                  >
+                    <div>Compute :</div>
+                    <input
+                      type="text"
+                      value={serverData?.Compute}
+                      disabled={
+                        serverData?.Compute_options == "no" ? true : false
+                      }
+                      onChange={(e) => {
+                        setServerData({
+                          ...serverData,
+                          Compute: e.target.value,
+                        });
+                      }}
+                      className="w-[14rem]"
+                    />
+                  </label>
+                </div>
+
+                <div className="flex justify-center gap-[6.5rem]">
+                  {/* <label
+                    htmlFor=""
+                    className="font-semibold text-base flex flex-col justify-start"
+                  >
+                    <div>Internet facing :</div>
+                    <select
+                      value={serverData?.Internet_facing}
+                      onChange={(e) => {
+                        setServerData({
+                          ...serverData,
+                          Internet_facing: e.target.value,
+                        });
+                      }}
+                      className="w-[14rem]"
+                    >
+                      <option value="" disabled>
+                        Select Options
+                      </option>
+                      <option value="yes">Yes</option>
+                      <option value="no">No</option>
+                    </select>
+                  </label>
+                  <label
+                    htmlFor=""
+                    className="font-semibold text-base flex flex-col justify-start"
+                  >
+                    <div>NATting :</div>
+                    <select
+                      value={serverData?.NATting}
+                      onChange={(e) => {
+                        setServerData({
+                          ...serverData,
+                          NATting: e.target.value,
+                        });
+                      }}
+                      className="w-[14rem]"
+                    >
+                      <option value="" disabled>
+                        Select Options
+                      </option>
+                      <option value="yes">Yes</option>
+                      <option value="no">No</option>
+                    </select>
+                  </label> */}
+                </div>
+              </div>
+            </div>
+          </form>
+          {/* </div> */}
           {role == "admin" && (
+
             <div className="mt-4 flex justify-end">
               <button
                 type="submit"
@@ -227,8 +785,8 @@ const viewTopology = () => {
               </button>
             </div>
           )}
-        </div>
-      </form>
+        </div >
+      </form >
     </>
   );
 };
