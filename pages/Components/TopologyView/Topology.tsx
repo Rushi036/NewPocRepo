@@ -276,8 +276,8 @@ function Topology(props: any) {
           )}
         </div>
         <div
-          className="editor-options min-h-[50vh]"
-          style={{ width: Object.keys(uniqueProductPrices)[0] ? "50%" : "25%" }}
+          className="relative editor-options min-h-[50vh]"
+          style={{ width: "50%" }}
         >
           {props.editable ? (
             <div className="modal" style={{ display: "contents" }}>
@@ -300,81 +300,122 @@ function Topology(props: any) {
               </ul>
             </div>
           ) : (
-            <div className={role=='admin'?"":'hidden'}>
-              <div className="flex justify-center">
-                <button
-                  className={`btn ${
-                    apiHit &&
-                    uniqueProductPrices &&
-                    Object.keys(uniqueProductPrices)[0]
+            <>
+              <div className={role == 'admin' ? "" : 'hidden'}>
+                <div className="flex justify-center">
+                  <button
+                    className={`btn ${apiHit &&
+                      uniqueProductPrices &&
+                      Object.keys(uniqueProductPrices)[0]
                       ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                       : "bg-red-700 text-white hover:bg-red-800"
-                  } rounded-md px-4 py-1 mt-6 font-semibold`}
-                  disabled={
-                    apiHit &&
-                    uniqueProductPrices &&
-                    Object.keys(uniqueProductPrices)[0]
-                  }
-                  onClick={(e: any) => getallVMs(e)}
-                >
-                  Calculate Estimation
-                </button>
-              </div>{" "}
-              {apiHit &&
-                uniqueProductPrices &&
-                Object.keys(uniqueProductPrices)[0] && (
-                  <div className="mt-4 w-full bg-white border rounded-lg overflow-hidden shadow-md">
-                    <table className="w-full">
-                      <thead className="bg-red-700 text-white">
-                        <tr>
-                          <th className="font-medium">Product</th>
-                          <th className="font-medium">Quantity</th>
-                          <th className="font-medium">Price</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>
-                            <select
-                              id="productDropdown"
-                              onChange={handleProductChange}
-                              value={selectedProduct}
-                              className="px-4 py-1 border mb-2 rounded-lg"
-                            >
-                              <option value="" disabled>
-                                Select a product
-                              </option>
-                              {Object.keys(uniqueProductPrices).map(
-                                (productName) => (
-                                  <option key={productName} value={productName}>
-                                    {productName}
-                                  </option>
-                                )
-                              )}
-                            </select>
-                          </td>
-                          <td className="px-4 py-2 text-center">
-                            {serverCount}
-                          </td>
-                          <td className="px-4 py-2">
-                            <p className="border-b-2">
-                              {uniqueProductPrices && selectedProduct
-                                ? `$${uniqueProductPrices[selectedProduct]}`
-                                : "N/A"}
-                            </p>
-                          </td>
-                        </tr>
-                        {/* Add more rows as needed */}
-                      </tbody>
-                    </table>
+                      } rounded-md px-4 py-1 mt-6 font-semibold`}
+                    disabled={
+                      apiHit &&
+                      uniqueProductPrices &&
+                      Object.keys(uniqueProductPrices)[0]
+                    }
+                    onClick={(e: any) => getallVMs(e)}
+                  >
+                    Calculate Estimation
+                  </button>
+                </div>{" "}
+                {apiHit &&
+                  uniqueProductPrices &&
+                  Object.keys(uniqueProductPrices)[0] && (
+                    <div className="mt-4 w-full bg-white border rounded-lg overflow-hidden shadow-md">
+                      <table className="w-full">
+                        <thead className="bg-red-700 text-white">
+                          <tr>
+                            <th className="font-medium">Product</th>
+                            <th className="font-medium">Quantity</th>
+                            <th className="font-medium">Price</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>
+                              <select
+                                id="productDropdown"
+                                onChange={handleProductChange}
+                                value={selectedProduct}
+                                className="px-4 py-1 border mb-2 rounded-lg"
+                              >
+                                <option value="" disabled>
+                                  Select a product
+                                </option>
+                                {Object.keys(uniqueProductPrices).map(
+                                  (productName) => (
+                                    <option key={productName} value={productName}>
+                                      {productName}
+                                    </option>
+                                  )
+                                )}
+                              </select>
+                            </td>
+                            <td className="px-4 py-2 text-center">
+                              {serverCount}
+                            </td>
+                            <td className="px-4 py-2">
+                              <p className="border-b-2">
+                                {uniqueProductPrices && selectedProduct
+                                  ? `$${uniqueProductPrices[selectedProduct]}`
+                                  : "N/A"}
+                              </p>
+                            </td>
+                          </tr>
+                          {/* Add more rows as needed */}
+                        </tbody>
+                      </table>
 
-                    {/* Total Price Block */}
-                    <div className="total-price px-4 py-2 text-lg font-semibold">
-                      Total Price: ${totalPrice}
+                      {/* Total Price Block */}
+                      <div className="total-price px-4 py-2 text-lg font-semibold">
+                        Total Price: ${totalPrice}
+                      </div>
                     </div>
+                  )}
+              </div>
+              <div className={role != 'admin' ? "" : 'hidden'}>
+                <div className="mt-4 w-full bg-white border rounded-lg overflow-hidden shadow-md">
+                  <table className="w-full">
+                    <thead className="bg-red-700 text-white">
+                      <tr>
+                        <th className="font-medium">Product</th>
+                        <th className="font-medium">Quantity</th>
+                        <th className="font-medium">Price</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td className="pl-4">
+                          Server
+                        </td>
+                        <td className="px-4 py-2 text-center">
+                          {serverCount}
+                        </td>
+                        <td className="px-4 py-2">
+                          <p className="border-b-2">
+                            {uniqueProductPrices && selectedProduct
+                              ? `$${uniqueProductPrices[selectedProduct]}`
+                              : "N/A"}
+                          </p>
+                        </td>
+                      </tr>
+                      {/* Add more rows as needed */}
+                    </tbody>
+                  </table>
+
+                  {/* Total Price Block */}
+                  <div className="total-price px-4 py-2 text-lg font-semibold">
+                    Total Price: ${totalPrice}
                   </div>
-                )}
-            </div>
+                </div>
+                <div className="flex flex-row gap-3 absolute bottom-2 right-4">
+                  <button className="px-4 py-2 bg-red-700 text-white">Decline</button>
+                  <button className="px-4 py-2 bg-green-700 text-white">Accept</button>
+                </div>
+              </div>
+            </>
           )}
         </div>
       </div>
