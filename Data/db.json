@@ -389,6 +389,7 @@
       "id": 7
     },
     {
+      "topology_id": 12,
       "node_name": null,
       "fields": {
         "subcriptionId": "bbe9815b-b792-4f3d-a601-94380a26964d",
@@ -397,27 +398,28 @@
         "Subnet": "10.47.48.0/22",
         "ResourceGRP": "NetworkWatcherRG",
         "Region": "Asia-Center",
-        "Description": "bjbvj",
-        "VM_type": "",
-        "Series": "",
-        "vCPUs": "",
-        "RAM": "",
-        "OS_version": "Ubuntu 18.04",
+        "Description": "uyg",
+        "VM_type": "1",
+        "Series": "1",
+        "vCPUs": "1",
+        "RAM": "1",
+        "OS_version": "Ubuntu 20.04",
         "License": "BYOL",
-        "OS_Disk_size": "sdkjv ",
-        "Disk_partition": "dfvfv",
-        "Storage_Disk_Size": "dfvfb",
+        "OS_Disk_size": "dfgh",
+        "Disk_partition": "dfghj",
+        "Storage_Disk_Size": "wert",
         "Storage_Disk": "yes",
-        "Storage_Disk_Value": "bhjj",
-        "Compute_options": "no",
-        "Compute": "",
+        "Storage_Disk_Value": "wedrfg",
+        "Compute_options": "yes",
+        "Compute": "sdfghj",
         "Internet_facing": "no",
         "NATting": "no"
       },
       "id": 8
     },
     {
-      "node_name": null,
+      "topology_id": 13,
+      "node_name": "Server",
       "fields": {
         "subcriptionId": "bbe9815b-b792-4f3d-a601-94380a26964d",
         "vnet": "GRCD-AZ-SAP-PP-VNT-01",
@@ -425,44 +427,16 @@
         "Subnet": "10.47.48.0/22",
         "ResourceGRP": "NetworkWatcherRG",
         "Region": "Asia-Center",
-        "Description": "sdgrg",
+        "Description": "",
         "VM_type": "",
         "Series": "",
         "vCPUs": "",
         "RAM": "",
-        "OS_version": "Ubuntu 20.04",
-        "License": "BYOL",
-        "OS_Disk_size": "dfhdth",
-        "Disk_partition": "fgfj",
-        "Storage_Disk_Size": "rtjtrj",
-        "Storage_Disk": "yes",
-        "Storage_Disk_Value": "sdgreh",
-        "Compute_options": "no",
-        "Compute": "",
-        "Internet_facing": "no",
-        "NATting": "no"
-      },
-      "id": 9
-    },
-    {
-      "node_name": null,
-      "fields": {
-        "subcriptionId": "bbe9815b-b792-4f3d-a601-94380a26964d",
-        "vnet": "GRCD-AZ-SAP-PP-VNT-01",
-        "CIDR": "10.47.48.0/22",
-        "Subnet": "10.47.48.0/22",
-        "ResourceGRP": "NetworkWatcherRG",
-        "Region": "Asia-Center",
-        "Description": "dgdrhe",
-        "VM_type": "",
-        "Series": "",
-        "vCPUs": "",
-        "RAM": "",
-        "OS_version": "Ubuntu 20.04",
-        "License": "BYOL",
-        "OS_Disk_size": "dsgreh",
-        "Disk_partition": "sfrh",
-        "Storage_Disk_Size": "dthtrj",
+        "OS_version": "",
+        "License": "",
+        "OS_Disk_size": "",
+        "Disk_partition": "",
+        "Storage_Disk_Size": "",
         "Storage_Disk": "no",
         "Storage_Disk_Value": "",
         "Compute_options": "no",
@@ -470,34 +444,7 @@
         "Internet_facing": "no",
         "NATting": "no"
       },
-      "id": 10
-    }
-  ],
-  "allVMsData": [
-    {
-      "productName": "Virtual Machines D Series Windows",
-      "unitPrice": 0.292243,
-      "currencyCode": "USD"
-    },
-    {
-      "productName": "Virtual Machines Dasv4 Series Windows",
-      "unitPrice": 0.734,
-      "currencyCode": "USD"
-    },
-    {
-      "productName": "Virtual Machines Esv5 Series",
-      "unitPrice": 0.947,
-      "currencyCode": "USD"
-    },
-    {
-      "productName": "Virtual Machines Dsv5 Series Windows",
-      "unitPrice": 0.751923,
-      "currencyCode": "USD"
-    },
-    {
-      "productName": "Virtual Machines MSv2 Series",
-      "unitPrice": 5.89,
-      "currencyCode": "USD"
+      "id": 9
     }
   ]
 }

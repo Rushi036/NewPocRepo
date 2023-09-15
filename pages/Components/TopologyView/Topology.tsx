@@ -410,7 +410,7 @@ function Topology(props: any) {
           )}
         </div>
         <div
-          className="editor-options min-h-[50vh]"
+          className="relative editor-options min-h-[50vh]"
           style={{
             width: (vmData && vmData.data) || viewClicked ? "50%" : "25%",
           }}
@@ -510,9 +510,10 @@ function Topology(props: any) {
                     <div className="total-price px-4 py-2 text-lg font-semibold">
                       Total Price: {serverCount && serverCount * selectedPrice}
                     </div>
-                  </div>
-                )}
+                    </div>
+                  )}
               </div>
+           
               <div className={role != "admin" ? "justify-center" : "hidden"}>
                 <div className="justify-center">
                   <button

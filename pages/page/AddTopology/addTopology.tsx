@@ -35,7 +35,7 @@ const addTopology = () => {
   const [subnet, setSubnet] = useState<any>(null);
   const [resourceGRP, setResourceGRP] = useState<any>(null);
   const [region, setRegion] = useState<any>(null);
-  const [responseData, setResponseData] = useState<any>();
+  const [responseData, setResponseData] = useState<any>(null);
   let sd = {
     subcriptionId: "",
     vnet: "",
@@ -80,6 +80,7 @@ const addTopology = () => {
       setSelectedClouds([...selectedClouds, value]);
     }
   };
+
   const saveTopology = async (e: any) => {
     e.preventDefault();
     setLoading(true);
@@ -116,6 +117,7 @@ const addTopology = () => {
           resource_owner: resourceOwner,
           selected_environment: selectedEnvironment,
         };
+
 
         console.log("topo data---------------", topologyData);
         toast.success("Topology created successfully!", {
@@ -156,6 +158,9 @@ const addTopology = () => {
             resource_owner: resourceOwner,
             selected_environment: selectedEnvironment,
           };
+          setAllNodes(res.data[0].node_details[0])
+          setResponseData(res.data[0].id)
+
 
           console.log("topo data---------------", topologyTableData);
 
@@ -190,7 +195,7 @@ const addTopology = () => {
           resourceOwner &&
           selectedEnvironment
         ) {
-        setNextForm(true);
+          setNextForm(true);
         }
         setLoading(false);
       });
@@ -204,6 +209,7 @@ const addTopology = () => {
     e.preventDefault();
     setLoading(true);
     let rdd = {
+      topology_id: responseData,
       node_name: allNodes,
       fields: serverData,
     };
@@ -372,7 +378,7 @@ const addTopology = () => {
                       Subscription Id :
                     </label>
                     <div className="font-semibold border-b-2 h-6 border-slate-600 bg-gray-200 px-1">
-                    {serverData?.subcriptionId}
+                      {serverData?.subcriptionId}
                     </div>
                     {/* <input
                       type="text"
@@ -396,8 +402,8 @@ const addTopology = () => {
                       value={serverData?.vnet}
                       className="w-[14rem]"
                     /> */}
-                     <div className="font-semibold border-b-2 h-6 border-slate-600 bg-gray-200 px-1">
-                     {serverData?.vnet}
+                    <div className="font-semibold border-b-2 h-6 border-slate-600 bg-gray-200 px-1">
+                      {serverData?.vnet}
                     </div>
                   </div>
                 </div>
@@ -458,7 +464,7 @@ const addTopology = () => {
                 </div>
 
                 <div className="flex justify-around">
-                <label
+                  <label
                     htmlFor=""
                     className="font-semibold text-base flex flex-col justify-start"
                   >
