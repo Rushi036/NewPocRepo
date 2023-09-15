@@ -308,7 +308,7 @@ function Topology(props: any) {
                     uniqueProductPrices &&
                     Object.keys(uniqueProductPrices)[0]
                       ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                      : "bg-blue-500 text-white hover:bg-blue-600"
+                      : "bg-red-700 text-white hover:bg-red-800"
                   } rounded-md px-4 py-1 mt-6 font-semibold`}
                   disabled={
                     apiHit &&
@@ -323,9 +323,9 @@ function Topology(props: any) {
               {apiHit &&
                 uniqueProductPrices &&
                 Object.keys(uniqueProductPrices)[0] && (
-                  <div className="mt-4 w-full bg-white border rounded-lg overflow-hidden">
+                  <div className="mt-4 w-full bg-white border rounded-lg overflow-hidden shadow-md">
                     <table className="w-full">
-                      <thead className="bg-blue-500 text-white">
+                      <thead className="bg-red-700 text-white">
                         <tr>
                           <th className="font-medium">Product</th>
                           <th className="font-medium">Quantity</th>

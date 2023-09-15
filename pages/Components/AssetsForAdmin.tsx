@@ -56,7 +56,13 @@ const AssetsForAdmin = () => {
                       <td className="px-auto py-3">{d.bu}</td>
                       <td className="px-auto py-3">{d.title}</td>
                       <td className="px-auto py-3">{d.status}</td>
-                      <td className="px-auto py-3">{d.cloud_server}</td>
+                      {d.cloud_server && d.cloud_server.length > 1 ? (
+                        <td className="px-auto py-3">
+                          {d.cloud_server[0]} {d.cloud_server[1]}
+                        </td>
+                      ) : (
+                        <td className="px-auto py-3">{d.cloud_server}</td>
+                      )}
                       <td className="px-auto py-3">{d.created_date}</td>
                       <td className="px-auto py-3 space-x-2">
                         <Link
