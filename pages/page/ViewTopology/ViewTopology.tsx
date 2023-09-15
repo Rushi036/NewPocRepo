@@ -48,11 +48,19 @@ const viewTopology = () => {
       let userRole = localStorage.getItem("role");
       userRole != "admin"
         ? await getTopologyData(buId, id).then((res) => {
+          if(res){
             setTitle(res.data[0].title);
             setCloud(res.data[0].cloud_server);
             setTopology(res.data[0].flowChart);
+            setApplicationOwner(res.data[0].application_owner);
+            setResourceOwner(res.data[0].resource_owner);
+            setSelectedEnvironment(res.data[0].selected_environment);
+            setbusinessSponser(res.data[0].business_sponser);
+            setServerOwner(res.data[0].server_owner);
+          }
           })
         : await viewTopologyForAdmin(id).then((res) => {
+          if(res){
             setTitle(res.data[0].title);
             setCloud(res.data[0].cloud_server);
             setTopology(res.data[0].flowChart);
@@ -62,6 +70,7 @@ const viewTopology = () => {
             setSelectedEnvironment(res.data[0].selected_environment);
             setbusinessSponser(res.data[0].business_sponser);
             setServerOwner(res.data[0].server_owner);
+          }
             // console.log("res", res.data[0]);
           });
     }
@@ -107,19 +116,19 @@ const viewTopology = () => {
         <ToastContainer />
         <div className="mt-4 p-2 box-border w-full bg-white">
           <div className="flex justify-evenly px-4 pt-4">
-            <div className="flex">
+            <div className="flex w-1/3 justify-start">
               <label htmlFor="" className="font-semibold">
                 Topology Name :
               </label>
-              <p className="border-b-2 border-slate-600 rounded-md ml-2">
+              <p className="border-b-2 border-slate-600 rounded-md px-2">
                 {title}
               </p>
             </div>
-            <div className="flex">
+            <div className="flex  w-1/3 justify-center">
               <label htmlFor="" className="font-semibold text-base w-28">
                 Environment :
               </label>
-              <div className="border-b-2 border-slate-600 rounded-md ml-2">
+              <div className="border-b-2 border-slate-600 rounded-md px-2">
                 {selectedEnvironment}
               </div>
               {/* <select
@@ -137,11 +146,11 @@ const viewTopology = () => {
                 <option value="UAT">UAT</option> */}
               {/* </select> */}
             </div>
-            <div className="flex w-2/6">
+            <div className="flex w-1/3 justify-end">
               <label htmlFor="" className="font-semibold text-base w-36">
                 Application Owner :
               </label>
-              <div className="border-b-2 border-slate-600 rounded-md ml-2">
+              <div className="border-b-2 border-slate-600 rounded-md px-2">
                 {applicationOwner}
               </div>
               {/* <input
@@ -154,11 +163,11 @@ const viewTopology = () => {
           </div>
 
           <div className="flex  justify-evenly px-4 pt-4">
-            <div className="flex">
+            <div className="flex w-1/4 justify-start">
               <label htmlFor="" className="font-semibold text-base w-36">
                 Business Sponsor :
               </label>
-              <div className="border-b-2 border-slate-600 rounded-md ml-2">
+              <div className="border-b-2 border-slate-600 rounded-md px-2">
                 {businessSponser}
               </div>
               {/* <input
@@ -168,11 +177,11 @@ const viewTopology = () => {
                   className="border-slate-600 border-b-2 rounded ml-2 w-1/2"
                 /> */}
             </div>
-            <div className="flex">
+            <div className="flex  w-1/4 justify-center">
               <label htmlFor="" className="font-semibold text-base w-28">
                 Server Owner :
               </label>
-              <div className="border-b-2 border-slate-600 rounded-md ml-2">
+              <div className="border-b-2 border-slate-600 rounded-md px-2">
                 {serverOwner}
               </div>
               {/* <input
@@ -182,12 +191,12 @@ const viewTopology = () => {
                   className="border-slate-600 border-b-2 ml-2 rounded w-1/2"
                 /> */}
             </div>
-            <div className="flex">
-              <label htmlFor="" className="font-semibold text-base w-36">
+            <div className="flex w-1/4 justify-center">
+              <label htmlFor="" className="font-semibold text-base w-32">
                 Resource Owner :
               </label>
-              <div className="border-b-2 border-slate-600 rounded-md ml-2">
-                {serverOwner}
+              <div className="border-b-2 border-slate-600 rounded-md px-2">
+                {resourceOwner}
               </div>
               {/* <input
                   type="text"
@@ -196,11 +205,11 @@ const viewTopology = () => {
                   className="border-slate-600 border-b-2 rounded ml-2 w-1/2"
                 /> */}
             </div>
-            <div className="flex">
+            <div className="flex w-1/4 justify-end">
               <label htmlFor="" className="font-semibold">
                 Cloud :
               </label>
-              <p className="border-b-2 border-slate-600 rounded-md ml-2">
+              <p className="border-b-2 border-slate-600 rounded-md px-2">
                 {/* {cloud && cloud.length > 1 ? (
                   <p>
                     {cloud[0]} {cloud[1]}
