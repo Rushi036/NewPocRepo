@@ -70,6 +70,12 @@ const viewTopology = () => {
             setTitle(res.data[0].title);
             setCloud(res.data[0].cloud_server);
             setTopology(res.data[0].flowChart);
+            setTopoDetails(res.data[0].node_details);
+            setApplicationOwner(res.data[0].application_owner);
+            setResourceOwner(res.data[0].resource_owner);
+            setSelectedEnvironment(res.data[0].selected_environment);
+            setbusinessSponser(res.data[0].business_sponser);
+            setServerOwner(res.data[0].server_owner);
           })
         : await viewTopologyForAdmin(id).then((res) => {
             setTitle(res.data[0].title);
@@ -84,36 +90,38 @@ const viewTopology = () => {
             console.log("res", res.data[0]);
           });
 
-          await getFormData(id).then((data: any) => {
-            let res = data.data[0].fields;
-            let sd = {
-              subcriptionId: res.subcriptionId,
-              vnet: res.vnet,
-              CIDR: res.CIDR,
-              Subnet: res.Subnet,
-              ResourceGRP: res.ResourceGRP,
-              Region: res.Region,
-              Description: res.Description,
-              VM_type: res.VM_type,
-              Series: res.Series,
-              vCPUs: res.vCPUs,
-              RAM: res.RAM,
-              OS_version: res.OS_version,
-              License: res.License,
-              OS_Disk_size: res.OS_Disk_size,
-              Disk_partition: res.Disk_partition,
-              Storage_Disk_Size: res.Storage_Disk_Size,
-              Storage_Disk: res.Storage_Disk,
-              Storage_Disk_Value: res.Storage_Disk_Value,
-              Compute_options: res.Compute_options,
-              Compute: res.Compute,
-              Internet_facing: res.Internet_facing,
-              NATting: res.NATting,
-            };
-    
-            setServerData(sd);
-            console.log(res)
-          })
+      await getFormData(id).then((data: any) => {
+        if (data.data[0]) {
+          let res = data.data[0].fields;
+          let sd = {
+            subcriptionId: res.subcriptionId,
+            vnet: res.vnet,
+            CIDR: res.CIDR,
+            Subnet: res.Subnet,
+            ResourceGRP: res.ResourceGRP,
+            Region: res.Region,
+            Description: res.Description,
+            VM_type: res.VM_type,
+            Series: res.Series,
+            vCPUs: res.vCPUs,
+            RAM: res.RAM,
+            OS_version: res.OS_version,
+            License: res.License,
+            OS_Disk_size: res.OS_Disk_size,
+            Disk_partition: res.Disk_partition,
+            Storage_Disk_Size: res.Storage_Disk_Size,
+            Storage_Disk: res.Storage_Disk,
+            Storage_Disk_Value: res.Storage_Disk_Value,
+            Compute_options: res.Compute_options,
+            Compute: res.Compute,
+            Internet_facing: res.Internet_facing,
+            NATting: res.NATting,
+          };
+
+          setServerData(sd);
+          console.log(res);
+        }
+      });
     }
 
     id && dataFetch();
@@ -135,16 +143,19 @@ const viewTopology = () => {
     //     });
     //   });
     // });
-    await getFormData(id).then(async (res:any)=>{
+    await getFormData(id).then(async (res: any) => {
       let rs = res.data[0];
       let data = {
         ...rs,
-        fields: serverData
-      }
-      await updateFormData(rs.id,data)
-    })
+        fields: serverData,
+      };
+      await updateFormData(rs.id, data);
+    });
   };
-    console.log("-------------------estimatecalc--------------------",estimateCalc)
+  console.log(
+    "-------------------estimatecalc--------------------",
+    estimateCalc
+  );
   //     // await fetchTopology;
   return (
     <>
@@ -286,7 +297,9 @@ const viewTopology = () => {
             <div className="mt-4 p-2 box-border w-full bg-white">
               <div className="form-inputs px-2 space-y-5">
                 <div className="flex justify-evenly pt-4">
-                  <h1 className="text-xl font-semibold border-b-2 border-slate-600">Additional Info - {allNodes}</h1>
+                  <h1 className="text-xl font-semibold border-b-2 border-slate-600">
+                    Additional Info - {allNodes}
+                  </h1>
                   <div className="flex items-center pb-2">
                     <label
                       htmlFor=""
@@ -331,9 +344,7 @@ const viewTopology = () => {
                     className="font-semibold text-base flex flex-col justify-start"
                   >
                     <div>CIDR :</div>
-                    <div
-                      className="w-[14rem] border-b-2"
-                    >
+                    <div className="w-[14rem] border-b-2">
                       {serverData?.CIDR}
                     </div>
                   </label>
@@ -342,9 +353,7 @@ const viewTopology = () => {
                     className="font-semibold text-base flex flex-col justify-start"
                   >
                     <div>Subnet :</div>
-                    <div
-                      className="w-[14rem] border-b-2"
-                    >
+                    <div className="w-[14rem] border-b-2">
                       {serverData?.Subnet}
                     </div>
                   </label>
@@ -353,20 +362,16 @@ const viewTopology = () => {
                     className="font-semibold text-base flex flex-col justify-start"
                   >
                     <div>ResourceGRP :</div>
-                    <div
-                      className="w-[14rem] border-b-2"
-                      >
+                    <div className="w-[14rem] border-b-2">
                       {serverData?.ResourceGRP}
                     </div>
                   </label>
                   <label
                     htmlFor=""
                     className="font-semibold text-base flex flex-col justify-start"
-                    >
+                  >
                     <div>Region :</div>
-                    <div 
-                      className="w-[14rem] border-b-2"
-                      >
+                    <div className="w-[14rem] border-b-2">
                       {serverData?.Region}
                     </div>
                   </label>
@@ -780,7 +785,6 @@ const viewTopology = () => {
           </form>
           {/* </div> */}
           {role == "admin" && (
-
             <div className="mt-4 flex justify-end">
               <button
                 type="submit"
@@ -791,8 +795,8 @@ const viewTopology = () => {
               </button>
             </div>
           )}
-        </div >
-      </form >
+        </div>
+      </form>
     </>
   );
 };

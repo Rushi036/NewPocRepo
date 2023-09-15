@@ -84,7 +84,7 @@
       "cloud_server": [
         "Azure"
       ],
-      "status": "Approved By User",
+      "status": "Rejected By User",
       "created_date": "15/09/2023",
       "topology_id": 2,
       "business_sponser": "demo",
@@ -95,8 +95,30 @@
       "id": 2,
       "product": "Virtual Machines Dasv4 Series Windows",
       "quantity": 1,
-      "price": 0.734,
-      "totalPrice": 0.734
+      "price": 0.22,
+      "totalPrice": 0.22
+    },
+    {
+      "title": "topo3",
+      "bu": "Grasim Chemical",
+      "bu_id": "1",
+      "cloud_server": [
+        "AWS",
+        "Azure"
+      ],
+      "status": "Approved By User",
+      "created_date": "15/09/2023",
+      "topology_id": 3,
+      "business_sponser": "topo",
+      "server_owner": "topo",
+      "application_owner": "topo",
+      "resource_owner": "topo",
+      "selected_environment": "Test",
+      "id": 3,
+      "product": "Virtual Machines Dasv4 Series Windows",
+      "quantity": 3,
+      "price": 0.22,
+      "totalPrice": 0.66
     }
   ],
   "topology": [
@@ -133,6 +155,26 @@
       "resource_owner": "demo",
       "selected_environment": "Test",
       "id": 2
+    },
+    {
+      "bu_id": "1",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}},{\"width\":100,\"height\":148,\"id\":\"1\",\"type\":\"selectorNode\",\"position\":{\"x\":-203.40276009344495,\"y\":326.1955763380636},\"data\":{\"label\":\"Node 1\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"positionAbsolute\":{\"x\":-203.40276009344495,\"y\":326.1955763380636}},{\"width\":100,\"height\":148,\"id\":\"2\",\"type\":\"selectorNode\",\"position\":{\"x\":80.6864365350993,\"y\":289.39645760379614},\"data\":{\"label\":\"Node 2\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"positionAbsolute\":{\"x\":80.6864365350993,\"y\":289.39645760379614}}],\"edges\":[{\"id\":\"1\",\"source\":\"0\",\"target\":\"1\",\"animated\":true},{\"id\":\"2\",\"source\":\"0\",\"target\":\"2\",\"animated\":true}],\"viewport\":{\"x\":355.01784504341714,\"y\":65.67452778203071,\"zoom\":0.6793640951167661}}",
+      "node_details": [
+        "Server",
+        "Server",
+        "Server"
+      ],
+      "title": "topo3",
+      "cloud_server": [
+        "AWS",
+        "Azure"
+      ],
+      "business_sponser": "topo",
+      "server_owner": "topo",
+      "application_owner": "topo",
+      "resource_owner": "topo",
+      "selected_environment": "Test",
+      "id": 3
     }
   ],
   "finops": [
@@ -445,6 +487,62 @@
         "NATting": "no"
       },
       "id": 9
+    },
+    {
+      "topology_id": 3,
+      "node_name": "Server",
+      "fields": {
+        "subcriptionId": "bbe9815b-b792-4f3d-a601-94380a26964d",
+        "vnet": "GRCD-AZ-SAP-PP-VNT-01",
+        "CIDR": "10.47.48.0/22",
+        "Subnet": "10.47.48.0/22",
+        "ResourceGRP": "NetworkWatcherRG",
+        "Region": "Asia-Center",
+        "Description": "dsbfisdj",
+        "VM_type": "demo",
+        "Series": "demo",
+        "vCPUs": "demo",
+        "RAM": "demo",
+        "OS_version": "Ubuntu 20.04",
+        "License": "BYOL",
+        "OS_Disk_size": "bhjvhj",
+        "Disk_partition": "bjbjkb",
+        "Storage_Disk_Size": "jbjkbkjb",
+        "Storage_Disk": "no",
+        "Storage_Disk_Value": "",
+        "Compute_options": "no",
+        "Compute": "",
+        "Internet_facing": "yes",
+        "NATting": "yes"
+      },
+      "id": 10
+    }
+  ],
+  "allVMsData": [
+    {
+      "productName": "Virtual Machines D Series Windows",
+      "unitPrice": 0.292243,
+      "currencyCode": "USD"
+    },
+    {
+      "productName": "Virtual Machines Dasv4 Series Windows",
+      "unitPrice": 0.22,
+      "currencyCode": "USD"
+    },
+    {
+      "productName": "Virtual Machines Esv5 Series",
+      "unitPrice": 0.947,
+      "currencyCode": "USD"
+    },
+    {
+      "productName": "Virtual Machines Ebdsv5 Series",
+      "unitPrice": 0.019032,
+      "currencyCode": "USD"
+    },
+    {
+      "productName": "Virtual Machines Bpsv2 Series Windows",
+      "unitPrice": 0.01,
+      "currencyCode": "USD"
     }
   ]
 }
