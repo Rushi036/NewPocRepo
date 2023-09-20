@@ -119,6 +119,27 @@
       "quantity": 3,
       "price": 0.22,
       "totalPrice": 0.66
+    },
+    {
+      "title": "demo topo",
+      "bu": "Birla Carbon",
+      "bu_id": "3",
+      "cloud_server": [
+        "AWS"
+      ],
+      "status": "Approval Pending",
+      "created_date": "18/09/2023",
+      "topology_id": 4,
+      "business_sponser": "demo",
+      "server_owner": "demo",
+      "application_owner": "Birla Carbon",
+      "resource_owner": "BU-Demo",
+      "selected_environment": "Development",
+      "id": 4,
+      "product": "Virtual Machines D Series Windows",
+      "quantity": 1,
+      "price": 0.292243,
+      "totalPrice": 0.292243
     }
   ],
   "topology": [
@@ -175,6 +196,24 @@
       "resource_owner": "topo",
       "selected_environment": "Test",
       "id": 3
+    },
+    {
+      "bu_id": "3",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":-39.77260981912144,\"y\":-174.86821705426354},\"selected\":false,\"positionAbsolute\":{\"x\":-39.77260981912144,\"y\":-174.86821705426354},\"dragging\":false},{\"width\":100,\"height\":148,\"id\":\"1\",\"type\":\"selectorNode\",\"position\":{\"x\":-351.8372093023255,\"y\":23.80361757105942},\"data\":{\"label\":\"Node 1\",\"Path\":{\"Name\":\"Database\",\"Path\":\"/network_icons/database.png\"}},\"selected\":false,\"positionAbsolute\":{\"x\":-351.8372093023255,\"y\":23.80361757105942},\"dragging\":false}],\"edges\":[{\"id\":\"1\",\"source\":\"0\",\"target\":\"1\",\"animated\":true}],\"viewport\":{\"x\":332.81418918918916,\"y\":112.4391891891892,\"zoom\":0.6537162162162162}}",
+      "node_details": [
+        "Server",
+        "Database"
+      ],
+      "title": "demo topo",
+      "cloud_server": [
+        "AWS"
+      ],
+      "business_sponser": "demo",
+      "server_owner": "demo",
+      "application_owner": "Birla Carbon",
+      "resource_owner": "BU-Demo",
+      "selected_environment": "Development",
+      "id": 4
     }
   ],
   "finops": [
@@ -516,6 +555,35 @@
         "NATting": "yes"
       },
       "id": 10
+    },
+    {
+      "topology_id": 4,
+      "node_name": "Server",
+      "fields": {
+        "subcriptionId": "bbe9815b-b792-4f3d-a601-94380a26964d",
+        "vnet": "GRCD-AZ-SAP-PP-VNT-01",
+        "CIDR": "10.47.48.0/22",
+        "Subnet": "10.47.48.0/22",
+        "ResourceGRP": "NetworkWatcherRG",
+        "Region": "Asia-Center",
+        "Description": "",
+        "VM_type": "",
+        "Series": "",
+        "vCPUs": "",
+        "RAM": "",
+        "OS_version": "Ubuntu 20.04",
+        "License": "",
+        "OS_Disk_size": "3gb",
+        "Disk_partition": "3",
+        "Storage_Disk_Size": "34",
+        "Storage_Disk": "no",
+        "Storage_Disk_Value": "",
+        "Compute_options": "no",
+        "Compute": "",
+        "Internet_facing": "yes",
+        "NATting": "yes"
+      },
+      "id": 11
     }
   ],
   "allVMsData": [
