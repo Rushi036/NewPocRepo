@@ -1016,7 +1016,7 @@ function Topology(props: any) {
                 ) : (
                   <div>
                     <div className="">
-                      <div className="justify-center">
+                      <div className="flex justify-center">
                         <button
                           className={`btn ${
                             viewClicked
@@ -1263,7 +1263,7 @@ function Topology(props: any) {
               </div>
 
               <div className={role != "admin" ? "justify-center" : "hidden"}>
-                <div className="justify-center">
+                <div className="flex justify-center">
                   <button
                     className={`btn 
                     }  rounded-md px-4 py-1 mt-6 font-semibold ${
