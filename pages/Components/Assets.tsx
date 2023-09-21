@@ -1,29 +1,39 @@
 import React, { useEffect, useState } from "react";
 import { tableData } from "../api/tableData";
 import Link from "next/link";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Assets = () => {
   let role;
   let bu_id: string | null;
   const [data, setData] = useState<any>(null);
-  if (typeof window !== "undefined") {
+  // if (typeof window !== "undefined") {
+  useEffect(() => {
     role = localStorage.getItem("role");
     bu_id = localStorage.getItem("bu_id");
-    useEffect(() => {
-      dataFetch();
-    }, []);
-  }
+    dataFetch();
+  }, []);
+  // }
   async function dataFetch() {
     const res: any = await tableData(bu_id);
     setData(res.data);
   }
-  console.log(data);
+  console.log("--------------", data);
+  const noDelete = () => {
+    toast.error("This action is not Permitted!", {
+      position: "bottom-right",
+      autoClose: 2000,
+    });
+  };
+
   return (
     <div className="">
+      <ToastContainer />
       <div className="text-xl px-4 border-b-2 border-slate-400 pb-2 flex justify-between items-center">
         <span>Assets</span>
       </div>
-      <div className="flex justify-between px-4 pt-4">
+      <div className="flex justify-between px-4">
         <div></div>
         <Link href={"../page/AddTopology/addTopology"}>
           <button className="btn bg-red-700 rounded-sm  px-4 py-1 mt-6 text-white font-semibold hover:bg-red-800">
@@ -83,7 +93,10 @@ const Assets = () => {
                             View
                           </button>
                         </Link>
-                        <button className="btn bg-red-400 px-2 py-1 rounded-sm text-white font-medium">
+                        <button
+                          className="btn bg-red-400 px-2 py-1 rounded-sm text-white font-medium"
+                          onClick={noDelete}
+                        >
                           Delete
                         </button>
                       </td>
