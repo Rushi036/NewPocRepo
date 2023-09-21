@@ -16,6 +16,7 @@ import { getUserData } from "@/pages/api/getUserData";
 import { title } from "process";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/router";
 // import "/toastify-custom.css";
 const addTopology = () => {
   const [loading, setLoading] = useState<any>(false);
@@ -61,14 +62,14 @@ const addTopology = () => {
     NATting: "no",
   };
   const [serverData, setServerData] = useState<any>(sd);
-
+  const router = useRouter();
   const [cloud, setCloud] = useState<any>(null);
   const [topology, setTopology] = useState<any>(null);
   const [open, setOpen] = useState(false);
   const [role, setRole] = useState<any>(false);
   const bothCloud = ["AWS", "Azure"];
   const [selectedEnvironment, setSelectedEnvironment] = useState("");
-
+  const [redirectState, setRedirectState] = useState(false);
   const handleEnvironmentChange = (e: any) => {
     setSelectedEnvironment(e.target.value);
   };
@@ -118,7 +119,6 @@ const addTopology = () => {
           selected_environment: selectedEnvironment,
         };
 
-
         console.log("topo data---------------", topologyData);
         toast.success("Topology created successfully!", {
           position: "bottom-right",
@@ -158,9 +158,8 @@ const addTopology = () => {
             resource_owner: resourceOwner,
             selected_environment: selectedEnvironment,
           };
-          setAllNodes(res.data[0].node_details[0])
-          setResponseData(res.data[0].id)
-
+          setAllNodes(res.data[0].node_details[0]);
+          setResponseData(res.data[0].id);
 
           console.log("topo data---------------", topologyTableData);
 
@@ -213,10 +212,74 @@ const addTopology = () => {
       node_name: allNodes,
       fields: serverData,
     };
-    saveResourseData(rdd);
+    if (
+      serverData.Internet_facing &&
+      serverData.NATting &&
+      serverData.Description &&
+      serverData.Series &&
+      serverData.vCPUs &&
+      serverData.RAM &&
+      serverData.OS_version &&
+      serverData.License &&
+      serverData.OS_Disk_size &&
+      serverData.Storage_Disk_Size &&
+      serverData.Disk_partition &&
+      serverData.Storage_Disk &&
+      serverData.Compute_options &&
+      serverData.OS_Disk_size
+    ) {
+      console.log("storage",  serverData.Storage_Disk);
+      console.log("storage disk value",  serverData.Storage_Disk_Value);
+
+      console.log("compute",  serverData.Compute)
+      console.log("comptute option",  serverData.Compute_options);
+
+      if (
+        serverData.Storage_Disk == "yes" &&
+        serverData.Storage_Disk_Value  &&
+        serverData.Compute_options == "yes" &&
+        serverData.Compute
+      ) {
+        saveResourseData(rdd);
+      } else if (
+        serverData.Storage_Disk == "no" &&
+        serverData.Compute_options == "no"
+      ) {
+        saveResourseData(rdd);
+      } else if (
+        serverData.Storage_Disk == "yes" &&
+        serverData.Storage_Disk_Value &&
+        serverData.Compute_options == "no"
+      ) {
+        saveResourseData(rdd);
+      } else if (
+        serverData.Storage_Disk == "no" &&
+        serverData.Compute_options == "no" &&
+        serverData.Compute
+      ) {
+        saveResourseData(rdd);
+      } else {
+       
+        setLoading(false);
+        toast.error("Please enter all fields!", {
+          position: "bottom-right",
+          autoClose: 3000,
+        });
+      }
+    } else {
+      setLoading(false);
+      toast.error("Please enter all fields!", {
+        position: "bottom-right",
+        autoClose: 3000,
+      });
+    }
   }
   async function saveResourseData(data: any) {
-    await addResourseData(data).then(() => setLoading(false));
+    await addResourseData(data).then(() => {
+      setLoading(false);
+      // setRedirectState(true);
+      router.push("/Components/Assets");
+    });
   }
 
   return (
@@ -365,11 +428,14 @@ const addTopology = () => {
         </form>
         {nextForm && (
           <form className={"overflow-hidden w-full z-10"}>
+            <ToastContainer />
             <div className={loading ? "loader" : "hidden"}></div>
             <div className="mt-4 p-2 box-border w-full bg-white">
               <div className="form-inputs px-2 space-y-5">
                 <div className="flex justify-evenly pt-4">
-                  <h1 className="text-xl font-semibold border-b-2 border-slate-600">Additional Info - {allNodes}</h1>
+                  <h1 className="text-xl font-semibold border-b-2 border-slate-600">
+                    Additional Info - {allNodes}
+                  </h1>
                   <div className="flex items-center pb-2">
                     <label
                       htmlFor=""
@@ -579,7 +645,7 @@ const addTopology = () => {
                     <div>Series :</div>
                     <input
                       type="text"
-                      disabled={role == "admin" ? false : true}
+                      disabled={role == "admin" ? true : false}
                       required
                       value={serverData?.Series}
                       onChange={(e) => {
@@ -598,7 +664,7 @@ const addTopology = () => {
                     <div>vCPUs :</div>
                     <input
                       type="text"
-                      disabled={role == "admin" ? false : true}
+                      disabled={role == "admin" ? true : false}
                       required
                       value={serverData?.vCPUs}
                       onChange={(e) => {
@@ -617,7 +683,7 @@ const addTopology = () => {
                     <div>RAM :</div>
                     <input
                       type="text"
-                      disabled={role == "admin" ? false : true}
+                      disabled={role == "admin" ? true : false}
                       required
                       value={serverData?.RAM}
                       onChange={(e) => {

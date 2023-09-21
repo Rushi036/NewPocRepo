@@ -57,86 +57,199 @@
   ],
   "topology_table_data": [
     {
-      "title": "top",
+      "title": "topo1",
       "bu": "Grasim Chemical",
       "bu_id": "1",
       "cloud_server": [
-        "AWS"
+        "Azure"
       ],
-      "status": "Approved By User",
-      "created_date": "15/09/2023",
+      "status": "Approval Pending",
+      "created_date": "20/09/2023",
       "topology_id": 1,
-      "business_sponser": "fgjfj",
-      "server_owner": "dffn",
-      "application_owner": "fdhfgj",
-      "resource_owner": "fgnfgn",
-      "selected_environment": "Production",
+      "business_sponser": "topo1",
+      "server_owner": "topo1",
+      "application_owner": "topo1",
+      "resource_owner": "topo1",
+      "selected_environment": "Test",
       "id": 1,
       "product": "Virtual Machines Dasv4 Series Windows",
       "quantity": 1,
-      "price": 0.734,
-      "totalPrice": 0.734
+      "price": "0.220",
+      "totalPrice": 0.22,
+      "awsProduct": "",
+      "awsQuantity": "",
+      "awsProductPrice": "",
+      "totalPriceAws": ""
     },
     {
       "title": "topo2",
       "bu": "Grasim Chemical",
       "bu_id": "1",
       "cloud_server": [
-        "Azure"
+        "AWS"
       ],
-      "status": "Rejected By User",
-      "created_date": "15/09/2023",
+      "status": "Approval Pending",
+      "created_date": "20/09/2023",
       "topology_id": 2,
-      "business_sponser": "demo",
-      "server_owner": "demo",
-      "application_owner": "demo",
-      "resource_owner": "demo",
+      "business_sponser": "topo2",
+      "server_owner": "topo2",
+      "application_owner": "topo2",
+      "resource_owner": "topo2",
       "selected_environment": "Test",
       "id": 2,
-      "product": "Virtual Machines Dasv4 Series Windows",
-      "quantity": 1,
-      "price": 0.22,
-      "totalPrice": 0.22
+      "product": "",
+      "quantity": "",
+      "price": "",
+      "totalPrice": "",
+      "awsProduct": "AmazonEC2",
+      "awsQuantity": 1,
+      "awsProductPrice": 0.213,
+      "totalPriceAws": 0.213
     },
     {
       "title": "topo3",
       "bu": "Grasim Chemical",
       "bu_id": "1",
       "cloud_server": [
-        "AWS",
+        "AWS"
+      ],
+      "status": "Approval Pending",
+      "created_date": "20/09/2023",
+      "topology_id": 3,
+      "business_sponser": "hjvhjhjv",
+      "server_owner": "hjvhjvhjv",
+      "application_owner": "vhjv",
+      "resource_owner": "jhvjh",
+      "selected_environment": "Development",
+      "id": 3,
+      "awsProduct": "AmazonEC2",
+      "awsQuantity": 1,
+      "awsProductPrice": 0.213,
+      "totalPriceAws": 0.213
+    },
+    {
+      "title": "test",
+      "bu": "Grasim Chemical",
+      "bu_id": "1",
+      "cloud_server": [
         "Azure"
       ],
-      "status": "Approved By User",
-      "created_date": "15/09/2023",
-      "topology_id": 3,
-      "business_sponser": "topo",
-      "server_owner": "topo",
-      "application_owner": "topo",
-      "resource_owner": "topo",
+      "status": "Approval Pending",
+      "created_date": "20/09/2023",
+      "topology_id": 4,
+      "business_sponser": "hjbhjb",
+      "server_owner": "jbjh",
+      "application_owner": "bhjbj",
+      "resource_owner": "bjbj",
       "selected_environment": "Test",
-      "id": 3,
+      "id": 4,
       "product": "Virtual Machines Dasv4 Series Windows",
-      "quantity": 3,
-      "price": 0.22,
-      "totalPrice": 0.66
+      "quantity": 1,
+      "price": "0.220",
+      "totalPrice": 0.22
+    },
+    {
+      "title": "bubuib",
+      "bu": "Grasim Chemical",
+      "bu_id": "1",
+      "cloud_server": [
+        "AWS"
+      ],
+      "status": "Approval Pending",
+      "created_date": "20/09/2023",
+      "topology_id": 5,
+      "business_sponser": "uibuib",
+      "server_owner": "iubui",
+      "application_owner": "uiui",
+      "resource_owner": "buibu",
+      "selected_environment": "Test",
+      "id": 5,
+      "awsProduct": "AmazonEC2",
+      "awsQuantity": 1,
+      "awsProductPrice": 0.213,
+      "totalPriceAws": 0.213
+    },
+    {
+      "title": "vhgvhg",
+      "bu": "Grasim Chemical",
+      "bu_id": "1",
+      "cloud_server": [
+        "AWS"
+      ],
+      "status": "Approved By User",
+      "created_date": "20/09/2023",
+      "topology_id": 6,
+      "business_sponser": "hjbhj",
+      "server_owner": "hbhjb",
+      "application_owner": "hjbhj",
+      "resource_owner": "hjbj",
+      "selected_environment": "Production",
+      "id": 6,
+      "product": "",
+      "quantity": "",
+      "price": "",
+      "totalPrice": "",
+      "awsProduct": "AmazonEC2",
+      "awsQuantity": 1,
+      "awsProductPrice": 0.213,
+      "totalPriceAws": 0.213
+    },
+    {
+      "title": "vyuv",
+      "bu": "Grasim Chemical",
+      "bu_id": "1",
+      "cloud_server": [
+        "AWS"
+      ],
+      "status": "Rejected By User",
+      "created_date": "20/09/2023",
+      "topology_id": 7,
+      "business_sponser": "vhjhj",
+      "server_owner": "h",
+      "application_owner": "vhjj",
+      "resource_owner": "hjhj",
+      "selected_environment": "Production",
+      "id": 7,
+      "awsProduct": "AmazonEC2",
+      "awsQuantity": 1,
+      "awsProductPrice": 0.213,
+      "totalPriceAws": 0.213
+    },
+    {
+      "title": "bhbhjb",
+      "bu": "Grasim Chemical",
+      "bu_id": "1",
+      "cloud_server": [
+        "Azure",
+        "AWS"
+      ],
+      "status": "Draft",
+      "created_date": "20/09/2023",
+      "topology_id": 8,
+      "business_sponser": "bhjbj",
+      "server_owner": "bjbjb",
+      "application_owner": "hjbhjbh",
+      "resource_owner": "bj",
+      "selected_environment": "Production",
+      "id": 8
     }
   ],
   "topology": [
     {
       "bu_id": "1",
-      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":412.45336313198266,\"y\":140.8062393208242,\"zoom\":0.5}}",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
       "node_details": [
         "Server"
       ],
-      "title": "top",
+      "title": "topo1",
       "cloud_server": [
-        "AWS"
+        "Azure"
       ],
-      "business_sponser": "fgjfj",
-      "server_owner": "dffn",
-      "application_owner": "fdhfgj",
-      "resource_owner": "fgnfgn",
-      "selected_environment": "Production",
+      "business_sponser": "topo1",
+      "server_owner": "topo1",
+      "application_owner": "topo1",
+      "resource_owner": "topo1",
+      "selected_environment": "Test",
       "id": 1
     },
     {
@@ -147,34 +260,117 @@
       ],
       "title": "topo2",
       "cloud_server": [
-        "Azure"
+        "AWS"
       ],
-      "business_sponser": "demo",
-      "server_owner": "demo",
-      "application_owner": "demo",
-      "resource_owner": "demo",
+      "business_sponser": "topo2",
+      "server_owner": "topo2",
+      "application_owner": "topo2",
+      "resource_owner": "topo2",
       "selected_environment": "Test",
       "id": 2
     },
     {
       "bu_id": "1",
-      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}},{\"width\":100,\"height\":148,\"id\":\"1\",\"type\":\"selectorNode\",\"position\":{\"x\":-203.40276009344495,\"y\":326.1955763380636},\"data\":{\"label\":\"Node 1\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"positionAbsolute\":{\"x\":-203.40276009344495,\"y\":326.1955763380636}},{\"width\":100,\"height\":148,\"id\":\"2\",\"type\":\"selectorNode\",\"position\":{\"x\":80.6864365350993,\"y\":289.39645760379614},\"data\":{\"label\":\"Node 2\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"positionAbsolute\":{\"x\":80.6864365350993,\"y\":289.39645760379614}}],\"edges\":[{\"id\":\"1\",\"source\":\"0\",\"target\":\"1\",\"animated\":true},{\"id\":\"2\",\"source\":\"0\",\"target\":\"2\",\"animated\":true}],\"viewport\":{\"x\":355.01784504341714,\"y\":65.67452778203071,\"zoom\":0.6793640951167661}}",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
       "node_details": [
-        "Server",
-        "Server",
         "Server"
       ],
       "title": "topo3",
       "cloud_server": [
-        "AWS",
+        "AWS"
+      ],
+      "business_sponser": "hjvhjhjv",
+      "server_owner": "hjvhjvhjv",
+      "application_owner": "vhjv",
+      "resource_owner": "jhvjh",
+      "selected_environment": "Development",
+      "id": 3
+    },
+    {
+      "bu_id": "1",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "test",
+      "cloud_server": [
         "Azure"
       ],
-      "business_sponser": "topo",
-      "server_owner": "topo",
-      "application_owner": "topo",
-      "resource_owner": "topo",
+      "business_sponser": "hjbhjb",
+      "server_owner": "jbjh",
+      "application_owner": "bhjbj",
+      "resource_owner": "bjbj",
       "selected_environment": "Test",
-      "id": 3
+      "id": 4
+    },
+    {
+      "bu_id": "1",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "bubuib",
+      "cloud_server": [
+        "AWS"
+      ],
+      "business_sponser": "uibuib",
+      "server_owner": "iubui",
+      "application_owner": "uiui",
+      "resource_owner": "buibu",
+      "selected_environment": "Test",
+      "id": 5
+    },
+    {
+      "bu_id": "1",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "vhgvhg",
+      "cloud_server": [
+        "AWS"
+      ],
+      "business_sponser": "hjbhj",
+      "server_owner": "hbhjb",
+      "application_owner": "hjbhj",
+      "resource_owner": "hjbj",
+      "selected_environment": "Production",
+      "id": 6
+    },
+    {
+      "bu_id": "1",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "vyuv",
+      "cloud_server": [
+        "AWS"
+      ],
+      "business_sponser": "vhjhj",
+      "server_owner": "h",
+      "application_owner": "vhjj",
+      "resource_owner": "hjhj",
+      "selected_environment": "Production",
+      "id": 7
+    },
+    {
+      "bu_id": "1",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "bhbhjb",
+      "cloud_server": [
+        "Azure",
+        "AWS"
+      ],
+      "business_sponser": "bhjbj",
+      "server_owner": "bjbjb",
+      "application_owner": "hjbhjbh",
+      "resource_owner": "bj",
+      "selected_environment": "Production",
+      "id": 8
     }
   ],
   "finops": [
@@ -241,226 +437,7 @@
   ],
   "resourse_data": [
     {
-      "node_name": null,
-      "fields": {
-        "Description": "cghc",
-        "VM_type": "",
-        "Series": "",
-        "vCPUs": "",
-        "RAM": "",
-        "OS_version": "Ubuntu 20.04",
-        "License": "BYOL",
-        "OS_Disk_size": "bhjbjb",
-        "Disk_partition": "bjbj",
-        "Storage_Disk_Size": "bjbjb",
-        "Storage_Disk": "yes",
-        "Storage_Disk_Value": "fvf",
-        "Compute_options": "yes",
-        "Compute": "rdtfv",
-        "Internet_facing": "no",
-        "NATting": "no"
-      },
-      "id": 1
-    },
-    {
-      "node_name": null,
-      "fields": {
-        "subcriptionId": "1",
-        "vnet": "1",
-        "CIDR": "1",
-        "Subnet": "1",
-        "ResourceGRP": "1",
-        "Region": "1",
-        "Description": "sfhbs",
-        "VM_type": "",
-        "Series": "",
-        "vCPUs": "",
-        "RAM": "",
-        "OS_version": "Ubuntu 20.04",
-        "License": "BYOL",
-        "OS_Disk_size": "bjbj",
-        "Disk_partition": "jkbj",
-        "Storage_Disk_Size": "bjkb",
-        "Storage_Disk": "yes",
-        "Storage_Disk_Value": "dfvfdv",
-        "Compute_options": "no",
-        "Compute": "",
-        "Internet_facing": "no",
-        "NATting": "no"
-      },
-      "id": 2
-    },
-    {
-      "node_name": null,
-      "fields": {
-        "subcriptionId": "1",
-        "vnet": "1",
-        "CIDR": "1",
-        "Subnet": "1",
-        "ResourceGRP": "1",
-        "Region": "1",
-        "Description": "fvfdv",
-        "VM_type": "",
-        "Series": "",
-        "vCPUs": "",
-        "RAM": "",
-        "OS_version": "Ubuntu 18.04",
-        "License": "Azure Hybrid Benefit",
-        "OS_Disk_size": " gh",
-        "Disk_partition": "hvhv",
-        "Storage_Disk_Size": "vhvh",
-        "Storage_Disk": "yes",
-        "Storage_Disk_Value": "bjbbj",
-        "Compute_options": "no",
-        "Compute": "",
-        "Internet_facing": "no",
-        "NATting": "no"
-      },
-      "id": 3
-    },
-    {
-      "node_name": null,
-      "fields": {
-        "subcriptionId": "bbe9815b-b792-4f3d-a601-94380a26964d",
-        "vnet": "GRCD-AZ-SAP-PP-VNT-01",
-        "CIDR": "10.47.48.0/22",
-        "Subnet": "10.47.48.0/22",
-        "ResourceGRP": "NetworkWatcherRG",
-        "Region": "Asia-Center",
-        "Description": "demo",
-        "VM_type": "",
-        "Series": "",
-        "vCPUs": "",
-        "RAM": "",
-        "OS_version": "Ubuntu 20.04",
-        "License": "BYOL",
-        "OS_Disk_size": "demo",
-        "Disk_partition": "demo",
-        "Storage_Disk_Size": "demo",
-        "Storage_Disk": "yes",
-        "Storage_Disk_Value": "demo",
-        "Compute_options": "no",
-        "Compute": "",
-        "Internet_facing": "no",
-        "NATting": "no"
-      },
-      "id": 4
-    },
-    {
-      "node_name": null,
-      "fields": {
-        "subcriptionId": "bbe9815b-b792-4f3d-a601-94380a26964d",
-        "vnet": "GRCD-AZ-SAP-PP-VNT-01",
-        "CIDR": "10.47.48.0/22",
-        "Subnet": "10.47.48.0/22",
-        "ResourceGRP": "NetworkWatcherRG",
-        "Region": "Asia-Center",
-        "Description": "",
-        "VM_type": "",
-        "Series": "",
-        "vCPUs": "",
-        "RAM": "",
-        "OS_version": "",
-        "License": "",
-        "OS_Disk_size": "",
-        "Disk_partition": "",
-        "Storage_Disk_Size": "",
-        "Storage_Disk": "no",
-        "Storage_Disk_Value": "",
-        "Compute_options": "no",
-        "Compute": "",
-        "Internet_facing": "no",
-        "NATting": "no"
-      },
-      "id": 5
-    },
-    {
-      "node_name": null,
-      "fields": {
-        "subcriptionId": "bbe9815b-b792-4f3d-a601-94380a26964d",
-        "vnet": "GRCD-AZ-SAP-PP-VNT-01",
-        "CIDR": "10.47.48.0/22",
-        "Subnet": "10.47.48.0/22",
-        "ResourceGRP": "NetworkWatcherRG",
-        "Region": "Asia-Center",
-        "Description": "demo",
-        "VM_type": "",
-        "Series": "",
-        "vCPUs": "",
-        "RAM": "",
-        "OS_version": "Ubuntu 20.04",
-        "License": "BYOL",
-        "OS_Disk_size": "demo",
-        "Disk_partition": "demo",
-        "Storage_Disk_Size": "demo",
-        "Storage_Disk": "yes",
-        "Storage_Disk_Value": "demo",
-        "Compute_options": "no",
-        "Compute": "",
-        "Internet_facing": "no",
-        "NATting": "no"
-      },
-      "id": 6
-    },
-    {
-      "node_name": null,
-      "fields": {
-        "subcriptionId": "bbe9815b-b792-4f3d-a601-94380a26964d",
-        "vnet": "GRCD-AZ-SAP-PP-VNT-01",
-        "CIDR": "10.47.48.0/22",
-        "Subnet": "10.47.48.0/22",
-        "ResourceGRP": "NetworkWatcherRG",
-        "Region": "Asia-Center",
-        "Description": "demo",
-        "VM_type": "",
-        "Series": "",
-        "vCPUs": "",
-        "RAM": "",
-        "OS_version": "Ubuntu 20.04",
-        "License": "BYOL",
-        "OS_Disk_size": "demo",
-        "Disk_partition": "demo",
-        "Storage_Disk_Size": "demo",
-        "Storage_Disk": "yes",
-        "Storage_Disk_Value": "demo",
-        "Compute_options": "no",
-        "Compute": "",
-        "Internet_facing": "no",
-        "NATting": "no"
-      },
-      "id": 7
-    },
-    {
-      "topology_id": 12,
-      "node_name": null,
-      "fields": {
-        "subcriptionId": "bbe9815b-b792-4f3d-a601-94380a26964d",
-        "vnet": "GRCD-AZ-SAP-PP-VNT-01",
-        "CIDR": "10.47.48.0/22",
-        "Subnet": "10.47.48.0/22",
-        "ResourceGRP": "NetworkWatcherRG",
-        "Region": "Asia-Center",
-        "Description": "uyg",
-        "VM_type": "1",
-        "Series": "1",
-        "vCPUs": "1",
-        "RAM": "1",
-        "OS_version": "Ubuntu 20.04",
-        "License": "BYOL",
-        "OS_Disk_size": "dfgh",
-        "Disk_partition": "dfghj",
-        "Storage_Disk_Size": "wert",
-        "Storage_Disk": "yes",
-        "Storage_Disk_Value": "wedrfg",
-        "Compute_options": "yes",
-        "Compute": "sdfghj",
-        "Internet_facing": "no",
-        "NATting": "no"
-      },
-      "id": 8
-    },
-    {
-      "topology_id": 13,
+      "topology_id": 1,
       "node_name": "Server",
       "fields": {
         "subcriptionId": "bbe9815b-b792-4f3d-a601-94380a26964d",
@@ -469,16 +446,16 @@
         "Subnet": "10.47.48.0/22",
         "ResourceGRP": "NetworkWatcherRG",
         "Region": "Asia-Center",
-        "Description": "",
+        "Description": "topo1",
         "VM_type": "",
-        "Series": "",
-        "vCPUs": "",
-        "RAM": "",
-        "OS_version": "",
-        "License": "",
-        "OS_Disk_size": "",
-        "Disk_partition": "",
-        "Storage_Disk_Size": "",
+        "Series": "topo1",
+        "vCPUs": "topo1",
+        "RAM": "topo1",
+        "OS_version": "Ubuntu 20.04",
+        "License": "BYOL",
+        "OS_Disk_size": "topo1",
+        "Disk_partition": "topo1",
+        "Storage_Disk_Size": "topo1",
         "Storage_Disk": "no",
         "Storage_Disk_Value": "",
         "Compute_options": "no",
@@ -486,7 +463,36 @@
         "Internet_facing": "no",
         "NATting": "no"
       },
-      "id": 9
+      "id": 1
+    },
+    {
+      "topology_id": 2,
+      "node_name": "Server",
+      "fields": {
+        "subcriptionId": "bbe9815b-b792-4f3d-a601-94380a26964d",
+        "vnet": "GRCD-AZ-SAP-PP-VNT-01",
+        "CIDR": "10.47.48.0/22",
+        "Subnet": "10.47.48.0/22",
+        "ResourceGRP": "NetworkWatcherRG",
+        "Region": "Asia-Center",
+        "Description": "cyvgvhgvh",
+        "VM_type": "",
+        "Series": "hvhjvhj",
+        "vCPUs": "hjvhjvhjv",
+        "RAM": "hjvhjjh",
+        "OS_version": "Ubuntu 18.04",
+        "License": "BYOL",
+        "OS_Disk_size": "vuyvhj",
+        "Disk_partition": "hjbhjbhj",
+        "Storage_Disk_Size": "hjbhjb",
+        "Storage_Disk": "no",
+        "Storage_Disk_Value": "",
+        "Compute_options": "no",
+        "Compute": "",
+        "Internet_facing": "no",
+        "NATting": "no"
+      },
+      "id": 2
     },
     {
       "topology_id": 3,
@@ -498,24 +504,140 @@
         "Subnet": "10.47.48.0/22",
         "ResourceGRP": "NetworkWatcherRG",
         "Region": "Asia-Center",
-        "Description": "dsbfisdj",
-        "VM_type": "demo",
-        "Series": "demo",
-        "vCPUs": "demo",
-        "RAM": "demo",
+        "Description": "jhbhjbjh",
+        "VM_type": "type1",
+        "Series": "hjbhj",
+        "vCPUs": "hjbj",
+        "RAM": "bhjbhj",
         "OS_version": "Ubuntu 20.04",
-        "License": "BYOL",
-        "OS_Disk_size": "bhjvhj",
-        "Disk_partition": "bjbjkb",
-        "Storage_Disk_Size": "jbjkbkjb",
+        "License": "Azure Hybrid Benefit",
+        "OS_Disk_size": "bjbj",
+        "Disk_partition": "jbjbjk",
+        "Storage_Disk_Size": "bjkbj",
         "Storage_Disk": "no",
         "Storage_Disk_Value": "",
         "Compute_options": "no",
         "Compute": "",
-        "Internet_facing": "yes",
-        "NATting": "yes"
+        "Internet_facing": "no",
+        "NATting": "no"
       },
-      "id": 10
+      "id": 3
+    },
+    {
+      "topology_id": 4,
+      "node_name": "Server",
+      "fields": {
+        "subcriptionId": "bbe9815b-b792-4f3d-a601-94380a26964d",
+        "vnet": "GRCD-AZ-SAP-PP-VNT-01",
+        "CIDR": "10.47.48.0/22",
+        "Subnet": "10.47.48.0/22",
+        "ResourceGRP": "NetworkWatcherRG",
+        "Region": "Asia-Center",
+        "Description": "bhjbhj",
+        "VM_type": "",
+        "Series": "hjbjhbhj",
+        "vCPUs": "bjhbjh",
+        "RAM": "bjj",
+        "OS_version": "Ubuntu 20.04",
+        "License": "BYOL",
+        "OS_Disk_size": "bjbj",
+        "Disk_partition": "jbjkbjk",
+        "Storage_Disk_Size": "bjkb",
+        "Storage_Disk": "no",
+        "Storage_Disk_Value": "",
+        "Compute_options": "no",
+        "Compute": "",
+        "Internet_facing": "no",
+        "NATting": "no"
+      },
+      "id": 4
+    },
+    {
+      "topology_id": 5,
+      "node_name": "Server",
+      "fields": {
+        "subcriptionId": "bbe9815b-b792-4f3d-a601-94380a26964d",
+        "vnet": "GRCD-AZ-SAP-PP-VNT-01",
+        "CIDR": "10.47.48.0/22",
+        "Subnet": "10.47.48.0/22",
+        "ResourceGRP": "NetworkWatcherRG",
+        "Region": "Asia-Center",
+        "Description": "bb",
+        "VM_type": "",
+        "Series": "bubb",
+        "vCPUs": "ubub",
+        "RAM": "bhj",
+        "OS_version": "Ubuntu 18.04",
+        "License": "BYOL",
+        "OS_Disk_size": "uibub",
+        "Disk_partition": "hbhb",
+        "Storage_Disk_Size": "hbhjbj",
+        "Storage_Disk": "no",
+        "Storage_Disk_Value": "",
+        "Compute_options": "no",
+        "Compute": "",
+        "Internet_facing": "no",
+        "NATting": "no"
+      },
+      "id": 5
+    },
+    {
+      "topology_id": 6,
+      "node_name": "Server",
+      "fields": {
+        "subcriptionId": "bbe9815b-b792-4f3d-a601-94380a26964d",
+        "vnet": "GRCD-AZ-SAP-PP-VNT-01",
+        "CIDR": "10.47.48.0/22",
+        "Subnet": "10.47.48.0/22",
+        "ResourceGRP": "NetworkWatcherRG",
+        "Region": "Asia-Center",
+        "Description": "vhvj",
+        "VM_type": "type2",
+        "Series": "hvhjh",
+        "vCPUs": "hjh",
+        "RAM": "jbhj",
+        "OS_version": "Ubuntu 18.04",
+        "License": "BYOL",
+        "OS_Disk_size": "vvhj",
+        "Disk_partition": "vhjvhj",
+        "Storage_Disk_Size": "hjhjhhj",
+        "Storage_Disk": "no",
+        "Storage_Disk_Value": "",
+        "Compute_options": "no",
+        "Compute": "",
+        "Internet_facing": "no",
+        "NATting": "no"
+      },
+      "id": 6
+    },
+    {
+      "topology_id": 7,
+      "node_name": "Server",
+      "fields": {
+        "subcriptionId": "bbe9815b-b792-4f3d-a601-94380a26964d",
+        "vnet": "GRCD-AZ-SAP-PP-VNT-01",
+        "CIDR": "10.47.48.0/22",
+        "Subnet": "10.47.48.0/22",
+        "ResourceGRP": "NetworkWatcherRG",
+        "Region": "Asia-Center",
+        "Description": "vhjvhj",
+        "VM_type": "",
+        "Series": "vhjhj",
+        "vCPUs": "hj",
+        "RAM": "hhjbhj",
+        "OS_version": "Ubuntu 18.04",
+        "License": "BYOL",
+        "OS_Disk_size": "vhv",
+        "Disk_partition": "hvhjvhj",
+        "Storage_Disk_Size": "jhvhj",
+        "Storage_Disk": "no",
+        "Storage_Disk_Value": "",
+        "Compute_options": "no",
+        "Compute": "",
+        "Internet_facing": "no",
+        "NATting": "no"
+      },
+      "id": 7
     }
   ],
   "allVMsData": [
@@ -543,6 +665,168 @@
       "productName": "Virtual Machines Bpsv2 Series Windows",
       "unitPrice": 0.01,
       "currencyCode": "USD"
+    }
+  ],
+  "awsVMData": [
+    {
+      "regionCode": "ap-northeast-1",
+      "servicecode": "AmazonEC2",
+      "servicename": "Amazon Elastic Compute Cloud",
+      "USD": "0.2489500000",
+      "description": "Windows with SQL Server Web (Amazon VPC), c6i.large reserved instance applied",
+      "rateCode": "2223B6PCG6QAUYY6.7NE97W5U4E.6YS6EN2CT7"
+    },
+    {
+      "regionCode": "ap-northeast-1",
+      "servicecode": "AmazonEC2",
+      "servicename": "Amazon Elastic Compute Cloud",
+      "USD": "0.2372200000",
+      "description": "Windows with SQL Server Web (Amazon VPC), c6i.large reserved instance applied",
+      "rateCode": "2223B6PCG6QAUYY6.4NA7Y494T4.6YS6EN2CT7"
+    },
+    {
+      "regionCode": "ap-northeast-1",
+      "servicecode": "AmazonEC2",
+      "servicename": "Amazon Elastic Compute Cloud",
+      "USD": "0.1167600000",
+      "description": "Windows with SQL Server Web (Amazon VPC), c6i.large reserved instance applied",
+      "rateCode": "2223B6PCG6QAUYY6.HU7G6KETJZ.6YS6EN2CT7"
+    },
+    {
+      "regionCode": "ap-northeast-1",
+      "servicecode": "AmazonEC2",
+      "servicename": "Amazon Elastic Compute Cloud",
+      "USD": "0.1167600000",
+      "description": "Windows with SQL Server Web (Amazon VPC), c6i.large reserved instance applied",
+      "rateCode": "2223B6PCG6QAUYY6.HU7G6KETJZ.6YS6EN2CT7"
+    },
+    {
+      "regionCode": "ap-northeast-1",
+      "servicecode": "AmazonEC2",
+      "servicename": "Amazon Elastic Compute Cloud",
+      "USD": "0.0000000000",
+      "description": "USD 0.0 per Windows with SQL Server Web (Amazon VPC), c6i.large reserved instance applied",
+      "rateCode": "2223B6PCG6QAUYY6.MZU6U2429S.6YS6EN2CT7"
+    },
+    {
+      "regionCode": "ap-northeast-1",
+      "servicecode": "AmazonEC2",
+      "servicename": "Amazon Elastic Compute Cloud",
+      "USD": "0.0000000000",
+      "description": "USD 0.0 per Windows with SQL Server Web (Amazon VPC), c6i.large reserved instance applied",
+      "rateCode": "2223B6PCG6QAUYY6.MZU6U2429S.6YS6EN2CT7"
+    },
+    {
+      "regionCode": "ap-northeast-1",
+      "servicecode": "AmazonEC2",
+      "servicename": "Amazon Elastic Compute Cloud",
+      "USD": "0.1223500000",
+      "description": "Windows with SQL Server Web (Amazon VPC), c6i.large reserved instance applied",
+      "rateCode": "2223B6PCG6QAUYY6.CUZHX8X6JH.6YS6EN2CT7"
+    },
+    {
+      "regionCode": "ap-northeast-1",
+      "servicecode": "AmazonEC2",
+      "servicename": "Amazon Elastic Compute Cloud",
+      "USD": "0.1223500000",
+      "description": "Windows with SQL Server Web (Amazon VPC), c6i.large reserved instance applied",
+      "rateCode": "2223B6PCG6QAUYY6.CUZHX8X6JH.6YS6EN2CT7"
+    },
+    {
+      "regionCode": "ap-northeast-1",
+      "servicecode": "AmazonEC2",
+      "servicename": "Amazon Elastic Compute Cloud",
+      "USD": "0.2132400000",
+      "description": "Windows with SQL Server Web (Amazon VPC), c6i.large reserved instance applied",
+      "rateCode": "2223B6PCG6QAUYY6.BPH4J8HBKS.6YS6EN2CT7"
+    },
+    {
+      "regionCode": "ap-northeast-1",
+      "servicecode": "AmazonEC2",
+      "servicename": "Amazon Elastic Compute Cloud",
+      "USD": "0.0000000000",
+      "description": "USD 0.0 per Windows with SQL Server Web (Amazon VPC), c6i.large reserved instance applied",
+      "rateCode": "2223B6PCG6QAUYY6.VJWZNREJX2.6YS6EN2CT7"
+    },
+    {
+      "regionCode": "ap-northeast-1",
+      "servicecode": "AmazonEC2",
+      "servicename": "Amazon Elastic Compute Cloud",
+      "USD": "0.0000000000",
+      "description": "USD 0.0 per Windows with SQL Server Web (Amazon VPC), c6i.large reserved instance applied",
+      "rateCode": "2223B6PCG6QAUYY6.VJWZNREJX2.6YS6EN2CT7"
+    },
+    {
+      "regionCode": "ap-northeast-1",
+      "servicecode": "AmazonEC2",
+      "servicename": "Amazon Elastic Compute Cloud",
+      "USD": "0.2208700000",
+      "description": "Windows with SQL Server Web (Amazon VPC), c6i.large reserved instance applied",
+      "rateCode": "2223B6PCG6QAUYY6.Z2E3P23VKM.6YS6EN2CT7"
+    },
+    {
+      "regionCode": "ap-northeast-1",
+      "servicecode": "AmazonEC2",
+      "servicename": "Amazon Elastic Compute Cloud",
+      "USD": "2843",
+      "description": "Upfront Fee",
+      "rateCode": "2223B6PCG6QAUYY6.R5XV2EPZQZ.2TG2D8R56U"
+    },
+    {
+      "regionCode": "ap-northeast-1",
+      "servicecode": "AmazonEC2",
+      "servicename": "Amazon Elastic Compute Cloud",
+      "USD": "2843",
+      "description": "Upfront Fee",
+      "rateCode": "2223B6PCG6QAUYY6.R5XV2EPZQZ.2TG2D8R56U"
+    },
+    {
+      "regionCode": "ap-northeast-1",
+      "servicecode": "AmazonEC2",
+      "servicename": "Amazon Elastic Compute Cloud",
+      "USD": "0.1046300000",
+      "description": "Windows with SQL Server Web (Amazon VPC), c6i.large reserved instance applied",
+      "rateCode": "2223B6PCG6QAUYY6.38NPMPTW36.6YS6EN2CT7"
+    },
+    {
+      "regionCode": "ap-northeast-1",
+      "servicecode": "AmazonEC2",
+      "servicename": "Amazon Elastic Compute Cloud",
+      "USD": "0.1046300000",
+      "description": "Windows with SQL Server Web (Amazon VPC), c6i.large reserved instance applied",
+      "rateCode": "2223B6PCG6QAUYY6.38NPMPTW36.6YS6EN2CT7"
+    },
+    {
+      "regionCode": "ap-northeast-1",
+      "servicecode": "AmazonEC2",
+      "servicename": "Amazon Elastic Compute Cloud",
+      "USD": "0.0000000000",
+      "description": "USD 0.0 per Windows with SQL Server Web (Amazon VPC), c6i.large reserved instance applied",
+      "rateCode": "2223B6PCG6QAUYY6.6QCMYABX3D.6YS6EN2CT7"
+    },
+    {
+      "regionCode": "ap-northeast-1",
+      "servicecode": "AmazonEC2",
+      "servicename": "Amazon Elastic Compute Cloud",
+      "USD": "0.0000000000",
+      "description": "USD 0.0 per Windows with SQL Server Web (Amazon VPC), c6i.large reserved instance applied",
+      "rateCode": "2223B6PCG6QAUYY6.6QCMYABX3D.6YS6EN2CT7"
+    },
+    {
+      "regionCode": "ap-northeast-1",
+      "servicecode": "AmazonEC2",
+      "servicename": "Amazon Elastic Compute Cloud",
+      "USD": "0.0000000000",
+      "description": "USD 0.0 per Windows with SQL Server Web (Amazon VPC), c6i.large reserved instance applied",
+      "rateCode": "2223B6PCG6QAUYY6.NQ3QZPMQV9.6YS6EN2CT7"
+    },
+    {
+      "regionCode": "ap-northeast-1",
+      "servicecode": "AmazonEC2",
+      "servicename": "Amazon Elastic Compute Cloud",
+      "USD": "0.0000000000",
+      "description": "USD 0.0 per Windows with SQL Server Web (Amazon VPC), c6i.large reserved instance applied",
+      "rateCode": "2223B6PCG6QAUYY6.NQ3QZPMQV9.6YS6EN2CT7"
     }
   ]
 }

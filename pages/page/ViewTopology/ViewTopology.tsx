@@ -13,11 +13,12 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAppContext } from "@/pages/Components/AppContext";
 import { getFormData, updateFormData } from "@/pages/api/getForData";
+import { BiCloud } from "react-icons/bi";
 const viewTopology = () => {
   const [rfInstance, setRfInstance] = useState<any>(null);
   const router = useRouter();
   const [title, setTitle] = useState<any>(null);
-  const [cloud, setCloud] = useState<any>(null);
+  const [cloud, setCloud] = useState<any>([]);
   const [topology, setTopology] = useState<any>(null);
   const { id } = router.query;
   const [role, setRole] = useState<any>();
@@ -130,26 +131,20 @@ const viewTopology = () => {
   const sendEstimationToUser = async (e: any) => {
     e.preventDefault();
     toggleEst();
-    // await getOldData(id).then(async (res) => {
-    //   let data = res.data[0];
-    //   data = {
-    //     ...data,
-    //     status: "Approval Pending",
-    //   };
-    //   await sendEstimation(data.id, data).then(() => {
-    //     toast.success("Estimation sent successfully!", {
-    //       position: "bottom-right",
-    //       autoClose: 3000,
-    //     });
-    //   });
-    // });
+
     await getFormData(id).then(async (res: any) => {
       let rs = res.data[0];
-      let data = {
-        ...rs,
-        fields: serverData,
-      };
-      await updateFormData(rs.id, data);
+      if (rs && serverData.VM_type) { //validation is not working
+        let data = {
+          ...rs,
+          fields: serverData,
+        };
+        await updateFormData(rs.id, data);
+      } else
+        toast.error("Select the VM Type!", {
+          position: "bottom-right",
+          autoClose: 2000,
+        });
     });
   };
   console.log(
@@ -157,6 +152,9 @@ const viewTopology = () => {
     estimateCalc
   );
   //     // await fetchTopology;
+  {
+    cloud && console.log("cloud---", cloud);
+  }
   return (
     <>
       <form className="">
@@ -277,7 +275,13 @@ const viewTopology = () => {
                 ) : (
                   <p>{cloud}</p>
                 )} */}
-                <div>{cloud}</div>
+                {cloud && cloud.length > 1 ? (
+                  <div>
+                    {cloud[0]} & {cloud[1]}
+                  </div>
+                ) : (
+                  <div>{cloud}</div>
+                )}
               </p>
             </div>
           </div>
@@ -307,7 +311,7 @@ const viewTopology = () => {
                     >
                       Subscription Id :
                     </label>
-                    <div className="font-semibold border-b-2 h-6 border-slate-600 bg-gray-200 px-1">
+                    <div className="font-semibold border-b-2 h-6 border-slate-600 bg-gray-100 px-1">
                       {serverData?.subcriptionId}
                     </div>
                     {/* <input
@@ -332,7 +336,7 @@ const viewTopology = () => {
                       value={serverData?.vnet}
                       className="w-[14rem]"
                     /> */}
-                    <div className="font-semibold border-b-2 h-6 border-slate-600 bg-gray-200 px-1">
+                    <div className="font-semibold border-b-2 h-6 border-slate-600 bg-gray-100 px-1">
                       {serverData?.vnet}
                     </div>
                   </div>
@@ -344,7 +348,7 @@ const viewTopology = () => {
                     className="font-semibold text-base flex flex-col justify-start"
                   >
                     <div>CIDR :</div>
-                    <div className="w-[14rem] border-b-2">
+                    <div className="w-[14rem] border-b-2 border-slate-600 bg-gray-100">
                       {serverData?.CIDR}
                     </div>
                   </label>
@@ -353,7 +357,7 @@ const viewTopology = () => {
                     className="font-semibold text-base flex flex-col justify-start"
                   >
                     <div>Subnet :</div>
-                    <div className="w-[14rem] border-b-2">
+                    <div className="w-[14rem] border-b-2 border-slate-600 bg-gray-100">
                       {serverData?.Subnet}
                     </div>
                   </label>
@@ -362,7 +366,7 @@ const viewTopology = () => {
                     className="font-semibold text-base flex flex-col justify-start"
                   >
                     <div>ResourceGRP :</div>
-                    <div className="w-[14rem] border-b-2">
+                    <div className="w-[14rem] border-b-2 border-slate-600 bg-gray-100">
                       {serverData?.ResourceGRP}
                     </div>
                   </label>
@@ -371,7 +375,7 @@ const viewTopology = () => {
                     className="font-semibold text-base flex flex-col justify-start"
                   >
                     <div>Region :</div>
-                    <div className="w-[14rem] border-b-2">
+                    <div className="w-[14rem] border-b-2 border-slate-600 bg-gray-100">
                       {serverData?.Region}
                     </div>
                   </label>
@@ -391,6 +395,7 @@ const viewTopology = () => {
                           Internet_facing: e.target.value,
                         });
                       }}
+                      disabled={true}
                       className="w-[14rem]"
                     >
                       <option value="" disabled>
@@ -413,6 +418,7 @@ const viewTopology = () => {
                           NATting: e.target.value,
                         });
                       }}
+                      disabled={true}
                       className="w-[14rem]"
                     >
                       <option value="" disabled>
@@ -455,6 +461,7 @@ const viewTopology = () => {
                     <div>Description :</div>
                     <textarea
                       className="w-[14rem] min-h-[1.7rem] h-[1.7rem]"
+                      disabled={true}
                       onChange={(e) => {
                         setServerData({
                           ...serverData,
@@ -468,9 +475,9 @@ const viewTopology = () => {
                     htmlFor=""
                     className="font-semibold text-base flex flex-col justify-start"
                   >
+                    {/* //validation is not working for vm type */}
                     <div>VM type :</div>
-                    <input
-                      type="text"
+                    <select
                       required
                       value={serverData?.VM_type}
                       onChange={(e) => {
@@ -479,9 +486,17 @@ const viewTopology = () => {
                           VM_type: e.target.value,
                         });
                       }}
-                      disabled={role == "admin" ? false : true}
+                      disabled={role === "admin" ? false : true}
                       className="w-[14rem]"
-                    />
+                      placeholder="Select VM Type"
+                    >
+                      <option disabled={true}>
+                        Select VM Type
+                      </option>
+                      <option value="type1">Type 1</option>
+                      <option value="type2">Type 2</option>
+                      {/* Add more options as needed */}
+                    </select>
                   </label>
                 </div>
 
@@ -493,7 +508,7 @@ const viewTopology = () => {
                     <div>Series :</div>
                     <input
                       type="text"
-                      disabled={role == "admin" ? false : true}
+                      disabled={true}
                       required
                       value={serverData?.Series}
                       onChange={(e) => {
@@ -512,7 +527,7 @@ const viewTopology = () => {
                     <div>vCPUs :</div>
                     <input
                       type="text"
-                      disabled={role == "admin" ? false : true}
+                      disabled={true}
                       required
                       value={serverData?.vCPUs}
                       onChange={(e) => {
@@ -531,7 +546,7 @@ const viewTopology = () => {
                     <div>RAM :</div>
                     <input
                       type="text"
-                      disabled={role == "admin" ? false : true}
+                      disabled={true}
                       required
                       value={serverData?.RAM}
                       onChange={(e) => {
@@ -556,6 +571,7 @@ const viewTopology = () => {
                           OS_version: e.target.value,
                         });
                       }}
+                      disabled={true}
                       className="w-[14rem]"
                     >
                       <option value="" disabled>
@@ -584,6 +600,7 @@ const viewTopology = () => {
                           License: e.target.value,
                         });
                       }}
+                      disabled={true}
                       className="w-[14rem]"
                     >
                       <option value="" disabled>
@@ -604,6 +621,7 @@ const viewTopology = () => {
                       type="text"
                       required
                       value={serverData?.OS_Disk_size}
+                      disabled={true}
                       onChange={(e) => {
                         setServerData({
                           ...serverData,
@@ -625,6 +643,7 @@ const viewTopology = () => {
                           Disk_partition: e.target.value,
                         });
                       }}
+                      disabled={true}
                       value={serverData?.Disk_partition}
                       className="w-[14rem] min-h-[1.7rem] h-[1.7rem]"
                     />
@@ -644,6 +663,7 @@ const viewTopology = () => {
                           Storage_Disk_Size: e.target.value,
                         });
                       }}
+                      disabled={true}
                       className="w-[14rem]"
                     />
                   </label>
@@ -663,6 +683,7 @@ const viewTopology = () => {
                           Storage_Disk: e.target.value,
                         });
                       }}
+                      disabled={true}
                       className="w-[14rem]"
                     >
                       <option value="" disabled>
@@ -680,7 +701,7 @@ const viewTopology = () => {
                     <input
                       type="text"
                       value={serverData?.Storage_Disk_Value}
-                      disabled={serverData?.Storage_Disk == "no" ? true : false}
+                      disabled={true}
                       onChange={(e) => {
                         setServerData({
                           ...serverData,
@@ -697,6 +718,7 @@ const viewTopology = () => {
                     <div>Compute options :</div>
                     <select
                       value={serverData?.Compute_options}
+                      disabled={true}
                       onChange={(e) => {
                         setServerData({
                           ...serverData,
@@ -720,9 +742,7 @@ const viewTopology = () => {
                     <input
                       type="text"
                       value={serverData?.Compute}
-                      disabled={
-                        serverData?.Compute_options == "no" ? true : false
-                      }
+                      disabled={true}
                       onChange={(e) => {
                         setServerData({
                           ...serverData,

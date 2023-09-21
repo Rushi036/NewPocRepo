@@ -19,20 +19,21 @@ const Assets = () => {
     const res: any = await tableData(bu_id);
     setData(res.data);
   }
-  console.log(data);
+  console.log("--------------",data);
   const noDelete = () => {
     toast.error("This action is not Permitted!", {
       position: "bottom-right",
       autoClose: 2000,
     });
   }
+
   return (
     <div className="">
       <ToastContainer />
       <div className="text-xl px-4 border-b-2 border-slate-400 pb-2 flex justify-between items-center">
         <span>Assets</span>
       </div>
-      <div className="flex justify-between px-4 pt-4">
+      <div className="flex justify-between px-4">
         <div></div>
         <Link href={"../page/AddTopology/addTopology"}>
           <button className="btn bg-red-700 rounded-sm  px-4 py-1 mt-6 text-white font-semibold hover:bg-red-800">
