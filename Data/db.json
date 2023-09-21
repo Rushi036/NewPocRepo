@@ -45,14 +45,33 @@
       "name": "ABMCPL",
       "email": "ABG5@gmail.com",
       "password": "abg@123",
-      "role": "BU"
+      "role": "BU",
+      "subcriptionId": "",
+      "vnet": "",
+      "CIDR": "",
+      "Subnet": "",
+      "ResourceGRP": "",
+      "Region": ""
     },
     {
       "id": 6,
       "name": "BMCSPL",
-      "email": "ABG@gmail.com",
+      "email": "ABG6@gmail.com",
       "password": "abg@123",
       "role": "BU"
+    },
+    {
+      "id": 7,
+      "name": "Grasim PnF",
+      "email": "ABG7@gmail.com",
+      "password": "abg@123",
+      "role": "BU",
+      "subcriptionId": "",
+      "vnet": "",
+      "CIDR": "",
+      "Subnet": "",
+      "ResourceGRP": "",
+      "Region": ""
     }
   ],
   "topology_table_data": [
@@ -497,7 +516,7 @@
   "finops": [
     {
       "user_id": 1,
-      "link": "http://65.108.85.82:5601/app/dashboards#/view/e6776b10-1534-11ea-841c-01bf20a6c8ba?_g=(filters:!(),refreshInterval:(pause:!t,value:60000),time:(from:now-7d%2Fd,to:now))"
+      "link": "http://10.47.98.164:5601/app/r/s/ZfxHb"
     },
     {
       "user_id": 2,
@@ -513,11 +532,16 @@
     },
     {
       "user_id": 5,
-      "link": "http://65.108.85.82:5601/app/dashboards#/view/e6776b10-1534-11ea-841c-01bf20a6c8ba?_g=(filters:!(),refreshInterval:(pause:!t,value:60000),time:(from:now-7d%2Fd,to:now))"
+      "link": "http://10.47.98.164:5601/app/r/s/dSPkj"
     },
     {
       "user_id": 6,
       "link": "http://65.108.85.82:5601/app/dashboards#/view/e6776b10-1534-11ea-841c-01bf20a6c8ba?_g=(filters:!(),refreshInterval:(pause:!t,value:60000),time:(from:now-7d%2Fd,to:now))"
+    },
+    {
+      "user_id": 7,
+      "link":"http://10.47.98.164:5601/app/dashboards#/view/d8fdd1a0-52e7-11ee-bc96-cdc778061039?embed=true&_g=(refreshInterval:(pause:!t,value:60000),time:(from:now-15m,to:now))&_a=()&show-time-filter=true&hide-filter-bar=true"
+
     }
   ],
   "reports": [
