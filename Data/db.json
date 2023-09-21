@@ -120,6 +120,23 @@
       "awsQuantity": 1,
       "awsProductPrice": 0.213,
       "totalPriceAws": 0.213
+    },
+    {
+      "title": "q",
+      "bu": "Grasim PnF",
+      "bu_id": "7",
+      "cloud_server": [
+        "AWS"
+      ],
+      "status": "Draft",
+      "created_date": "21/09/2023",
+      "topology_id": 3,
+      "business_sponser": "f",
+      "server_owner": "f",
+      "application_owner": "d",
+      "resource_owner": "f",
+      "selected_environment": "Production",
+      "id": 3
     }
   ],
   "topology": [
@@ -156,6 +173,23 @@
       "resource_owner": "vhj",
       "selected_environment": "Test",
       "id": 2
+    },
+    {
+      "bu_id": "7",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "q",
+      "cloud_server": [
+        "AWS"
+      ],
+      "business_sponser": "f",
+      "server_owner": "f",
+      "application_owner": "d",
+      "resource_owner": "f",
+      "selected_environment": "Production",
+      "id": 3
     }
   ],
   "finops": [
@@ -185,8 +219,7 @@
     },
     {
       "user_id": 7,
-      "link":"http://10.47.98.164:5601/app/dashboards#/view/d8fdd1a0-52e7-11ee-bc96-cdc778061039?embed=true&_g=(refreshInterval:(pause:!t,value:60000),time:(from:now-15m,to:now))&_a=()&show-time-filter=true&hide-filter-bar=true"
-
+      "link": "http://10.47.98.164:5601/app/dashboards#/view/d8fdd1a0-52e7-11ee-bc96-cdc778061039?embed=true&_g=(refreshInterval:(pause:!t,value:60000),time:(from:now-15m,to:now))&_a=()&show-time-filter=true&hide-filter-bar=true"
     }
   ],
   "reports": [
@@ -283,6 +316,35 @@
         "NATting": "no"
       },
       "id": 2
+    },
+    {
+      "topology_id": 3,
+      "node_name": "Server",
+      "fields": {
+        "subcriptionId": "",
+        "vnet": "",
+        "CIDR": "",
+        "Subnet": "",
+        "ResourceGRP": "",
+        "Region": "",
+        "Description": "lkasnd",
+        "VM_type": "",
+        "Series": ",ams c",
+        "vCPUs": "lkasncc",
+        "RAM": "lskdnc",
+        "OS_version": "Ubuntu 20.04",
+        "License": "BYOL",
+        "OS_Disk_size": "lkdn",
+        "Disk_partition": "sdc",
+        "Storage_Disk_Size": "dfv",
+        "Storage_Disk": "no",
+        "Storage_Disk_Value": "",
+        "Compute_options": "no",
+        "Compute": "",
+        "Internet_facing": "no",
+        "NATting": "no"
+      },
+      "id": 3
     }
   ],
   "allVMsData": [

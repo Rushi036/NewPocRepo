@@ -178,9 +178,7 @@ function Topology(props: any) {
       <div className="topology-editor">
         <div className="creator">
           {network_icons ?
-            <ReactFlowProvider>
               <AddNodeOnEdgeDrop network_icons={network_icons} initialNodes={initialNodes} setRfInstance={props.setRfInstance} topology={props.topology} />
-            </ReactFlowProvider>
             :
             <>no data found</>
           }

@@ -11,7 +11,7 @@ import "reactflow/dist/style.css";
 import { getIcons } from "@/pages/api/getIcons";
 import { GetAllVMs } from "@/pages/api/getallVMs";
 import { table } from "console";
-import router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { viewTopologyForAdmin } from "@/pages/api/viewTopologyForAdmin";
 import { useAppContext } from "../AppContext";
 import { getOldData, sendEstimation } from "@/pages/api/sendEstimation";
@@ -169,6 +169,7 @@ const AddNodeOnEdgeDrop = (props: any) => {
 };
 
 function Topology(props: any) {
+  const router = useRouter()
   const { id } = router.query;
   const [network_icons, setNetworkIcons] = useState<any>(null);
   const [initialNodes, setInitialNodes] = useState<any>(null);
@@ -632,14 +633,12 @@ function Topology(props: any) {
           }}
         >
           {network_icons ? (
-            <ReactFlowProvider>
               <AddNodeOnEdgeDrop
                 network_icons={network_icons}
                 initialNodes={initialNodes}
                 setRfInstance={props.setRfInstance}
                 topology={props.topology}
               />
-            </ReactFlowProvider>
           ) : (
             <>no data found</>
           )}
