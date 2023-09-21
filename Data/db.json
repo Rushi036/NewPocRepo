@@ -318,59 +318,7 @@
       "application_owner": "uiui",
       "resource_owner": "buibu",
       "selected_environment": "Test",
-      "id": 5
-    },
-    {
-      "bu_id": "1",
-      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
-      "node_details": [
-        "Server"
-      ],
-      "title": "vhgvhg",
-      "cloud_server": [
-        "AWS"
-      ],
-      "business_sponser": "hjbhj",
-      "server_owner": "hbhjb",
-      "application_owner": "hjbhj",
-      "resource_owner": "hjbj",
-      "selected_environment": "Production",
-      "id": 6
-    },
-    {
-      "bu_id": "1",
-      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
-      "node_details": [
-        "Server"
-      ],
-      "title": "vyuv",
-      "cloud_server": [
-        "AWS"
-      ],
-      "business_sponser": "vhjhj",
-      "server_owner": "h",
-      "application_owner": "vhjj",
-      "resource_owner": "hjhj",
-      "selected_environment": "Production",
-      "id": 7
-    },
-    {
-      "bu_id": "1",
-      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
-      "node_details": [
-        "Server"
-      ],
-      "title": "bhbhjb",
-      "cloud_server": [
-        "Azure",
-        "AWS"
-      ],
-      "business_sponser": "bhjbj",
-      "server_owner": "bjbjb",
-      "application_owner": "hjbhjbh",
-      "resource_owner": "bj",
-      "selected_environment": "Production",
-      "id": 8
+      "id": 3
     }
   ],
   "finops": [
@@ -637,7 +585,7 @@
         "Internet_facing": "no",
         "NATting": "no"
       },
-      "id": 7
+      "id": 10
     }
   ],
   "allVMsData": [
