@@ -8,24 +8,24 @@ const Assets = () => {
   let role;
   let bu_id: string | null;
   const [data, setData] = useState<any>(null);
-  if (typeof window !== "undefined") {
+  // if (typeof window !== "undefined") {
+  useEffect(() => {
     role = localStorage.getItem("role");
     bu_id = localStorage.getItem("bu_id");
-    useEffect(() => {
-      dataFetch();
-    }, []);
-  }
+    dataFetch();
+  }, []);
+  // }
   async function dataFetch() {
     const res: any = await tableData(bu_id);
     setData(res.data);
   }
-  console.log("--------------",data);
+  console.log("--------------", data);
   const noDelete = () => {
     toast.error("This action is not Permitted!", {
       position: "bottom-right",
       autoClose: 2000,
     });
-  }
+  };
 
   return (
     <div className="">
@@ -42,7 +42,6 @@ const Assets = () => {
         </Link>
       </div>
       <div className="items-center pb-4 px-4 ">
-
         <div className="relative overflow-x-auto mt-6">
           <table className="w-full text-sm text-center text-gray-800 ">
             <thead className="text-xs text-white uppercase bg-red-800 ">
@@ -94,7 +93,10 @@ const Assets = () => {
                             View
                           </button>
                         </Link>
-                        <button className="btn bg-red-400 px-2 py-1 rounded-sm text-white font-medium" onClick={noDelete}>
+                        <button
+                          className="btn bg-red-400 px-2 py-1 rounded-sm text-white font-medium"
+                          onClick={noDelete}
+                        >
                           Delete
                         </button>
                       </td>

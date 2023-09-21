@@ -68,27 +68,31 @@ const viewTopology = () => {
       let userRole = localStorage.getItem("role");
       userRole != "admin"
         ? await getTopologyData(buId, id).then((res) => {
-          setTitle(res.data[0].title);
-          setCloud(res.data[0].cloud_server);
-          setTopology(res.data[0].flowChart);
-          setTopoDetails(res.data[0].node_details);
-          setApplicationOwner(res.data[0].application_owner);
-          setResourceOwner(res.data[0].resource_owner);
-          setSelectedEnvironment(res.data[0].selected_environment);
-          setbusinessSponser(res.data[0].business_sponser);
-          setServerOwner(res.data[0].server_owner);
+          if(res){
+            setTitle(res.data[0].title);
+            setCloud(res.data[0].cloud_server);
+            setTopology(res.data[0].flowChart);
+            setTopoDetails(res.data[0].node_details);
+            setApplicationOwner(res.data[0].application_owner);
+            setResourceOwner(res.data[0].resource_owner);
+            setSelectedEnvironment(res.data[0].selected_environment);
+            setbusinessSponser(res.data[0].business_sponser);
+            setServerOwner(res.data[0].server_owner);
+          }
         })
         : await viewTopologyForAdmin(id).then((res) => {
-          setTitle(res.data[0].title);
-          setCloud(res.data[0].cloud_server);
-          setTopology(res.data[0].flowChart);
-          setTopoDetails(res.data[0].node_details);
-          setApplicationOwner(res.data[0].application_owner);
-          setResourceOwner(res.data[0].resource_owner);
-          setSelectedEnvironment(res.data[0].selected_environment);
-          setbusinessSponser(res.data[0].business_sponser);
-          setServerOwner(res.data[0].server_owner);
-          console.log("res", res.data[0]);
+          if(res){
+            setTitle(res.data[0].title);
+            setCloud(res.data[0].cloud_server);
+            setTopology(res.data[0].flowChart);
+            setTopoDetails(res.data[0].node_details);
+            setApplicationOwner(res.data[0].application_owner);
+            setResourceOwner(res.data[0].resource_owner);
+            setSelectedEnvironment(res.data[0].selected_environment);
+            setbusinessSponser(res.data[0].business_sponser);
+            setServerOwner(res.data[0].server_owner);
+            console.log("res", res.data[0]);
+          }
         });
 
       await getFormData(id).then((data: any) => {
