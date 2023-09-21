@@ -1108,7 +1108,7 @@ function Topology(props: any) {
                                         )}
                                       </td>
                                       <td className="px-4 py-2 text-center">
-                                        <p className="border-b-2">
+                                        <div className="border-b-2">
                                           {cloud && cloud == "Azure" ? (
                                             <div>{estimation.totalPrice}</div>
                                           ) : (
@@ -1116,7 +1116,7 @@ function Topology(props: any) {
                                               {estimation.totalPriceAws}
                                             </div>
                                           )}
-                                        </p>
+                                        </div>
                                       </td>
                                     </tr>
                                   </tbody>
@@ -1364,13 +1364,13 @@ function Topology(props: any) {
                                 </td>
 
                                 <td className="px-4 py-2 text-center">
-                                  <p className="border-b-2">
+                                  <div className="border-b-2">
                                     {cloud && cloud == "Azure" ? (
                                       <div>{estimation.totalPrice}</div>
                                     ) : (
                                       <div>{estimation.totalPriceAws}</div>
                                     )}
-                                  </p>
+                                  </div>
                                 </td>
                               </tr>
 
