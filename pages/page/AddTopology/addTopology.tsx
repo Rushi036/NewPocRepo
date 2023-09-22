@@ -436,7 +436,7 @@ const addTopology = () => {
                   <h1 className="text-xl font-semibold border-b-2 border-slate-600">
                     Additional Info - {allNodes}
                   </h1>
-                  <div className="flex items-center pb-2">
+                  {/* <div className="flex items-center pb-2">
                     <label
                       htmlFor=""
                       className="font-semibold text-base flex flex-col justify-start mr-2"
@@ -446,13 +446,6 @@ const addTopology = () => {
                     <div className="font-semibold border-b-2 h-6 border-slate-600 bg-gray-200 px-1">
                       {serverData?.subcriptionId}
                     </div>
-                    {/* <input
-                      type="text"
-                      required
-                      disabled
-                      value={serverData?.subcriptionId}
-                      className="w-[20rem]"
-                    /> */}
                   </div>
                   <div className="flex">
                     <label
@@ -461,20 +454,13 @@ const addTopology = () => {
                     >
                       VNET :
                     </label>
-                    {/* <input
-                      type="text"
-                      disabled
-                      required
-                      value={serverData?.vnet}
-                      className="w-[14rem]"
-                    /> */}
                     <div className="font-semibold border-b-2 h-6 border-slate-600 bg-gray-200 px-1">
                       {serverData?.vnet}
                     </div>
-                  </div>
+                  </div> */}
                 </div>
 
-                <div className="flex justify-around">
+                {/* <div className="flex justify-around">
                   <label
                     htmlFor=""
                     className="font-semibold text-base flex flex-col justify-start"
@@ -527,7 +513,7 @@ const addTopology = () => {
                       className="w-[14rem]"
                     />
                   </label>
-                </div>
+                </div> */}
 
                 <div className="flex justify-around">
                   <label
@@ -574,32 +560,7 @@ const addTopology = () => {
                       <option value="no">No</option>
                     </select>
                   </label>
-                  {/* <label
-                    htmlFor=""
-                    className="font-semibold text-base flex flex-col justify-start"
-                  >
-                    <div>ResourceGRP :</div>
-                    <input
-                      type="text"
-                      disabled
-                      required
-                      value={serverData?.ResourceGRP}
-                      className="w-[14rem]"
-                    />
-                  </label>
-                  <label
-                    htmlFor=""
-                    className="font-semibold text-base flex flex-col justify-start"
-                  >
-                    <div>Region :</div>
-                    <input
-                      type="text"
-                      disabled
-                      required
-                      value={serverData?.Region}
-                      className="w-[14rem]"
-                    />
-                  </label> */}
+             
                   <label
                     htmlFor=""
                     className="font-semibold text-base flex flex-col justify-start"
@@ -616,7 +577,7 @@ const addTopology = () => {
                       value={serverData?.Description}
                     />
                   </label>
-                  <label
+                  {/* <label
                     htmlFor=""
                     className="font-semibold text-base flex flex-col justify-start"
                   >
@@ -634,7 +595,7 @@ const addTopology = () => {
                       disabled={role == "admin" ? false : true}
                       className="w-[14rem]"
                     />
-                  </label>
+                  </label> */}
                 </div>
 
                 <div className="flex justify-around">
@@ -887,50 +848,7 @@ const addTopology = () => {
                 </div>
 
                 <div className="flex justify-center gap-[6.5rem]">
-                  {/* <label
-                    htmlFor=""
-                    className="font-semibold text-base flex flex-col justify-start"
-                  >
-                    <div>Internet facing :</div>
-                    <select
-                      value={serverData?.Internet_facing}
-                      onChange={(e) => {
-                        setServerData({
-                          ...serverData,
-                          Internet_facing: e.target.value,
-                        });
-                      }}
-                      className="w-[14rem]"
-                    >
-                      <option value="" disabled>
-                        Select Options
-                      </option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
-                    </select>
-                  </label>
-                  <label
-                    htmlFor=""
-                    className="font-semibold text-base flex flex-col justify-start"
-                  >
-                    <div>NATting :</div>
-                    <select
-                      value={serverData?.NATting}
-                      onChange={(e) => {
-                        setServerData({
-                          ...serverData,
-                          NATting: e.target.value,
-                        });
-                      }}
-                      className="w-[14rem]"
-                    >
-                      <option value="" disabled>
-                        Select Options
-                      </option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
-                    </select>
-                  </label> */}
+              
                 </div>
               </div>
               <div className="mt-4 flex justify-end">
