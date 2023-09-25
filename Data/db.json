@@ -221,6 +221,104 @@
       "awsQuantity": "",
       "awsProductPrice": "",
       "totalPriceAws": ""
+    },
+    {
+      "title": "q",
+      "bu": "Grasim PnF",
+      "bu_id": "7",
+      "cloud_server": [
+        "AWS"
+      ],
+      "status": "Draft",
+      "created_date": "22/09/2023",
+      "topology_id": 4,
+      "business_sponser": "q",
+      "server_owner": "q",
+      "application_owner": "q",
+      "resource_owner": "q",
+      "selected_environment": "Production",
+      "id": 4
+    },
+    {
+      "title": "demo",
+      "bu": "Grasim PnF",
+      "bu_id": "7",
+      "cloud_server": [
+        "AWS"
+      ],
+      "status": "Approved By User",
+      "created_date": "25/09/2023",
+      "topology_id": 5,
+      "business_sponser": "demo",
+      "server_owner": "demo",
+      "application_owner": "demo",
+      "resource_owner": "demo",
+      "selected_environment": "Production",
+      "id": 5,
+      "awsProduct": "AmazonEC2",
+      "awsQuantity": 1,
+      "awsProductPrice": 0.213,
+      "totalPriceAws": 0.213
+    },
+    {
+      "title": "h",
+      "bu": "Grasim PnF",
+      "bu_id": "7",
+      "cloud_server": [
+        "Azure"
+      ],
+      "status": "Approved By User",
+      "created_date": "25/09/2023",
+      "topology_id": 6,
+      "business_sponser": "q",
+      "server_owner": "q",
+      "application_owner": "q",
+      "resource_owner": "q",
+      "selected_environment": "Production",
+      "id": 6,
+      "product": "",
+      "quantity": "",
+      "price": "",
+      "totalPrice": "",
+      "awsProduct": "",
+      "awsQuantity": "",
+      "awsProductPrice": "",
+      "totalPriceAws": ""
+    },
+    {
+      "title": "j",
+      "bu": "Grasim PnF",
+      "bu_id": "7",
+      "cloud_server": [
+        "AWS",
+        "Azure"
+      ],
+      "status": "Draft",
+      "created_date": "25/09/2023",
+      "topology_id": 7,
+      "business_sponser": "b",
+      "server_owner": "jhb",
+      "application_owner": "hb",
+      "resource_owner": "jhb",
+      "selected_environment": "Production",
+      "id": 7
+    },
+    {
+      "title": "q",
+      "bu": "Grasim PnF",
+      "bu_id": "7",
+      "cloud_server": [
+        "AWS"
+      ],
+      "status": "Draft",
+      "created_date": "25/09/2023",
+      "topology_id": 8,
+      "business_sponser": "q",
+      "server_owner": "q",
+      "application_owner": "q",
+      "resource_owner": "q",
+      "selected_environment": "Production",
+      "id": 8
     }
   ],
   "topology": [
@@ -274,6 +372,92 @@
       "resource_owner": "jhvjh",
       "selected_environment": "Test",
       "id": 3
+    },
+    {
+      "bu_id": "7",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "q",
+      "cloud_server": [
+        "AWS"
+      ],
+      "business_sponser": "q",
+      "server_owner": "q",
+      "application_owner": "q",
+      "resource_owner": "q",
+      "selected_environment": "Production",
+      "id": 4
+    },
+    {
+      "bu_id": "7",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "demo",
+      "cloud_server": [
+        "AWS"
+      ],
+      "business_sponser": "demo",
+      "server_owner": "demo",
+      "application_owner": "demo",
+      "resource_owner": "demo",
+      "selected_environment": "Production",
+      "id": 5
+    },
+    {
+      "bu_id": "7",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "h",
+      "cloud_server": [
+        "Azure"
+      ],
+      "business_sponser": "q",
+      "server_owner": "q",
+      "application_owner": "q",
+      "resource_owner": "q",
+      "selected_environment": "Production",
+      "id": 6
+    },
+    {
+      "bu_id": "7",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "j",
+      "cloud_server": [
+        "AWS",
+        "Azure"
+      ],
+      "business_sponser": "b",
+      "server_owner": "jhb",
+      "application_owner": "hb",
+      "resource_owner": "jhb",
+      "selected_environment": "Production",
+      "id": 7
+    },
+    {
+      "bu_id": "7",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "q",
+      "cloud_server": [
+        "AWS"
+      ],
+      "business_sponser": "q",
+      "server_owner": "q",
+      "application_owner": "q",
+      "resource_owner": "q",
+      "selected_environment": "Production",
+      "id": 8
     }
   ],
   "finops": [
@@ -417,6 +601,174 @@
         "NATting": "no"
       },
       "id": 3
+    },
+    {
+      "topology_id": 4,
+      "node_name": "Server",
+      "fields": {
+        "Description": "asxsw",
+        "VM_type": "",
+        "Series": "skjeb",
+        "vCPUs": "kjb",
+        "RAM": "kjb",
+        "OS_version": "",
+        "OS": "Ubuntu",
+        "Version": 18.04,
+        "Publisher": "Canonical",
+        "License": "BYOL",
+        "OS_Disk_size": "kjb dsvkj",
+        "OS_Disk_Name": "kjbsd",
+        "Disk_partition": "kjb sdc",
+        "Storage_Disk_Size": "kjsdc",
+        "Storage_Disk": "no",
+        "Storage_Disk_Value": "",
+        "Compute_options": "no",
+        "Compute": "",
+        "Internet_facing": "no",
+        "NATting": "no"
+      },
+      "id": 4
+    },
+    {
+      "topology_id": null,
+      "node_name": null,
+      "fields": {
+        "subcriptionId": "",
+        "vnet": "",
+        "CIDR": "",
+        "Subnet": "",
+        "ResourceGRP": "",
+        "Region": "",
+        "Description": "demo",
+        "VM_type": "",
+        "Series": "demo",
+        "vCPUs": "demo",
+        "RAM": "demo",
+        "OS_version": "",
+        "OS": "RHEL",
+        "Version": 8.6,
+        "Publisher": "RedHat",
+        "License": "BYOL",
+        "OS_Disk_size": "demo",
+        "OS_Disk_Name": "demo",
+        "Disk_partition": "demo",
+        "Storage_Disk_Size": "demo",
+        "Storage_Disk": "yes",
+        "Storage_Disk_Value": "demo",
+        "Compute_options": "yes",
+        "Compute": "demo",
+        "Internet_facing": "yes",
+        "NATting": "yes"
+      },
+      "id": 5
+    },
+    {
+      "topology_id": 5,
+      "node_name": "Server",
+      "fields": {
+        "Description": "demo",
+        "VM_type": "",
+        "Series": "demo",
+        "vCPUs": "demo",
+        "RAM": "demo",
+        "OS_version": "RHEL8.6",
+        "OS": "RHEL",
+        "Version": 8.6,
+        "Publisher": "RedHat",
+        "License": "Azure Hybrid Benefit",
+        "OS_Disk_size": "demo",
+        "OS_Disk_Name": "demo",
+        "Disk_partition": "demo",
+        "Storage_Disk_Size": "demo",
+        "Storage_Disk": "yes",
+        "Storage_Disk_Value": "demo",
+        "Compute_options": "yes",
+        "Compute": "demo",
+        "Internet_facing": "yes",
+        "NATting": "yes"
+      },
+      "id": 6
+    },
+    {
+      "topology_id": 6,
+      "node_name": "Server",
+      "fields": {
+        "Description": "h",
+        "VM_type": "",
+        "Series": "q",
+        "vCPUs": "q",
+        "RAM": "q",
+        "OS_version": "",
+        "OS": "Ubuntu",
+        "Version": 18.04,
+        "Publisher": "Canonical",
+        "License": "BYOL",
+        "OS_Disk_size": "q",
+        "OS_Disk_Name": "q",
+        "Disk_partition": "q",
+        "Storage_Disk_Size": "q",
+        "Storage_Disk": "no",
+        "Storage_Disk_Value": "",
+        "Compute_options": "no",
+        "Compute": "",
+        "Internet_facing": "no",
+        "NATting": "no"
+      },
+      "id": 7
+    },
+    {
+      "topology_id": 7,
+      "node_name": "Server",
+      "fields": {
+        "Description": "h",
+        "VM_type": "",
+        "Series": "q",
+        "vCPUs": "q",
+        "RAM": "q",
+        "OS_version": "",
+        "OS": "RHEL",
+        "Version": 8.6,
+        "Publisher": "RedHat",
+        "License": "BYOL",
+        "OS_Disk_size": "q",
+        "OS_Disk_Name": "q",
+        "Disk_partition": "q",
+        "Storage_Disk_Size": "h",
+        "Storage_Disk": "no",
+        "Storage_Disk_Value": "",
+        "Compute_options": "no",
+        "Compute": "",
+        "Internet_facing": "no",
+        "NATting": "no"
+      },
+      "id": 8
+    },
+    {
+      "topology_id": 8,
+      "node_name": "Server",
+      "fields": {
+        "Description": "q",
+        "VM_type": "",
+        "Series": "q",
+        "vCPUs": "q",
+        "RAM": "q",
+        "OS_version": "RHEL8.6",
+        "OS": "RHEL",
+        "Version": 8.6,
+        "Publisher": "RedHat",
+        "License": "BYOL",
+        "OS_Disk_size": "q",
+        "OS_Disk_Name": "q",
+        "Disk_partition": "q",
+        "Storage_Disk_Size": "q",
+        "Storage_Disk": "no",
+        "Storage_Disk_Value": "",
+        "Compute_options": "no",
+        "Compute": "",
+        "Internet_facing": "no",
+        "NATting": "no"
+      },
+      "id": 9
     }
   ],
   "allVMsData": [

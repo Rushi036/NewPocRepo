@@ -1251,13 +1251,6 @@ function Topology(props: any) {
                           )}
                         </div>
                       )}
-                      {estimation.statusOfTopo == "Approved By User" && (
-                        <div className="flex flex-row mt-2 mb-2 space-x-2 bottom-4 justify-end">
-                          <button className="px-4 rounded-md py-1 bg-red-700 text-white">
-                            Automation
-                          </button>
-                        </div>
-                      )}
                     </div>
                   </div>
                 )}
