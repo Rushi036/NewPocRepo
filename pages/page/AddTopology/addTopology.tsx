@@ -118,12 +118,12 @@ const addTopology = () => {
           cloud_server: selectedClouds,
           business_sponser: businessSponser,
           server_owner: serverOwner,
-          application_owner: applicationOwner,
+          application_owner: applicationOwner,  
           resource_owner: resourceOwner,
           selected_environment: selectedEnvironment,
         };
 
-        console.log("topo data---------------", topologyData);
+        // console.log("topo data---------------", topologyData);
         toast.success("Topology created successfully!", {
           position: "bottom-right",
           autoClose: 3000,
@@ -165,7 +165,7 @@ const addTopology = () => {
           setAllNodes(res.data[0].node_details[0]);
           setResponseData(res.data[0].id);
 
-          console.log("topo data---------------", topologyTableData);
+          // console.log("topo data---------------", topologyTableData);
 
           await addTableData(topologyTableData);
         }
@@ -216,7 +216,7 @@ const addTopology = () => {
       node_name: allNodes,
       fields: serverData,
     };
-    console.log(rdd);
+    // console.log(rdd);
     if (
       serverData.Internet_facing &&
       serverData.NATting &&
@@ -231,16 +231,14 @@ const addTopology = () => {
       serverData.Storage_Disk &&
       serverData.Compute_options &&
       serverData.OS_Disk_size
+      // serverData.OS_version &&
+      // serverData.OS &&
+      // serverData.Version &&
+      // serverData.Publisher
     ) {
-      // console.log("storage",  serverData.Storage_Disk);
-      // console.log("storage disk value",  serverData.Storage_Disk_Value);
-
-      // console.log("compute",  serverData.Compute)
-      // console.log("comptute option",  serverData.Compute_options);
-
       if (
         serverData.Storage_Disk == "yes" &&
-        serverData.Storage_Disk_Value  &&
+        serverData.Storage_Disk_Value &&
         serverData.Compute_options == "yes" &&
         serverData.Compute
       ) {
@@ -263,7 +261,6 @@ const addTopology = () => {
       ) {
         saveResourseData(rdd);
       } else {
-       
         setLoading(false);
         toast.error("Please enter all fields!", {
           position: "bottom-right",
@@ -285,7 +282,7 @@ const addTopology = () => {
       router.push("/Components/Assets");
     });
   }
-
+// console.log("serverdata",serverData)
   return (
     <>
       <div className="text-xl px-4 border-b-2 border-slate-400 pb-2 flex items-center">
@@ -564,7 +561,7 @@ const addTopology = () => {
                       <option value="no">No</option>
                     </select>
                   </label>
-             
+
                   <label
                     htmlFor=""
                     className="font-semibold text-base flex flex-col justify-start"
@@ -690,7 +687,16 @@ const addTopology = () => {
                   >
                     <div>OS version :</div>
                     <select
-                      value={serverData?.OS?JSON.stringify({"OS_version":serverData?.VM_type,"OS":serverData?.OS,"Version": serverData?.Version, "Publisher": serverData?.Publisher}):""}
+                      value={
+                        serverData?.OS
+                          ? JSON.stringify({
+                              OS_version: serverData?.VM_type,
+                              OS: serverData?.OS,
+                              Version: serverData?.Version,
+                              Publisher: serverData?.Publisher,
+                            })
+                          : ""
+                      }
                       onChange={(e) => {
                         let data = JSON.parse(e.target.value);
                         setServerData({
@@ -698,7 +704,7 @@ const addTopology = () => {
                           OS_version: data.OS_version,
                           OS: data.OS,
                           Version: data.Version,
-                          Publisher: data.Publisher
+                          Publisher: data.Publisher,
                         });
                       }}
                       className="w-[14rem]"
@@ -706,11 +712,56 @@ const addTopology = () => {
                       <option value="" disabled>
                         Select OS
                       </option>
-                      <option value={JSON.stringify({"VM_type":"Ubuntu 20.04","OS":"Ubuntu", "Version":20.04,"Publisher":"Canonical"})}>Ubuntu 20.04</option>
-                      <option value={JSON.stringify({"VM_type":"Ubuntu 18.04","OS":"Ubuntu", "Version":18.04,"Publisher":"Canonical"})}>Ubuntu 18.04</option>
-                      <option value={JSON.stringify({"VM_type":"RHEL8.6","OS":"RHEL", "Version":8.6,"Publisher":"RedHat"})}>RHEL8.6</option>
-                      <option value={JSON.stringify({"VM_type":"Windows2019","OS":"Windows", "Version":2019,"Publisher":"MicrosoftWindowsServer"})}>Windows2019</option>
-                      <option value={JSON.stringify({"VM_type":"Centos7","OS":"Centos", "Version":7,"Publisher":"OpenLogic"})}>Centos7</option>
+                      <option
+                        value={JSON.stringify({
+                          VM_type: "Ubuntu 20.04",
+                          OS: "Ubuntu",
+                          Version: "20.04",
+                          Publisher: "Canonical",
+                        })}
+                      >
+                        Ubuntu 20.04
+                      </option>
+                      <option
+                        value={JSON.stringify({
+                          VM_type: "Ubuntu 18.04",
+                          OS: "Ubuntu",
+                          Version: 18.04,
+                          Publisher: "Canonical",
+                        })}
+                      >
+                        Ubuntu 18.04
+                      </option>
+                      <option
+                        value={JSON.stringify({
+                          VM_type: "RHEL8.6",
+                          OS: "RHEL",
+                          Version: 8.6,
+                          Publisher: "RedHat",
+                        })}
+                      >
+                        RHEL8.6
+                      </option>
+                      <option
+                        value={JSON.stringify({
+                          VM_type: "Windows2019",
+                          OS: "Windows",
+                          Version: 2019,
+                          Publisher: "MicrosoftWindowsServer",
+                        })}
+                      >
+                        Windows2019
+                      </option>
+                      <option
+                        value={JSON.stringify({
+                          VM_type: "Centos7",
+                          OS: "Centos",
+                          Version: 7,
+                          Publisher: "OpenLogic",
+                        })}
+                      >
+                        Centos7
+                      </option>
                     </select>
                   </label>
                 </div>
@@ -871,7 +922,6 @@ const addTopology = () => {
                     />
                   </label>
                 </div>
-
               </div>
 
               <div className="mt-4 flex justify-end">

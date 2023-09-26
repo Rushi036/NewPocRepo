@@ -38,9 +38,15 @@ const viewTopology = () => {
   const [buIdOfUser, setBuIdOfUser] = useState<any>();
   const [bu, setBu] = useState<any>();
   const vm_types: any = {
-    "Azure": ["t2.micro", "t2.medium", "t2.2xlarge", "m4.xlarge"],
-    "AWS": ["Standard_B2s", "Standard_B2ms", "Standard_B1s", "Standard_D12_v2", "Standard_DS3_v2"]
-  }
+    Azure: ["t2.micro", "t2.medium", "t2.2xlarge", "m4.xlarge"],
+    AWS: [
+      "Standard_B2s",
+      "Standard_B2ms",
+      "Standard_B1s",
+      "Standard_D12_v2",
+      "Standard_DS3_v2",
+    ],
+  };
   const toggleEst = () => {
     toggleEstimateCalc();
   };
@@ -75,32 +81,32 @@ const viewTopology = () => {
       let userRole = localStorage.getItem("role");
       userRole != "admin"
         ? await getTopologyData(buId, id).then((res) => {
-          if (res) {
-            setTitle(res.data[0].title);
-            setCloud(res.data[0].cloud_server);
-            setTopology(res.data[0].flowChart);
-            setTopoDetails(res.data[0].node_details);
-            setApplicationOwner(res.data[0].application_owner);
-            setResourceOwner(res.data[0].resource_owner);
-            setSelectedEnvironment(res.data[0].selected_environment);
-            setbusinessSponser(res.data[0].business_sponser);
-            setServerOwner(res.data[0].server_owner);
-          }
-        })
+            if (res && res.data[0]) {
+              setTitle(res.data[0].title);
+              setCloud(res.data[0].cloud_server);
+              setTopology(res.data[0].flowChart);
+              setTopoDetails(res.data[0].node_details);
+              setApplicationOwner(res.data[0].application_owner);
+              setResourceOwner(res.data[0].resource_owner);
+              setSelectedEnvironment(res.data[0].selected_environment);
+              setbusinessSponser(res.data[0].business_sponser);
+              setServerOwner(res.data[0].server_owner);
+            }
+          })
         : await viewTopologyForAdmin(id).then((res) => {
-          if (res) {
-            setTitle(res.data[0].title);
-            setCloud(res.data[0].cloud_server);
-            setTopology(res.data[0].flowChart);
-            setTopoDetails(res.data[0].node_details);
-            setApplicationOwner(res.data[0].application_owner);
-            setResourceOwner(res.data[0].resource_owner);
-            setSelectedEnvironment(res.data[0].selected_environment);
-            setbusinessSponser(res.data[0].business_sponser);
-            setServerOwner(res.data[0].server_owner);
-            // console.log("res", res.data[0]);
-          }
-        });
+            if (res && res.data[0]) {
+              setTitle(res.data[0].title);
+              setCloud(res.data[0].cloud_server);
+              setTopology(res.data[0].flowChart);
+              setTopoDetails(res.data[0].node_details);
+              setApplicationOwner(res.data[0].application_owner);
+              setResourceOwner(res.data[0].resource_owner);
+              setSelectedEnvironment(res.data[0].selected_environment);
+              setbusinessSponser(res.data[0].business_sponser);
+              setServerOwner(res.data[0].server_owner);
+              // console.log("res", res.data[0]);
+            }
+          });
 
       await getFormData(id).then((data: any) => {
         if (data.data[0]) {
@@ -135,7 +141,7 @@ const viewTopology = () => {
           };
 
           setServerData(sd);
-          console.log(res);
+          // console.log(res);
         }
       });
     }
@@ -149,7 +155,7 @@ const viewTopology = () => {
       // let buIdOfUser;
       await fetchestimation(id).then((res) => {
         if (res && res.data[0]) {
-          console.log("topology data", res.data[0]);
+          // console.log("topology data", res.data[0]);
           setTopoStatus(res.data[0].status);
           setBuIdOfUser(res.data[0].bu_id);
           setBu(res.data[0].bu);
@@ -233,62 +239,61 @@ const viewTopology = () => {
   function sendAutomation(e: any) {
     e.preventDefault();
     let data: any;
-    const imageId:any = {
+    const imageId: any = {
       "Ubuntu 20.04": "ami-051c327686af3f780",
       "Ubuntu 18.04": "ami-019fa3af48e40143a",
       "RHEL8.6": "ami-0b8b26e328a0e983d",
-      "Windows2019": "ami-09e5ba61a58b68ed4",
-      "Centos7": "ami-8d5073e2"
-    }
+      Windows2019: "ami-09e5ba61a58b68ed4",
+      Centos7: "ami-8d5073e2",
+    };
     if (cloud == "AWS") {
       data = {
-        "bussiess_name": bu,
-        "cloud": "AWS",
-        "ResourceType": "APP", // APP, A
-        "appname": "AUTO", //pending
-        "key_name": "bmcspl-mumbai", //pending
-        "Environment": "T",
-        "instance_type": serverData.VM_type,
-        "image_id": imageId[serverData.OS_version], //(As per OS)
-        "vpc_subnet_id": serverData?.SubnetAws,
-        "region": serverData?.RegionAws,
-        "security_group": "sg-00077de1b13e2e800", //pending
-        "Work_Order_ID": "", //blank
-        "Application_Owner": applicationOwner,
-        "Application_name": title,
-        "Business": "ABCL", //pending
-        "Environment_tag": "Test",
-        "osdisk_name": serverData?.OS_Disk_Name,
-        "osdisk_size": serverData?.OS_Disk_size,
-        "datadisk_name": serverData?.Storage_Disk_Value,
-        "datadisk_size": serverData?.Storage_Disk_Size
-      }
-    }
-    else {
+        bussiess_name: bu,
+        cloud: "AWS",
+        ResourceType: "APP", // APP, A
+        appname: "AUTO", //pending
+        key_name: "bmcspl-mumbai", //pending
+        Environment: "T",
+        instance_type: serverData.VM_type,
+        image_id: imageId[serverData.OS_version], //(As per OS)
+        vpc_subnet_id: serverData?.SubnetAws,
+        region: serverData?.RegionAws,
+        security_group: "sg-00077de1b13e2e800", //pending
+        Work_Order_ID: "", //blank
+        Application_Owner: applicationOwner,
+        Application_name: title,
+        Business: "ABCL", //pending
+        Environment_tag: "Test",
+        osdisk_name: serverData?.OS_Disk_Name,
+        osdisk_size: serverData?.OS_Disk_size,
+        datadisk_name: serverData?.Storage_Disk_Value,
+        datadisk_size: serverData?.Storage_Disk_Size,
+      };
+    } else {
       data = {
-        "bussiess_name": bu, //(Business User Name)
-        "cloud": "AZ",
-        "Environment": "T", //(T - Test from Form )
-        "ResourceType": "A", //(W - webserver / D - Database / A - App / X - Other)
-        "appname": "AUTO",
-        "subscription_id": serverData?.subscriptionIDAzure, //(subscription id from form)
-        "resourcegroup": serverData?.ResourceGRPAzure, //(resource grp from form)
-        "vm_size": serverData.VM_type, //(VM type from Form)
-        "subnet_name": serverData?.vnetAzure, //(Subnet name from form)
-        "offer": serverData?.OS, //(OS from form)
-        "publisher": serverData?.Publisher, //(OS Publisher from form)
-        "sku": serverData?.Version, //(OS Version from form)
-        "version": "Latest",
-        "datadiskname": serverData?.Storage_Disk_Value, //(From form)
-        "disk_size_gb": serverData?.Storage_Disk_Size, //(From Form)
-        "os_disk_size_gb": serverData?.OS_Disk_size, //(From Form)
-        "ApplicationOwner": applicationOwner, //(Application Owner from Form)
-        "ApplicationName": title, //(Topology Name from Form)
-        "Business": "",
-        "Environment_tag": ""
-      }
+        bussiess_name: bu, //(Business User Name)
+        cloud: "AZ",
+        Environment: "T", //(T - Test from Form )
+        ResourceType: "A", //(W - webserver / D - Database / A - App / X - Other)
+        appname: "AUTO",
+        subscription_id: serverData?.subscriptionIDAzure, //(subscription id from form)
+        resourcegroup: serverData?.ResourceGRPAzure, //(resource grp from form)
+        vm_size: serverData.VM_type, //(VM type from Form)
+        subnet_name: serverData?.vnetAzure, //(Subnet name from form)
+        offer: serverData?.OS, //(OS from form)
+        publisher: serverData?.Publisher, //(OS Publisher from form)
+        sku: serverData?.Version, //(OS Version from form)
+        version: "Latest",
+        datadiskname: serverData?.Storage_Disk_Value, //(From form)
+        disk_size_gb: serverData?.Storage_Disk_Size, //(From Form)
+        os_disk_size_gb: serverData?.OS_Disk_size, //(From Form)
+        ApplicationOwner: applicationOwner, //(Application Owner from Form)
+        ApplicationName: title, //(Topology Name from Form)
+        Business: "",
+        Environment_tag: "",
+      };
     }
-    console.log(data)
+    console.log(data);
   }
 
   return (
@@ -423,12 +428,7 @@ const viewTopology = () => {
                         htmlFor=""
                         className="font-semibold text-base flex flex-col justify-start mr-2"
                       >
-                        {cloud == "Azure" ? (
-                          <p>VNET :</p>
-                        ) : (
-                          <p>VPC :</p>
-                        )}
-
+                        {cloud == "Azure" ? <p>VNET :</p> : <p>VPC :</p>}
                       </label>
                       <div className="font-semibold border-b-2 h-6 border-slate-600 bg-gray-100 px-1">
                         {cloud == "Azure" ? (
@@ -658,31 +658,16 @@ const viewTopology = () => {
                   </label>
                   <label
                     htmlFor=""
-                    className="font-semibold text-base flex flex-col justify-start"
+                    className="font-semibold text-base flex flex-col justify-start "
                   >
                     <div>OS version :</div>
-                    <select
-                      value={JSON.stringify({ "OS": serverData?.OS, "Version": serverData?.Version, "Publisher": serverData?.Publisher })}
-                      onChange={(e) => {
-                        let data = JSON.parse(e.target.value);
-                        setServerData({
-                          ...serverData,
-                          OS: data.OS,
-                          Version: data.Version,
-                          Publisher: data.Publisher
-                        });
-                      }}
-                      className="w-[14rem]"
+                    <input
+                      type="text"
+                      value={serverData?.OS}
+                      className="w-[14rem] min-h-[1.7rem] h-[1.7rem] border-b-2 border-slate-600 bg-gray-200"
                     >
-                      <option value="" disabled>
-                        Select OS
-                      </option>
-                      <option value={JSON.stringify({ "OS": "Ubuntu", "Version": 20.04, "Publisher": "Canonical" })}>Ubuntu 20.04</option>
-                      <option value={JSON.stringify({ "OS": "Ubuntu", "Version": 18.04, "Publisher": "Canonical" })}>Ubuntu 18.04</option>
-                      <option value={JSON.stringify({ "OS": "RHEL", "Version": 8.6, "Publisher": "RedHat" })}>RHEL8.6</option>
-                      <option value={JSON.stringify({ "OS": "Windows", "Version": 2019, "Publisher": "MicrosoftWindowsServer" })}>Windows2019</option>
-                      <option value={JSON.stringify({ "OS": "Centos", "Version": 7, "Publisher": "OpenLogic" })}>Centos7</option>
-                    </select>
+                      {/* {serverData && serverData.OS} */}
+                    </input>
                   </label>
                 </div>
 
@@ -845,34 +830,40 @@ const viewTopology = () => {
                       className="w-[14rem] min-h-[1.7rem] h-[1.7rem]"
                     />
                   </label>
-
                 </div>
 
                 <div className="flex justify-center gap-[6.5rem]">
-                  {role == "admin" && topoStatus == "Approved By User" && <label
-                    htmlFor=""
-                    className="font-semibold text-base flex flex-col justify-start"
-                  >
-                    <div>VM type :</div>
-                    <select
-                      required
-                      value={serverData?.VM_type}
-                      onChange={(e) => {
-                        setServerData({
-                          ...serverData,
-                          VM_type: e.target.value,
-                        });
-                      }}
-                      className="w-[14rem]"
+                  {role == "admin" && topoStatus == "Approved By User" && (
+                    <label
+                      htmlFor=""
+                      className="font-semibold text-base flex flex-col justify-start"
                     >
-                      <option disabled={true} value={""}>Select VM Type</option>
-                      {vm_types[cloud].map((e: any, i: any) => {
-                        return (
-                          <option key={i} value={e}>{e}</option>
-                        )
-                      })}
-                    </select>
-                  </label>}
+                      <div>VM type :</div>
+                      <select
+                        required
+                        value={serverData?.VM_type}
+                        onChange={(e) => {
+                          setServerData({
+                            ...serverData,
+                            VM_type: e.target.value,
+                          });
+                        }}
+                        className="w-[14rem]"
+                      >
+                        <option disabled={true} value={""}>
+                          Select VM Type
+                        </option>
+                        {vm_types &&
+                          vm_types[cloud].map((e: any, i: any) => {
+                            return (
+                              <option key={i} value={e}>
+                                {e}
+                              </option>
+                            );
+                          })}
+                      </select>
+                    </label>
+                  )}
                 </div>
               </div>
             </div>
@@ -890,7 +881,11 @@ const viewTopology = () => {
           )}
           {role == "admin" && topoStatus == "Approved By User" && (
             <div className="flex flex-row mt-2 mb-2 space-x-2 bottom-4 justify-end">
-              <button onClick={sendAutomation} type="submit" className="bg-red-700 text-white px-6 py-1 rounded">
+              <button
+                onClick={sendAutomation}
+                type="submit"
+                className="bg-red-700 text-white px-6 py-1 rounded"
+              >
                 Automation
               </button>
             </div>

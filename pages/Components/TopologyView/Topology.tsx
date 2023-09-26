@@ -219,7 +219,7 @@ function Topology(props: any) {
       setfetchestCalcDone(true);
     }
   }, [estimation.awsProduct, estimation.product]);
-  console.log("esti----------", fetchestCalcDone);
+  // console.log("esti----------", fetchestCalcDone);
   useEffect(() => {
     async function dataFetch() {
       let buId = localStorage.getItem("bu_id");
@@ -227,7 +227,7 @@ function Topology(props: any) {
       userRole != "admin" && id
         ? await fetchestimation(id).then((res) => {
             if (res.data[0]) {
-              console.log("user", res.data[0]);
+              // console.log("user", res.data[0]);
 
               setEstimation((prevEstimation: any) => ({
                 ...prevEstimation,
@@ -245,7 +245,7 @@ function Topology(props: any) {
           })
         : await fetchestimation(id).then((res) => {
             if (res.data[0]) {
-              console.log("admin", res.data[0]);
+              // console.log("admin", res.data[0]);
               setEstimation((prevEstimation: any) => ({
                 ...prevEstimation,
                 product: res.data[0].product,
@@ -315,7 +315,7 @@ function Topology(props: any) {
       topoDetails && topoDetails.filter((item: any) => item === "Server").length
     );
   };
-  console.log("-------aws vm data", awsVmData);
+  // console.log("-------aws vm data", awsVmData);
   useEffect(() => {
     async function dataFetch() {
       await getIcons().then((res) => {
@@ -564,7 +564,7 @@ function Topology(props: any) {
     e.preventDefault();
     setCloudSelection(cloudNumber);
   };
-  console.log("selected cloud", cloudSelection);
+  // console.log("selected cloud", cloudSelection);
   useEffect(() => {
     function findPrice(selectedProduct: any, selectedAWSProduct: any) {
       // console.log("in  function", selectedProduct);
@@ -1260,15 +1260,16 @@ function Topology(props: any) {
                 <div className="flex justify-center">
                   <button
                     className={`btn 
-                    }  rounded-md px-4 py-1 mt-6 font-semibold ${
-                      !fetchestCalcDone
-                        ? "bg-gray-300"
-                        : "bg-red-700 text-white"
-                    }`}
+                      rounded-md px-4 py-1 mt-6 font-semibold  ${
+                        fetchestCalcDone && !viewClicked
+                          ? "bg-red-700 text-white"
+                          : "bg-gray-300 cursor-not-allowed"
+                      } `}
                     disabled={
                       (apiHit && vmData && vmData.data) ||
                       (apiHit && awsVmData && awsVmData.data) ||
-                      !fetchestCalcDone
+                      !fetchestCalcDone ||
+                      viewClicked
                     }
                     onClick={(e: any) => manageview(e)}
                   >

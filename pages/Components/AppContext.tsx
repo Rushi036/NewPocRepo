@@ -22,7 +22,7 @@ export const AppContextProvider: React.FC<any> = ({ children }: any) => {
   const toggleEstimateCalc = () => {
     setEstimateCalc((prevState) => !prevState);
   };
-console.log("est in app",estimateCalc)
+// console.log("est in app",estimateCalc)
 
   return (
     <AppContext.Provider
