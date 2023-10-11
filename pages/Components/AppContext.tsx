@@ -1,20 +1,31 @@
 import React, { createContext, useEffect, useState } from "react";
-
+import moment from "moment";
 const AppContext = createContext<{
   state: boolean;
   toggleState: () => void;
   estimateCalc: boolean;
   toggleEstimateCalc: () => void;
+  time: any;
+  toggleTime: (time: any) => void;
+  timeEnd: any;
+  toggleTimeEnd: (timeEnd: any) => void;
 }>({
   state: true,
   toggleState: () => {},
   estimateCalc: false,
-  toggleEstimateCalc: () => {}
+  toggleEstimateCalc: () => {},
+  time: moment().subtract(1, "hour").format("YYYY-MM-DDTHH:mm:ss"),
+
+  toggleTime: (time) => {},
+
+  timeEnd: moment().format("YYYY-MM-DDTHH:mm:ss"),
+
+  toggleTimeEnd: (timeEnd) => {},
 });
 
 export const AppContextProvider: React.FC<any> = ({ children }: any) => {
   const [state, setState] = useState(true);
-  const [estimateCalc , setEstimateCalc] = useState(false);
+  const [estimateCalc, setEstimateCalc] = useState(false);
 
   const toggleState = () => {
     setState((prevState) => !prevState);
@@ -22,7 +33,23 @@ export const AppContextProvider: React.FC<any> = ({ children }: any) => {
   const toggleEstimateCalc = () => {
     setEstimateCalc((prevState) => !prevState);
   };
-// console.log("est in app",estimateCalc)
+
+  const [time, setTime] = useState(
+    moment().subtract(1, "hour").format("YYYY-MM-DDTHH:mm:ss")
+  );
+
+  const [timeEnd, setTimeEnd] = useState(
+    moment().format("YYYY-MM-DDTHH:mm:ss")
+  );
+
+  const toggleTime = (time: any) => {
+    setTime(time);
+  };
+
+  const toggleTimeEnd = (timeEnd: any) => {
+    setTimeEnd(timeEnd);
+  };
+  // console.log("est in app",estimateCalc)
 
   return (
     <AppContext.Provider
@@ -30,7 +57,11 @@ export const AppContextProvider: React.FC<any> = ({ children }: any) => {
         state,
         toggleState,
         estimateCalc,
-        toggleEstimateCalc
+        toggleEstimateCalc,
+        time,
+        toggleTime,
+        timeEnd,
+        toggleTimeEnd,
       }}
     >
       {children}
@@ -39,6 +70,6 @@ export const AppContextProvider: React.FC<any> = ({ children }: any) => {
 };
 
 export const useAppContext = () => React.useContext(AppContext);
-export default function fun(){
-  return(null);
-};
+export default function fun() {
+  return null;
+}

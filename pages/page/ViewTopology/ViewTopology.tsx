@@ -290,7 +290,7 @@ const viewTopology = () => {
         ApplicationOwner: applicationOwner, //(Application Owner from Form)
         ApplicationName: title, //(Topology Name from Form)
         Business: "",
-        Environment_tag: "",
+        Environment_tag: "Test",
       };
     }
     console.log(data);
