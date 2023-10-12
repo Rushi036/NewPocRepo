@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { finOps } from "../api/finOps";
+import { finOps } from "../../api/finOps";
 import { DateRangePicker } from "rsuite";
 import moment from "moment";
-import { useAppContext } from "./AppContext";
+import { useAppContext } from "../../Components/AppContext";
 import "rsuite/dist/rsuite.min.css";
-import PieChartComponent from "./Charts/PieChart";
-import StackChartComponent from "./Charts/StackChart";
-import LineChartComponent from "./Charts/LineChartBlendedCost";
+import PieChartComponent from "../../Components/Charts/PieChart";
+import StackChartComponent from "../../Components/Charts/StackChart";
+import LineChartComponent from "../../Components/Charts/LineChartBlendedCost";
 // import BubbleChartComponent from "./Charts/BubbleChart";
 
 const FinOps = () => {
