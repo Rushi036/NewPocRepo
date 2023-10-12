@@ -19,7 +19,7 @@ const Assets = () => {
     const res: any = await tableData(bu_id);
     setData(res.data);
   }
-  console.log("--------------", data);
+  // console.log("--------------", data);
   const noDelete = () => {
     toast.error("This action is not Permitted!", {
       position: "bottom-right",

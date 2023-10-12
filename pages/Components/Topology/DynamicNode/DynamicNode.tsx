@@ -80,19 +80,19 @@ const memoTopo = (data: any) => {
       {data.id === "0" ? "" : <Handle type="target" position={Position.Top} />}
       {data.id === "0" ? (
         <div className="custom-node" onClick={openModal}>
-          {data.id === "0" ? <button onClick={()=>setDialogOpen(true)}>+</button> : <button onClick={onDelete}>x</button>}
+          {/* {data.id === "0" ? <button onClick={()=>setDialogOpen(true)}>+</button> : <button onClick={onDelete}>x</button>} */}
           <img height={100} width={100} src={data.data?.Path?.Path} alt="" />
           <p>{data.data?.Path?.Name}</p>
         </div>
       ) : (
         <div className="custom-node">
-          {data.id === "0" ? <button onClick={()=>setDialogOpen(true)}>+</button> : <button onClick={onDelete}>x</button>}
+          {/* {data.id === "0" ? <button onClick={()=>setDialogOpen(true)}>+</button> : <button onClick={onDelete}>x</button>} */}
           <img height={100} width={100}  src={data.data?.Path?.Path} alt="" />
           <p>{data.data?.Path?.Name}</p>
         </div>
       )}
 
-      {dialogOpen && (
+      {/* {dialogOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="bg-white border-2 border-gray-600 px-7 py-4 rounded-lg shadow-xl">
             <form onSubmit={handleSubmit}>
@@ -140,7 +140,7 @@ const memoTopo = (data: any) => {
             </form>
           </div>
         </div>
-      )}
+      )} */}
       <Handle type="source" position={Position.Bottom} id="a" />
       {/* <Modal
         isOpen={modalIsOpen}

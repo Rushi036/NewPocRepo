@@ -1,6 +1,6 @@
 import axios from "axios";
-
-const baseURL = "http://localhost:8000/";
+import  {baseURL}  from "@/const";
+// const baseURL = "http://localhost:8000/";
 
 export async function addTopologyData(data: any) {
     await axios.post(baseURL + "topology", data);

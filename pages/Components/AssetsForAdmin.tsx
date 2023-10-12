@@ -12,7 +12,7 @@ const AssetsForAdmin = () => {
     const res: any = await getAllTopo();
     setData(res.data.sort());
   }
-  console.log("All Topo Data", data);
+  // console.log("All Topo Data", data);
   return (
     <div className="">
       <div className="text-xl px-4 border-b-2 border-slate-400 pb-2 flex justify-between items-center">

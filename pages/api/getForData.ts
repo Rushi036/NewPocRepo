@@ -1,6 +1,6 @@
 import axios from "axios";
-
-const baseURL = "http://localhost:8000/";
+import  {baseURL}  from "@/const";
+// const baseURL = "http://localhost:8000/";
 export async function getFormData(id: any) {
     return await axios.get(baseURL + "resourse_data?topology_id=" + id)
 }
