@@ -11,7 +11,7 @@ import "reactflow/dist/style.css";
 import { getIcons } from "@/pages/api/getIcons";
 import { GetAllVMs } from "@/pages/api/getallVMs";
 import { table } from "console";
-import router from "next/router";
+import { useRouter } from "next/router";
 import { viewTopologyForAdmin } from "@/pages/api/viewTopologyForAdmin";
 import { useAppContext } from "../AppContext";
 import { getOldData, sendEstimation } from "@/pages/api/sendEstimation";
@@ -169,6 +169,7 @@ const AddNodeOnEdgeDrop = (props: any) => {
 };
 
 function Topology(props: any) {
+  const router = useRouter();
   const { id } = router.query;
   const [network_icons, setNetworkIcons] = useState<any>(null);
   const [initialNodes, setInitialNodes] = useState<any>(null);
@@ -276,7 +277,7 @@ function Topology(props: any) {
   }, [id]);
   async function fetchData() {
     await viewTopologyForAdmin(id).then((res) => {
-      if(res){
+      if (res) {
         setTitle(res.data[0].title);
         setCloud(res.data[0].cloud_server);
         setTopology(res.data[0].flowChart);
@@ -632,14 +633,12 @@ function Topology(props: any) {
           }}
         >
           {network_icons ? (
-            <ReactFlowProvider>
-              <AddNodeOnEdgeDrop
-                network_icons={network_icons}
-                initialNodes={initialNodes}
-                setRfInstance={props.setRfInstance}
-                topology={props.topology}
-              />
-            </ReactFlowProvider>
+            <AddNodeOnEdgeDrop
+              network_icons={network_icons}
+              initialNodes={initialNodes}
+              setRfInstance={props.setRfInstance}
+              topology={props.topology}
+            />
           ) : (
             <>no data found</>
           )}
@@ -1125,18 +1124,18 @@ function Topology(props: any) {
                               </div>
                             </div>
                           )}
-                          {cloud && cloud.length > 1 && (
+                          {cloud && cloud.length > 1 && role == "admin" && (
                             <div>
                               <div>
                                 <div className="flex items-center m-2 mt-4">
-                                  <input
+                                  {/* <input
                                     id="default-radio-1"
                                     type="radio"
                                     value=""
                                     name="default-radio"
                                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2 "
                                     onFocus={(e: any) => selectCloud(e, 2)}
-                                  />
+                                  /> */}
                                   <label
                                     htmlFor="default-radio-1"
                                     className="ml-2 text-sm font-medium text-gray-900"
@@ -1189,14 +1188,14 @@ function Topology(props: any) {
                               </div>
                               <div>
                                 <div className="flex items-center m-2 mt-4">
-                                  <input
+                                  {/* <input
                                     id="default-radio-1"
                                     type="radio"
                                     value=""
                                     name="default-radio"
                                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2 "
                                     onFocus={(e: any) => selectCloud(e, 1)}
-                                  />
+                                  /> */}
                                   <label
                                     htmlFor="default-radio-1"
                                     className="ml-2 text-sm font-medium text-gray-900"
@@ -1252,12 +1251,6 @@ function Topology(props: any) {
                           )}
                         </div>
                       )}
-
-                      <div className="flex flex-row mt-2 mb-2 space-x-2 bottom-4 justify-end">
-                        <button className="px-4 rounded-md py-1 bg-red-700 text-white">
-                          Automation
-                        </button>
-                      </div>
                     </div>
                   </div>
                 )}
@@ -1364,13 +1357,13 @@ function Topology(props: any) {
                                 </td>
 
                                 <td className="px-4 py-2 text-center">
-                                  <p className="border-b-2">
+                                  <div className="border-b-2">
                                     {cloud && cloud == "Azure" ? (
                                       <div>{estimation.totalPrice}</div>
                                     ) : (
                                       <div>{estimation.totalPriceAws}</div>
                                     )}
-                                  </p>
+                                  </div>
                                 </td>
                               </tr>
 
@@ -1380,7 +1373,7 @@ function Topology(props: any) {
                         </div>
                       </div>
                     )}
-                    {cloud && cloud.length > 1 && (
+                    {cloud && cloud.length > 1 && role != "admin" && (
                       <div>
                         <div>
                           <div className="flex items-center m-2 mt-4">

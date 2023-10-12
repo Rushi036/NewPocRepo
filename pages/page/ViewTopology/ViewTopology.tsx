@@ -14,6 +14,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { useAppContext } from "@/pages/Components/AppContext";
 import { getFormData, updateFormData } from "@/pages/api/getForData";
 import { BiCloud } from "react-icons/bi";
+import { fetchestimation } from "@/pages/api/fetchEstimation";
+import { getUserData } from "@/pages/api/getUserData";
+
 const viewTopology = () => {
   const [rfInstance, setRfInstance] = useState<any>(null);
   const router = useRouter();
@@ -31,16 +34,17 @@ const viewTopology = () => {
   const [allNodes, setAllNodes] = useState<any>(null);
   const [selectedEnvironment, setSelectedEnvironment] = useState("");
   const { estimateCalc, toggleEstimateCalc } = useAppContext();
+  const [topoStatus, setTopoStatus] = useState<any>();
+  const [buIdOfUser, setBuIdOfUser] = useState<any>();
+  const [bu, setBu] = useState<any>();
+  const vm_types: any = {
+    "Azure": ["t2.micro", "t2.medium", "t2.2xlarge", "m4.xlarge"],
+    "AWS": ["Standard_B2s", "Standard_B2ms", "Standard_B1s", "Standard_D12_v2", "Standard_DS3_v2"]
+  }
   const toggleEst = () => {
     toggleEstimateCalc();
   };
   let sd = {
-    subcriptionId: "",
-    vnet: "",
-    CIDR: "",
-    Subnet: "",
-    ResourceGRP: "",
-    Region: "",
     Description: "",
     VM_type: "type1",
     Series: "",
@@ -49,26 +53,29 @@ const viewTopology = () => {
     OS_version: "",
     License: "",
     OS_Disk_size: "",
+    OS_Disk_Name: "",
     Disk_partition: "",
     Storage_Disk_Size: "",
-    Storage_Disk: "no",
+    Storage_Disk: "",
     Storage_Disk_Value: "",
-    Compute_options: "no",
+    Compute_options: "",
     Compute: "",
-    Internet_facing: "no",
-    NATting: "no",
+    Internet_facing: "",
+    NATting: "",
   };
   const [serverData, setServerData] = useState<any>(sd);
+
   useEffect(() => {
     setRole(localStorage.getItem("role"));
   }, []);
+
   useEffect(() => {
     async function dataFetch() {
       let buId = localStorage.getItem("bu_id");
       let userRole = localStorage.getItem("role");
       userRole != "admin"
         ? await getTopologyData(buId, id).then((res) => {
-          if(res){
+          if (res) {
             setTitle(res.data[0].title);
             setCloud(res.data[0].cloud_server);
             setTopology(res.data[0].flowChart);
@@ -81,7 +88,7 @@ const viewTopology = () => {
           }
         })
         : await viewTopologyForAdmin(id).then((res) => {
-          if(res){
+          if (res) {
             setTitle(res.data[0].title);
             setCloud(res.data[0].cloud_server);
             setTopology(res.data[0].flowChart);
@@ -91,7 +98,7 @@ const viewTopology = () => {
             setSelectedEnvironment(res.data[0].selected_environment);
             setbusinessSponser(res.data[0].business_sponser);
             setServerOwner(res.data[0].server_owner);
-            console.log("res", res.data[0]);
+            // console.log("res", res.data[0]);
           }
         });
 
@@ -99,20 +106,24 @@ const viewTopology = () => {
         if (data.data[0]) {
           let res = data.data[0].fields;
           let sd = {
-            subcriptionId: res.subcriptionId,
-            vnet: res.vnet,
-            CIDR: res.CIDR,
-            Subnet: res.Subnet,
-            ResourceGRP: res.ResourceGRP,
-            Region: res.Region,
+            // subcriptionId: res.subcriptionId,
+            // vnet: res.vnet,
+            // CIDR: res.CIDR,
+            // Subnet: res.Subnet,
+            // ResourceGRP: res.ResourceGRP,
+            // Region: res.Region,
             Description: res.Description,
             VM_type: res.VM_type,
             Series: res.Series,
             vCPUs: res.vCPUs,
             RAM: res.RAM,
             OS_version: res.OS_version,
+            OS: res.OS,
+            Version: res.Version,
+            Publisher: res.Publisher,
             License: res.License,
             OS_Disk_size: res.OS_Disk_size,
+            OS_Disk_Name: res.OS_Disk_Name,
             Disk_partition: res.Disk_partition,
             Storage_Disk_Size: res.Storage_Disk_Size,
             Storage_Disk: res.Storage_Disk,
@@ -132,13 +143,80 @@ const viewTopology = () => {
     id && dataFetch();
   }, [id]);
 
+  useEffect(() => {
+    async function topoDataFetch() {
+      let buId = localStorage.getItem("bu_id");
+      // let buIdOfUser;
+      await fetchestimation(id).then((res) => {
+        if (res && res.data[0]) {
+          console.log("topology data", res.data[0]);
+          setTopoStatus(res.data[0].status);
+          setBuIdOfUser(res.data[0].bu_id);
+          setBu(res.data[0].bu);
+          // buIdOfUser = res.data[0].bu_id;
+        }
+      });
+      if (role != "admin") {
+        await getUserData(buId).then((res) => {
+          // console.log("userData",res)
+          if (res && res.data[0]) {
+            let userData = {
+              subscriptionIDAws: res.data[0].AWS_subcriptionId,
+              vpcAws: res.data[0].AWS_VPC,
+              CIDRAws: res.data[0].AWS_CIDR,
+              SubnetAws: res.data[0].AWS_Subnet,
+              ResourceGRPAws: res.data[0].AWS_ResourceGRP,
+              RegionAws: res.data[0].AWS_Region,
+              subscriptionIDAzure: res.data[0].Azure_subcriptionId,
+              vnetAzure: res.data[0].Azure_vnet,
+              CIDRAzure: res.data[0].Azure_CIDR,
+              SubnetAzure: res.data[0].Azure_Subnet,
+              ResourceGRPAzure: res.data[0].Azure_ResourceGRP,
+              RegionAzure: res.data[0].Azure_Region,
+            };
+            setServerData((prevServerData: any) => ({
+              ...prevServerData,
+              ...userData,
+            }));
+          }
+        });
+      } else {
+        await getUserData(buIdOfUser).then((res) => {
+          // console.log("userData",res)
+          if (res && res.data[0]) {
+            let userData = {
+              subscriptionIDAws: res.data[0].AWS_subcriptionId,
+              vpcAws: res.data[0].AWS_VPC,
+              CIDRAws: res.data[0].AWS_CIDR,
+              SubnetAws: res.data[0].AWS_Subnet,
+              ResourceGRPAws: res.data[0].AWS_ResourceGRP,
+              RegionAws: res.data[0].AWS_Region,
+              subscriptionIDAzure: res.data[0].Azure_subcriptionId,
+              vnetAzure: res.data[0].Azure_vnet,
+              CIDRAzure: res.data[0].Azure_CIDR,
+              SubnetAzure: res.data[0].Azure_Subnet,
+              ResourceGRPAzure: res.data[0].Azure_ResourceGRP,
+              RegionAzure: res.data[0].Azure_Region,
+            };
+            setServerData((prevServerData: any) => ({
+              ...prevServerData,
+              ...userData,
+            }));
+          }
+        });
+      }
+    }
+    topoDataFetch();
+  }, [id, buIdOfUser]);
+
   const sendEstimationToUser = async (e: any) => {
     e.preventDefault();
     toggleEst();
 
     await getFormData(id).then(async (res: any) => {
       let rs = res.data[0];
-      if (rs && serverData.VM_type) { //validation is not working
+      if (rs && serverData.VM_type) {
+        //validation is not working
         let data = {
           ...rs,
           fields: serverData,
@@ -151,14 +229,68 @@ const viewTopology = () => {
         });
     });
   };
-  console.log(
-    "-------------------estimatecalc--------------------",
-    estimateCalc
-  );
-  //     // await fetchTopology;
-  {
-    cloud && console.log("cloud---", cloud);
+
+  function sendAutomation(e: any) {
+    e.preventDefault();
+    let data: any;
+    const imageId:any = {
+      "Ubuntu 20.04": "ami-051c327686af3f780",
+      "Ubuntu 18.04": "ami-019fa3af48e40143a",
+      "RHEL8.6": "ami-0b8b26e328a0e983d",
+      "Windows2019": "ami-09e5ba61a58b68ed4",
+      "Centos7": "ami-8d5073e2"
+    }
+    if (cloud == "AWS") {
+      data = {
+        "bussiess_name": bu,
+        "cloud": "AWS",
+        "ResourceType": "APP", // APP, A
+        "appname": "AUTO", //pending
+        "key_name": "bmcspl-mumbai", //pending
+        "Environment": "T",
+        "instance_type": serverData.VM_type,
+        "image_id": imageId[serverData.OS_version], //(As per OS)
+        "vpc_subnet_id": serverData?.SubnetAws,
+        "region": serverData?.RegionAws,
+        "security_group": "sg-00077de1b13e2e800", //pending
+        "Work_Order_ID": "", //blank
+        "Application_Owner": applicationOwner,
+        "Application_name": title,
+        "Business": "ABCL", //pending
+        "Environment_tag": "Test",
+        "osdisk_name": serverData?.OS_Disk_Name,
+        "osdisk_size": serverData?.OS_Disk_size,
+        "datadisk_name": serverData?.Storage_Disk_Value,
+        "datadisk_size": serverData?.Storage_Disk_Size
+      }
+    }
+    else {
+      data = {
+        "bussiess_name": bu, //(Business User Name)
+        "cloud": "AZ",
+        "Environment": "T", //(T - Test from Form )
+        "ResourceType": "A", //(W - webserver / D - Database / A - App / X - Other)
+        "appname": "AUTO",
+        "subscription_id": serverData?.subscriptionIDAzure, //(subscription id from form)
+        "resourcegroup": serverData?.ResourceGRPAzure, //(resource grp from form)
+        "vm_size": serverData.VM_type, //(VM type from Form)
+        "subnet_name": serverData?.vnetAzure, //(Subnet name from form)
+        "offer": serverData?.OS, //(OS from form)
+        "publisher": serverData?.Publisher, //(OS Publisher from form)
+        "sku": serverData?.Version, //(OS Version from form)
+        "version": "Latest",
+        "datadiskname": serverData?.Storage_Disk_Value, //(From form)
+        "disk_size_gb": serverData?.Storage_Disk_Size, //(From Form)
+        "os_disk_size_gb": serverData?.OS_Disk_size, //(From Form)
+        "ApplicationOwner": applicationOwner, //(Application Owner from Form)
+        "ApplicationName": title, //(Topology Name from Form)
+        "Business": "",
+        "Environment_tag": ""
+      }
+    }
+    console.log(data)
   }
+
   return (
     <>
       <div className="">
@@ -193,20 +325,6 @@ const viewTopology = () => {
               <div className="border-b-2 border-slate-600 rounded-md px-2">
                 {selectedEnvironment}
               </div>
-              {/* <select
-                // onChange={handleEnvironmentChange}
-                value={selectedEnvironment}
-                required
-                className="border-slate-600 border-b-2 ml-2 rounded p-0.5 w-1/2"
-              > */}
-              {/* <option value="" disabled>
-                  Select Environment
-                </option>
-                <option value="Production">Production</option>
-                <option value="Test">Test</option>
-                <option value="Development">Development</option>
-                <option value="UAT">UAT</option> */}
-              {/* </select> */}
             </div>
             <div className="flex w-1/3 justify-end">
               <label htmlFor="" className="font-semibold text-base w-36">
@@ -215,12 +333,6 @@ const viewTopology = () => {
               <div className="border-b-2 border-slate-600 rounded-md px-2">
                 {applicationOwner}
               </div>
-              {/* <input
-                type="text"
-                // onChange={(e) => setApplicationOwner(e.target.value)}
-                required
-                className="border-slate-600 border-b-2 rounded ml-2  w-1/2"
-              /> */}
             </div>
           </div>
 
@@ -232,12 +344,6 @@ const viewTopology = () => {
               <div className="border-b-2 border-slate-600 rounded-md px-2">
                 {businessSponser}
               </div>
-              {/* <input
-                  type="text"
-                  // onChange={(e) => setbusinessSponser(e.target.value)}
-                  required
-                  className="border-slate-600 border-b-2 rounded ml-2 w-1/2"
-                /> */}
             </div>
             <div className="flex  w-1/4 justify-center">
               <label htmlFor="" className="font-semibold text-base w-28">
@@ -246,12 +352,6 @@ const viewTopology = () => {
               <div className="border-b-2 border-slate-600 rounded-md px-2">
                 {serverOwner}
               </div>
-              {/* <input
-                  type="text"
-                  // onChange={(e) => setServerOwner(e.target.value)}
-                  required
-                  className="border-slate-600 border-b-2 ml-2 rounded w-1/2"
-                /> */}
             </div>
             <div className="flex w-1/4 justify-center">
               <label htmlFor="" className="font-semibold text-base w-32">
@@ -260,12 +360,6 @@ const viewTopology = () => {
               <div className="border-b-2 border-slate-600 rounded-md px-2">
                 {resourceOwner}
               </div>
-              {/* <input
-                  type="text"
-                  // onChange={(e) => setResourceOwner(e.target.value)}
-                  required
-                  className="border-slate-600 border-b-2 rounded ml-2 w-1/2"
-                /> */}
             </div>
             <div className="flex w-1/4 justify-end">
               <label htmlFor="" className="font-semibold">
@@ -308,82 +402,117 @@ const viewTopology = () => {
                   <h1 className="text-xl font-semibold border-b-2 border-slate-600">
                     Additional Info - {allNodes}
                   </h1>
-                  <div className="flex items-center pb-2">
-                    <label
-                      htmlFor=""
-                      className="font-semibold text-base flex flex-col justify-start mr-2"
-                    >
-                      Subscription Id :
-                    </label>
-                    <div className="font-semibold border-b-2 h-6 border-slate-600 bg-gray-100 px-1">
-                      {serverData?.subcriptionId}
+                  {topoStatus == "Approved By User" && (
+                    // <div>
+                    <div className="flex items-center pb-2">
+                      <label
+                        htmlFor=""
+                        className="font-semibold text-base flex flex-col justify-start mr-2"
+                      >
+                        Subscription Id :
+                      </label>
+                      <div className="font-semibold border-b-2 h-6 border-slate-600 bg-gray-100 px-1">
+                        {cloud == "Azure" ? (
+                          <div>
+                            {serverData && serverData?.subscriptionIDAzure}
+                          </div>
+                        ) : (
+                          <div>
+                            {serverData && serverData?.subscriptionIDAws}
+                          </div>
+                        )}
+                      </div>
                     </div>
-                    {/* <input
-                      type="text"
-                      required
-                      disabled
-                      value={serverData?.subcriptionId}
-                      className="w-[20rem]"
-                    /> */}
-                  </div>
-                  <div className="flex">
-                    <label
-                      htmlFor=""
-                      className="font-semibold text-base flex flex-col justify-start mr-2"
-                    >
-                      VNET :
-                    </label>
-                    {/* <input
-                      type="text"
-                      disabled
-                      required
-                      value={serverData?.vnet}
-                      className="w-[14rem]"
-                    /> */}
-                    <div className="font-semibold border-b-2 h-6 border-slate-600 bg-gray-100 px-1">
-                      {serverData?.vnet}
-                    </div>
-                  </div>
-                </div>
+                  )}
+                  {topoStatus == "Approved By User" && (
+                    <div className="flex">
+                      <label
+                        htmlFor=""
+                        className="font-semibold text-base flex flex-col justify-start mr-2"
+                      >
+                        {cloud == "Azure" ? (
+                          <p>VNET :</p>
+                        ) : (
+                          <p>VPC :</p>
+                        )}
 
-                <div className="flex justify-around">
-                  <label
-                    htmlFor=""
-                    className="font-semibold text-base flex flex-col justify-start"
-                  >
-                    <div>CIDR :</div>
-                    <div className="w-[14rem] border-b-2 border-slate-600 bg-gray-100">
-                      {serverData?.CIDR}
+                      </label>
+                      <div className="font-semibold border-b-2 h-6 border-slate-600 bg-gray-100 px-1">
+                        {cloud == "Azure" ? (
+                          <div>{serverData?.vnetAzure}</div>
+                        ) : (
+                          <div>{serverData?.vnetAws}</div>
+                        )}
+                        {/* {serverData?.vnet} */}
+                      </div>
                     </div>
-                  </label>
-                  <label
-                    htmlFor=""
-                    className="font-semibold text-base flex flex-col justify-start"
-                  >
-                    <div>Subnet :</div>
-                    <div className="w-[14rem] border-b-2 border-slate-600 bg-gray-100">
-                      {serverData?.Subnet}
-                    </div>
-                  </label>
-                  <label
-                    htmlFor=""
-                    className="font-semibold text-base flex flex-col justify-start"
-                  >
-                    <div>ResourceGRP :</div>
-                    <div className="w-[14rem] border-b-2 border-slate-600 bg-gray-100">
-                      {serverData?.ResourceGRP}
-                    </div>
-                  </label>
-                  <label
-                    htmlFor=""
-                    className="font-semibold text-base flex flex-col justify-start"
-                  >
-                    <div>Region :</div>
-                    <div className="w-[14rem] border-b-2 border-slate-600 bg-gray-100">
-                      {serverData?.Region}
-                    </div>
-                  </label>
+                    // </div>
+                  )}
                 </div>
+                {topoStatus == "Approved By User" && (
+                  <div className="flex justify-around">
+                    <label
+                      htmlFor=""
+                      className="font-semibold text-base flex flex-col justify-start"
+                    >
+                      <div>CIDR :</div>
+                      <div className="w-[14rem] border-b-2 border-slate-600 bg-gray-100">
+                        {cloud == "Azure" ? (
+                          <div>{serverData?.CIDRAzure}</div>
+                        ) : (
+                          <div>{serverData?.CIDRAws}</div>
+                        )}
+                        {/* {serverData?.CIDR} */}
+                      </div>
+                    </label>
+                    <label
+                      htmlFor=""
+                      className="font-semibold text-base flex flex-col justify-start"
+                    >
+                      <div>Subnet :</div>
+                      <div className="w-[14rem] border-b-2 border-slate-600 bg-gray-100">
+                        {cloud == "Azure" ? (
+                          <div>
+                            {serverData &&
+                              serverData.SubnetAzure &&
+                              serverData.SubnetAzure[0].subnet1}
+                          </div>
+                        ) : (
+                          <div>{serverData?.SubnetAws}</div>
+                        )}
+                        {/* {serverData?.Subnet} */}
+                      </div>
+                    </label>
+                    <label
+                      htmlFor=""
+                      className="font-semibold text-base flex flex-col justify-start"
+                    >
+                      <div>ResourceGRP :</div>
+                      <div className="w-[14rem] border-b-2 border-slate-600 bg-gray-100">
+                        {cloud == "Azure" ? (
+                          <div>{serverData?.ResourceGRPAzure}</div>
+                        ) : (
+                          <div>{serverData?.ResourceGRPAws}</div>
+                        )}
+                        {/* {serverData?.ResourceGRP} */}
+                      </div>
+                    </label>
+                    <label
+                      htmlFor=""
+                      className="font-semibold text-base flex flex-col justify-start"
+                    >
+                      <div>Region :</div>
+                      <div className="w-[14rem] border-b-2 border-slate-600 bg-gray-100">
+                        {cloud == "Azure" ? (
+                          <div>{serverData?.RegionAzure}</div>
+                        ) : (
+                          <div>{serverData?.RegionAws}</div>
+                        )}
+                        {/* {serverData?.Region} */}
+                      </div>
+                    </label>
+                  </div>
+                )}
 
                 <div className="flex justify-around">
                   <label
@@ -432,32 +561,6 @@ const viewTopology = () => {
                       <option value="no">No</option>
                     </select>
                   </label>
-                  {/* <label
-                    htmlFor=""
-                    className="font-semibold text-base flex flex-col justify-start"
-                  >
-                    <div>ResourceGRP :</div>
-                    <input
-                      type="text"
-                      disabled
-                      required
-                      value={serverData?.ResourceGRP}
-                      className="w-[14rem]"
-                    />
-                  </label>
-                  <label
-                    htmlFor=""
-                    className="font-semibold text-base flex flex-col justify-start"
-                  >
-                    <div>Region :</div>
-                    <input
-                      type="text"
-                      disabled
-                      required
-                      value={serverData?.Region}
-                      className="w-[14rem]"
-                    />
-                  </label> */}
                   <label
                     htmlFor=""
                     className="font-semibold text-base flex flex-col justify-start"
@@ -479,27 +582,25 @@ const viewTopology = () => {
                     htmlFor=""
                     className="font-semibold text-base flex flex-col justify-start"
                   >
-                    {/* //validation is not working for vm type */}
-                    <div>VM type :</div>
+                    <div>License :</div>
                     <select
-                      required
-                      value={serverData?.VM_type}
+                      value={serverData?.License}
                       onChange={(e) => {
                         setServerData({
                           ...serverData,
-                          VM_type: e.target.value,
+                          License: e.target.value,
                         });
                       }}
-                      disabled={role === "admin" ? false : true}
+                      disabled={true}
                       className="w-[14rem]"
-                      placeholder="Select VM Type"
                     >
-                      <option disabled={true}>
-                        Select VM Type
+                      <option value="" disabled>
+                        Select License
                       </option>
-                      <option value="type1">Type 1</option>
-                      <option value="type2">Type 2</option>
-                      {/* Add more options as needed */}
+                      <option value="BYOL">BYOL</option>
+                      <option value="Azure Hybrid Benefit">
+                        Azure Hybrid Benefit
+                      </option>
                     </select>
                   </label>
                 </div>
@@ -568,24 +669,26 @@ const viewTopology = () => {
                   >
                     <div>OS version :</div>
                     <select
-                      value={serverData?.OS_version}
+                      value={JSON.stringify({ "OS": serverData?.OS, "Version": serverData?.Version, "Publisher": serverData?.Publisher })}
                       onChange={(e) => {
+                        let data = JSON.parse(e.target.value);
                         setServerData({
                           ...serverData,
-                          OS_version: e.target.value,
+                          OS: data.OS,
+                          Version: data.Version,
+                          Publisher: data.Publisher
                         });
                       }}
-                      disabled={true}
                       className="w-[14rem]"
                     >
                       <option value="" disabled>
                         Select OS
                       </option>
-                      <option value="Ubuntu 20.04">Ubuntu 20.04</option>
-                      <option value="Ubuntu 18.04">Ubuntu 18.04</option>
-                      <option value="RHEL8.6">RHEL8.6</option>
-                      <option value="Windows2019">Windows2019</option>
-                      <option value="Centos7">Centos7</option>
+                      <option value={JSON.stringify({ "OS": "Ubuntu", "Version": 20.04, "Publisher": "Canonical" })}>Ubuntu 20.04</option>
+                      <option value={JSON.stringify({ "OS": "Ubuntu", "Version": 18.04, "Publisher": "Canonical" })}>Ubuntu 18.04</option>
+                      <option value={JSON.stringify({ "OS": "RHEL", "Version": 8.6, "Publisher": "RedHat" })}>RHEL8.6</option>
+                      <option value={JSON.stringify({ "OS": "Windows", "Version": 2019, "Publisher": "MicrosoftWindowsServer" })}>Windows2019</option>
+                      <option value={JSON.stringify({ "OS": "Centos", "Version": 7, "Publisher": "OpenLogic" })}>Centos7</option>
                     </select>
                   </label>
                 </div>
@@ -595,26 +698,19 @@ const viewTopology = () => {
                     htmlFor=""
                     className="font-semibold text-base flex flex-col justify-start"
                   >
-                    <div>License :</div>
-                    <select
-                      value={serverData?.License}
+                    <div>OS Disk Name :</div>
+                    <input
+                      type="text"
+                      value={serverData?.OS_Disk_Name}
                       onChange={(e) => {
                         setServerData({
                           ...serverData,
-                          License: e.target.value,
+                          OS_Disk_Name: e.target.value,
                         });
                       }}
-                      disabled={true}
                       className="w-[14rem]"
-                    >
-                      <option value="" disabled>
-                        Select License
-                      </option>
-                      <option value="BYOL">BYOL</option>
-                      <option value="Azure Hybrid Benefit">
-                        Azure Hybrid Benefit
-                      </option>
-                    </select>
+                      disabled
+                    />
                   </label>
                   <label
                     htmlFor=""
@@ -630,86 +726,6 @@ const viewTopology = () => {
                         setServerData({
                           ...serverData,
                           OS_Disk_size: e.target.value,
-                        });
-                      }}
-                      className="w-[14rem]"
-                    />
-                  </label>
-                  <label
-                    htmlFor=""
-                    className="font-semibold text-base flex flex-col justify-start"
-                  >
-                    <div>Disk partition :</div>
-                    <textarea
-                      onChange={(e) => {
-                        setServerData({
-                          ...serverData,
-                          Disk_partition: e.target.value,
-                        });
-                      }}
-                      disabled={true}
-                      value={serverData?.Disk_partition}
-                      className="w-[14rem] min-h-[1.7rem] h-[1.7rem]"
-                    />
-                  </label>
-                  <label
-                    htmlFor=""
-                    className="font-semibold text-base flex flex-col justify-start"
-                  >
-                    <div>Storage Disk Size :</div>
-                    <input
-                      type="text"
-                      required
-                      value={serverData?.Storage_Disk_Size}
-                      onChange={(e) => {
-                        setServerData({
-                          ...serverData,
-                          Storage_Disk_Size: e.target.value,
-                        });
-                      }}
-                      disabled={true}
-                      className="w-[14rem]"
-                    />
-                  </label>
-                </div>
-
-                <div className="flex justify-around">
-                  <label
-                    htmlFor=""
-                    className="font-semibold text-base flex flex-col justify-start"
-                  >
-                    <div>Storage Disk :</div>
-                    <select
-                      value={serverData?.Storage_Disk}
-                      onChange={(e) => {
-                        setServerData({
-                          ...serverData,
-                          Storage_Disk: e.target.value,
-                        });
-                      }}
-                      disabled={true}
-                      className="w-[14rem]"
-                    >
-                      <option value="" disabled>
-                        Select Disk
-                      </option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
-                    </select>
-                  </label>
-                  <label
-                    htmlFor=""
-                    className="font-semibold text-base flex flex-col justify-start"
-                  >
-                    <div>Storage Disk Value:</div>
-                    <input
-                      type="text"
-                      value={serverData?.Storage_Disk_Value}
-                      disabled={true}
-                      onChange={(e) => {
-                        setServerData({
-                          ...serverData,
-                          Storage_Disk_Value: e.target.value,
                         });
                       }}
                       className="w-[14rem]"
@@ -758,24 +774,25 @@ const viewTopology = () => {
                   </label>
                 </div>
 
-                <div className="flex justify-center gap-[6.5rem]">
-                  {/* <label
+                <div className="flex justify-around">
+                  <label
                     htmlFor=""
                     className="font-semibold text-base flex flex-col justify-start"
                   >
-                    <div>Internet facing :</div>
+                    <div>Data Disk :</div>
                     <select
-                      value={serverData?.Internet_facing}
+                      value={serverData?.Storage_Disk}
                       onChange={(e) => {
                         setServerData({
                           ...serverData,
-                          Internet_facing: e.target.value,
+                          Storage_Disk: e.target.value,
                         });
                       }}
+                      disabled={true}
                       className="w-[14rem]"
                     >
                       <option value="" disabled>
-                        Select Options
+                        Select Disk
                       </option>
                       <option value="yes">Yes</option>
                       <option value="no">No</option>
@@ -785,30 +802,89 @@ const viewTopology = () => {
                     htmlFor=""
                     className="font-semibold text-base flex flex-col justify-start"
                   >
-                    <div>NATting :</div>
-                    <select
-                      value={serverData?.NATting}
+                    <div>Data Disk Name:</div>
+                    <input
+                      type="text"
+                      value={serverData?.Storage_Disk_Value}
+                      disabled={true}
                       onChange={(e) => {
                         setServerData({
                           ...serverData,
-                          NATting: e.target.value,
+                          Storage_Disk_Value: e.target.value,
+                        });
+                      }}
+                      className="w-[14rem]"
+                    />
+                  </label>
+                  <label
+                    htmlFor=""
+                    className="font-semibold text-base flex flex-col justify-start"
+                  >
+                    <div>Data Disk Size :</div>
+                    <input
+                      type="text"
+                      required
+                      value={serverData?.Storage_Disk_Size}
+                      onChange={(e) => {
+                        setServerData({
+                          ...serverData,
+                          Storage_Disk_Size: e.target.value,
+                        });
+                      }}
+                      disabled={true}
+                      className="w-[14rem]"
+                    />
+                  </label>
+                  <label
+                    htmlFor=""
+                    className="font-semibold text-base flex flex-col justify-start"
+                  >
+                    <div>Disk partition :</div>
+                    <textarea
+                      onChange={(e) => {
+                        setServerData({
+                          ...serverData,
+                          Disk_partition: e.target.value,
+                        });
+                      }}
+                      disabled={true}
+                      value={serverData?.Disk_partition}
+                      className="w-[14rem] min-h-[1.7rem] h-[1.7rem]"
+                    />
+                  </label>
+
+                </div>
+
+                <div className="flex justify-center gap-[6.5rem]">
+                  {role == "admin" && topoStatus == "Approved By User" && <label
+                    htmlFor=""
+                    className="font-semibold text-base flex flex-col justify-start"
+                  >
+                    <div>VM type :</div>
+                    <select
+                      required
+                      value={serverData?.VM_type}
+                      onChange={(e) => {
+                        setServerData({
+                          ...serverData,
+                          VM_type: e.target.value,
                         });
                       }}
                       className="w-[14rem]"
                     >
-                      <option value="" disabled>
-                        Select Options
-                      </option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
+                      <option disabled={true} value={""}>Select VM Type</option>
+                      {vm_types[cloud].map((e: any, i: any) => {
+                        return (
+                          <option key={i} value={e}>{e}</option>
+                        )
+                      })}
                     </select>
-                  </label> */}
+                  </label>}
                 </div>
               </div>
             </div>
           </form>
-          {/* </div> */}
-          {role == "admin" && (
+          {role == "admin" && topoStatus == "Draft" && (
             <div className="mt-4 flex justify-end">
               <button
                 type="submit"
@@ -816,6 +892,13 @@ const viewTopology = () => {
                 onClick={sendEstimationToUser}
               >
                 Send Estimation
+              </button>
+            </div>
+          )}
+          {role == "admin" && topoStatus == "Approved By User" && (
+            <div className="flex flex-row mt-2 mb-2 space-x-2 bottom-4 justify-end">
+              <button onClick={sendAutomation} type="submit" className="bg-red-700 text-white px-6 py-1 rounded">
+                Automation
               </button>
             </div>
           )}

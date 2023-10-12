@@ -50,8 +50,12 @@ const addTopology = () => {
     vCPUs: "",
     RAM: "",
     OS_version: "",
+    OS: "",
+    Version: "",
+    Publisher: "",
     License: "",
     OS_Disk_size: "",
+    OS_Disk_Name: "",
     Disk_partition: "",
     Storage_Disk_Size: "",
     Storage_Disk: "no",
@@ -212,6 +216,7 @@ const addTopology = () => {
       node_name: allNodes,
       fields: serverData,
     };
+    console.log(rdd);
     if (
       serverData.Internet_facing &&
       serverData.NATting &&
@@ -219,7 +224,6 @@ const addTopology = () => {
       serverData.Series &&
       serverData.vCPUs &&
       serverData.RAM &&
-      serverData.OS_version &&
       serverData.License &&
       serverData.OS_Disk_size &&
       serverData.Storage_Disk_Size &&
@@ -228,11 +232,11 @@ const addTopology = () => {
       serverData.Compute_options &&
       serverData.OS_Disk_size
     ) {
-      console.log("storage",  serverData.Storage_Disk);
-      console.log("storage disk value",  serverData.Storage_Disk_Value);
+      // console.log("storage",  serverData.Storage_Disk);
+      // console.log("storage disk value",  serverData.Storage_Disk_Value);
 
-      console.log("compute",  serverData.Compute)
-      console.log("comptute option",  serverData.Compute_options);
+      // console.log("compute",  serverData.Compute)
+      // console.log("comptute option",  serverData.Compute_options);
 
       if (
         serverData.Storage_Disk == "yes" &&
@@ -436,7 +440,7 @@ const addTopology = () => {
                   <h1 className="text-xl font-semibold border-b-2 border-slate-600">
                     Additional Info - {allNodes}
                   </h1>
-                  <div className="flex items-center pb-2">
+                  {/* <div className="flex items-center pb-2">
                     <label
                       htmlFor=""
                       className="font-semibold text-base flex flex-col justify-start mr-2"
@@ -446,13 +450,6 @@ const addTopology = () => {
                     <div className="font-semibold border-b-2 h-6 border-slate-600 bg-gray-200 px-1">
                       {serverData?.subcriptionId}
                     </div>
-                    {/* <input
-                      type="text"
-                      required
-                      disabled
-                      value={serverData?.subcriptionId}
-                      className="w-[20rem]"
-                    /> */}
                   </div>
                   <div className="flex">
                     <label
@@ -461,20 +458,13 @@ const addTopology = () => {
                     >
                       VNET :
                     </label>
-                    {/* <input
-                      type="text"
-                      disabled
-                      required
-                      value={serverData?.vnet}
-                      className="w-[14rem]"
-                    /> */}
                     <div className="font-semibold border-b-2 h-6 border-slate-600 bg-gray-200 px-1">
                       {serverData?.vnet}
                     </div>
-                  </div>
+                  </div> */}
                 </div>
 
-                <div className="flex justify-around">
+                {/* <div className="flex justify-around">
                   <label
                     htmlFor=""
                     className="font-semibold text-base flex flex-col justify-start"
@@ -527,7 +517,7 @@ const addTopology = () => {
                       className="w-[14rem]"
                     />
                   </label>
-                </div>
+                </div> */}
 
                 <div className="flex justify-around">
                   <label
@@ -574,32 +564,7 @@ const addTopology = () => {
                       <option value="no">No</option>
                     </select>
                   </label>
-                  {/* <label
-                    htmlFor=""
-                    className="font-semibold text-base flex flex-col justify-start"
-                  >
-                    <div>ResourceGRP :</div>
-                    <input
-                      type="text"
-                      disabled
-                      required
-                      value={serverData?.ResourceGRP}
-                      className="w-[14rem]"
-                    />
-                  </label>
-                  <label
-                    htmlFor=""
-                    className="font-semibold text-base flex flex-col justify-start"
-                  >
-                    <div>Region :</div>
-                    <input
-                      type="text"
-                      disabled
-                      required
-                      value={serverData?.Region}
-                      className="w-[14rem]"
-                    />
-                  </label> */}
+             
                   <label
                     htmlFor=""
                     className="font-semibold text-base flex flex-col justify-start"
@@ -620,6 +585,30 @@ const addTopology = () => {
                     htmlFor=""
                     className="font-semibold text-base flex flex-col justify-start"
                   >
+                    <div>License :</div>
+                    <select
+                      value={serverData?.License}
+                      onChange={(e) => {
+                        setServerData({
+                          ...serverData,
+                          License: e.target.value,
+                        });
+                      }}
+                      className="w-[14rem]"
+                    >
+                      <option value="" disabled>
+                        Select License
+                      </option>
+                      <option value="BYOL">BYOL</option>
+                      <option value="Azure Hybrid Benefit">
+                        Azure Hybrid Benefit
+                      </option>
+                    </select>
+                  </label>
+                  {/* <label
+                    htmlFor=""
+                    className="font-semibold text-base flex flex-col justify-start"
+                  >
                     <div>VM type :</div>
                     <input
                       type="text"
@@ -634,7 +623,7 @@ const addTopology = () => {
                       disabled={role == "admin" ? false : true}
                       className="w-[14rem]"
                     />
-                  </label>
+                  </label> */}
                 </div>
 
                 <div className="flex justify-around">
@@ -701,11 +690,15 @@ const addTopology = () => {
                   >
                     <div>OS version :</div>
                     <select
-                      value={serverData?.OS_version}
+                      value={serverData?.OS?JSON.stringify({"OS_version":serverData?.VM_type,"OS":serverData?.OS,"Version": serverData?.Version, "Publisher": serverData?.Publisher}):""}
                       onChange={(e) => {
+                        let data = JSON.parse(e.target.value);
                         setServerData({
                           ...serverData,
-                          OS_version: e.target.value,
+                          OS_version: data.OS_version,
+                          OS: data.OS,
+                          Version: data.Version,
+                          Publisher: data.Publisher
                         });
                       }}
                       className="w-[14rem]"
@@ -713,11 +706,11 @@ const addTopology = () => {
                       <option value="" disabled>
                         Select OS
                       </option>
-                      <option value="Ubuntu 20.04">Ubuntu 20.04</option>
-                      <option value="Ubuntu 18.04">Ubuntu 18.04</option>
-                      <option value="RHEL8.6">RHEL8.6</option>
-                      <option value="Windows2019">Windows2019</option>
-                      <option value="Centos7">Centos7</option>
+                      <option value={JSON.stringify({"VM_type":"Ubuntu 20.04","OS":"Ubuntu", "Version":20.04,"Publisher":"Canonical"})}>Ubuntu 20.04</option>
+                      <option value={JSON.stringify({"VM_type":"Ubuntu 18.04","OS":"Ubuntu", "Version":18.04,"Publisher":"Canonical"})}>Ubuntu 18.04</option>
+                      <option value={JSON.stringify({"VM_type":"RHEL8.6","OS":"RHEL", "Version":8.6,"Publisher":"RedHat"})}>RHEL8.6</option>
+                      <option value={JSON.stringify({"VM_type":"Windows2019","OS":"Windows", "Version":2019,"Publisher":"MicrosoftWindowsServer"})}>Windows2019</option>
+                      <option value={JSON.stringify({"VM_type":"Centos7","OS":"Centos", "Version":7,"Publisher":"OpenLogic"})}>Centos7</option>
                     </select>
                   </label>
                 </div>
@@ -727,25 +720,18 @@ const addTopology = () => {
                     htmlFor=""
                     className="font-semibold text-base flex flex-col justify-start"
                   >
-                    <div>License :</div>
-                    <select
-                      value={serverData?.License}
+                    <div>OS Disk Name :</div>
+                    <input
+                      type="text"
+                      value={serverData?.OS_Disk_Name}
                       onChange={(e) => {
                         setServerData({
                           ...serverData,
-                          License: e.target.value,
+                          OS_Disk_Name: e.target.value,
                         });
                       }}
                       className="w-[14rem]"
-                    >
-                      <option value="" disabled>
-                        Select License
-                      </option>
-                      <option value="BYOL">BYOL</option>
-                      <option value="Azure Hybrid Benefit">
-                        Azure Hybrid Benefit
-                      </option>
-                    </select>
+                    />
                   </label>
                   <label
                     htmlFor=""
@@ -760,83 +746,6 @@ const addTopology = () => {
                         setServerData({
                           ...serverData,
                           OS_Disk_size: e.target.value,
-                        });
-                      }}
-                      className="w-[14rem]"
-                    />
-                  </label>
-                  <label
-                    htmlFor=""
-                    className="font-semibold text-base flex flex-col justify-start"
-                  >
-                    <div>Disk partition :</div>
-                    <textarea
-                      onChange={(e) => {
-                        setServerData({
-                          ...serverData,
-                          Disk_partition: e.target.value,
-                        });
-                      }}
-                      value={serverData?.Disk_partition}
-                      className="w-[14rem] min-h-[1.7rem] h-[1.7rem]"
-                    />
-                  </label>
-                  <label
-                    htmlFor=""
-                    className="font-semibold text-base flex flex-col justify-start"
-                  >
-                    <div>Storage Disk Size :</div>
-                    <input
-                      type="text"
-                      required
-                      value={serverData?.Storage_Disk_Size}
-                      onChange={(e) => {
-                        setServerData({
-                          ...serverData,
-                          Storage_Disk_Size: e.target.value,
-                        });
-                      }}
-                      className="w-[14rem]"
-                    />
-                  </label>
-                </div>
-
-                <div className="flex justify-around">
-                  <label
-                    htmlFor=""
-                    className="font-semibold text-base flex flex-col justify-start"
-                  >
-                    <div>Storage Disk :</div>
-                    <select
-                      value={serverData?.Storage_Disk}
-                      onChange={(e) => {
-                        setServerData({
-                          ...serverData,
-                          Storage_Disk: e.target.value,
-                        });
-                      }}
-                      className="w-[14rem]"
-                    >
-                      <option value="" disabled>
-                        Select Disk
-                      </option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
-                    </select>
-                  </label>
-                  <label
-                    htmlFor=""
-                    className="font-semibold text-base flex flex-col justify-start"
-                  >
-                    <div>Storage Disk Value:</div>
-                    <input
-                      type="text"
-                      value={serverData?.Storage_Disk_Value}
-                      disabled={serverData?.Storage_Disk == "no" ? true : false}
-                      onChange={(e) => {
-                        setServerData({
-                          ...serverData,
-                          Storage_Disk_Value: e.target.value,
                         });
                       }}
                       className="w-[14rem]"
@@ -886,24 +795,24 @@ const addTopology = () => {
                   </label>
                 </div>
 
-                <div className="flex justify-center gap-[6.5rem]">
-                  {/* <label
+                <div className="flex justify-around">
+                  <label
                     htmlFor=""
                     className="font-semibold text-base flex flex-col justify-start"
                   >
-                    <div>Internet facing :</div>
+                    <div>Data Disk :</div>
                     <select
-                      value={serverData?.Internet_facing}
+                      value={serverData?.Storage_Disk}
                       onChange={(e) => {
                         setServerData({
                           ...serverData,
-                          Internet_facing: e.target.value,
+                          Storage_Disk: e.target.value,
                         });
                       }}
                       className="w-[14rem]"
                     >
                       <option value="" disabled>
-                        Select Options
+                        Select Disk
                       </option>
                       <option value="yes">Yes</option>
                       <option value="no">No</option>
@@ -913,26 +822,58 @@ const addTopology = () => {
                     htmlFor=""
                     className="font-semibold text-base flex flex-col justify-start"
                   >
-                    <div>NATting :</div>
-                    <select
-                      value={serverData?.NATting}
+                    <div>Data Disk Name:</div>
+                    <input
+                      type="text"
+                      value={serverData?.Storage_Disk_Value}
+                      disabled={serverData?.Storage_Disk == "no" ? true : false}
                       onChange={(e) => {
                         setServerData({
                           ...serverData,
-                          NATting: e.target.value,
+                          Storage_Disk_Value: e.target.value,
                         });
                       }}
                       className="w-[14rem]"
-                    >
-                      <option value="" disabled>
-                        Select Options
-                      </option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
-                    </select>
-                  </label> */}
+                    />
+                  </label>
+                  <label
+                    htmlFor=""
+                    className="font-semibold text-base flex flex-col justify-start"
+                  >
+                    <div>Data Disk Size :</div>
+                    <input
+                      type="text"
+                      required
+                      value={serverData?.Storage_Disk_Size}
+                      onChange={(e) => {
+                        setServerData({
+                          ...serverData,
+                          Storage_Disk_Size: e.target.value,
+                        });
+                      }}
+                      className="w-[14rem]"
+                    />
+                  </label>
+                  <label
+                    htmlFor=""
+                    className="font-semibold text-base flex flex-col justify-start"
+                  >
+                    <div>Disk partition :</div>
+                    <textarea
+                      onChange={(e) => {
+                        setServerData({
+                          ...serverData,
+                          Disk_partition: e.target.value,
+                        });
+                      }}
+                      value={serverData?.Disk_partition}
+                      className="w-[14rem] min-h-[1.7rem] h-[1.7rem]"
+                    />
+                  </label>
                 </div>
+
               </div>
+
               <div className="mt-4 flex justify-end">
                 <button
                   type="submit"

@@ -6,12 +6,34 @@
       "email": "ABG1@gmail.com",
       "password": "abg@123",
       "role": "BU",
-      "subcriptionId": "bbe9815b-b792-4f3d-a601-94380a26964d",
-      "vnet": "GRCD-AZ-SAP-PP-VNT-01",
-      "CIDR": "10.47.48.0/22",
-      "Subnet": "10.47.48.0/22",
-      "ResourceGRP": "NetworkWatcherRG",
-      "Region": "Asia-Center"
+      "Azure_subcriptionId": "bbe9815b-b792-4f3d-a601-94380a26964d",
+      "Azure_vnet": "GRCD-AZ-SAP-PP-VNT-01",
+      "Azure_CIDR": "10.47.48.0/22",
+      "Azure_Subnet": [
+        {
+          "subnet1": "GRCD-AZ-SUB-PP-MGT-01"
+        },
+        {
+          "subnet2": "GRCD-AZ-SUB-PP-APP-02"
+        },
+        {
+          "subnet3": "GRCD-AZ-SUB-PP-APP-04"
+        },
+        {
+          "subnet4": "GRCD-AZ-SUB-PP-DBA-05"
+        },
+        {
+          "subnet5": "GRCD-AZ-SUB-PP-APP-03"
+        }
+      ],
+      "Azure_ResourceGRP": "NetworkWatcherRG",
+      "Azure_Region": "Asia-Center",
+      "AWS_subcriptionId": "347692176337",
+      "AWS_VPC": "GrasimChemical-VPC",
+      "AWS_CIDR": "10.17.61.0/24",
+      "AWS_Subnet": "",
+      "AWS_ResourceGRP": "",
+      "AWS_Region": "Asia-Center"
     },
     {
       "id": 2,
@@ -26,12 +48,22 @@
       "email": "ABG3@gmail.com",
       "password": "abg@123",
       "role": "BU",
-      "subcriptionId": "bbe9815b-b792-4f3d-a601-94380a26964d",
-      "vnet": "GRCD-AZ-SAP-PP-VNT-01",
-      "CIDR": "10.47.48.0/22",
-      "Subnet": "10.47.48.0/22",
-      "ResourceGRP": "NetworkWatcherRG",
-      "Region": "Asia-Center"
+      "Azure_subcriptionId": "3c3370e0-d5b7-4d7a-81bb-fe78a73dd72e",
+      "Azure_vnet": "Mirgationdemo-VNet",
+      "Azure_CIDR": "10.55.6.16/28",
+      "Azure_Subnet": [
+        {
+          "subnet1": "DMZ-VNET-SUBNET"
+        }
+      ],
+      "Azure_ResourceGRP": "Migrationdemo-RG",
+      "Azure_Region": "Asia-Center",
+      "AWS_subcriptionId": "",
+      "AWS_VPC": "",
+      "AWS_CIDR": "",
+      "AWS_Subnet": "",
+      "AWS_ResourceGRP": "",
+      "AWS_Region": "Asia-Center"
     },
     {
       "id": 4,
@@ -46,19 +78,51 @@
       "email": "ABG5@gmail.com",
       "password": "abg@123",
       "role": "BU",
-      "subcriptionId": "",
-      "vnet": "",
-      "CIDR": "",
-      "Subnet": "",
-      "ResourceGRP": "",
-      "Region": ""
+      "Azure_subcriptionId": "4688b72b-c3b3-4eda-b632-e969386f8a1f",
+      "Azure_vnet": "abgvnet01",
+      "Azure_CIDR": "172.25.66.0/24",
+      "Azure_Subnet": [
+        {
+          "subnet1": "FrontEnd_Subnet"
+        },
+        {
+          "subnet2": "Internet_Subnet"
+        }
+      ],
+      "Azure_ResourceGRP": "NetworkWatcherRG",
+      "Azure_Region": "Asia-Center",
+      "AWS_subcriptionId": "718927010107",
+      "AWS_VPC": "ABMC-UAT-VPC",
+      "AWS_CIDR": "10.18.26.0/24",
+      "AWS_Subnet": "",
+      "AWS_ResourceGRP": "",
+      "AWS_Region": "Asia-Center"
     },
     {
       "id": 6,
       "name": "BMCSPL",
       "email": "ABG6@gmail.com",
       "password": "abg@123",
-      "role": "BU"
+      "role": "BU",
+      "Azure_subcriptionId": "92ce7eae-ad96-41e7-9e7e-2d8f1a5792f9",
+      "Azure_vnet": "GITS-AZ-PIM-P-VN-01",
+      "Azure_CIDR": "10.47.26.0/24",
+      "Azure_Subnet": [
+        {
+          "subnet1": "GITS-AZ-PIM-P-SN-01"
+        },
+        {
+          "subnet2": "GITS-AZ-PIM-P-LBSN-01"
+        }
+      ],
+      "Azure_ResourceGRP": "NetworkWatcherRG",
+      "Azure_Region": "Asia-Center",
+      "AWS_subcriptionId": "419872061991",
+      "AWS_VPC": "BMCSL-JUMP-VPC",
+      "AWS_CIDR": "10.17.48.192/26",
+      "AWS_Subnet": "",
+      "AWS_ResourceGRP": "",
+      "AWS_Region": "Asia-Center"
     },
     {
       "id": 7,
@@ -66,56 +130,131 @@
       "email": "ABG7@gmail.com",
       "password": "abg@123",
       "role": "BU",
-      "subcriptionId": "",
-      "vnet": "",
-      "CIDR": "",
-      "Subnet": "",
-      "ResourceGRP": "",
-      "Region": ""
+      "Azure_subcriptionId": "d8171501-9b21-42d3-a0da-d6216bab0785",
+      "Azure_vnet": "GRASIM-PF-VNET-2",
+      "Azure_CIDR": "10.8.175.0/24",
+      "Azure_Subnet": [
+        {
+          "subnet1": "GRASIM-WI-DMS"
+        },
+        {
+          "subnet2": "GatewaySubnet"
+        },
+        {
+          "subnet3": "GRASIM-WI-MI-001"
+        }
+      ],
+      "Azure_ResourceGRP": "NetworkWatcherRG",
+      "Azure_Region": "Asia-Center",
+      "AWS_subcriptionId": "281897532807",
+      "AWS_VPC": "Grasim-MAXIMO-VPC",
+      "AWS_CIDR": "10.8.159.0/24",
+      "AWS_Subnet": "",
+      "AWS_ResourceGRP": "",
+      "AWS_Region": "Asia-Center"
     }
   ],
   "topology_table_data": [
     {
-      "title": "topo",
+      "title": "topo1",
+      "bu": "Grasim Chemical",
+      "bu_id": "1",
+      "cloud_server": [
+        "Azure"
+      ],
+      "status": "Approved By User",
+      "created_date": "22/09/2023",
+      "topology_id": 1,
+      "business_sponser": "ghvh",
+      "server_owner": "vhvh",
+      "application_owner": "gv",
+      "resource_owner": "vh",
+      "selected_environment": "Test",
+      "id": 1,
+      "product": "Virtual Machines Dasv4 Series Windows",
+      "quantity": 1,
+      "price": "0.220",
+      "totalPrice": 0.22
+    },
+    {
+      "title": "topoaws",
       "bu": "Grasim Chemical",
       "bu_id": "1",
       "cloud_server": [
         "AWS"
       ],
       "status": "Approved By User",
-      "created_date": "21/09/2023",
-      "topology_id": 1,
-      "business_sponser": "bhjbhj",
-      "server_owner": "jbjbjb",
-      "application_owner": "bjbj",
-      "resource_owner": "jbjb",
+      "created_date": "22/09/2023",
+      "topology_id": 2,
+      "business_sponser": "vhjvhj",
+      "server_owner": "vhjvhj",
+      "application_owner": "vhjvjh",
+      "resource_owner": "vhjv",
       "selected_environment": "Test",
-      "id": 1,
-      "product": "",
-      "quantity": "",
-      "price": "",
-      "totalPrice": "",
+      "id": 2,
       "awsProduct": "AmazonEC2",
       "awsQuantity": 1,
       "awsProductPrice": 0.213,
       "totalPriceAws": 0.213
     },
     {
-      "title": "jhbhbh",
+      "title": "topoAwsAzure",
       "bu": "Grasim Chemical",
       "bu_id": "1",
+      "cloud_server": [
+        "Azure"
+      ],
+      "status": "Approved By User",
+      "created_date": "22/09/2023",
+      "topology_id": 3,
+      "business_sponser": "jvjnv",
+      "server_owner": "vhjv",
+      "application_owner": "jvhjv",
+      "resource_owner": "jhvjh",
+      "selected_environment": "Test",
+      "id": 3,
+      "product": "Virtual Machines Dasv4 Series Windows",
+      "quantity": 1,
+      "price": "0.220",
+      "totalPrice": 0.22,
+      "awsProduct": "",
+      "awsQuantity": "",
+      "awsProductPrice": "",
+      "totalPriceAws": ""
+    },
+    {
+      "title": "q",
+      "bu": "Grasim PnF",
+      "bu_id": "7",
+      "cloud_server": [
+        "AWS"
+      ],
+      "status": "Draft",
+      "created_date": "22/09/2023",
+      "topology_id": 4,
+      "business_sponser": "q",
+      "server_owner": "q",
+      "application_owner": "q",
+      "resource_owner": "q",
+      "selected_environment": "Production",
+      "id": 4
+    },
+    {
+      "title": "demo",
+      "bu": "Grasim PnF",
+      "bu_id": "7",
       "cloud_server": [
         "AWS"
       ],
       "status": "Approved By User",
-      "created_date": "21/09/2023",
-      "topology_id": 2,
-      "business_sponser": "bhjb",
-      "server_owner": "bhjbjh",
-      "application_owner": "bjhbj",
-      "resource_owner": "vhj",
-      "selected_environment": "Test",
-      "id": 2,
+      "created_date": "25/09/2023",
+      "topology_id": 5,
+      "business_sponser": "demo",
+      "server_owner": "demo",
+      "application_owner": "demo",
+      "resource_owner": "demo",
+      "selected_environment": "Production",
+      "id": 5,
       "awsProduct": "AmazonEC2",
       "awsQuantity": 1,
       "awsProductPrice": 0.213,
@@ -248,14 +387,14 @@
       "node_details": [
         "Server"
       ],
-      "title": "topo",
+      "title": "topo1",
       "cloud_server": [
-        "AWS"
+        "Azure"
       ],
-      "business_sponser": "bhjbhj",
-      "server_owner": "jbjbjb",
-      "application_owner": "bjbj",
-      "resource_owner": "jbjb",
+      "business_sponser": "ghvh",
+      "server_owner": "vhvh",
+      "application_owner": "gv",
+      "resource_owner": "vh",
       "selected_environment": "Test",
       "id": 1
     },
@@ -265,14 +404,14 @@
       "node_details": [
         "Server"
       ],
-      "title": "jhbhbh",
+      "title": "topoaws",
       "cloud_server": [
         "AWS"
       ],
-      "business_sponser": "bhjb",
-      "server_owner": "bhjbjh",
-      "application_owner": "bjhbj",
-      "resource_owner": "vhj",
+      "business_sponser": "vhjvhj",
+      "server_owner": "vhjvhj",
+      "application_owner": "vhjvjh",
+      "resource_owner": "vhjv",
       "selected_environment": "Test",
       "id": 2
     },
@@ -426,6 +565,7 @@
     {
       "user_id": 7,
       "link": "http://10.47.98.164:5601/app/dashboards#/view/d8fdd1a0-52e7-11ee-bc96-cdc778061039?embed=true&_g=(refreshInterval:(pause:!t,value:60000),time:(from:now-15m,to:now))&_a=()&show-time-filter=true&hide-filter-bar=true"
+      "link": "http://10.47.98.164:5601/app/dashboards#/view/d8fdd1a0-52e7-11ee-bc96-cdc778061039?embed=true&_g=(refreshInterval:(pause:!t,value:60000),time:(from:now-15m,to:now))&_a=()&show-time-filter=true&hide-filter-bar=true"
     }
   ],
   "reports": [
@@ -475,16 +615,16 @@
         "Subnet": "10.47.48.0/22",
         "ResourceGRP": "NetworkWatcherRG",
         "Region": "Asia-Center",
-        "Description": "bubjh",
+        "Description": "vgh",
         "VM_type": "",
-        "Series": "hhjhj",
-        "vCPUs": "hhjhj",
-        "RAM": "hjh",
-        "OS_version": "Ubuntu 18.04",
+        "Series": "vhv",
+        "vCPUs": "hvv",
+        "RAM": "hvhjv",
+        "OS_version": "Ubuntu 20.04",
         "License": "BYOL",
-        "OS_Disk_size": "bhjbh",
-        "Disk_partition": "vhjhj",
-        "Storage_Disk_Size": "hjvhjvh",
+        "OS_Disk_size": "bhjb",
+        "Disk_partition": "jhbj",
+        "Storage_Disk_Size": "bhjjbj",
         "Storage_Disk": "no",
         "Storage_Disk_Value": "",
         "Compute_options": "no",
@@ -498,22 +638,16 @@
       "topology_id": 2,
       "node_name": "Server",
       "fields": {
-        "subcriptionId": "bbe9815b-b792-4f3d-a601-94380a26964d",
-        "vnet": "GRCD-AZ-SAP-PP-VNT-01",
-        "CIDR": "10.47.48.0/22",
-        "Subnet": "10.47.48.0/22",
-        "ResourceGRP": "NetworkWatcherRG",
-        "Region": "Asia-Center",
-        "Description": "gvhv",
-        "VM_type": "type1",
-        "Series": "hgvghvh",
-        "vCPUs": "hgvghvh",
-        "RAM": "vghghv",
-        "OS_version": "Ubuntu 18.04",
+        "Description": "vhvh",
+        "VM_type": "",
+        "Series": "jhvjhvh",
+        "vCPUs": "jhvhj",
+        "RAM": "hjvhj",
+        "OS_version": "Ubuntu 20.04",
         "License": "BYOL",
-        "OS_Disk_size": "jbvyuvy",
-        "Disk_partition": "yvyuvu",
-        "Storage_Disk_Size": "yvyuvu",
+        "OS_Disk_size": "vhjv",
+        "Disk_partition": "jhvhj",
+        "Storage_Disk_Size": "hvjvj",
         "Storage_Disk": "no",
         "Storage_Disk_Value": "",
         "Compute_options": "no",
