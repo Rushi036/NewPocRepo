@@ -42,7 +42,7 @@ const viewTopology = () => {
     ResourceGRP: "",
     Region: "",
     Description: "",
-    VM_type: "",
+    VM_type: "type1",
     Series: "",
     vCPUs: "",
     RAM: "",
@@ -271,7 +271,7 @@ const viewTopology = () => {
               <label htmlFor="" className="font-semibold">
                 Cloud :
               </label>
-              <p className="border-b-2 border-slate-600 rounded-md px-2">
+              <div className="border-b-2 border-slate-600 rounded-md px-2">
               {/* {cloud && cloud.length > 1 ? (
                   <p>
                     {cloud[0]} {cloud[1]}
@@ -286,7 +286,7 @@ const viewTopology = () => {
                 ) : (
                   <div>{cloud}</div>
                 )}
-              </p>
+              </div>
             </div>
           </div>
           <div className="relative overflow-hidden">

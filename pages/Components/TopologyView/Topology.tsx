@@ -11,7 +11,7 @@ import "reactflow/dist/style.css";
 import { getIcons } from "@/pages/api/getIcons";
 import { GetAllVMs } from "@/pages/api/getallVMs";
 import { table } from "console";
-import router, { useRouter } from "next/router";
+import router from "next/router";
 import { viewTopologyForAdmin } from "@/pages/api/viewTopologyForAdmin";
 import { useAppContext } from "../AppContext";
 import { getOldData, sendEstimation } from "@/pages/api/sendEstimation";
@@ -1017,7 +1017,7 @@ function Topology(props: any) {
                 ) : (
                   <div>
                     <div className="">
-                      <div className="justify-center">
+                      <div className="flex justify-center">
                         <button
                           className={`btn ${
                             viewClicked
@@ -1109,7 +1109,7 @@ function Topology(props: any) {
                                         )}
                                       </td>
                                       <td className="px-4 py-2 text-center">
-                                        <p className="border-b-2">
+                                        <div className="border-b-2">
                                           {cloud && cloud == "Azure" ? (
                                             <div>{estimation.totalPrice}</div>
                                           ) : (
@@ -1117,7 +1117,7 @@ function Topology(props: any) {
                                               {estimation.totalPriceAws}
                                             </div>
                                           )}
-                                        </p>
+                                        </div>
                                       </td>
                                     </tr>
                                   </tbody>
@@ -1264,7 +1264,7 @@ function Topology(props: any) {
               </div>
 
               <div className={role != "admin" ? "justify-center" : "hidden"}>
-                <div className="justify-center">
+                <div className="flex justify-center">
                   <button
                     className={`btn 
                     }  rounded-md px-4 py-1 mt-6 font-semibold ${
