@@ -162,33 +162,27 @@ const FinOps = () => {
               ranges={predefinedRanges}
               // showOneCalendar
               style={{ width: "100%" }}
-              // shouldDisableDate={afterToday()}
+              shouldDisableDate={afterToday()}
               placeholder="Select Date Range"
               format="yyyy-MM-dd HH:mm:ss"
             />
           </div>
         </div>
-        <div className="mt-4 h-auto flex flex-col gap-4">
-          <div className="flex gap-4">
-            <div className="card !mb-0 w-1/2 h-auto">
-              <LineChartComponent Id={Id ? Id : 0} date={value && value}/>
-            </div>
-            <div className="card !mb-0 w-1/2 h-auto">
-              <PieChartComponent />
-            </div>
+        <div className="card !w-full">
+          <b>
+            <span>Lorem ipsum dolor sit - </span>
+          </b>
+          <span>83012.123</span>
+        </div>
+        <div className="mt-4 h-auto flex flex-wrap gap-4">
+          <div className="card">
+            <LineChartComponent Id={Id ? Id : 0} date={value} />
           </div>
-          <div className="flex gap-4">
-            <div className="card !mb-0 w-1/2">
-              <StackChartComponent />
-            </div>
-            <div className="card !mb-0 w-1/2">
-            </div>
+          <div className="card">
+            <PieChartComponent id="1" />
           </div>
-          <div className="flex gap-4">
-            <div className="card !mb-0 w-1/2 h-64">
-            </div>
-            <div className="card !mb-0 w-1/2 h-64">
-            </div>
+          <div className="card">
+            <StackChartComponent />
           </div>
         </div>
       </div>

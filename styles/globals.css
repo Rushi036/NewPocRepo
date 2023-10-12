@@ -183,11 +183,14 @@ body {
 }
 
 .card {
+  flex: 1;
   background-color: #ffffff;
   border-radius: 8px;
   padding: 16px;
-  margin-bottom: 2%;
-  width: 49%;
+  /* margin-bottom: 2%; */
+  width: 50%;
+  min-width: 400px;
+  box-sizing: border-box;
   overflow: hidden;
 }
 .card > div {

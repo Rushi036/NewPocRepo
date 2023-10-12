@@ -5,11 +5,11 @@ import NoDataToDisplay from "highcharts/modules/no-data-to-display";
 
 // Initialize Highcharts modules
 
-const ChartComponent = () => {
+const ChartComponent = (props:any) => {
   useEffect(() => {
     HighchartsVariablePie(Highcharts);
     NoDataToDisplay(Highcharts);
-    Highcharts.chart("container", {
+    Highcharts.chart("container-"+props.id, {
       chart: {
         type: "variablepie",
       },
@@ -71,7 +71,7 @@ const ChartComponent = () => {
     });
   }, []); // Empty dependency array ensures the effect runs once after initial render
 
-  return <div id="container" style={{ height: "400px" }} />;
+  return <div id={"container-"+props.id} style={{ height: "400px" }} />;
 };
 
 export default ChartComponent;

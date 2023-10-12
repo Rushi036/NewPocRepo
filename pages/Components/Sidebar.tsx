@@ -30,7 +30,7 @@ const Sidebar = () => {
     <>
       <div
         className={`${
-          state ? "w-1/5" : "w-fit"
+          state ? "w-1/5 min-w-[250px]" : "w-fit"
         } bottom-0 z-30 top-0 hidden relative shadow-2xl sm:block transition-all duration-300 bg-white border-r`}
       >
         <img
