@@ -21,9 +21,9 @@ const ChartComponent = () => {
         headerFormat: "",
         pointFormat:
           '<span style="color:{point.color}">\u25CF</span> <b> {point.name}</b><br/>' 
-          // +
-          // "Area (square km): <b>{point.y}</b><br/>" +
-          // "Population density (people per square km): <b>{point.z}</b><br/>",
+          +
+          "Area (square km): <b>{point.y}</b><br/>" +
+          "Population density (people per square km): <b>{point.z}</b><br/>",
       },
       lang: {
         noData: "Please select atleast one Application",

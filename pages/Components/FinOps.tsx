@@ -6,6 +6,7 @@ import { useAppContext } from "./AppContext";
 import "rsuite/dist/rsuite.min.css";
 import PieChartComponent from "./Charts/PieChart";
 import StackChartComponent from "./Charts/StackChart";
+import LineChartComponent from "./Charts/LineChartBlendedCost";
 // import BubbleChartComponent from "./Charts/BubbleChart";
 
 const FinOps = () => {
@@ -96,6 +97,7 @@ const FinOps = () => {
     },
   ];
   const handleIdChange = (e: any) => {
+    // console.log("id", e.target.value);
     setId(e.target.value);
   };
   const handleCloudChange = (e: any) => {
@@ -118,7 +120,7 @@ const FinOps = () => {
     // setData(res.data);
     // setUrl(data[1]);
   }
-  // data && console.log("finops data", data[0].link);
+  // console.log("api payload data", Id, value);
   return (
     <div className="h-auto">
       <div className="text-xl border-b-2 px-4 border-slate-400 pb-2">
@@ -147,10 +149,12 @@ const FinOps = () => {
             {/* <label className="text-lg ">Select Id : </label> */}
             <select
               className="block w-full py-2 px-4 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-              //  onChange={(e) => handleIdChange(e)}
+              onChange={(e) => handleIdChange(e)}
             >
               {/* subscription id or account id */}
               <option disabled>Select Id</option>
+              <option value="718927010207">718927010207</option>{" "}
+              <option value="718927010107">718927010107</option>
             </select>
           </div>
           <div className="w-1/3">
@@ -171,18 +175,18 @@ const FinOps = () => {
         <div className="p-4 mt-4 h-auto">
           <div className="flex -mx-2 mb-4 space-x-8">
             <div className="card w-1/2 h-auto px-2 mb-4">
-              <StackChartComponent />
+              <LineChartComponent Id={Id ? Id : 0} date={value && value}/>
             </div>
             <div className="card w-1/2 h-auto px-2 mb-4">
               <PieChartComponent />
             </div>
           </div>
           <div className="flex -mx-2 mb-4 space-x-8">
-            <div className="card w-1/2 h-64 px-2 mb-4">
-              {/* <BubbleChartComponent /> */}
+            <div className="card w-1/2 px-2 mb-4">
+              <StackChartComponent />
               {/* <div className="card h-32 bg-white rounded-lg shadow-md"></div> */}
             </div>
-            <div className="card w-1/2 h-64 px-2 mb-4">
+            <div className="card w-1/2 px-2 mb-4">
               {/* <div className="card h-32 bg-white rounded-lg shadow-md"></div> */}
             </div>
           </div>
