@@ -97,19 +97,15 @@ const FinOps = () => {
     },
   ];
   const handleIdChange = (e: any) => {
-    // console.log("id", e.target.value);
     setId(e.target.value);
   };
   const handleCloudChange = (e: any) => {
     setCloud(e.target.value);
   };
-  // console.log("cloud", cloud);
   useEffect(() => {
     value && toggleTime(value[0]);
     value && toggleTimeEnd(value[1]);
   }, [value]);
-  // if (typeof window !== "undefined") {
-  // role = localStorage.getItem("role");
   useEffect(() => {
     bu_id = localStorage.getItem("bu_id");
     dataFetch();
@@ -172,30 +168,26 @@ const FinOps = () => {
             />
           </div>
         </div>
-        <div className="p-4 mt-4 h-auto">
-          <div className="flex -mx-2 mb-4 space-x-8">
-            <div className="card w-1/2 h-auto px-2 mb-4">
+        <div className="mt-4 h-auto flex flex-col gap-4">
+          <div className="flex gap-4">
+            <div className="card !mb-0 w-1/2 h-auto">
               <LineChartComponent Id={Id ? Id : 0} date={value && value}/>
             </div>
-            <div className="card w-1/2 h-auto px-2 mb-4">
+            <div className="card !mb-0 w-1/2 h-auto">
               <PieChartComponent />
             </div>
           </div>
-          <div className="flex -mx-2 mb-4 space-x-8">
-            <div className="card w-1/2 px-2 mb-4">
+          <div className="flex gap-4">
+            <div className="card !mb-0 w-1/2">
               <StackChartComponent />
-              {/* <div className="card h-32 bg-white rounded-lg shadow-md"></div> */}
             </div>
-            <div className="card w-1/2 px-2 mb-4">
-              {/* <div className="card h-32 bg-white rounded-lg shadow-md"></div> */}
+            <div className="card !mb-0 w-1/2">
             </div>
           </div>
-          <div className="flex -mx-2 mb-4 space-x-8">
-            <div className="card w-1/2 h-64 px-2 mb-4">
-              {/* <div className="card h-32 bg-white rounded-lg shadow-md"></div> */}
+          <div className="flex gap-4">
+            <div className="card !mb-0 w-1/2 h-64">
             </div>
-            <div className="card w-1/2 h-64 px-2 mb-4">
-              {/* <div className="card h-32 bg-white rounded-lg shadow-md"></div> */}
+            <div className="card !mb-0 w-1/2 h-64">
             </div>
           </div>
         </div>
