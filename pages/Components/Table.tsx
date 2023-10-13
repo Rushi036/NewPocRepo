@@ -7,6 +7,9 @@ const Table = ({ data }: any) => {
   return (
     <div>
       <div className="items-center pb-4 px-4">
+        <label className="text-xl font-semibold">
+            Network Table
+        </label>
         <div className="relative overflow-x-auto mt-6">
           <table className="w-full text-sm text-center text-gray-800">
             <thead className="text-xs text-white uppercase bg-red-800">
