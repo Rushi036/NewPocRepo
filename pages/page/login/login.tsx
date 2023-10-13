@@ -1,9 +1,11 @@
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Layout from "@/pages/Components/bLayout";
 import { login } from "@/pages/api/login";
 import { useRouter } from "next/router";
+import { useIsAuthenticated, useMsal } from "@azure/msal-react";
+// import { useIsAuthenticated, useMsal } from "@azure/msal-react";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -11,9 +13,12 @@ const Login = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [link, setLink] = useState("");
   const router = useRouter();
-
+  const isAuthenticated = useIsAuthenticated();
+  const { instance } = useMsal();
   const isFormValid = email !== "" && password !== "";
-
+  // let [loginEmployee, { data: loginData }] = useLoginEmployeeMutation();
+  const { accounts } = useMsal();
+  const account: any = accounts[0];
   const handleEmailChange = (e: any) => {
     setEmail(e.target.value);
   };
@@ -25,7 +30,29 @@ const Login = () => {
   const handleRememberMeChange = (e: any) => {
     setRememberMe(e.target.checked);
   };
-
+  const request = {
+    scopes: ["user.read", "user.readbasic.all"],
+  };
+  const handleSignIn = () => {
+    instance
+      .loginPopup(request)
+      .then((response: any) => {
+        // getEmployeesImages(response.accessToken);
+        // //console.log(response.accessToken);
+        sessionStorage.setItem("accessTokenMSAL", response.accessToken);
+        // if (isAuthenticated) {
+        //   router.push("/page/Dashboard/Dashboard");
+        // }
+      })
+      .catch((error: any) => {
+        //console.log("Error:", error);
+      });
+  };
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/page/Dashboard/Dashboard");
+    }
+  }, [isAuthenticated]);
   const handleSubmit = (e: any) => {
     e.preventDefault();
     async function dataFetch() {
@@ -69,7 +96,7 @@ const Login = () => {
           {/* <h1 className="text-xl font-bold pb-4 leading-tight tracking-tight text-gray-900 ">
             Sign in to your account
           </h1> */}
-          <form className="md:space-y-4" onSubmit={handleSubmit}>
+          {/* <form className="md:space-y-4" onSubmit={handleSubmit}>
             <div className="mb-4">
               <i className="fa fa-envelope icon"></i>
               <label htmlFor="email" className="block pb-2 text-gray-600">
@@ -108,7 +135,14 @@ const Login = () => {
             >
               Sign in
             </button>
-          </form>
+          </form> */}
+          <button
+            className="btn join-item rounded-none mx-20 my-24 bg-blue-500 text-white "
+            onClick={handleSignIn}
+          >
+            Microsoft Login
+            <Image src="/abgLogo.jpg" alt="" width={30} height={30} />
+          </button>
           <br></br>
         </div>
       </div>

@@ -31,6 +31,7 @@ const LineChartComponent = (Id: any, dates: any) => {
           e[1],
         ];
       });
+      console.log(newData);
       const options: any = {
         title: {
           text: "Cost Trend Over Time",
