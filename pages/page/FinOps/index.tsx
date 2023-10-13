@@ -8,7 +8,8 @@ import PieChartComponent from "../../Components/Charts/PieChart";
 import StackChartComponent from "../../Components/Charts/StackChart";
 import LineChartComponent from "../../Components/Charts/LineChartBlendedCost";
 // import BubbleChartComponent from "./Charts/BubbleChart";
-
+import { MaterialReactTable } from "material-react-table";
+import Table from "@/pages/Components/Table";
 const FinOps = () => {
   let bu_id: string | null;
   const [url, setUrl] = useState<any>();
@@ -29,7 +30,7 @@ const FinOps = () => {
             ["grcd-az-sur-dp-rsg-asr-01", 644],
             ["grcd-az-sur-dp-rsg-01", 817],
           ],
-        }
+        },
       },
       {
         PieChart: {
@@ -45,7 +46,7 @@ const FinOps = () => {
             ["ECC-DR-APP2", 573.1545715332031],
             ["DR-Tonner Management App (SAP SURROUND)", 0],
           ],
-        }
+        },
       },
       {
         LineChart: {
@@ -61,23 +62,59 @@ const FinOps = () => {
             ["ECC-DR-APP2", 573.1545715332031],
             ["DR-Tonner Management App (SAP SURROUND)", 0],
           ],
-        }
+        },
       },
       {
         LineChart: {
           title: "Cost Distribution at application level",
-          data: [
-            ["ECC-DR-DB+CI (On Demand)", 29778.70211209737],
-          ],
-        }
+          data: [["ECC-DR-DB+CI (On Demand)", 29778.70211209737]],
+        },
       },
     ],
-    Table: [],
+    Table: [
+      {
+        headers: ["Sr. no", "Application Name", "Min", "Max", "Avg"],
+        data: [
+          [
+            ["srno", 1],
+            ["appname", "HTTP"],
+            ["min", 0],
+            ["max", 37966029.86666667],
+            ["avg", 761918.7798981322],
+          ],
+          [
+            ["srno", 2],
+            ["appname", "tcp/5671"],
+            ["min", 0],
+            ["max", 8792770.133333333],
+            ["avg", 170468.6151443124],
+          ],
+        ],
+      },
+      {
+        headers: ["Sr. no", "Application Name", "Min", "Max", "Avg"],
+        data: [
+          [
+            ["srno", 3],
+            ["appname", "HTTP"],
+            ["min", 0],
+            ["max", 37966029.86666667],
+            ["avg", 761918.7798981322],
+          ],
+          [
+            ["srno", 4],
+            ["appname", "tcp/5671"],
+            ["min", 0],
+            ["max", 8792770.133333333],
+            ["avg", 170468.6151443124],
+          ],
+        ],
+      },
+    ],
     Mertric: {
       title: "Grasim Chemical Division - DR PROD",
       value: 328460.59684130736,
     },
-
   };
   const [value, setValue] = React.useState<any>([
     new Date(time),
@@ -164,6 +201,21 @@ const FinOps = () => {
   const handleCloudChange = (e: any) => {
     setCloud(e.target.value);
   };
+
+  // const columns: any = useMemo(() => [
+  //   {
+  //     accessorKey: "srno",
+
+  //     header: "Sr.No.",
+
+  //     enableSorting: false,
+
+  //     size: 0,
+
+  //     footer: "",
+  //   },
+  // ]);
+
   useEffect(() => {
     value && toggleTime(value[0]);
     value && toggleTimeEnd(value[1]);
@@ -237,21 +289,24 @@ const FinOps = () => {
           <span>{res.Mertric.value}</span>
         </div>
         <div className="mt-4 h-auto flex flex-wrap gap-4">
-
           {res.Graph.map((e: any, i: any) => {
             if (e.PieChart) {
               return (
                 <div key={i} className="card">
                   <PieChartComponent id={i} />
                 </div>
-              )
-            }
-            else if (e.LineChart) {
+              );
+            } else if (e.LineChart) {
               return (
-                <div key={i} className={e.LineChart.data.length>=2?"card !min-w-full":"card"}>
-                  <LineChartComponent Id={i} date={value} />
+                <div
+                  key={i}
+                  className={
+                    e.LineChart.data.length >= 2 ? "card !min-w-full" : "card"
+                  }
+                >
+                  {/* <LineChartComponent Id={i} date={value} /> */}
                 </div>
-              )
+              );
             }
           })}
           {/* <div className="card">
@@ -260,6 +315,15 @@ const FinOps = () => {
           <div className="card">
             <StackChartComponent />
           </div>
+
+          {res.Table.map((e: any, i: any) => {
+            // console.log("table data", e);
+            return (
+              <div className="card">
+                <Table data={e} />
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
