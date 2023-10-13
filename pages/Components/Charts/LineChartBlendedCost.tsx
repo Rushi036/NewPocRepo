@@ -9,14 +9,14 @@ const LineChartComponent = (Id: any, dates: any) => {
   const [unBlendCostData, setUnBlendCostData] = useState<any>();
   const getData = async () => {
     await getUnBlendedCost(Id).then((res) => {
-      console.log("res in chart", res);
+      // console.log("res in chart", res);
       setUnBlendCostData(res);
     });
   };
   useEffect(() => {
     getData();
   }, [Id]);
-  console.log("unblend in chart", unBlendCostData);
+  // console.log("unblend in chart", unBlendCostData);
   useEffect(() => {
     if (chartContainer.current) {
       const newData = unBlendCostData?.data.map((e: any) => {
@@ -38,11 +38,6 @@ const LineChartComponent = (Id: any, dates: any) => {
           align: "left",
         },
 
-        // subtitle: {
-        //   text: 'By Job Category. Source: <a href="https://irecusa.org/programs/solar-jobs-census/" target="_blank">IREC</a>.',
-        //   align: "left",
-        // },
-
         yAxis: {
           title: {
             text: "Unblended Cost",
@@ -51,9 +46,6 @@ const LineChartComponent = (Id: any, dates: any) => {
 
         xAxis: {
           type: "category",
-          //     accessibility: {
-          //         rangeDescription: 'Range: 2010 to 2020'
-          //     }
         },
 
         legend: {
@@ -98,7 +90,7 @@ const LineChartComponent = (Id: any, dates: any) => {
       };
 
       Highcharts.chart(chartContainer.current, options);
-      console.log(newData);
+      // console.log(newData);
     }
   }, [unBlendCostData]); // Empty dependency array ensures the effect runs once after initial render
 

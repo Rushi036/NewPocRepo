@@ -293,7 +293,7 @@ const viewTopology = () => {
         Environment_tag: "Test",
       };
     }
-    console.log(data);
+    // console.log(data);
   }
 
   return (

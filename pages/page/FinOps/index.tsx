@@ -17,6 +17,68 @@ const FinOps = () => {
   const { timeEnd, toggleTimeEnd } = useAppContext();
   const [cloud, setCloud] = useState("Azure");
   const [Id, setId] = useState();
+  const res: any = {
+    Graph: [
+      {
+        PieChart: {
+          title: "Resource Group consumption",
+          data: [
+            ["grcd-az-sap-dp-rsg-01", 1616],
+            ["digitalexdrprod-resource", 287],
+            ["grcd-az-sur-pp-rsg-01-asr", 146],
+            ["grcd-az-sur-dp-rsg-asr-01", 644],
+            ["grcd-az-sur-dp-rsg-01", 817],
+          ],
+        }
+      },
+      {
+        PieChart: {
+          title: "Cost Distribution at application level",
+          data: [
+            ["ECC-DR-DB+CI (On Demand)", 29778.70211209737],
+            ["DR-GRC Tool (SAP SURROUND)", 1251.6276209803618],
+            ["DR-Central Mfg Cockpit (SAP SURROUND)", 1202.8653640140838],
+            ["DR - TrueCopy Digital Sign (SAP SURROUND)", 2404.4580796147857],
+            ["DR-Surakhsha (SAP SURROUND)", 4585.552786759836],
+            ["ECC-DR-APP1", 648.4713706970215],
+            ["DR-Tonner Management DB (SAP SURROUND)", 5015.091064453125],
+            ["ECC-DR-APP2", 573.1545715332031],
+            ["DR-Tonner Management App (SAP SURROUND)", 0],
+          ],
+        }
+      },
+      {
+        LineChart: {
+          title: "Cost Distribution at application level",
+          data: [
+            ["ECC-DR-DB+CI (On Demand)", 29778.70211209737],
+            ["DR-GRC Tool (SAP SURROUND)", 1251.6276209803618],
+            ["DR-Central Mfg Cockpit (SAP SURROUND)", 1202.8653640140838],
+            ["DR - TrueCopy Digital Sign (SAP SURROUND)", 2404.4580796147857],
+            ["DR-Surakhsha (SAP SURROUND)", 4585.552786759836],
+            ["ECC-DR-APP1", 648.4713706970215],
+            ["DR-Tonner Management DB (SAP SURROUND)", 5015.091064453125],
+            ["ECC-DR-APP2", 573.1545715332031],
+            ["DR-Tonner Management App (SAP SURROUND)", 0],
+          ],
+        }
+      },
+      {
+        LineChart: {
+          title: "Cost Distribution at application level",
+          data: [
+            ["ECC-DR-DB+CI (On Demand)", 29778.70211209737],
+          ],
+        }
+      },
+    ],
+    Table: [],
+    Mertric: {
+      title: "Grasim Chemical Division - DR PROD",
+      value: 328460.59684130736,
+    },
+
+  };
   const [value, setValue] = React.useState<any>([
     new Date(time),
     new Date(timeEnd),
@@ -170,17 +232,31 @@ const FinOps = () => {
         </div>
         <div className="card !w-full">
           <b>
-            <span>Lorem ipsum dolor sit - </span>
+            <span>{res.Mertric.title} - </span>
           </b>
-          <span>83012.123</span>
+          <span>{res.Mertric.value}</span>
         </div>
         <div className="mt-4 h-auto flex flex-wrap gap-4">
-          <div className="card">
-            <LineChartComponent Id={Id ? Id : 0} date={value} />
-          </div>
-          <div className="card">
+
+          {res.Graph.map((e: any, i: any) => {
+            if (e.PieChart) {
+              return (
+                <div key={i} className="card">
+                  <PieChartComponent id={i} />
+                </div>
+              )
+            }
+            else if (e.LineChart) {
+              return (
+                <div key={i} className={e.LineChart.data.length>=2?"card !min-w-full":"card"}>
+                  <LineChartComponent Id={i} date={value} />
+                </div>
+              )
+            }
+          })}
+          {/* <div className="card">
             <PieChartComponent id="1" />
-          </div>
+          </div> */}
           <div className="card">
             <StackChartComponent />
           </div>
