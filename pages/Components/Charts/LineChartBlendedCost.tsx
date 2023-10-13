@@ -37,11 +37,6 @@ const LineChartComponent = (Id: any, dates: any) => {
           align: "left",
         },
 
-        // subtitle: {
-        //   text: 'By Job Category. Source: <a href="https://irecusa.org/programs/solar-jobs-census/" target="_blank">IREC</a>.',
-        //   align: "left",
-        // },
-
         yAxis: {
           title: {
             text: "Unblended Cost",
@@ -50,9 +45,6 @@ const LineChartComponent = (Id: any, dates: any) => {
 
         xAxis: {
           type: "category",
-          //     accessibility: {
-          //         rangeDescription: 'Range: 2010 to 2020'
-          //     }
         },
 
         legend: {
