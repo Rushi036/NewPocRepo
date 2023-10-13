@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { finOps } from "../api/finOps";
+import { finOps } from "../../api/finOps";
 import { DateRangePicker } from "rsuite";
 import moment from "moment";
-import { useAppContext } from "./AppContext";
+import { useAppContext } from "../../Components/AppContext";
 import "rsuite/dist/rsuite.min.css";
-import PieChartComponent from "./Charts/PieChart";
-import StackChartComponent from "./Charts/StackChart";
-import LineChartComponent from "./Charts/LineChartBlendedCost";
+import PieChartComponent from "../../Components/Charts/PieChart";
+import StackChartComponent from "../../Components/Charts/StackChart";
+import LineChartComponent from "../../Components/Charts/LineChartBlendedCost";
 // import BubbleChartComponent from "./Charts/BubbleChart";
 
 const FinOps = () => {
@@ -97,19 +97,15 @@ const FinOps = () => {
     },
   ];
   const handleIdChange = (e: any) => {
-    // console.log("id", e.target.value);
     setId(e.target.value);
   };
   const handleCloudChange = (e: any) => {
     setCloud(e.target.value);
   };
-  // console.log("cloud", cloud);
   useEffect(() => {
     value && toggleTime(value[0]);
     value && toggleTimeEnd(value[1]);
   }, [value]);
-  // if (typeof window !== "undefined") {
-  // role = localStorage.getItem("role");
   useEffect(() => {
     bu_id = localStorage.getItem("bu_id");
     dataFetch();
@@ -166,37 +162,27 @@ const FinOps = () => {
               ranges={predefinedRanges}
               // showOneCalendar
               style={{ width: "100%" }}
-              // shouldDisableDate={afterToday()}
+              shouldDisableDate={afterToday()}
               placeholder="Select Date Range"
               format="yyyy-MM-dd HH:mm:ss"
             />
           </div>
         </div>
-        <div className="p-4 mt-4 h-auto">
-          <div className="flex -mx-2 mb-4 space-x-8">
-            <div className="card w-1/2 h-auto px-2 mb-4">
-              <LineChartComponent Id={Id ? Id : 0} date={value && value}/>
-            </div>
-            <div className="card w-1/2 h-auto px-2 mb-4">
-              <PieChartComponent />
-            </div>
+        <div className="card !w-full">
+          <b>
+            <span>Lorem ipsum dolor sit - </span>
+          </b>
+          <span>83012.123</span>
+        </div>
+        <div className="mt-4 h-auto flex flex-wrap gap-4">
+          <div className="card">
+            <LineChartComponent Id={Id ? Id : 0} date={value} />
           </div>
-          <div className="flex -mx-2 mb-4 space-x-8">
-            <div className="card w-1/2 px-2 mb-4">
-              <StackChartComponent />
-              {/* <div className="card h-32 bg-white rounded-lg shadow-md"></div> */}
-            </div>
-            <div className="card w-1/2 px-2 mb-4">
-              {/* <div className="card h-32 bg-white rounded-lg shadow-md"></div> */}
-            </div>
+          <div className="card">
+            <PieChartComponent id="1" />
           </div>
-          <div className="flex -mx-2 mb-4 space-x-8">
-            <div className="card w-1/2 h-64 px-2 mb-4">
-              {/* <div className="card h-32 bg-white rounded-lg shadow-md"></div> */}
-            </div>
-            <div className="card w-1/2 h-64 px-2 mb-4">
-              {/* <div className="card h-32 bg-white rounded-lg shadow-md"></div> */}
-            </div>
+          <div className="card">
+            <StackChartComponent />
           </div>
         </div>
       </div>

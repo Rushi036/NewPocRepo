@@ -30,7 +30,7 @@ const Sidebar = () => {
     <>
       <div
         className={`${
-          state ? "w-1/5" : "w-fit"
+          state ? "w-1/5 min-w-[250px]" : "w-fit"
         } bottom-0 z-30 top-0 hidden relative shadow-2xl sm:block transition-all duration-300 bg-white border-r`}
       >
         <img
@@ -139,7 +139,7 @@ const Sidebar = () => {
           {uRole != "admin" && (
             <li className="hs-accordion" id="account-accordion">
               <Link
-                href="/Components/FinOps"
+                href="/page/FinOps"
                 className={`flex items-center gap-x-3.5 py-2 px-2.5 text-base
               text-slate-700 rounded-md hover:bg-gray-100
               ${activeLink === 3 ? "bg-gray-100" : ""}`}

@@ -52,7 +52,7 @@ const viewTopology = () => {
   };
   let sd = {
     Description: "",
-    VM_type: "",
+    VM_type: "type1",
     Series: "",
     vCPUs: "",
     RAM: "",
@@ -371,6 +371,13 @@ const viewTopology = () => {
                 Cloud :
               </label>
               <div className="border-b-2 border-slate-600 rounded-md px-2">
+              {/* {cloud && cloud.length > 1 ? (
+                  <p>
+                    {cloud[0]} {cloud[1]}
+                  </p>
+                ) : (
+                  <p>{cloud}</p>
+                )} */}
                 {cloud && cloud.length > 1 ? (
                   <div>
                     {cloud[0]} & {cloud[1]}
