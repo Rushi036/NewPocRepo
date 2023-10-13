@@ -9,14 +9,14 @@ const LineChartComponent = (Id: any, dates: any) => {
   const [unBlendCostData, setUnBlendCostData] = useState<any>();
   const getData = async () => {
     await getUnBlendedCost(Id).then((res) => {
-      console.log("res in chart", res);
+      // console.log("res in chart", res);
       setUnBlendCostData(res);
     });
   };
   useEffect(() => {
     getData();
   }, [Id]);
-  console.log("unblend in chart", unBlendCostData);
+  // console.log("unblend in chart", unBlendCostData);
   useEffect(() => {
     if (chartContainer.current) {
       const newData = unBlendCostData?.data.map((e: any) => {
@@ -89,7 +89,7 @@ const LineChartComponent = (Id: any, dates: any) => {
       };
 
       Highcharts.chart(chartContainer.current, options);
-      console.log(newData);
+      // console.log(newData);
     }
   }, [unBlendCostData]); // Empty dependency array ensures the effect runs once after initial render
 

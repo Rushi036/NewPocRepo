@@ -30,7 +30,7 @@ const Login = () => {
     e.preventDefault();
     async function dataFetch() {
       const data = await login(email, password);
-      console.log("------------------", data);
+      // console.log("------------------", data);
       if (data?.data[0]) {
         localStorage.setItem("userName", data.data[0].name);
         localStorage.setItem("role", data.data[0].role);
