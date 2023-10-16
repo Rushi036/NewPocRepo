@@ -5,7 +5,7 @@
 
 // // Initialize Highcharts modules
 
-// const BubbleChartComponent = () => {
+const BubbleChartComponent = () => {
 //   useEffect(() => {
 //     HighchartsVariablePie(Highcharts);
 //     NoDataToDisplay(Highcharts);
@@ -150,6 +150,7 @@
 //   }, []); // Empty dependency array ensures the effect runs once after initial render
 
 //   return <div id="container3" style={{ height: "400px" }} />;
-// };
+return(<></>)
+};
 
-// export default BubbleChartComponent;
+export default BubbleChartComponent;
