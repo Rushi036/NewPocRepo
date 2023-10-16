@@ -1,0 +1,66 @@
+{
+  "Metric": {
+    "title": "abmcpl",
+    "value": 125
+  },
+  "Table": [],
+  "Graph": [
+    {
+      "PieChart": {
+        "title": "state of Unique Instances",
+        "data": [
+          ["running", 125],
+          ["terminated", 10],
+          ["stopped", 3],
+          ["shutting-down", 2]
+        ]
+      }
+    },
+    {
+      "PieChart": {
+        "title": "Most Cost Consuming Service Per Day",
+        "data": [
+          ["Amazon Elastic Compute Cloud - Compute", 311.05],
+          ["EC2 - Other", 114.31],
+          ["Amazon Virtual Private Cloud", 70.57],
+          ["Amazon Relational Database Service", 54.83],
+          ["AmazonCloudWatch", 36.43],
+          ["Amazon Elastic Compute Cloud - Compute", 302.52],
+          ["EC2 - Other", 97.16],
+          ["Amazon Virtual Private Cloud", 67.36],
+          ["Amazon Relational Database Service", 52.65],
+          ["AmazonCloudWatch", 35.46]
+        ]
+      }
+    },
+    {
+      "LineChart": {
+        "title": "Total Unblended Cost per Day",
+        "series": [
+          {
+            "name": "abmcpl",
+            "data": [
+              ["2023-10-03T00:00:00.000Z", 1096.54],
+              ["2023-10-04T00:00:00.000Z", 9000],
+              ["2023-10-05T00:00:00.000Z", 1096.54],
+              ["2023-10-06T00:00:00.000Z", 106.54],
+              ["2023-10-07T00:00:00.000Z", null],
+              ["2023-10-08T00:00:00.000Z", null],
+              ["2023-10-09T00:00:00.000Z", null],
+              ["2023-10-10T00:00:00.000Z", null],
+              ["2023-10-11T00:00:00.000Z", 2132.02],
+              ["2023-10-12T00:00:00.000Z", 132.02],
+              ["2023-10-13T00:00:00.000Z", 232.02],
+              ["2023-10-14T00:00:00.000Z", 212.02],
+              ["2023-10-15T00:00:00.000Z", 213.02],
+              ["2023-10-16T00:00:00.000Z", 22.02],
+              ["2023-10-17T00:00:00.000Z", 3200.02]
+            ]
+          }
+        ],
+        "xAxis": "day",
+        "yAxis": "cost"
+      }
+    }
+  ]
+}
