@@ -2,12 +2,12 @@ import React, { useEffect, useRef } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
-const StackChartComponent = () => {
+const StackChartComponent = (props:any) => {
   const chartContainer = useRef(null);
 
   useEffect(() => {
     if (chartContainer.current) {
-      const options = {
+      const options:any = {
         chart: {
           type: "column",
         },

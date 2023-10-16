@@ -3,49 +3,55 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { getUnBlendedCost } from "@/pages/api/FinopsApi/GetUnblendedCost";
 
-const LineChartComponent = (Id: any, dates: any) => {
-  //   console.log("props in chart", Id);
+const LineChartComponent = (props: any) => {
+  //   console.log("props in chart", id);
   const chartContainer = useRef(null);
-  const [unBlendCostData, setUnBlendCostData] = useState<any>();
-  const getData = async () => {
-    await getUnBlendedCost(Id).then((res) => {
-      // console.log("res in chart", res);
-      setUnBlendCostData(res);
-    });
-  };
+  // const [unBlendCostData, setUnBlendCostData] = useState<any>();
+  // const getData = async () => {
+  //   await getUnBlendedCost(id).then((res) => {
+  //     // console.log("res in chart", res);
+  //     setUnBlendCostData(res);
+  //   });
+  // };
+  // useEffect(() => {
+  //   getData();
+  // }, [id]);
   useEffect(() => {
-    getData();
-  }, [Id]);
-  // console.log("unblend in chart", unBlendCostData);
-  useEffect(() => {
+    // console.log("unblend in chart", props.data);
     if (chartContainer.current) {
-      const newData = unBlendCostData?.data.map((e: any) => {
-        return [
-          new Date(e[0]).toLocaleString("en-US", {
-            month: "short",
-            day: "2-digit",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-          }),
-          e[1],
-        ];
+      const newData = props?.data?.series.map((e: any) => {
+        let changedData = e.data?.map((x: any) => {
+          return [
+            new Date(x[0]).toLocaleString("en-US", {
+              month: "short",
+              day: "2-digit",
+              year: "numeric",
+              // hour: "2-digit",
+              // minute: "2-digit",
+            }),
+            x[1],
+          ];
+        });
+        return { name: e.name, data: changedData };
       });
-      console.log(newData);
+      // console.log("tline chart data ", newData)
       const options: any = {
         title: {
-          text: "Cost Trend Over Time",
+          text: props.data.title,
           align: "left",
         },
 
         yAxis: {
           title: {
-            text: "Unblended Cost",
+            text: props.data.yAxis || "",
           },
         },
 
         xAxis: {
-          type: "category",
+          title: {
+            text: props.data.xAxis || "",
+          },
+          type: "category"
         },
 
         legend: {
@@ -63,13 +69,7 @@ const LineChartComponent = (Id: any, dates: any) => {
           },
         },
 
-        series: [
-          {
-            name: "app",
-            // data: [["hi",4394], 567, 5678, 5678, 43934, 4567, 45678, 5678],
-            data: newData ? newData : [],
-          },
-        ],
+        series: newData,
 
         responsive: {
           rules: [
@@ -89,10 +89,11 @@ const LineChartComponent = (Id: any, dates: any) => {
         },
       };
 
+      // console.log(options);
+
       Highcharts.chart(chartContainer.current, options);
-      // console.log(newData);
     }
-  }, [unBlendCostData]); // Empty dependency array ensures the effect runs once after initial render
+  }, [props.data]); // Empty dependency array ensures the effect runs once after initial render
 
   return <div ref={chartContainer} style={{ height: "400px" }} />;
 };

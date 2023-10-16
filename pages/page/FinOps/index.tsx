@@ -6,7 +6,9 @@ import { useAppContext } from "../../Components/AppContext";
 import "rsuite/dist/rsuite.min.css";
 import PieChartComponent from "../../Components/Charts/PieChart";
 import StackChartComponent from "../../Components/Charts/StackChart";
-import LineChartComponent from "../../Components/Charts/LineChartBlendedCost";
+import LineChartComponent from "../../Components/Charts/LineChart";
+import AzureData from "./Azure.json";
+import AWSData from "./AWS.json";
 // import BubbleChartComponent from "./Charts/BubbleChart";
 import { MaterialReactTable } from "material-react-table";
 import Table from "@/pages/Components/Table";
@@ -18,104 +20,7 @@ const FinOps = () => {
   const { timeEnd, toggleTimeEnd } = useAppContext();
   const [cloud, setCloud] = useState("Azure");
   const [Id, setId] = useState();
-  const res: any = {
-    Graph: [
-      {
-        PieChart: {
-          title: "Resource Group consumption",
-          data: [
-            ["grcd-az-sap-dp-rsg-01", 1616],
-            ["digitalexdrprod-resource", 287],
-            ["grcd-az-sur-pp-rsg-01-asr", 146],
-            ["grcd-az-sur-dp-rsg-asr-01", 644],
-            ["grcd-az-sur-dp-rsg-01", 817],
-          ],
-        },
-      },
-      {
-        PieChart: {
-          title: "Cost Distribution at application level",
-          data: [
-            ["ECC-DR-DB+CI (On Demand)", 29778.70211209737],
-            ["DR-GRC Tool (SAP SURROUND)", 1251.6276209803618],
-            ["DR-Central Mfg Cockpit (SAP SURROUND)", 1202.8653640140838],
-            ["DR - TrueCopy Digital Sign (SAP SURROUND)", 2404.4580796147857],
-            ["DR-Surakhsha (SAP SURROUND)", 4585.552786759836],
-            ["ECC-DR-APP1", 648.4713706970215],
-            ["DR-Tonner Management DB (SAP SURROUND)", 5015.091064453125],
-            ["ECC-DR-APP2", 573.1545715332031],
-            ["DR-Tonner Management App (SAP SURROUND)", 0],
-          ],
-        },
-      },
-      {
-        LineChart: {
-          title: "Cost Distribution at application level",
-          data: [
-            ["ECC-DR-DB+CI (On Demand)", 29778.70211209737],
-            ["DR-GRC Tool (SAP SURROUND)", 1251.6276209803618],
-            ["DR-Central Mfg Cockpit (SAP SURROUND)", 1202.8653640140838],
-            ["DR - TrueCopy Digital Sign (SAP SURROUND)", 2404.4580796147857],
-            ["DR-Surakhsha (SAP SURROUND)", 4585.552786759836],
-            ["ECC-DR-APP1", 648.4713706970215],
-            ["DR-Tonner Management DB (SAP SURROUND)", 5015.091064453125],
-            ["ECC-DR-APP2", 573.1545715332031],
-            ["DR-Tonner Management App (SAP SURROUND)", 0],
-          ],
-        },
-      },
-      {
-        LineChart: {
-          title: "Cost Distribution at application level",
-          data: [["ECC-DR-DB+CI (On Demand)", 29778.70211209737]],
-        },
-      },
-    ],
-    Table: [
-      {
-        headers: ["Sr. no", "Application Name", "Min", "Max", "Avg"],
-        data: [
-          [
-            ["srno", 1],
-            ["appname", "HTTP"],
-            ["min", 0],
-            ["max", 37966029.86666667],
-            ["avg", 761918.7798981322],
-          ],
-          [
-            ["srno", 2],
-            ["appname", "tcp/5671"],
-            ["min", 0],
-            ["max", 8792770.133333333],
-            ["avg", 170468.6151443124],
-          ],
-        ],
-      },
-      {
-        headers: ["Sr. no", "Application Name", "Min", "Max", "Avg"],
-        data: [
-          [
-            ["srno", 3],
-            ["appname", "HTTP"],
-            ["min", 0],
-            ["max", 37966029.86666667],
-            ["avg", 761918.7798981322],
-          ],
-          [
-            ["srno", 4],
-            ["appname", "tcp/5671"],
-            ["min", 0],
-            ["max", 8792770.133333333],
-            ["avg", 170468.6151443124],
-          ],
-        ],
-      },
-    ],
-    Mertric: {
-      title: "Grasim Chemical Division - DR PROD",
-      value: 328460.59684130736,
-    },
-  };
+  const res: any = cloud == "Azure" ? AzureData : AWSData;
   const [value, setValue] = React.useState<any>([
     new Date(time),
     new Date(timeEnd),
@@ -284,16 +189,16 @@ const FinOps = () => {
         </div>
         <div className="card !w-full">
           <b>
-            <span>{res.Mertric.title} - </span>
+            <span>{res.Metric?.title} - </span>
           </b>
-          <span>{res.Mertric.value}</span>
+          <span>{res.Metric?.value}</span>
         </div>
         <div className="mt-4 h-auto flex flex-wrap gap-4">
           {res.Graph.map((e: any, i: any) => {
             if (e.PieChart) {
               return (
                 <div key={i} className="card">
-                  <PieChartComponent id={i} />
+                  <PieChartComponent id={i} data={e.PieChart} />
                 </div>
               );
             } else if (e.LineChart) {
@@ -301,10 +206,18 @@ const FinOps = () => {
                 <div
                   key={i}
                   className={
-                    e.LineChart.data.length >= 2 ? "card !min-w-full" : "card"
+                    e.LineChart.series?.data?.length >= 20
+                      ? "card !min-w-full"
+                      : "card"
                   }
                 >
-                  {/* <LineChartComponent Id={i} date={value} /> */}
+                  <LineChartComponent id={i} data={e.LineChart} />
+                </div>
+              );
+            } else if (e.HorizontalStackBarGraph) {
+              return (
+                <div key={i} className={e.LineChart.data.length>=2?"card !min-w-full":"card"}>
+                  <LineChartComponent Id={i} date={value} />
                 </div>
               );
             }
@@ -315,15 +228,6 @@ const FinOps = () => {
           <div className="card">
             <StackChartComponent />
           </div>
-
-          {res.Table.map((e: any, i: any) => {
-            // console.log("table data", e);
-            return (
-              <div className="card">
-                <Table data={e} />
-              </div>
-            );
-          })}
         </div>
       </div>
     </div>
