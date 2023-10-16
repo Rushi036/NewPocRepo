@@ -33,6 +33,9 @@ const Login = () => {
   const request = {
     scopes: ["user.read", "user.readbasic.all"],
   };
+
+  
+
   const handleSignIn = () => {
     instance
       .loginPopup(request)
@@ -48,11 +51,32 @@ const Login = () => {
         //console.log("Error:", error);
       });
   };
+  // console.log(isAuthenticated)
   useEffect(() => {
     if (isAuthenticated) {
       router.push("/page/Dashboard/Dashboard");
     }
   }, [isAuthenticated]);
+
+// useEffect(() => {
+  //   if (account?.idTokenClaims) {
+  //     let reshead: any;
+  //     const email: string = account.idTokenClaims.preferred_username;
+  //     sessionStorage.setItem("userEmail", email);
+  //     const getData = async () => {
+  //       const fetchedData = await login(email);
+  //       setUserData(fetchedData);
+  //       // console.log("response data--------------", userdata);
+  //       if (fetchedData) {
+  //         sessionStorage.setItem("userStatus", fetchedData.emp_status);
+  //         sessionStorage.setItem("userRole", fetchedData.role_name);
+  //         sessionStorage.setItem("userID", fetchedData.emp_id);
+  //       }
+  //     };
+  //     getData();
+  //   }
+  // }, [account]);
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
     async function dataFetch() {
