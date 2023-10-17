@@ -103,10 +103,10 @@ const Login = () => {
   return (
     <div>
       <br></br>
-      <div className="flex w-auto justify-center items-center">
+      <div className="h-[50vh] flex w-auto justify-center items-center">
         <br></br>
         <div
-          className="bg-white shadow-xl w-full max-w-md"
+          className="bg-white shadow-xl w-full max-w-md flex flex-col justify-center items-center"
           style={{ borderRadius: "25px", padding: "20px" }}
         >
           <img
@@ -161,11 +161,11 @@ const Login = () => {
             </button>
           </form> */}
           <button
-            className="btn join-item rounded-none mx-20 my-24 bg-blue-500 text-white "
+            className="flex flex-row-reverse items-center p-1 btn join-item rounded-none bg-white text-black border-2 "
             onClick={handleSignIn}
           >
-            Microsoft Login
-            <Image src="/abgLogo.jpg" alt="" width={30} height={30} />
+            Sign In with Microsoft
+            <img src="/microsoft_logo.png" alt="" width={30} height={30} />
           </button>
           <br></br>
         </div>

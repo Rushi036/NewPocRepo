@@ -9,7 +9,6 @@ import StackChartComponent from "../../Components/Charts/StackChart";
 import LineChartComponent from "../../Components/Charts/LineChart";
 import AzureData from "./Azure.json";
 import AWSData from "./AWS.json";
-import Table from "@/pages/Components/Table";
 import { getSubscriptionIds } from "@/pages/api/FinopsApi/GetSubscriptionId";
 import { getAllSubscriptions } from "@/pages/api/FinopsApi/GetAllSubscriptions";
 // import BubbleChartComponent from "./Charts/BubbleChart";
@@ -136,7 +135,7 @@ const FinOps = () => {
     } else if (userRole == "ADMIN") {
       getAllsubsData();
     }
-  }, [cloud]);
+  }, [cloud, userRole]);
 
   const callApi = async () => {
     //For BE
@@ -240,9 +239,11 @@ const FinOps = () => {
         <div className="flex space-x-4 justify-content-between">
           <div className="card !w-1/2">
             <b>
-              <span>{res && res.Metric ? res.Metric.title + " - " : "No data"} </span>
+              <span>{res && res.Metric ? res.Metric.title + " " : "No data"} </span>
             </b>
-            <span>{res && res.Metric ? res.Metric.value : ""} </span>
+            <br />
+            <span>Total Subscription Cost - </span>
+            <span>₹ {res && res.Metric ? res.Metric.value : ""} </span>
           </div>
           <div className="card !w-1/2">
             <b>
@@ -296,14 +297,6 @@ const FinOps = () => {
           })}
         </div>
 
-        {res && res.Table?.map((e: any, i: any) => {
-          // console.log("table data", e);
-          return (
-            <div key={i} className="card">
-              <Table data={e} />
-            </div>
-          );
-        })}
       </div>
     </div>
   );

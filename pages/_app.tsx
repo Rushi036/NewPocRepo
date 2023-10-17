@@ -11,38 +11,28 @@ import { MsalProvider } from "@azure/msal-react";
 import { PublicClientApplication } from "@azure/msal-browser";
 export default function App({ Component, pageProps }: any) {
   // Use the layout defined at the page level, if available
+  const [isBrowser, setIsBrowser] = useState(false);
+  useEffect(() => {
+    setIsBrowser(typeof window !== "undefined");
+  }, []);
+
+  const pca = new PublicClientApplication({
+    auth: {
+      clientId: "60802651-5188-4bec-a75c-a52c10d93027",
+      authority:
+        "https://login.microsoftonline.com/f87a5f5e-f97e-4aec-bab8-6e4187ef4f1c",
+      redirectUri: "/",
+    },
+  });
   if (Component.getLayout) {
-    const pca = new PublicClientApplication({
-      auth: {
-        clientId: "60802651-5188-4bec-a75c-a52c10d93027",
-        authority:
-          "https://login.microsoftonline.com/f87a5f5e-f97e-4aec-bab8-6e4187ef4f1c",
-        redirectUri: "/",
-      },
-    });
-    const [isBrowser, setIsBrowser] = useState(false);
-    useEffect(() => {
-      setIsBrowser(typeof window !== "undefined");
-    }, []);
     const getLayout = Component.getLayout || ((page: any) => page);
     return getLayout(
       <MsalProvider instance={pca}>
         <Component {...pageProps} />
       </MsalProvider>
     );
-  } else {
-    const pca = new PublicClientApplication({
-      auth: {
-        clientId: "60802651-5188-4bec-a75c-a52c10d93027",
-        authority:
-          "https://login.microsoftonline.com/f87a5f5e-f97e-4aec-bab8-6e4187ef4f1c",
-        redirectUri: "/",
-      },
-    });
-    const [isBrowser, setIsBrowser] = useState(false);
-    useEffect(() => {
-      setIsBrowser(typeof window !== "undefined");
-    }, []);
+  }
+  else {
     return (
       <MsalProvider instance={pca}>
         <AppContextProvider>
