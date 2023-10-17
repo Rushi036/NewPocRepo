@@ -168,15 +168,31 @@ const FinOps = () => {
         lte: value[1],
         subscription_name: [subACCName],
       };
-      fetchData(body).then(res => { return res.json() }).then((data) => setRes(data))
+      fetchDataAzure(body).then(res => { return res.json() }).then((data) => setRes(data))
     }
     else {
-      setRes(AWSData);
+      let body = {
+        gte: value[0],
+        lte: value[1],
+        account_id: [subscId],
+        account_name: [subACCName],
+      };
+      fetchDataAWS(body).then(res => { return res.json() }).then((data) => setRes(data))
     }
-  }, [cloud, value, subACCName]);
+  }, [cloud, value, subACCName, subscId]);
 
-  async function fetchData(body: any) {
+  async function fetchDataAzure(body: any) {
     return await fetch("http://10.47.98.164:9201/AzureFinopsDashboardData", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+  }
+
+  async function fetchDataAWS(body: any) {
+    return await fetch("http://10.47.98.164:9201/AwsFinopsDashboardData", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -245,7 +261,7 @@ const FinOps = () => {
             </b>
             <br />
             <span>Total Subscription Cost - </span>
-            <span>₹ {res && res.Metric ? res.Metric.value : ""} </span>
+            <span>{cloud == "Azure"? "₹":"$"} {res && res.Metric ? res.Metric.value : ""} </span>
           </div>
           <div className="card !w-1/2">
             <b>
@@ -255,7 +271,7 @@ const FinOps = () => {
           </div>
         </div>
         <div className="mt-4 h-auto flex flex-wrap gap-4">
-          {res && res.Graph.map((e: any, i: any) => {
+          {res && res.Graph?.map((e: any, i: any) => {
             if (e && e.PieChart) {
               return (
                 <div key={i} className="card">
