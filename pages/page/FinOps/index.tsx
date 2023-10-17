@@ -109,8 +109,10 @@ const FinOps = () => {
   ];
 
   useEffect(() => {
-    setUserADID(sessionStorage.getItem("userEmail"));
-    setUserRole(sessionStorage.getItem("userRole"));
+    // setUserADID(sessionStorage.getItem("userEmail"));
+    // setUserRole(sessionStorage.getItem("userRole"));   --------these are for sso login
+    setUserADID(localStorage.getItem("userEmail"));
+    setUserRole(localStorage.getItem("userRole"));
   }, []);
 
   const handleSubNameChange = (e: any) => {

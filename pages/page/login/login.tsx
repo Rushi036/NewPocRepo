@@ -28,64 +28,67 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
-  const handleRememberMeChange = (e: any) => {
-    setRememberMe(e.target.checked);
-  };
-  const request = {
-    scopes: ["user.read", "user.readbasic.all"],
-  };
+  //----------------------SSO LOGIN CODE ------------------------------------------------
 
-  const handleSignIn = () => {
-    instance
-      .loginPopup(request)
-      .then((response: any) => {
-        // getEmployeesImages(response.accessToken);
-        // //console.log(response.accessToken);
-        sessionStorage.setItem("accessTokenMSAL", response.accessToken);
-        // if (isAuthenticated) {
-        //   router.push("/page/Dashboard/Dashboard");
-        // }
-      })
-      .catch((error: any) => {
-        //console.log("Error:", error);
-      });
-  };
+  // const request = {
+  //   scopes: ["user.read", "user.readbasic.all"],
+  // };
+
+  // const handleSignIn = () => {
+  //   instance
+  //     .loginPopup(request)
+  //     .then((response: any) => {
+  //       // getEmployeesImages(response.accessToken);
+  //       // //console.log(response.accessToken);
+  //       sessionStorage.setItem("accessTokenMSAL", response.accessToken);
+  //       // if (isAuthenticated) {
+  //       //   router.push("/page/Dashboard/Dashboard");
+  //       // }
+  //     })
+  //     .catch((error: any) => {
+  //       //console.log("Error:", error);
+  //     });
+  // };
   // console.log(isAuthenticated)
-  useEffect(() => {
-    if (isAuthenticated) {
-      router.push("/page/Dashboard/Dashboard");
-    }
-  }, [isAuthenticated]);
-  console.log("isauthenticated", isAuthenticated);
-  useEffect(() => {
-    if (account?.idTokenClaims) {
-      let reshead: any;
-      const email: string = account.idTokenClaims.preferred_username;
-      const name: string = account.idTokenClaims.name;
-      // console.log("------------------",account.idTokenClaims);
-      sessionStorage.setItem("userEmail", email);
-      sessionStorage.setItem("userName", name);
-      const getData = async () => {
-        const fetchedData = await getUserRole(email);
-        // setUserData(fetchedData);
-        // console.log("response data--------------", fetchedData.data.role);
-        if (fetchedData) {
-          sessionStorage.setItem("userRole", fetchedData.data.role);
-        }
-      };
-      getData();
-    }
-  }, [account]);
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     router.push("/page/Dashboard/Dashboard");
+  //   }
+  // }, [isAuthenticated]);
+  // console.log("isauthenticated", isAuthenticated);
+  // useEffect(() => {
+  //   if (account?.idTokenClaims) {
+  //     let reshead: any;
+  //     const email: string = account.idTokenClaims.preferred_username;
+  //     const name: string = account.idTokenClaims.name;
+  //     // console.log("------------------",account.idTokenClaims);
+  //     sessionStorage.setItem("userEmail", email);
+  //     sessionStorage.setItem("userName", name);
+  //     const getData = async () => {
+  //       const fetchedData = await getUserRole(email);
+  //       // setUserData(fetchedData);
+  //       // console.log("response data--------------", fetchedData.data.role);
+  //       if (fetchedData) {
+  //         sessionStorage.setItem("userRole", fetchedData.data.role);
+  //       }
+  //     };
+  //     getData();
+  //   }
+  // }, [account]);
 
+  //----------------------SSO LOGIN CODE ENDS------------------------------------------------
+
+  console.log("------------", email, password);
   const handleSubmit = (e: any) => {
     e.preventDefault();
     async function dataFetch() {
       const data = await login(email, password);
-      // console.log("------------------", data);
+      console.log("------------------", data);
       if (data?.data[0]) {
+        localStorage.setItem("userEmail", data.data[0].email);
         localStorage.setItem("userName", data.data[0].name);
-        localStorage.setItem("role", data.data[0].role);
-        if (data.data[0].role != "admin") {
+        localStorage.setItem("userRole", data.data[0].role);
+        if (data.data[0].role != "ADMIN") {
           localStorage.setItem("bu_id", data.data[0].id);
         }
         // }else {
@@ -101,9 +104,9 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="">
       <br></br>
-      <div className="h-[50vh] flex w-auto justify-center items-center">
+      <div className="flex w-full h-full justify-center items-center">
         <br></br>
         <div
           className="bg-white shadow-xl w-full max-w-md flex flex-col justify-center items-center"
@@ -117,10 +120,10 @@ const Login = () => {
             className="mx-auto mb-4"
           />
           <br></br>
-          {/* <h1 className="text-xl font-bold pb-4 leading-tight tracking-tight text-gray-900 ">
+          <h1 className="text-xl font-bold pb-4 leading-tight tracking-tight text-gray-900 ">
             Sign in to your account
-          </h1> */}
-          {/* <form className="md:space-y-4" onSubmit={handleSubmit}>
+          </h1>
+          <form className="md:space-y-4 w-full" onSubmit={handleSubmit}>
             <div className="mb-4">
               <i className="fa fa-envelope icon"></i>
               <label htmlFor="email" className="block pb-2 text-gray-600">
@@ -159,14 +162,14 @@ const Login = () => {
             >
               Sign in
             </button>
-          </form> */}
-          <button
+          </form>
+          {/* <button
             className="flex flex-row-reverse items-center p-1 btn join-item rounded-none bg-white text-black border-2 "
             onClick={handleSignIn}
           >
             Sign In with Microsoft
             <img src="/microsoft_logo.png" alt="" width={30} height={30} />
-          </button>
+          </button> */}
           <br></br>
         </div>
       </div>

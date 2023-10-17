@@ -32,7 +32,6 @@ const BLayout: React.FC<LayoutProps> = ({ children }: any) => {
         style={{
           position: "relative",
           zIndex: 1,
-          padding: "20px",
           color: "white",
         }}
       >
