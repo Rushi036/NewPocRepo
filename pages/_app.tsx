@@ -14,7 +14,7 @@ export default function App({ Component, pageProps }: any) {
   if (Component.getLayout) {
     const pca = new PublicClientApplication({
       auth: {
-        clientId: "58857187-8b00-4655-971a-98486f950ccd",
+        clientId: "60802651-5188-4bec-a75c-a52c10d93027",
         authority:
           "https://login.microsoftonline.com/f87a5f5e-f97e-4aec-bab8-6e4187ef4f1c",
         redirectUri: "/",
@@ -33,7 +33,7 @@ export default function App({ Component, pageProps }: any) {
   } else {
     const pca = new PublicClientApplication({
       auth: {
-        clientId: "58857187-8b00-4655-971a-98486f950ccd",
+        clientId: "60802651-5188-4bec-a75c-a52c10d93027",
         authority:
           "https://login.microsoftonline.com/f87a5f5e-f97e-4aec-bab8-6e4187ef4f1c",
         redirectUri: "/",

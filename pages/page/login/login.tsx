@@ -58,24 +58,24 @@ const Login = () => {
     }
   }, [isAuthenticated]);
 
-// useEffect(() => {
-  //   if (account?.idTokenClaims) {
-  //     let reshead: any;
-  //     const email: string = account.idTokenClaims.preferred_username;
-  //     sessionStorage.setItem("userEmail", email);
-  //     const getData = async () => {
-  //       const fetchedData = await login(email);
-  //       setUserData(fetchedData);
-  //       // console.log("response data--------------", userdata);
-  //       if (fetchedData) {
-  //         sessionStorage.setItem("userStatus", fetchedData.emp_status);
-  //         sessionStorage.setItem("userRole", fetchedData.role_name);
-  //         sessionStorage.setItem("userID", fetchedData.emp_id);
-  //       }
-  //     };
-  //     getData();
-  //   }
-  // }, [account]);
+useEffect(() => {
+    if (account?.idTokenClaims) {
+      let reshead: any;
+      const email: string = account.idTokenClaims.preferred_username;
+      sessionStorage.setItem("userEmail", email);
+      // const getData = async () => {
+      //   const fetchedData = await login(email);
+      //   setUserData(fetchedData);
+      //   // console.log("response data--------------", userdata);
+      //   if (fetchedData) {
+      //     sessionStorage.setItem("userStatus", fetchedData.emp_status);
+      //     sessionStorage.setItem("userRole", fetchedData.role_name);
+      //     sessionStorage.setItem("userID", fetchedData.emp_id);
+      //   }
+      // };
+      // getData();
+    }
+  }, [account]);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();

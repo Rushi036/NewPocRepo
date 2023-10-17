@@ -11,7 +11,7 @@ const ChartComponent = (props: any) => {
     NoDataToDisplay(Highcharts);
   }, []);
   useEffect(() => {
-    console.log(props.data.data);
+    // console.log(props.data.data);
     if (props.data) {
 
       const options: any = {
