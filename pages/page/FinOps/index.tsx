@@ -164,7 +164,7 @@ const FinOps = () => {
       let body = {
         gte: value[0],
         lte: value[1],
-        subscription_name: ["Grasim Chemical Division - DR PROD"],
+        subscription_name: [subACCName],
       };
       fetchData(body).then(res => { return res.json() }).then((data) => setRes(data))
     }
