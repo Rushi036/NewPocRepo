@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export const getSubscriptionIds = async (cloud: any, adid: any) => {
   let retData: any;
-  console.log("details in  api", cloud, adid);
+  // console.log("details in  api", cloud, adid);
   const res = await fetch(
     `${finopsServerBaseUrl}/GetcloudSubsriptionNamesandIds?cloud=${cloud}&adid=${adid}`,
     {

@@ -19,7 +19,7 @@ const LineChartComponent = (props: any) => {
   useEffect(() => {
     // console.log("unblend in chart", props.data);
     if (chartContainer.current) {
-      const newData = props?.data?.series.map((e: any) => {
+      const newData = props?.data?.data.map((e: any) => {
         let changedData = e.data?.map((x: any) => {
           return [
             new Date(x[0]).toLocaleString("en-US", {

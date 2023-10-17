@@ -22,7 +22,8 @@ const FinOps = () => {
   const { timeEnd, toggleTimeEnd } = useAppContext();
   const [cloud, setCloud] = useState("Azure");
   const [subACCName, setSubACCName] = useState();
-  const res: any = cloud == "Azure" ? AzureData : AWSData;
+  // const res: any = cloud == "Azure" ? AzureData : AWSData;
+  const [res,setRes] = useState<any>(null)
   const [subData, setSubData] = useState<any>();
   const [subscId, setSubscId] = useState<any>();
   const [userADID, setUserADID] = useState<any>("keshav.keshu@adityabirla.com"); //this will populate from the session storage
@@ -143,7 +144,7 @@ const FinOps = () => {
     //For Admin
     const res = await getAllSubscriptions(cloud);
     if (res) {
-      console.log("All Data", res);
+      // console.log("All Data", res);
     }
   };
   useEffect(() => {
@@ -166,6 +167,32 @@ const FinOps = () => {
     // setUrl(data[1]);
   }
   // console.log("api payload data", Id, value);
+
+  useEffect(() => {
+    if (cloud == "Azure") {
+
+      let body = {
+        gte: value[0],
+        lte: value[1],
+        subscription_name: ["Grasim Chemical Division - DR PROD"],
+      };
+      fetchData(body).then(res => { return res.json() }).then((data) => setRes(data))
+    }
+    else{
+      setRes(AWSData);
+    }
+  }, [cloud, value, subACCName]);
+
+  async function fetchData(body: any) {
+    return await fetch("http://10.47.98.164:9201/AzureFinopsDashboardData", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+  }
+
   return (
     <div className="h-auto">
       <div className="text-xl border-b-2 px-4 border-slate-400 pb-2">
@@ -222,9 +249,9 @@ const FinOps = () => {
         <div className="flex space-x-4 justify-content-between">
           <div className="card !w-1/2">
             <b>
-              <span>{res.Metric?.title} - </span>
+              <span>{res && res.Metric?.title} - </span>
             </b>
-            <span>{res.Metric?.value}</span>
+            <span>{res && res.Metric?.value}</span>
           </div>
           <div className="card !w-1/2">
             <b>
@@ -234,7 +261,7 @@ const FinOps = () => {
           </div>
         </div>
         <div className="mt-4 h-auto flex flex-wrap gap-4">
-          {res.Graph.map((e: any, i: any) => {
+          {res && res.Graph.map((e: any, i: any) => {
             if (e.PieChart) {
               return (
                 <div key={i} className="card">
@@ -268,13 +295,20 @@ const FinOps = () => {
                 </div>
               );
             }
+            else if (e.HorizontalBarGraph) {
+              return (
+                <div key={i} className="card">
+                  <StackChartComponent id={i} data={e.HorizontalBarGraph} />
+                </div>
+              );
+            }
           })}
         </div>
 
-        {res.Table?.map((e: any, i: any) => {
+        {res && res.Table?.map((e: any, i: any) => {
           // console.log("table data", e);
           return (
-            <div className="card">
+            <div key={i} className="card">
               <Table data={e} />
             </div>
           );

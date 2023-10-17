@@ -36,7 +36,7 @@
     {
       "LineChart": {
         "title": "Total Unblended Cost per Day",
-        "series": [
+        "data": [
           {
             "name": "abmcpl",
             "data": [

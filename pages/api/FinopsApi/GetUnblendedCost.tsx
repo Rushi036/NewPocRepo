@@ -19,7 +19,7 @@ export const getUnBlendedCost = async (data: any) => {
     accountnumb: data.Id,
     accountname: "abmcpl",
   };
-  console.log("body in api", body);
+  // console.log("body in api", body);
 
   const res = await fetch(`${finopsBaseUrl}/unblendedcost`, {
     method: "POST",

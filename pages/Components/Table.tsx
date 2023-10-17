@@ -3,7 +3,7 @@ import React from "react";
 
 const Table = ({ data }: any) => {
   //   console.log("headers", data.headers);
-  console.log("data", data.data);
+  // console.log("data", data.data);
   return (
     <div>
       <div className="items-center pb-4 px-4">
