@@ -156,17 +156,7 @@ const FinOps = () => {
     value && toggleTime(value[0]);
     value && toggleTimeEnd(value[1]);
   }, [value]);
-  useEffect(() => {
-    bu_id = localStorage.getItem("bu_id");
-    dataFetch();
-  }, []);
-  // }
-  async function dataFetch() {
-    // const res: any = await finOps(bu_id);
-    // setData(res.data);
-    // setUrl(data[1]);
-  }
-  // console.log("api payload data", Id, value);
+
 
   useEffect(() => {
     if (cloud == "Azure") {
