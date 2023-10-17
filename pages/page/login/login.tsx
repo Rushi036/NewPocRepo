@@ -5,6 +5,7 @@ import Layout from "@/pages/Components/bLayout";
 import { login } from "@/pages/api/login";
 import { useRouter } from "next/router";
 import { useIsAuthenticated, useMsal } from "@azure/msal-react";
+import { getUserRole } from "@/pages/api/FinopsApi/GetUserRole";
 // import { useIsAuthenticated, useMsal } from "@azure/msal-react";
 
 const Login = () => {
@@ -34,8 +35,6 @@ const Login = () => {
     scopes: ["user.read", "user.readbasic.all"],
   };
 
-  
-
   const handleSignIn = () => {
     instance
       .loginPopup(request)
@@ -57,23 +56,24 @@ const Login = () => {
       router.push("/page/Dashboard/Dashboard");
     }
   }, [isAuthenticated]);
-
-useEffect(() => {
+  console.log("isauthenticated", isAuthenticated);
+  useEffect(() => {
     if (account?.idTokenClaims) {
       let reshead: any;
       const email: string = account.idTokenClaims.preferred_username;
+      const name: string = account.idTokenClaims.name;
+      // console.log("------------------",account.idTokenClaims);
       sessionStorage.setItem("userEmail", email);
-      // const getData = async () => {
-      //   const fetchedData = await login(email);
-      //   setUserData(fetchedData);
-      //   // console.log("response data--------------", userdata);
-      //   if (fetchedData) {
-      //     sessionStorage.setItem("userStatus", fetchedData.emp_status);
-      //     sessionStorage.setItem("userRole", fetchedData.role_name);
-      //     sessionStorage.setItem("userID", fetchedData.emp_id);
-      //   }
-      // };
-      // getData();
+      sessionStorage.setItem("userName", name);
+      const getData = async () => {
+        const fetchedData = await getUserRole(email);
+        // setUserData(fetchedData);
+        // console.log("response data--------------", fetchedData.data.role);
+        if (fetchedData) {
+          sessionStorage.setItem("userRole", fetchedData.data.role);
+        }
+      };
+      getData();
     }
   }, [account]);
 
