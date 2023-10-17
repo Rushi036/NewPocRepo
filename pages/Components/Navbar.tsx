@@ -1,26 +1,37 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { useRouter } from "next/router";
 
 import Link from "next/link";
+import { useMsal } from "@azure/msal-react";
 
 const Navbar = () => {
   const [isPopupOpen, setPopupOpen] = useState(false);
-
+  const { instance } = useMsal();
   const [isSignOutModalOpen, setSignOutModalOpen] = useState(false);
-
+  const router = useRouter();
   const [uname, setUname] = useState<any>(false);
 
   useEffect(() => {
-    setUname(localStorage.getItem("userName"));
+    setUname(sessionStorage.getItem("userName"));
   }, []);
 
   const handleClientNameClick = () => {
     setPopupOpen(!isPopupOpen);
   };
 
-  const handleSignOutClick = () => {
-    setSignOutModalOpen(true);
+  const handleSignOutClick = async () => {
+    // setSignOutModalOpen(true);
+
+    try {
+      await instance.logoutPopup();
+      router.push("/");
+      sessionStorage.clear();
+      localStorage.clear();
+    } catch (error) {
+      console.log("Logout error", error);
+    }
   };
 
   const handleSignOutConfirm = () => {

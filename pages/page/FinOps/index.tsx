@@ -15,7 +15,8 @@ import { getAllSubscriptions } from "@/pages/api/FinopsApi/GetAllSubscriptions";
 // import BubbleChartComponent from "./Charts/BubbleChart";
 
 const FinOps = () => {
-  let bu_id: string | null;
+  let userADID: string | null;
+  let userRole: string | null;
   const [url, setUrl] = useState<any>();
   const [data, setData] = useState<any>(null);
   const { time, toggleTime } = useAppContext();
@@ -25,7 +26,7 @@ const FinOps = () => {
   const res: any = cloud == "Azure" ? AzureData : AWSData;
   const [subData, setSubData] = useState<any>();
   const [subscId, setSubscId] = useState<any>();
-  const [userADID, setUserADID] = useState<any>("keshav.keshu@adityabirla.com"); //this will populate from the session storage
+  // const [userADID, setUserADID] = useState<any>("keshav.keshu@adityabirla.com"); //this will populate from the session storage
   const [value, setValue] = React.useState<any>([
     new Date(time),
     new Date(timeEnd),
@@ -105,6 +106,12 @@ const FinOps = () => {
       placement: "left",
     },
   ];
+
+  useEffect(() => {
+    userADID = sessionStorage.getItem("userEmail");
+    userRole = sessionStorage.getItem("userRole");
+  }, []);
+
   const handleSubNameChange = (e: any) => {
     const selectedSubAccName = e.target.value;
     setSubACCName(selectedSubAccName);
@@ -119,53 +126,36 @@ const FinOps = () => {
   };
   const handleCloudChange = (e: any) => {
     setCloud(e.target.value);
-    // setUserADID("keshav.keshu@adityabirla.com");
-    // callApi();
   };
   useEffect(() => {
-    //user role condition will be here - if role BE then this
-    callApi();
+    if (userRole == "BE") {
+      callApi();
+    } else if (userRole == "ADMIN") {
+      getAllsubsData();
+    }
   }, [cloud]);
 
   const callApi = async () => {
-    // if (cloud && userADID) {
+    //For BE
     const res = await getSubscriptionIds(cloud, userADID);
     if (res && res.data) {
       setSubData(res.data);
     }
-    // console.log("subs response", res);
-    // }
   };
-  // console.log("subs ID", subscId);
-  // console.log("subs Name", subACCName);
 
   const getAllsubsData = async () => {
     //For Admin
     const res = await getAllSubscriptions(cloud);
     if (res) {
-      console.log("All Data", res);
+      setSubData(res.data);
     }
   };
-  useEffect(() => {
-    //user role condition will be here - if role Admin then this
-    getAllsubsData();
-  }, [cloud]);
 
   useEffect(() => {
     value && toggleTime(value[0]);
     value && toggleTimeEnd(value[1]);
   }, [value]);
-  useEffect(() => {
-    bu_id = localStorage.getItem("bu_id");
-    dataFetch();
-  }, []);
-  // }
-  async function dataFetch() {
-    // const res: any = await finOps(bu_id);
-    // setData(res.data);
-    // setUrl(data[1]);
-  }
-  // console.log("api payload data", Id, value);
+
   return (
     <div className="h-auto">
       <div className="text-xl border-b-2 px-4 border-slate-400 pb-2">
