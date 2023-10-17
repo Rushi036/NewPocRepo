@@ -45,7 +45,7 @@ const ChartComponent = (props: any) => {
           `Total: <b>{point.y}</b> ${props.data.xAxis || ""}<br/>`,
         },
         lang: {
-          noData: "Please select atleast one Application",
+          noData: "No Data to Display",
         },
         noData: {
           style: {

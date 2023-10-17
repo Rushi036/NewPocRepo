@@ -2,12 +2,12 @@ import React, { useEffect, useRef } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
-const StackChartComponent = (props:any) => {
+const StackChartComponent = (props: any) => {
   const chartContainer = useRef(null);
 
   useEffect(() => {
     if (chartContainer.current) {
-      const options:any = {
+      const options: any = {
         chart: {
           type: "column",
         },
@@ -19,6 +19,16 @@ const StackChartComponent = (props:any) => {
           categories: props.data.categories,
           title: {
             text: props.data.xAxis,
+          },
+        },
+        lang: {
+          noData: "No Data to Display",
+        },
+        noData: {
+          style: {
+            fontWeight: "bold",
+            fontSize: "15px",
+            color: "#303030",
           },
         },
         yAxis: {

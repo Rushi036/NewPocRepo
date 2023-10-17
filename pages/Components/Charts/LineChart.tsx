@@ -59,7 +59,16 @@ const LineChartComponent = (props: any) => {
           align: "right",
           verticalAlign: "middle",
         },
-
+        noData: {
+          style: {
+            fontWeight: "bold",
+            fontSize: "15px",
+            color: "#303030",
+          },
+        },
+        lang: {
+          noData: "No Data to Display",
+        },
         plotOptions: {
           series: {
             label: {

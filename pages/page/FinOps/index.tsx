@@ -15,8 +15,8 @@ import { getAllSubscriptions } from "@/pages/api/FinopsApi/GetAllSubscriptions";
 // import BubbleChartComponent from "./Charts/BubbleChart";
 
 const FinOps = () => {
-  let userADID: string | null;
-  let userRole: string | null;
+  // const userADID
+  // let userRole: string | null;
   const [url, setUrl] = useState<any>();
   const [data, setData] = useState<any>(null);
   const { time, toggleTime } = useAppContext();
@@ -24,10 +24,11 @@ const FinOps = () => {
   const [cloud, setCloud] = useState("Azure");
   const [subACCName, setSubACCName] = useState();
   // const res: any = cloud == "Azure" ? AzureData : AWSData;
-  const [res,setRes] = useState<any>(null)
+  const [res, setRes] = useState<any>(null)
   const [subData, setSubData] = useState<any>();
   const [subscId, setSubscId] = useState<any>();
-  // const [userADID, setUserADID] = useState<any>("keshav.keshu@adityabirla.com"); //this will populate from the session storage
+  const [userADID, setUserADID] = useState<any>(null); //this will populate from the session storage
+  const [userRole, setUserRole] = useState<any>(null); //this will populate from the session storage
   const [value, setValue] = React.useState<any>([
     new Date(time),
     new Date(timeEnd),
@@ -109,8 +110,8 @@ const FinOps = () => {
   ];
 
   useEffect(() => {
-    userADID = sessionStorage.getItem("userEmail");
-    userRole = sessionStorage.getItem("userRole");
+    setUserADID(sessionStorage.getItem("userEmail"));
+    setUserRole(sessionStorage.getItem("userRole"));
   }, []);
 
   const handleSubNameChange = (e: any) => {
@@ -129,6 +130,7 @@ const FinOps = () => {
     setCloud(e.target.value);
   };
   useEffect(() => {
+    // console.log(cloud,subData, userRole)
     if (userRole == "BE") {
       callApi();
     } else if (userRole == "ADMIN") {
@@ -138,18 +140,17 @@ const FinOps = () => {
 
   const callApi = async () => {
     //For BE
-    const res = await getSubscriptionIds(cloud, userADID);
-    if (res && res.data) {
+    await getSubscriptionIds(cloud, userADID).then((res: any) => {
       setSubData(res.data);
-    }
+    })
   };
 
   const getAllsubsData = async () => {
     //For Admin
-    const res = await getAllSubscriptions(cloud);
-    if (res) {
+    await getAllSubscriptions(cloud).then((res: any) => {
+      // console.info("res - ",res)
       setSubData(res.data);
-    }
+    })
   };
 
   useEffect(() => {
@@ -168,7 +169,7 @@ const FinOps = () => {
       };
       fetchData(body).then(res => { return res.json() }).then((data) => setRes(data))
     }
-    else{
+    else {
       setRes(AWSData);
     }
   }, [cloud, value, subACCName]);
@@ -239,9 +240,9 @@ const FinOps = () => {
         <div className="flex space-x-4 justify-content-between">
           <div className="card !w-1/2">
             <b>
-              <span>{res && res.Metric?.title} - </span>
+              <span>{res && res.Metric ? res.Metric.title + " - " : "No data"} </span>
             </b>
-            <span>{res && res.Metric?.value}</span>
+            <span>{res && res.Metric ? res.Metric.value : ""} </span>
           </div>
           <div className="card !w-1/2">
             <b>
@@ -252,13 +253,13 @@ const FinOps = () => {
         </div>
         <div className="mt-4 h-auto flex flex-wrap gap-4">
           {res && res.Graph.map((e: any, i: any) => {
-            if (e.PieChart) {
+            if (e && e.PieChart) {
               return (
                 <div key={i} className="card">
                   <PieChartComponent id={i} data={e.PieChart} />
                 </div>
               );
-            } else if (e.LineChart) {
+            } else if (e && e.LineChart) {
               return (
                 <div
                   key={i}
@@ -271,7 +272,7 @@ const FinOps = () => {
                   <LineChartComponent id={i} data={e.LineChart} />
                 </div>
               );
-            } else if (e.HorizontalStackBarGraph) {
+            } else if (e && e.HorizontalStackBarGraph) {
               return (
                 <div
                   key={i}
@@ -285,7 +286,7 @@ const FinOps = () => {
                 </div>
               );
             }
-            else if (e.HorizontalBarGraph) {
+            else if (e && e.HorizontalBarGraph) {
               return (
                 <div key={i} className="card">
                   <StackChartComponent id={i} data={e.HorizontalBarGraph} />
