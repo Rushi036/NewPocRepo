@@ -170,11 +170,11 @@ const UserManagement = () => {
               </tr>
             </thead>
             <tbody>
-              {data && data.length != 0 ? (
+              {/* {data && data.length != 0 ? (
                 data.map((d: any, i: any) => {
                   return (
                     <tr key={i} className="bg-white border-b text-center">
-                      {/* <td className="px-auto py-3">{i + 1}</td>
+                     <td className="px-auto py-3">{i + 1}</td>
                       <td className="px-auto py-3">{d.bu}</td>
                       <td className="px-auto py-3">{d.title}</td>
                       <td className="px-auto py-3">{d.status}</td>
@@ -187,17 +187,8 @@ const UserManagement = () => {
                       )}
                       <td className="px-auto py-3">{d.created_date}</td>
                       <td className="px-auto py-3 space-x-2">
-                        <Link
-                          href={
-                            "../page/ViewTopology/ViewTopology?id=" +
-                            d.topology_id
-                          }
-                        >
-                          <button className="btn bg-blue-400 px-2 py-1 rounded-sm text-white font-medium">
-                            View
-                          </button>
-                        </Link>
-                      </td> */}
+                     
+                      </td> 
                     </tr>
                   );
                 })
@@ -207,7 +198,45 @@ const UserManagement = () => {
                     No Data Found
                   </td>
                 </tr>
-              )}
+              )} */}
+              <tr className="bg-white border-b text-center">
+                {" "}
+                <td className="px-auto py-3">1</td>
+                <td className="px-auto py-3">ABMCPL</td>
+                <td className="px-auto py-3">Prashant Agarwal</td>
+                <td className="px-auto py-3">prashant.a@adityabirla.com</td>
+                <td className="px-auto py-3">Sanket Doshi</td>
+                <td className="px-auto py-3">sanket.doshi@adityabirla.com</td>
+                <td className="px-auto py-3 text-blue-500">View Details</td>
+              </tr>
+              <tr className="bg-white border-b text-center">
+                {" "}
+                <td className="px-auto py-3">2</td>
+                <td className="px-auto py-3">Birla Carbon</td>
+                <td className="px-auto py-3">Ilango Nadar</td>
+                <td className="px-auto py-3">s.ilanngo@adityabirla.com</td>
+                <td className="px-auto py-3">Sourabh Mane</td>
+                <td className="px-auto py-3">Sourabh.Mane@adityabirla.com</td>
+                <td className="px-auto py-3 text-blue-500">View Details</td>
+              </tr><tr className="bg-white border-b text-center">
+                {" "}
+                <td className="px-auto py-3">3</td>
+                <td className="px-auto py-3">BMCSL</td>
+                <td className="px-auto py-3">Prashant Pandit</td>
+                <td className="px-auto py-3">prashant.pandit@adityabirla.com</td>
+                <td className="px-auto py-3">Rajit Bhat</td>
+                <td className="px-auto py-3">rajit.bhat@adityabirla.com</td>
+                <td className="px-auto py-3 text-blue-500">View Details</td>
+              </tr><tr className="bg-white border-b text-center">
+                {" "}
+                <td className="px-auto py-3">4</td>
+                <td className="px-auto py-3">BMCSPL</td>
+                <td className="px-auto py-3">Vikas Moon</td>
+                <td className="px-auto py-3">Vikas.Moon@adityabirla.com</td>
+                <td className="px-auto py-3">Rajit Bhat</td>
+                <td className="px-auto py-3">rajit.bhat@adityabirla.com</td>
+                <td className="px-auto py-3 text-blue-500">View Details</td>
+              </tr>
             </tbody>
           </table>
         </div>

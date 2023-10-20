@@ -19,28 +19,27 @@ const Dashboard = () => {
             {/* Adjust the width class to your desired width */}
             <div id="chart-1">
               <p>
-                <b>Total Running Services</b>
+                <b>Active service on AWS</b>
               </p>
-              <b>15</b>
+              <b>1</b>
             </div>
           </div>
 
           <div className="card card2">
             <div id="chart-2">
               <p>
-                <b>Pending Services Request</b>
+                <b>Active service on Azure</b>
               </p>
 
-              <b>4</b>
+              <b>2</b>
             </div>
           </div>
 
           <div className="card card3">
             <div id="chart-3">
               <p>
-                <b>Estimation For Approval</b>
+                <b> Service Request Pending</b>
               </p>
-
               <b>2</b>
             </div>
           </div>
@@ -48,10 +47,10 @@ const Dashboard = () => {
           <div className="card card4">
             <div id="chart-4">
               <p>
-                <b>New Notifications</b>
+                <b>Active Services</b>
               </p>
 
-              <b>3</b>
+              <b>5</b>
             </div>
           </div>
         </div>
@@ -62,40 +61,40 @@ const Dashboard = () => {
           <div className="card card1">
             <div id="chart-1">
               <p>
-                <b>Total Cloud Platform</b>
+                <b>Total Cloud Services</b>
               </p>
 
-              <b>3</b>
+              <b>2</b>
             </div>
           </div>
 
           <div className="card card2">
             <div id="chart-2">
               <p>
-                <b>New Services Request</b>
+                <b>On-Boarded business</b>
               </p>
 
-              <b>10</b>
+              <b>15</b>
             </div>
           </div>
 
           <div className="card card3">
             <div id="chart-3">
               <p>
-                <b>Cost Estimation For Approval</b>
+                <b>Active Subscriptions in Azure</b>
               </p>
 
-              <b>4</b>
+              <b>51</b>
             </div>
           </div>
 
           <div className="card card4">
             <div id="chart-4">
               <p>
-                <b>New Notifications</b>
+                <b>Active Subscriptions in AWS</b>
               </p>
 
-              <b>5</b>
+              <b>36</b>
             </div>
           </div>
         </div>
