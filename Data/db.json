@@ -183,7 +183,15 @@
       "AWS_CIDR": "10.8.159.0/24",
       "AWS_Subnet": "",
       "AWS_ResourceGRP": "",
-      "AWS_Region": "Asia-Center"
+      "AWS_Region": "Asia-Center",
+      "chartOrder": {
+        "Azure": {
+          "Cost Distribution at application level": true
+        },
+        "AWS": {
+          "Most Cost Consuming Service Per Day": true
+        }
+      }
     },
     {
       "id": 9,
@@ -212,7 +220,19 @@
       "AWS_CIDR": "10.8.159.0/24",
       "AWS_Subnet": "",
       "AWS_ResourceGRP": "",
-      "AWS_Region": "Asia-Center"
+      "AWS_Region": "Asia-Center",
+      "chartOrder": {
+        "Azure": {
+          "Cost Distribution at application level": true,
+          "Average CPU Consumption in Bytes by VM": true,
+          "Average Memory Consumption in Bytes by VM": true
+        },
+        "AWS": {
+          "Most Cost Consuming Service Per Day": true,
+          "Total Unblended Cost per Day": true,
+          "Average Unblended Cost per Usage Type per Day": true
+        }
+      }
     }
   ],
   "topology_table_data": [
@@ -287,11 +307,8 @@
       "title": "j",
       "bu": "Grasim PnF",
       "bu_id": "7",
-      "cloud_server": [
-        "AWS",
-        "Azure"
-      ],
-      "status": "Approval Pending",
+      "cloud_server": ["AWS", "Azure"],
+      "status": "Draft",
       "created_date": "25/09/2023",
       "topology_id": 7,
       "business_sponser": "b",
