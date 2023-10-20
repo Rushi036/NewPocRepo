@@ -2,15 +2,17 @@ import React, { useEffect, useState } from "react";
 import { finOps } from "../../api/finOps";
 import { DateRangePicker } from "rsuite";
 import moment from "moment";
-import { useAppContext } from "../../Components/AppContext";
+import fun, { useAppContext } from "../../Components/AppContext";
 import "rsuite/dist/rsuite.min.css";
 import PieChartComponent from "../../Components/Charts/PieChart";
 import StackChartComponent from "../../Components/Charts/StackChart";
 import LineChartComponent from "../../Components/Charts/LineChart";
 import AzureData from "./Azure.json";
 import AWSData from "./AWS.json";
+import { BsPinAngleFill, BsPinAngle } from "react-icons/bs"
 import { getSubscriptionIds } from "@/pages/api/FinopsApi/GetSubscriptionId";
 import { getAllSubscriptions } from "@/pages/api/FinopsApi/GetAllSubscriptions";
+import { getCurrentUserData, unpinGraphAPI } from "@/pages/api/FinopsApi/GetGraphFormat";
 // import BubbleChartComponent from "./Charts/BubbleChart";
 
 const FinOps = () => {
@@ -26,6 +28,7 @@ const FinOps = () => {
   const [res, setRes] = useState<any>(null)
   const [subData, setSubData] = useState<any>();
   const [subscId, setSubscId] = useState<any>();
+  const [graphFormat, setGraphFormat] = useState<any>(null);
   const [userADID, setUserADID] = useState<any>(null); //this will populate from the session storage
   const [userRole, setUserRole] = useState<any>(null); //this will populate from the session storage
   const [value, setValue] = React.useState<any>([
@@ -107,13 +110,19 @@ const FinOps = () => {
       placement: "left",
     },
   ];
-
+  
+  async function getGraphFormat() {
+    await getCurrentUserData().then((res) => setGraphFormat(res.data[0]))
+  }
   useEffect(() => {
     // setUserADID(sessionStorage.getItem("userEmail"));
     // setUserRole(sessionStorage.getItem("userRole"));   --------these are for sso login
     setUserADID(localStorage.getItem("userEmail"));
     setUserRole(localStorage.getItem("userRole"));
+    getGraphFormat();
   }, []);
+
+  // console.log("graph format",graphFormat)
 
   const handleSubNameChange = (e: any) => {
     const selectedSubAccName = e.target.value;
@@ -149,8 +158,11 @@ const FinOps = () => {
   const getAllsubsData = async () => {
     //For Admin
     await getAllSubscriptions(cloud).then((res: any) => {
-      // console.info("res - ",res)
+      // console.info("res - ",res.data)
       setSubData(res.data);
+      setSubACCName(res.data[0]?.subsAccName)
+      setSubscId(res.data[0]?.subsAccId);
+
     })
   };
 
@@ -201,6 +213,38 @@ const FinOps = () => {
     });
   }
 
+  async function unpinGraph(title: any) {
+    let chartOrder;
+    if (cloud == "AWS") {
+      let awsData= graphFormat?.chartOrder?.AWS;
+      delete awsData?.[title];
+      chartOrder = { AWS: awsData, Azure: graphFormat?.chartOrder?.Azure }
+    }
+    if (cloud == "Azure") {
+      let azureData= graphFormat?.chartOrder?.Azure;
+      delete azureData?.[title];
+      chartOrder = { Azure: azureData, AWS: graphFormat?.chartOrder?.AWS }
+    }
+    let data = { ...graphFormat, chartOrder: chartOrder };
+    await unpinGraphAPI(graphFormat?.id, data).then(getGraphFormat)
+  }
+
+  async function pinGraph(title: any) {
+    let chartOrder;
+    if (cloud == "AWS") {
+      let awsData:any= graphFormat?.chartOrder?.AWS;
+      awsData[title] = true;
+      chartOrder = { AWS: awsData, Azure: graphFormat?.chartOrder?.Azure }
+    }
+    if (cloud == "Azure") {
+      let azureData= graphFormat?.chartOrder?.Azure;
+      azureData[title] = true;
+      chartOrder = { Azure: azureData, AWS: graphFormat?.chartOrder?.AWS }
+    }
+    let data = { ...graphFormat, chartOrder: chartOrder };
+    await unpinGraphAPI(graphFormat?.id, data).then(getGraphFormat)
+  }
+
   return (
     <div className="finops-container h-auto">
       <div className="text-xl border-b-2 px-4 border-slate-400 pb-2">
@@ -230,12 +274,13 @@ const FinOps = () => {
             <select
               className="block w-full py-2 px-4 border hover:bg-gray-50 focus:bg-gray-50 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
               onChange={(e) => handleSubNameChange(e)}
+              value={subACCName}
             >
               {/* subscription id or account id */}
               <option>Select Id</option>
               {subData &&
                 subData.map((e: any, i: any) => (
-                  <option key={i}>{e.subsAccName}</option>
+                  <option key={i} value={e.subsAccName}>{e.subsAccName}</option>
                 ))}
             </select>
           </div>
@@ -262,7 +307,7 @@ const FinOps = () => {
             </b>
             <br />
             <span>Total Subscription Cost - </span>
-            <span>{cloud == "Azure"? "₹":"$"} {res && res.Metric ? res.Metric.value : ""} </span>
+            <span>{cloud == "Azure" ? "₹" : "$"} {res && res.Metric ? res.Metric.value : ""} </span>
           </div>
           <div className="card !w-1/2">
             <b>
@@ -273,13 +318,16 @@ const FinOps = () => {
         </div>
         <div className="mt-4 h-auto flex flex-wrap gap-4">
           {res && res.Graph?.map((e: any, i: any) => {
-            if (e && e.PieChart) {
+            if (e && e.PieChart && graphFormat.chartOrder?.[cloud]?.[e.PieChart.title]) {
               return (
                 <div key={i} className="card">
+                  <span className="flex justify-end cursor-pointer" onClick={() => unpinGraph(e.PieChart.title)}>
+                    <BsPinAngleFill />
+                  </span>
                   <PieChartComponent id={i} data={e.PieChart} />
                 </div>
               );
-            } else if (e && e.LineChart) {
+            } else if (e && e.LineChart && graphFormat.chartOrder?.[cloud]?.[e.LineChart.title]) {
               return (
                 <div
                   key={i}
@@ -289,10 +337,13 @@ const FinOps = () => {
                       : "card"
                   }
                 >
+                  <span className="flex justify-end cursor-pointer" onClick={() => unpinGraph(e.LineChart.title)}>
+                    <BsPinAngleFill />
+                  </span>
                   <LineChartComponent id={i} data={e.LineChart} />
                 </div>
               );
-            } else if (e && e.HorizontalStackBarGraph) {
+            } else if (e && e.HorizontalStackBarGraph && graphFormat.chartOrder?.[cloud]?.[e.HorizontalStackBarGraph.title]) {
               return (
                 <div
                   key={i}
@@ -302,13 +353,73 @@ const FinOps = () => {
                       : "card"
                   }
                 >
+                  <span className="flex justify-end cursor-pointer" onClick={() => unpinGraph(e.HorizontalStackBarGraph.title)}>
+                    <BsPinAngleFill />
+                  </span>
                   <StackChartComponent id={i} date={value} />
                 </div>
               );
             }
-            else if (e && e.HorizontalBarGraph) {
+            else if (e && e.HorizontalBarGraph && graphFormat.chartOrder?.[cloud]?.[e.HorizontalBarGraph.title]) {
               return (
                 <div key={i} className="card">
+                  <span className="flex justify-end cursor-pointer" onClick={() => unpinGraph(e.HorizontalBarGraph.title)}>
+                    <BsPinAngleFill />
+                  </span>
+                  <StackChartComponent id={i} data={e.HorizontalBarGraph} />
+                </div>
+              );
+            }
+          })}
+          {res && res.Graph?.map((e: any, i: any) => {
+            if (e && e.PieChart && !graphFormat.chartOrder?.[cloud]?.[e.PieChart.title]) {
+              return (
+                <div key={i} className="card">
+                  <span className="flex justify-end cursor-pointer" onClick={()=> pinGraph(e.PieChart.title)}>
+                    <BsPinAngle />
+                  </span>
+                  <PieChartComponent id={i} data={e.PieChart} />
+                </div>
+              );
+            } else if (e && e.LineChart && !graphFormat.chartOrder?.[cloud]?.[e.LineChart.title]) {
+              return (
+                <div
+                  key={i}
+                  className={
+                    e.LineChart.series?.data?.length >= 20
+                      ? "card !min-w-full"
+                      : "card"
+                  }
+                >
+                  <span className="flex justify-end cursor-pointer" onClick={()=> pinGraph(e.LineChart.title)}>
+                    <BsPinAngle />
+                  </span>
+                  <LineChartComponent id={i} data={e.LineChart} />
+                </div>
+              );
+            } else if (e && e.HorizontalStackBarGraph && !graphFormat.chartOrder?.[cloud]?.[e.HorizontalStackBarGraph.title]) {
+              return (
+                <div
+                  key={i}
+                  className={
+                    e.HorizontalStackBarGraph.data.length >= 10
+                      ? "card !min-w-full"
+                      : "card"
+                  }
+                >
+                  <span className="flex justify-end cursor-pointer" onClick={()=> pinGraph(e.HorizontalStackBarGraph.title)}>
+                    <BsPinAngle />
+                  </span>
+                  <StackChartComponent id={i} date={value} />
+                </div>
+              );
+            }
+            else if (e && e.HorizontalBarGraph && !graphFormat.chartOrder?.[cloud]?.[e.HorizontalBarGraph.title]) {
+              return (
+                <div key={i} className="card">
+                  <span className="flex justify-end cursor-pointer" onClick={()=> pinGraph(e.HorizontalBarGraph.title)}>
+                    <BsPinAngle />
+                  </span>
                   <StackChartComponent id={i} data={e.HorizontalBarGraph} />
                 </div>
               );
