@@ -222,9 +222,9 @@ function Topology(props: any) {
   // console.log("esti----------", fetchestCalcDone);
   useEffect(() => {
     async function dataFetch() {
-      let buId = localStorage.getItem("bu_id");
-      let userRole = localStorage.getItem("role");
-      userRole != "admin" && id
+      let buId = sessionStorage.getItem("bu_id");
+      let userRole = sessionStorage.getItem("userRole");
+      userRole != "ADMIN" && id
         ? await fetchestimation(id).then((res) => {
             if (res.data[0]) {
               // console.log("user", res.data[0]);
@@ -267,7 +267,7 @@ function Topology(props: any) {
 
   // console.log("estimation in topo",estimation)
   useEffect(() => {
-    arole = localStorage.getItem("role");
+    arole = sessionStorage.getItem("userRole");
   }, []);
   useEffect(() => {
     setRole(arole);
@@ -677,7 +677,7 @@ function Topology(props: any) {
           ) : (
             <div>
               <div
-                className={`${role === "admin" ? "" : "hidden"} justify-center`}
+                className={`${role === "ADMIN" ? "" : "hidden"} justify-center`}
               >
                 {estimation.statusOfTopo == "Draft" ? (
                   <div>
@@ -1124,7 +1124,7 @@ function Topology(props: any) {
                               </div>
                             </div>
                           )}
-                          {cloud && cloud.length > 1 && role == "admin" && (
+                          {cloud && cloud.length > 1 && role == "ADMIN" && (
                             <div>
                               <div>
                                 <div className="flex items-center m-2 mt-4">
@@ -1256,7 +1256,7 @@ function Topology(props: any) {
                 )}
               </div>
 
-              <div className={role != "admin" ? "justify-center" : "hidden"}>
+              <div className={role != "ADMIN" ? "justify-center" : "hidden"}>
                 <div className="flex justify-center">
                   <button
                     className={`btn 
@@ -1374,7 +1374,7 @@ function Topology(props: any) {
                         </div>
                       </div>
                     )}
-                    {cloud && cloud.length > 1 && role != "admin" && (
+                    {cloud && cloud.length > 1 && role != "ADMIN" && (
                       <div>
                         <div>
                           <div className="flex items-center m-2 mt-4">

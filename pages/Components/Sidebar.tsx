@@ -8,7 +8,7 @@ import DeviceHubIcon from "@mui/icons-material/DeviceHub";
 import { useAppContext } from "./AppContext";
 import HomeIcon from "@mui/icons-material/Home";
 import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
-import SettingsIcon from "@mui/icons-material/Settings";
+import GroupIcon from "@mui/icons-material/Group";
 const Sidebar = () => {
   const { state, toggleState } = useAppContext();
 
@@ -19,7 +19,7 @@ const Sidebar = () => {
   const [uRole, setUrole] = useState<any>(false);
 
   useEffect(() => {
-    setUrole(localStorage.getItem("role"));
+    setUrole(sessionStorage.getItem("userRole"));
   }, []);
   // Function to handle link clicks and set the active link
   const handleLinkClick = (index: any) => {
@@ -65,7 +65,7 @@ const Sidebar = () => {
               </span>
             </Link>
           </li>
-          {uRole == "admin" ? (
+          {uRole == "ADMIN" ? (
             <li className="hs-accordion" id="users-accordion">
               <Link
                 href="/Components/AssetsForAdmin"
@@ -100,25 +100,25 @@ const Sidebar = () => {
               </Link>
             </li>
           )}
-          {uRole == "admin" && (
+          {uRole == "ADMIN" && (
             <li>
               <Link
-                href="/Components/Manage"
+                href="/Components/UserManagement"
                 className={`flex items-center gap-x-3.5 py-2 px-2.5 text-base
               text-slate-700 rounded-md hover:bg-gray-100
               ${activeLink === 2 ? "bg-gray-100" : ""}`}
                 onClick={() => handleLinkClick(2)}
               >
-                <SettingsIcon className="h-7 w-7" />
+                <GroupIcon className="h-7 w-7" />
                 <span
                   className={`${!state && "hidden"} origin-left hover:block`}
                 >
-                  Manage
+                  User Management
                 </span>
               </Link>
             </li>
           )}
-          {uRole != "admin" && (
+          {uRole != "ADMIN" && (
             <li>
               <Link
                 href="/Components/Observability"
@@ -136,24 +136,20 @@ const Sidebar = () => {
               </Link>
             </li>
           )}
-          {uRole != "admin" && (
-            <li className="hs-accordion" id="account-accordion">
-              <Link
-                href="/page/FinOps"
-                className={`flex items-center gap-x-3.5 py-2 px-2.5 text-base
+          <li className="hs-accordion" id="account-accordion">
+            <Link
+              href="/page/FinOps"
+              className={`flex items-center gap-x-3.5 py-2 px-2.5 text-base
               text-slate-700 rounded-md hover:bg-gray-100
               ${activeLink === 3 ? "bg-gray-100" : ""}`}
-                onClick={() => handleLinkClick(3)}
-              >
-                <SpaceDashboardIcon className="h-7 w-7" />
-                <span
-                  className={`${!state && "hidden"} origin-left hover:block`}
-                >
-                  FinOps
-                </span>
-              </Link>
-            </li>
-          )}
+              onClick={() => handleLinkClick(3)}
+            >
+              <SpaceDashboardIcon className="h-7 w-7" />
+              <span className={`${!state && "hidden"} origin-left hover:block`}>
+                FinOps
+              </span>
+            </Link>
+          </li>
         </ul>
       </div>
     </>

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 const Dashboard = () => {
   const [role, setRole] = useState<any>();
   useEffect(() => {
-    setRole(localStorage.getItem("role"));
+    setRole(sessionStorage.getItem("userRole"));
   });
   return (
     <>
@@ -12,7 +12,7 @@ const Dashboard = () => {
       </div>
 
       {/* For Business User */}
-      {role != "admin" ? (
+      {role != "ADMIN" ? (
         <div className="cards-container  w-auto">
           <div className="w-32 card">
             {" "}

@@ -85,11 +85,11 @@ const Login = () => {
       const data = await login(email, password);
       console.log("------------------", data);
       if (data?.data[0]) {
-        localStorage.setItem("userEmail", data.data[0].email);
-        localStorage.setItem("userName", data.data[0].name);
-        localStorage.setItem("userRole", data.data[0].role);
+        sessionStorage.setItem("userEmail", data.data[0].email);
+        sessionStorage.setItem("userName", data.data[0].name);
+        sessionStorage.setItem("userRole", data.data[0].role);
         if (data.data[0].role != "ADMIN") {
-          localStorage.setItem("bu_id", data.data[0].id);
+          sessionStorage.setItem("bu_id", data.data[0].id);
         }
         // }else {
         router.push("/page/Dashboard/Dashboard");
