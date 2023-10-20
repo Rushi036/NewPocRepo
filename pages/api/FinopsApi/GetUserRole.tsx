@@ -6,7 +6,7 @@ export const getUserRole = async (email: any) => {
   console.log("details in  api", email);
 
   const res = await fetch(
-    `${finopsServerBaseUrl}/GetroleByEmail?emailid=${email}`,
+    `${finopsServerBaseUrl}/GetroleByEmail?adId=${email}`,
     // `${finopsServerBaseUrl}/GetroleByEmail?emailid=gajanan.mundada%40adityabirla.com`,
 
     {

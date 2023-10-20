@@ -109,8 +109,6 @@ const FinOps = () => {
   ];
 
   useEffect(() => {
-    // setUserADID(sessionStorage.getItem("userEmail"));
-    // setUserRole(sessionStorage.getItem("userRole"));   --------these are for sso login
     setUserADID(sessionStorage.getItem("userEmail"));
     setUserRole(sessionStorage.getItem("userRole"));
   }, []);

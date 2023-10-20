@@ -9,23 +9,25 @@ const AppContext = createContext<{
   toggleTime: (time: any) => void;
   timeEnd: any;
   toggleTimeEnd: (timeEnd: any) => void;
+  isLoggedIn: any;
+  toggleIsLoggedIn: (islogdedin: any) => void;
 }>({
   state: true,
   toggleState: () => {},
   estimateCalc: false,
   toggleEstimateCalc: () => {},
   time: moment().subtract(1, "hour").format("YYYY-MM-DDTHH:mm:ss"),
-
   toggleTime: (time) => {},
-
   timeEnd: moment().format("YYYY-MM-DDTHH:mm:ss"),
-
   toggleTimeEnd: (timeEnd) => {},
+  isLoggedIn: false,
+  toggleIsLoggedIn: (isloggedin: any) => {},
 });
 
 export const AppContextProvider: React.FC<any> = ({ children }: any) => {
   const [state, setState] = useState(true);
   const [estimateCalc, setEstimateCalc] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const toggleState = () => {
     setState((prevState) => !prevState);
@@ -49,6 +51,10 @@ export const AppContextProvider: React.FC<any> = ({ children }: any) => {
   const toggleTimeEnd = (timeEnd: any) => {
     setTimeEnd(timeEnd);
   };
+
+  const toggleIsLoggedIn = (isloggedin: any) => {
+    setIsLoggedIn(isloggedin);
+  };
   // console.log("est in app",estimateCalc)
 
   return (
@@ -62,6 +68,8 @@ export const AppContextProvider: React.FC<any> = ({ children }: any) => {
         toggleTime,
         timeEnd,
         toggleTimeEnd,
+        isLoggedIn,
+        toggleIsLoggedIn,
       }}
     >
       {children}

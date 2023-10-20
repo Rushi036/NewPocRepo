@@ -4,7 +4,8 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useRouter } from "next/router";
 
 import Link from "next/link";
-import { useMsal } from "@azure/msal-react";
+import { useIsAuthenticated, useMsal } from "@azure/msal-react";
+import { useAppContext } from "./AppContext";
 
 const Navbar = () => {
   const [isPopupOpen, setPopupOpen] = useState(false);
@@ -12,6 +13,8 @@ const Navbar = () => {
   const [isSignOutModalOpen, setSignOutModalOpen] = useState(false);
   const router = useRouter();
   const [uname, setUname] = useState<any>(false);
+  const { isLoggedIn, toggleIsLoggedIn } = useAppContext();
+  const isAuthenticated = useIsAuthenticated();
 
   useEffect(() => {
     // setUname(sessionStorage.getItem("userName"));
@@ -23,17 +26,26 @@ const Navbar = () => {
   };
 
   const handleSignOutClick = async () => {
-    setSignOutModalOpen(true);
+    // setSignOutModalOpen(true);
 
-    // try {
-    //   await instance.logoutPopup();
-    //   router.push("/");
-    //   sessionStorage.clear();
-    //   localStorage.clear();
-    // } catch (error) {
-    //   console.log("Logout error", error);
-    // }
+    try {
+      await instance.logoutPopup();
+      // toggleIsLoggedIn(false);
+      router.push("/");
+      sessionStorage.clear();
+      localStorage.clear();
+    } catch (error) {
+      console.log("Logout error", error);
+    }
   };
+
+  // useEffect(() => {
+  //   if (!isAuthenticated && !isLoggedIn) {
+  //     router.push("/");
+  //     sessionStorage.clear();
+  //     localStorage.clear();
+  //   }
+  // }, [isAuthenticated, isLoggedIn]);
 
   const handleSignOutConfirm = () => {
     // Perform sign-out logic here
