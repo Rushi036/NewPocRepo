@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BsArrowLeftCircle } from "react-icons/bs";
+import { GiHamburgerMenu } from "react-icons/gi";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PreviewIcon from "@mui/icons-material/Preview";
 import TabIcon from "@mui/icons-material/Tab";
@@ -44,10 +44,10 @@ const Sidebar = () => {
         <div
           className={`${
             !state && "rotate-180"
-          }  absolute mr-1.5 text-xl bg-white fill-slate-800 rounded-full cursor-pointer top-6 -right-4`}
+          }  absolute mr-1.5 text-xl bg-white fill-slate-800 rounded-full cursor-pointer top-6 -right-10`}
           onClick={toggleStateHere}
         >
-          <BsArrowLeftCircle />
+          <GiHamburgerMenu />
         </div>
 
         <ul className="space-y-1.5 pt-5">
