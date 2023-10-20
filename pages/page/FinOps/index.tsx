@@ -202,17 +202,17 @@ const FinOps = () => {
   }
 
   return (
-    <div className="h-auto">
+    <div className="finops-container h-auto">
       <div className="text-xl border-b-2 px-4 border-slate-400 pb-2">
         FinOps
       </div>
       {/* {data ? ( */}
       <div className="p-4 mt-4 h-auto">
-        <div className="flex justify-between items-center mb-4 p-3 bg-slate-300 rounded-lg">
+        <div className="flex justify-between items-center mb-4 p-3 bg-white rounded-lg">
           <div className="w-1/3">
             <label className="text-lg">Select Cloud : </label>
             <select
-              className="block w-full py-2 px-4 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+              className="block w-full py-2 px-4 border hover:bg-gray-50 focus:bg-gray-50 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
               onChange={(e) => handleCloudChange(e)}
             >
               <option disabled>Select Cloud</option>
@@ -228,7 +228,7 @@ const FinOps = () => {
             {/* )} */}
             {/* <label className="text-lg ">Select Id : </label> */}
             <select
-              className="block w-full py-2 px-4 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+              className="block w-full py-2 px-4 border hover:bg-gray-50 focus:bg-gray-50 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
               onChange={(e) => handleSubNameChange(e)}
             >
               {/* subscription id or account id */}
@@ -251,6 +251,7 @@ const FinOps = () => {
               shouldDisableDate={afterToday()}
               placeholder="Select Date Range"
               format="yyyy-MM-dd HH:mm:ss"
+              className="hover:bg-gray-50 focus:bg-gray-50"
             />
           </div>
         </div>
