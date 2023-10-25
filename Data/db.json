@@ -222,16 +222,8 @@
       "AWS_ResourceGRP": "",
       "AWS_Region": "Asia-Center",
       "chartOrder": {
-        "Azure": {
-          "Cost Distribution at application level": true,
-          "Average CPU Consumption in Bytes by VM": true,
-          "Average Memory Consumption in Bytes by VM": true
-        },
-        "AWS": {
-          "Most Cost Consuming Service Per Day": true,
-          "Total Unblended Cost per Day": true,
-          "Average Unblended Cost per Usage Type per Day": true
-        }
+        "Azure": {},
+        "AWS": {}
       }
     }
   ],
@@ -337,6 +329,23 @@
       "resource_owner": "q",
       "selected_environment": "Production",
       "id": 8
+    },
+    {
+      "title": "demo",
+      "bu": "Siddharth Nalwaya",
+      "bu_id": null,
+      "cloud_server": [
+        "AWS"
+      ],
+      "status": "Draft",
+      "created_date": "23/10/2023",
+      "topology_id": 9,
+      "business_sponser": "demo",
+      "server_owner": "demo",
+      "application_owner": "demo",
+      "resource_owner": "demo",
+      "selected_environment": "Production",
+      "id": 9
     }
   ],
   "topology": [
@@ -476,6 +485,23 @@
       "resource_owner": "q",
       "selected_environment": "Production",
       "id": 8
+    },
+    {
+      "bu_id": null,
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":120,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":299.75,\"y\":107.25,\"zoom\":0.825}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "demo",
+      "cloud_server": [
+        "AWS"
+      ],
+      "business_sponser": "demo",
+      "server_owner": "demo",
+      "application_owner": "demo",
+      "resource_owner": "demo",
+      "selected_environment": "Production",
+      "id": 9
     }
   ],
   "finops": [

@@ -13,6 +13,7 @@ import { BsPinAngleFill, BsPinAngle } from "react-icons/bs"
 import { getSubscriptionIds } from "@/pages/api/FinopsApi/GetSubscriptionId";
 import { getAllSubscriptions } from "@/pages/api/FinopsApi/GetAllSubscriptions";
 import { getCurrentUserData, unpinGraphAPI } from "@/pages/api/FinopsApi/GetGraphFormat";
+import BarGraph from "@/pages/Components/Charts/BarChart";
 // import BubbleChartComponent from "./Charts/BubbleChart";
 
 const FinOps = () => {
@@ -189,7 +190,8 @@ const FinOps = () => {
         account_id: [subscId],
         account_name: [subACCName],
       };
-      fetchDataAWS(body).then(res => { return res.json() }).then((data) => setRes(data))
+      // fetchDataAWS(body).then(res => { return res.json() }).then((data) => setRes(data))
+      setRes(AWSData);
     }
   }, [cloud, value, subACCName, subscId]);
 
@@ -397,30 +399,20 @@ const FinOps = () => {
                   <LineChartComponent id={i} data={e.LineChart} />
                 </div>
               );
-            } else if (e && e.HorizontalStackBarGraph && !graphFormat.chartOrder?.[cloud]?.[e.HorizontalStackBarGraph.title]) {
+            } else if (e && e.BarGraph && !graphFormat.chartOrder?.[cloud]?.[e.BarGraph.title]) {
               return (
                 <div
                   key={i}
                   className={
-                    e.HorizontalStackBarGraph.data.length >= 10
+                    e.BarGraph.data.length >= 10
                       ? "card !min-w-full"
                       : "card"
                   }
                 >
-                  <span className="flex justify-end cursor-pointer" onClick={()=> pinGraph(e.HorizontalStackBarGraph.title)}>
+                  <span className="flex justify-end cursor-pointer" onClick={()=> pinGraph(e.BarGraph.title)}>
                     <BsPinAngle />
                   </span>
-                  <StackChartComponent id={i} date={value} />
-                </div>
-              );
-            }
-            else if (e && e.HorizontalBarGraph && !graphFormat.chartOrder?.[cloud]?.[e.HorizontalBarGraph.title]) {
-              return (
-                <div key={i} className="card">
-                  <span className="flex justify-end cursor-pointer" onClick={()=> pinGraph(e.HorizontalBarGraph.title)}>
-                    <BsPinAngle />
-                  </span>
-                  <StackChartComponent id={i} data={e.HorizontalBarGraph} />
+                  <BarGraph id={i} date={value} data={e.BarGraph} />
                 </div>
               );
             }
