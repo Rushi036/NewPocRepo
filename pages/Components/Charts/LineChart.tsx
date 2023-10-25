@@ -36,6 +36,9 @@ const LineChartComponent = (props: any) => {
       });
       // console.log("tline chart data ", newData)
       const options: any = {
+        chart: {
+          zoomType: 'x'
+        },
         title: {
           text: props.data.title,
           align: "left",
@@ -76,6 +79,10 @@ const LineChartComponent = (props: any) => {
             },
             // pointStart: 1,
           },
+        },
+        tooltip: {
+          shared: true,
+          crosshairs: true
         },
 
         series: newData,

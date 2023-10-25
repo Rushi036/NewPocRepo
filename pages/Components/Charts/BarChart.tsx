@@ -9,6 +9,8 @@ const BarGraph = (props: any) => {
     if (chartContainer.current) {
       const options: any = {
         chart: {
+          // height: (9 / 16 * 100) + '%',
+          height: 400,
           type: props.data.type || "column",
         },
         title: {
@@ -34,7 +36,7 @@ const BarGraph = (props: any) => {
         yAxis: {
           min: 0,
           title: {
-            text: props.data.yAxis ||  "",
+            text: props.data.yAxis || "",
 
           },
           stackLabels: {
@@ -54,11 +56,11 @@ const BarGraph = (props: any) => {
         },
         tooltip: {
           headerFormat: "<b>{point.x}</b><br/>",
-          pointFormat: "{series.name}: {point.y}<br/>Total: {point.stackTotal}",
+          pointFormat: "{series.name}: {point.y}",
         },
         plotOptions: {
           column: {
-            stacking: "normal",
+            stacking: props.data.stacking == "true" || props.data.stacking == true ? "normal" : false,
             dataLabels: {
               enabled: true,
             },
@@ -73,7 +75,7 @@ const BarGraph = (props: any) => {
     }
   }, [props.data]); // Empty dependency array ensures the effect runs once after initial render
 
-  return <div ref={chartContainer} style={{ height: "400px" }} />;
+  return <div ref={chartContainer} />;
 };
 
 export default BarGraph;

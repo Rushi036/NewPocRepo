@@ -222,7 +222,9 @@
       "AWS_ResourceGRP": "",
       "AWS_Region": "Asia-Center",
       "chartOrder": {
-        "Azure": {},
+        "Azure": {
+          "Application Cost Breakdown (Weekly )": true
+        },
         "AWS": {}
       }
     }

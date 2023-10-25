@@ -195,6 +195,7 @@ body {
   min-width: 400px;
   box-sizing: border-box;
   overflow: hidden;
+  /* height: 500px; */
 }
 .card > div {
   width: 100%;
