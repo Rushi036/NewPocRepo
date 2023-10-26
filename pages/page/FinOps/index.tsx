@@ -319,7 +319,7 @@ const FinOps = () => {
           </div>
         </div>
         <div className="mt-4 h-auto flex flex-wrap gap-4">
-          {res && res.Graph?.map((e: any, i: any) => {
+          {res && graphFormat && res.Graph?.map((e: any, i: any) => {
             if (e && e.PieChart && graphFormat.chartOrder?.[cloud]?.[e.PieChart.title]) {
               return (
                 <div key={i} className="card">

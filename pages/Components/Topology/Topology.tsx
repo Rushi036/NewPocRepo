@@ -1,10 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import ELK from 'elkjs/lib/elk.bundled.js';
 import ReactFlow, {
   useNodesState,
   useEdgesState,
   addEdge,
   useReactFlow,
   ReactFlowProvider,
+  Controls,
+  Background,
+  Panel,
 } from "reactflow";
 import DynamicNode from "./DynamicNode/DynamicNode";
 import "reactflow/dist/style.css";
@@ -45,7 +49,7 @@ import { getIcons } from "@/pages/api/getIcons";
 //   },
 // ];
 
-let selectedNode = 3;
+let selectedNode: any = null;
 
 const proOptions = { hideAttribution: true };
 let id = 1;
@@ -57,12 +61,49 @@ const fitViewOptions = {
 
 const nodeTypes = { selectorNode: DynamicNode };
 
+const elk = new ELK();
+
+const useLayoutedElements = () => {
+  const { getNodes, setNodes, getEdges, fitView } = useReactFlow();
+  const defaultOptions = {
+    'elk.algorithm': 'layered',
+    'elk.layered.spacing.nodeNodeBetweenLayers': 100,
+    'elk.spacing.nodeNode': 80,
+  };
+
+const getLayoutedElements = useCallback((options: any) => {
+  const layoutOptions = { ...defaultOptions, ...options };
+  const graph = {
+    id: 'root',
+    layoutOptions: layoutOptions,
+    children: getNodes(),
+    edges: getEdges(),
+  };
+
+  elk.layout(graph).then(({ children }:any) => {
+    // By mutating the children in-place we saves ourselves from creating a
+    // needless copy of the nodes array.
+    children.forEach((node:any) => {
+      node.position = { x: node.x, y: node.y };
+    });
+
+    setNodes(children);
+    window.requestAnimationFrame(() => {
+      fitView();
+    });
+  });
+}, []);
+
+return { getLayoutedElements };
+};
+
 const AddNodeOnEdgeDrop = (props: any) => {
   const reactFlowWrapper = useRef<any>(null);
   const connectingNodeId = useRef(null);
   const [nodes, setNodes, onNodesChange] = useNodesState(props?.initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const { project, setViewport } = useReactFlow();
+  const { getLayoutedElements } = useLayoutedElements();
   const onConnect = useCallback(
     (params: any) => setEdges((eds: any) => addEdge(params, eds)),
     []
@@ -129,6 +170,7 @@ const AddNodeOnEdgeDrop = (props: any) => {
     props.topology && onRestore()
   }, [props.topology])
 
+
   return (
     <div className="wrapper" ref={reactFlowWrapper}>
       {/* <button onClick={onSave}>save</button>
@@ -146,7 +188,20 @@ const AddNodeOnEdgeDrop = (props: any) => {
         proOptions={proOptions}
         fitView
         fitViewOptions={fitViewOptions}
-      />
+      >
+        <Controls />
+        <Background variant="dots" gap={12} size={1} />
+        <Panel position="top-right">
+          <div 
+            className="p-1 border rounded border-black bg-slate-50 cursor-pointer"
+            onClick={() =>
+              getLayoutedElements({ 'elk.algorithm': 'layered', 'elk.direction': 'DOWN' })
+            }
+          >
+            vertical layout
+          </div>
+        </Panel>
+      </ReactFlow>
     </div>
   );
 };
@@ -178,7 +233,7 @@ function Topology(props: any) {
       <div className="topology-editor">
         <div className="creator">
           {network_icons ?
-              <AddNodeOnEdgeDrop network_icons={network_icons} initialNodes={initialNodes} setRfInstance={props.setRfInstance} topology={props.topology} />
+            <AddNodeOnEdgeDrop network_icons={network_icons} initialNodes={initialNodes} setRfInstance={props.setRfInstance} topology={props.topology} />
             :
             <>no data found</>
           }

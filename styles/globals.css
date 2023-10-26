@@ -27,12 +27,12 @@ body {
 }
 .topology-editor .creator {
   background-size: 10px 10px;
-  background-image: linear-gradient(
+  /* background-image: linear-gradient(
       to right,
       rgb(128, 128, 128, 0.1) 1px,
       transparent 1px
     ),
-    linear-gradient(to bottom, rgb(128, 128, 128, 0.1) 1px, transparent 1px);
+    linear-gradient(to bottom, rgb(128, 128, 128, 0.1) 1px, transparent 1px); */
   /* background-color: whitesmoke; */
   height: auto;
   width: 75%;
