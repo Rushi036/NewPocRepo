@@ -223,7 +223,8 @@
       "AWS_Region": "Asia-Center",
       "chartOrder": {
         "Azure": {
-          "Application Cost Breakdown (Weekly )": true
+          "Application Wise Cost Distribution ": true,
+          "Data Usage By Application": true
         },
         "AWS": {}
       }

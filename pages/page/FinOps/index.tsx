@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import { finOps } from "../../api/finOps";
 import { DateRangePicker } from "rsuite";
@@ -14,11 +15,16 @@ import { getSubscriptionIds } from "@/pages/api/FinopsApi/GetSubscriptionId";
 import { getAllSubscriptions } from "@/pages/api/FinopsApi/GetAllSubscriptions";
 import { getCurrentUserData, unpinGraphAPI } from "@/pages/api/FinopsApi/GetGraphFormat";
 import BarGraph from "@/pages/Components/Charts/BarChart";
+import Table from "@/pages/Components/Table";
+import dynamic from "next/dynamic";
 // import BubbleChartComponent from "./Charts/BubbleChart";
 
 const FinOps = () => {
   // const userADID
   // let userRole: string | null;
+  // const DynamicDateRangePicker = dynamic(() => import('rsuite').then((mod) => mod.DateRangePicker), {
+  //   ssr: false, // Set this to false to disable server-side rendering for the component
+  // });
   const [url, setUrl] = useState<any>();
   const [data, setData] = useState<any>(null);
   const { time, toggleTime } = useAppContext();
@@ -111,7 +117,52 @@ const FinOps = () => {
       placement: "left",
     },
   ];
-  
+
+  const tableData = {
+    Table: [
+      {
+        headers: ["Sr. no", "Application Name", "Min", "Max", "Avg"],
+        data: [
+          [
+            ["srno", 1],
+            ["appname", "HTTP"],
+            ["min", 0],
+            ["max", 37966029.86666667],
+            ["avg", 761918.7798981322],
+          ],
+          [
+            ["srno", 2],
+            ["appname", "tcp/5671"],
+            ["min", 0],
+            ["max", 8792770.133333333],
+            ["avg", 170468.6151443124],
+          ],
+        ],
+      },
+      {
+        headers: ["Sr. no", "Application Name", "Min", "Max", "Avg"],
+        data: [
+          [
+            ["srno", 3],
+            ["appname", "HTTP"],
+            ["min", 0],
+            ["max", 37966029.86666667],
+            ["avg", 761918.7798981322],
+          ],
+          [
+            ["srno", 4],
+            ["appname", "tcp/5671"],
+            ["min", 0],
+            ["max", 8792770.133333333],
+            ["avg", 170468.6151443124],
+          ]
+        ]
+      }
+    ]
+  }
+
+  console.log(tableData.Table)
+
   async function getGraphFormat() {
     await getCurrentUserData().then((res) => setGraphFormat(res.data[0]))
   }
@@ -218,12 +269,12 @@ const FinOps = () => {
   async function unpinGraph(title: any) {
     let chartOrder;
     if (cloud == "AWS") {
-      let awsData= graphFormat?.chartOrder?.AWS;
+      let awsData = graphFormat?.chartOrder?.AWS;
       delete awsData?.[title];
       chartOrder = { AWS: awsData, Azure: graphFormat?.chartOrder?.Azure }
     }
     if (cloud == "Azure") {
-      let azureData= graphFormat?.chartOrder?.Azure;
+      let azureData = graphFormat?.chartOrder?.Azure;
       delete azureData?.[title];
       chartOrder = { Azure: azureData, AWS: graphFormat?.chartOrder?.AWS }
     }
@@ -234,12 +285,12 @@ const FinOps = () => {
   async function pinGraph(title: any) {
     let chartOrder;
     if (cloud == "AWS") {
-      let awsData:any= graphFormat?.chartOrder?.AWS;
+      let awsData: any = graphFormat?.chartOrder?.AWS;
       awsData[title] = true;
       chartOrder = { AWS: awsData, Azure: graphFormat?.chartOrder?.Azure }
     }
     if (cloud == "Azure") {
-      let azureData= graphFormat?.chartOrder?.Azure;
+      let azureData = graphFormat?.chartOrder?.Azure;
       azureData[title] = true;
       chartOrder = { Azure: azureData, AWS: graphFormat?.chartOrder?.AWS }
     }
@@ -320,7 +371,7 @@ const FinOps = () => {
         </div>
         <div className="mt-4 h-auto flex flex-wrap gap-4">
           {res && res.Graph?.map((e: any, i: any) => {
-            if (e && e.PieChart && graphFormat.chartOrder?.[cloud]?.[e.PieChart.title]) {
+            if (e && e.PieChart && graphFormat?.chartOrder?.[cloud]?.[e.PieChart.title]) {
               return (
                 <div key={i} className="card">
                   <span className="flex justify-end cursor-pointer" onClick={() => unpinGraph(e.PieChart.title)}>
@@ -329,7 +380,7 @@ const FinOps = () => {
                   <PieChartComponent id={i} data={e.PieChart} />
                 </div>
               );
-            } else if (e && e.LineChart && graphFormat.chartOrder?.[cloud]?.[e.LineChart.title]) {
+            } else if (e && e.LineChart && graphFormat?.chartOrder?.[cloud]?.[e.LineChart.title]) {
               return (
                 <div
                   key={i}
@@ -345,39 +396,33 @@ const FinOps = () => {
                   <LineChartComponent id={i} data={e.LineChart} />
                 </div>
               );
-            } else if (e && e.HorizontalStackBarGraph && graphFormat.chartOrder?.[cloud]?.[e.HorizontalStackBarGraph.title]) {
+            } 
+            else if (e && e.BarGraph && graphFormat?.chartOrder?.[cloud]?.[e.BarGraph.title]) {
               return (
                 <div
                   key={i}
                   className={
-                    e.HorizontalStackBarGraph.data.length >= 10
+                    e.BarGraph.data.length >= 8
                       ? "card !min-w-full"
                       : "card"
                   }
                 >
-                  <span className="flex justify-end cursor-pointer" onClick={() => unpinGraph(e.HorizontalStackBarGraph.title)}>
+                  <span className="flex justify-end cursor-pointer" onClick={() => unpinGraph(e.BarGraph.title)}>
                     <BsPinAngleFill />
                   </span>
-                  <StackChartComponent id={i} date={value} />
+                  <BarGraph id={i} date={value} data={e.BarGraph} />
                 </div>
               );
             }
-            else if (e && e.HorizontalBarGraph && graphFormat.chartOrder?.[cloud]?.[e.HorizontalBarGraph.title]) {
-              return (
-                <div key={i} className="card">
-                  <span className="flex justify-end cursor-pointer" onClick={() => unpinGraph(e.HorizontalBarGraph.title)}>
-                    <BsPinAngleFill />
-                  </span>
-                  <StackChartComponent id={i} data={e.HorizontalBarGraph} />
-                </div>
-              );
-            }
+           
           })}
+
+
           {res && res.Graph?.map((e: any, i: any) => {
             if (e && e.PieChart && !graphFormat.chartOrder?.[cloud]?.[e.PieChart.title]) {
               return (
                 <div key={i} className="card">
-                  <span className="flex justify-end cursor-pointer" onClick={()=> pinGraph(e.PieChart.title)}>
+                  <span className="flex justify-end cursor-pointer" onClick={() => pinGraph(e.PieChart.title)}>
                     <BsPinAngle />
                   </span>
                   <PieChartComponent id={i} data={e.PieChart} />
@@ -393,23 +438,24 @@ const FinOps = () => {
                       : "card"
                   }
                 >
-                  <span className="flex justify-end cursor-pointer" onClick={()=> pinGraph(e.LineChart.title)}>
+                  <span className="flex justify-end cursor-pointer" onClick={() => pinGraph(e.LineChart.title)}>
                     <BsPinAngle />
                   </span>
                   <LineChartComponent id={i} data={e.LineChart} />
                 </div>
               );
-            } else if (e && e.BarGraph && !graphFormat.chartOrder?.[cloud]?.[e.BarGraph.title]) {
+            } 
+            else if (e && e.BarGraph && !graphFormat.chartOrder?.[cloud]?.[e.BarGraph.title]) {
               return (
                 <div
                   key={i}
                   className={
-                    e.BarGraph.data.length >= 10
+                    e.BarGraph.data.length >= 8
                       ? "card !min-w-full"
                       : "card"
                   }
                 >
-                  <span className="flex justify-end cursor-pointer" onClick={()=> pinGraph(e.BarGraph.title)}>
+                  <span className="flex justify-end cursor-pointer" onClick={() => pinGraph(e.BarGraph.title)}>
                     <BsPinAngle />
                   </span>
                   <BarGraph id={i} date={value} data={e.BarGraph} />
@@ -417,6 +463,16 @@ const FinOps = () => {
               );
             }
           })}
+
+          {/* {res && res.Table?.map((e: any, i: any) => {
+            <Table data={e} />
+          })} */}
+          
+          {/* 
+          {tableData.Table?.map((e: any, i: any) => {
+            // <Table data={e} />
+            <div>hi</div>
+          })} */}
         </div>
 
       </div>
