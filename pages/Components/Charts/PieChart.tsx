@@ -18,7 +18,7 @@ const ChartComponent = (props: any) => {
   }, []);
   useEffect(() => {
     // console.log(props.data.data);
-    if (props.data) {
+    if (props?.data) {
 
       const options: any = {
         chart: {
@@ -62,7 +62,7 @@ const ChartComponent = (props: any) => {
         }
       },
         title: {
-          text: props.data.title,
+          text: props?.data?.title || "",
           align: "left",
         },
         plotOptions: {
@@ -82,7 +82,7 @@ const ChartComponent = (props: any) => {
           pointFormat:
           '<span style="color:{point.color}">\u25CF</span> <b> {point.name}</b><br/>'
             +
-        `Total: <b>{point.y}</b> ${props.data.xAxis || ""}<br/>`,
+        `Total: <b>{point.y}</b> ${props?.data?.xAxis || ""}<br/>`,
         },
     lang: {
       noData: "No Data to Display",
@@ -109,7 +109,7 @@ const ChartComponent = (props: any) => {
         name: "networks",
         borderRadius: 0,
         colorByPoint: true,
-        data: props.data.data
+        data: props?.data?.data || []
       }
     ]
   }

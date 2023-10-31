@@ -4,23 +4,11 @@ import HighchartsReact from "highcharts-react-official";
 import { getUnBlendedCost } from "@/pages/api/FinopsApi/GetUnblendedCost";
 
 const LineChartComponent = (props: any) => {
-  //   console.log("props in chart", id);
   const chartContainer = useRef(null);
-  // const [unBlendCostData, setUnBlendCostData] = useState<any>();
-  // const getData = async () => {
-  //   await getUnBlendedCost(id).then((res) => {
-  //     // console.log("res in chart", res);
-  //     setUnBlendCostData(res);
-  //   });
-  // };
-  // useEffect(() => {
-  //   getData();
-  // }, [id]);
   useEffect(() => {
-    // console.log("unblend in chart", props.data);
     if (chartContainer.current) {
-      const newData = props?.data?.data.map((e: any) => {
-        let changedData = e.data?.map((x: any) => {
+      const newData = (props?.data?.data || []).map((e: any) => {
+        let changedData = e?.data?.map((x: any) => {
           return [
             new Date(x[0]).toLocaleString("en-US", {
               month: "short",
@@ -34,25 +22,24 @@ const LineChartComponent = (props: any) => {
         });
         return { name: e.name, data: changedData };
       });
-      // console.log("tline chart data ", newData)
       const options: any = {
         chart: {
           zoomType: 'x'
         },
         title: {
-          text: props.data.title,
+          text: props?.data?.title || "",
           align: "left",
         },
 
         yAxis: {
           title: {
-            text: props.data.yAxis || "",
+            text: props?.data?.yAxis || "",
           },
         },
 
         xAxis: {
           title: {
-            text: props.data.xAxis || "",
+            text: props?.data?.xAxis || "",
           },
           type: "category"
         },
@@ -85,7 +72,7 @@ const LineChartComponent = (props: any) => {
           crosshairs: true
         },
 
-        series: newData,
+        series: newData || [],
 
         responsive: {
           rules: [

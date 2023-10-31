@@ -14,7 +14,7 @@ const AppContext = createContext<{
   toggleState: () => {},
   estimateCalc: false,
   toggleEstimateCalc: () => {},
-  time: moment().subtract(1, "hour").format("YYYY-MM-DDTHH:mm:ss"),
+  time: moment().subtract(15, "day").format("YYYY-MM-DDTHH:mm:ss"),
 
   toggleTime: (time) => {},
 

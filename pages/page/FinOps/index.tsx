@@ -10,13 +10,14 @@ import StackChartComponent from "../../Components/Charts/StackChart";
 import LineChartComponent from "../../Components/Charts/LineChart";
 import AzureData from "./Azure.json";
 import AWSData from "./AWS.json";
-import { BsPinAngleFill, BsPinAngle } from "react-icons/bs"
+import { BsPinAngleFill, BsPinAngle, BsTable } from "react-icons/bs"
 import { getSubscriptionIds } from "@/pages/api/FinopsApi/GetSubscriptionId";
 import { getAllSubscriptions } from "@/pages/api/FinopsApi/GetAllSubscriptions";
 import { getCurrentUserData, unpinGraphAPI } from "@/pages/api/FinopsApi/GetGraphFormat";
 import BarGraph from "@/pages/Components/Charts/BarChart";
 import Table from "@/pages/Components/Table";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 // import BubbleChartComponent from "./Charts/BubbleChart";
 
 const FinOps = () => {
@@ -298,13 +299,136 @@ const FinOps = () => {
     await unpinGraphAPI(graphFormat?.id, data).then(getGraphFormat)
   }
 
+  function fullScreenTable() {
+    let myDocument = document.documentElement;
+    if (myDocument.requestFullscreen) {
+      myDocument.requestFullscreen();
+    }
+    else if (myDocument.msRequestFullscreen) {
+      myDocument.msRequestFullscreen();
+    }
+    else if (myDocument.mozRequestFullScreen) {
+      myDocument.mozRequestFullScreen();
+    }
+    else if (myDocument.webkitRequestFullscreen) {
+      myDocument.webkitRequestFullscreen();
+    }
+  }
+
+  function closeFullScreenTable() {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    }
+    else if (document.msexitFullscreen) {
+      document.msexitFullscreen();
+    }
+    else if (document.mozexitFullscreen) {
+      document.mozexitFullscreen();
+    }
+    else if (document.webkitexitFullscreen) {
+      document.webkitexitFullscreen();
+    }
+
+  }
+
   return (
     <div className="finops-container h-auto">
       <div className="text-xl border-b-2 px-4 border-slate-400 pb-2">
         FinOps
       </div>
       {/* {data ? ( */}
-      <div className="p-4 mt-4 h-auto">
+      <div className="p-4 h-auto">
+      <div className="flex justify-start overflow-x-scroll">
+                <div className="min-w-[200px] h-[70px] mb-4">
+                    <Link className="w-full flex justify-center items-center h-full" href={"/page/FinOps"}>
+                        <div className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
+                            <div className="w-[4px] h-full bg-red-400 absolute left-0 top-0"></div>
+                            <p className="text-slate-500 text-lg">
+                                Current Total Consumption
+                            </p>
+                        </div>
+                    </Link>
+                </div>
+
+                <div className="min-w-[200px] h-[70px] flex justify-center items-center mb-4">
+                    <Link className="w-full flex justify-center items-center h-full" href={"/page/FinOps"}>
+                        <div className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
+                            <div className="w-[4px] h-full bg-green-400 absolute left-0 top-0"></div>
+                            <p className="text-slate-500 text-lg">
+                                Current Total Consumption
+                            </p>
+                        </div>
+                    </Link>
+                </div>
+
+                <div className="min-w-[200px] h-[70px] flex justify-center items-center mb-4">
+                    <Link className="w-full flex justify-center items-center h-full" href={"/page/FinOps"}>
+                        <div className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
+                            <div className="w-[4px] h-full bg-yellow-400 absolute left-0 top-0"></div>
+                            <div className="w-[4px] h-full bg-blue-400 absolute left-0 top-0"></div>
+                            <p className="text-slate-500 text-lg">
+                                Cost Governance
+                            </p>
+                        </div>
+                    </Link>
+                </div>
+
+                <div className="min-w-[200px] h-[70px] flex justify-center items-center mb-4">
+                    <Link className="w-full flex justify-center items-center h-full" href={"/page/FinOps"}>
+                        <div className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
+                            <div className="w-[4px] h-full bg-pink-400 absolute left-0 top-0"></div>
+                            <p className="text-slate-500 text-lg">
+                                Total Asset
+                            </p>
+                        </div>
+                    </Link>
+                </div>
+
+                <div className="min-w-[200px] h-[70px] flex justify-center items-center mb-4">
+                    <Link className="w-full flex justify-center items-center h-full" href={"/page/FinOps"}>
+                        <div className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
+                            <div className="w-[4px] h-full bg-orange-400 absolute left-0 top-0"></div>
+                            <p className="text-slate-500 text-lg">
+                                Consumption Trend
+                            </p>
+                        </div>
+                    </Link>
+                </div>
+
+                <div className="min-w-[200px] h-[70px] flex justify-center items-center mb-4">
+                    <Link className="w-full flex justify-center items-center h-full" href={"/page/FinOps"}>
+                        <div className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
+                            <div className="w-[4px] h-full bg-purple-400 absolute left-0 top-0"></div>
+                            <p className="text-slate-500 text-lg">
+                                Cloud Gateway
+                            </p>
+                        </div>
+                    </Link>
+                </div>
+
+                <div className="min-w-[200px] h-[70px] flex justify-center items-center mb-4">
+                    <Link className="w-full flex justify-center items-center h-full" href={"/page/FinOps"}>
+                        <div className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
+                            <div className="w-[4px] h-full bg-purple-400 absolute left-0 top-0"></div>
+                            <p className="text-slate-500 text-lg">
+                                Forecast & Recommendation
+                            </p>
+                        </div>
+                    </Link>
+                </div>
+
+                <div className="min-w-[200px] h-[70px] flex justify-center items-center mb-4">
+                    <Link className="w-full flex justify-center items-center h-full" href={"/page/FinOps"}>
+                        <div className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
+                            <div className="w-[4px] h-full bg-purple-400 absolute left-0 top-0"></div>
+                            <p className="text-slate-500 text-lg">
+                            Managed Services Cost
+                            </p>
+                        </div>
+                    </Link>
+                </div>
+
+            </div>
         <div className="flex justify-between items-center mb-4 p-3 bg-white rounded-lg">
           <div className="w-1/3">
             <label className="text-lg">Select Cloud : </label>
@@ -321,7 +445,7 @@ const FinOps = () => {
             {/* {cloud == "Azure" ? ( */}
             {/* <label className="text-lg">Select Account Id : </label> */}
             {/* // ) : ( */}
-            <label className="text-lg">Select Subscription Name : </label>
+            <label className="text-lg">{cloud == "Azure" ? "Select Subscription Name" : "Select Account Name"} : </label>
             {/* )} */}
             {/* <label className="text-lg ">Select Id : </label> */}
             <select
@@ -356,11 +480,12 @@ const FinOps = () => {
         <div className="flex space-x-4 justify-content-between">
           <div className="card !w-1/2">
             <b>
-              <span>{res && res.Metric ? res.Metric.title + " " : "No data"} </span>
+              <span className="flex w-full items-center justify-between">{res && res.Metric ? res.Metric[0]?.title + " " : "No data"} <span className="cursor-pointer" onClick={fullScreenTable}><BsTable /></span></span>
             </b>
-            <br />
-            <span>Total Subscription Cost - </span>
-            <span>{cloud == "Azure" ? "₹" : "$"} {res && res.Metric ? res.Metric.value : ""} </span>
+
+            {/* <br /> */}
+            <span>{cloud == "Azure" ? "Total Subscription Cost" : "Total Account Cost"} - </span>
+            <span>{cloud == "Azure" ? "₹" : "$"} {res && res.Metric ? res.Metric[0]?.value : ""} </span>
           </div>
           <div className="card !w-1/2">
             <b>
@@ -371,7 +496,7 @@ const FinOps = () => {
         </div>
         <div className="mt-4 h-auto flex flex-wrap gap-4">
           {res && res.Graph?.map((e: any, i: any) => {
-            if (e && e.PieChart && graphFormat?.chartOrder?.[cloud]?.[e.PieChart.title]) {
+            if (e && e.PieChart && e.PieChart.data && Array.isArray(e.PieChart.data) && graphFormat?.chartOrder?.[cloud]?.[e.PieChart.title]) {
               return (
                 <div key={i} className="card">
                   <span className="flex justify-end cursor-pointer" onClick={() => unpinGraph(e.PieChart.title)}>
@@ -380,7 +505,7 @@ const FinOps = () => {
                   <PieChartComponent id={i} data={e.PieChart} />
                 </div>
               );
-            } else if (e && e.LineChart && graphFormat?.chartOrder?.[cloud]?.[e.LineChart.title]) {
+            } else if (e && e.LineChart && e.LineChart.data && Array.isArray(e.LineChart.data) && graphFormat?.chartOrder?.[cloud]?.[e.LineChart.title]) {
               return (
                 <div
                   key={i}
@@ -396,8 +521,8 @@ const FinOps = () => {
                   <LineChartComponent id={i} data={e.LineChart} />
                 </div>
               );
-            } 
-            else if (e && e.BarGraph && graphFormat?.chartOrder?.[cloud]?.[e.BarGraph.title]) {
+            }
+            else if (e && e.BarGraph && e.BarGraph.data && Array.isArray(e.BarGraph.data) && graphFormat?.chartOrder?.[cloud]?.[e.BarGraph.title]) {
               return (
                 <div
                   key={i}
@@ -414,12 +539,12 @@ const FinOps = () => {
                 </div>
               );
             }
-           
+
           })}
 
 
           {res && res.Graph?.map((e: any, i: any) => {
-            if (e && e.PieChart && !graphFormat.chartOrder?.[cloud]?.[e.PieChart.title]) {
+            if (e && e.PieChart && e.PieChart.data && Array.isArray(e.PieChart.data) && !graphFormat.chartOrder?.[cloud]?.[e.PieChart.title]) {
               return (
                 <div key={i} className="card">
                   <span className="flex justify-end cursor-pointer" onClick={() => pinGraph(e.PieChart.title)}>
@@ -428,7 +553,7 @@ const FinOps = () => {
                   <PieChartComponent id={i} data={e.PieChart} />
                 </div>
               );
-            } else if (e && e.LineChart && !graphFormat.chartOrder?.[cloud]?.[e.LineChart.title]) {
+            } else if (e && e.LineChart && e.LineChart.data && Array.isArray(e.LineChart.data) && !graphFormat.chartOrder?.[cloud]?.[e.LineChart.title]) {
               return (
                 <div
                   key={i}
@@ -444,8 +569,8 @@ const FinOps = () => {
                   <LineChartComponent id={i} data={e.LineChart} />
                 </div>
               );
-            } 
-            else if (e && e.BarGraph && !graphFormat.chartOrder?.[cloud]?.[e.BarGraph.title]) {
+            }
+            else if (e && e.BarGraph && e.BarGraph.data && Array.isArray(e.BarGraph.data) && !graphFormat.chartOrder?.[cloud]?.[e.BarGraph.title]) {
               return (
                 <div
                   key={i}
@@ -464,10 +589,16 @@ const FinOps = () => {
             }
           })}
 
-          {/* {res && res.Table?.map((e: any, i: any) => {
-            <Table data={e} />
-          })} */}
-          
+          {res && res.Table?.map((e: any, i: any) => {
+            return (
+              <>
+                <div key={i} className="card">
+                  <Table data={e} />
+                </div>
+              </>
+            )
+          })}
+
           {/* 
           {tableData.Table?.map((e: any, i: any) => {
             // <Table data={e} />

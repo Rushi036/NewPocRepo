@@ -11,16 +11,16 @@ const BarGraph = (props: any) => {
         chart: {
           // height: (9 / 16 * 100) + '%',
           height: 400,
-          type: props.data.type || "column",
+          type: props?.data?.type || "column",
         },
         title: {
-          text: props.data.title || "",
+          text: props?.data?.title || "",
           align: "left",
         },
         xAxis: {
-          categories: props.data.categories,
+          categories: props?.data?.categories || [],
           title: {
-            text: props.data.xAxis || "",
+            text: props?.data?.xAxis || "",
           },
         },
         lang: {
@@ -36,11 +36,11 @@ const BarGraph = (props: any) => {
         yAxis: {
           min: 0,
           title: {
-            text: props.data.yAxis || "",
+            text: props?.data?.yAxis || "",
 
           },
           stackLabels: {
-            enabled: props.data.stacking || false,
+            enabled: props?.data?.stacking || false,
           },
         },
         legend: {
@@ -60,16 +60,16 @@ const BarGraph = (props: any) => {
         },
         plotOptions: {
           column: {
-            stacking: props.data.stacking == "true" || props.data.stacking == true ? "normal" : false,
+            stacking: props?.data?.stacking == "true" || props?.data?.stacking == true ? "normal" : false,
             dataLabels: {
               enabled: true,
             },
           },
         },
-        series: props.data.data,
+        series: props?.data?.data || [],
       };
 
-      console.log(props.data)
+      // console.log(props.data)
 
       Highcharts.chart(chartContainer.current, options);
     }
