@@ -255,6 +255,11 @@ const FinOps = () => {
             // fetchDataAWS(body).then(res => { return res.json() }).then((data) => setRes(data))
             setRes(AWSData);
         }
+
+        // res.Graph.map((data:any,key:any)=>{
+
+        // })
+
     }, [cloud, value, subACCName, subscId]);
 
     async function fetchDataAzure(body: any) {
@@ -521,12 +526,7 @@ const FinOps = () => {
                                     </select>
                                 </div>
                                 <div className="w-full mx-2 mt-4">
-                                    {/* {cloud == "Azure" ? ( */}
-                                    {/* <label className="text-lg">Select Account Id : </label> */}
-                                    {/* // ) : ( */}
                                     <label className="text-lg">{cloud == "Azure" ? "Select Subscription Name" : "Select Account Name"} : </label>
-                                    {/* )} */}
-                                    {/* <label className="text-lg ">Select Id : </label> */}
                                     <select
                                         className="block w-full py-2 px-4 border hover:bg-gray-50 focus:bg-gray-50 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
                                         onChange={(e) => handleSubNameChange(e)}
@@ -554,6 +554,21 @@ const FinOps = () => {
                                         format="yyyy-MM-dd HH:mm:ss"
                                         className="hover:bg-gray-50 focus:bg-gray-50"
                                     />
+                                </div>
+                                <div className="w-full mx-2 mt-4">
+                                    <label className="text-lg">Select Reports : </label>
+                                    <select
+                                        className="block w-full py-2 px-4 border hover:bg-gray-50 focus:bg-gray-50 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                                        onChange={(e) => handleSubNameChange(e)}
+                                        value={subACCName}
+                                    >
+                                        {/* subscription id or account id */}
+                                        <option>Select Id</option>
+                                        {subData &&
+                                            subData.map((e: any, i: any) => (
+                                                <option key={i} value={e.subsAccName}>{e.subsAccName}</option>
+                                            ))}
+                                    </select>
                                 </div>
                             </div>
                         </div>
