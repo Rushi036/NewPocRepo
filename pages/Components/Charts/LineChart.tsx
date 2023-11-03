@@ -19,21 +19,25 @@ const LineChartComponent = (props: any) => {
   useEffect(() => {
     // console.log("unblend in chart", props.data);
     if (chartContainer.current) {
-      const newData = props?.data?.data.map((e: any) => {
-        let changedData = e.data?.map((x: any) => {
-          return [
-            new Date(x[0]).toLocaleString("en-US", {
-              month: "short",
-              day: "2-digit",
-              year: "numeric",
-              // hour: "2-digit",
-              // minute: "2-digit",
-            }),
-            x[1],
-          ];
+      const newData =
+        props &&
+        props.data &&
+        props.data.data &&
+        props?.data?.data.map((e: any) => {
+          let changedData = e.data?.map((x: any) => {
+            return [
+              new Date(x[0]).toLocaleString("en-US", {
+                month: "short",
+                day: "2-digit",
+                // year: "numeric",
+                // hour: "2-digit",
+                // minute: "2-digit",
+              }),
+              x[1],
+            ];
+          });
+          return { name: e.name, data: changedData };
         });
-        return { name: e.name, data: changedData };
-      });
       // console.log("tline chart data ", newData)
       const options: any = {
         title: {
@@ -51,7 +55,7 @@ const LineChartComponent = (props: any) => {
           title: {
             text: props.data.xAxis || "",
           },
-          type: "category"
+          type: "category",
         },
 
         legend: {

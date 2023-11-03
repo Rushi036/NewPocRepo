@@ -1,105 +1,85 @@
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const Dashboard = () => {
   const [role, setRole] = useState<any>();
   useEffect(() => {
     setRole(sessionStorage.getItem("userRole"));
-  });
+  }, []);
+
   return (
-    <>
-      <div className="text-xl border-b-2  border-slate-400 pb-2 px-4">
+    <div className="bg-gray-100 min-h-fit p-4">
+      <div className="text-xl  border-b-2 border-gray-400 mb-4 pb-2">
         Dashboard
       </div>
-
-      {/* For Business User */}
-      {role != "ADMIN" ? (
-        <div className="cards-container  w-auto">
-          <div className="w-32 card">
-            {" "}
-            {/* Adjust the width class to your desired width */}
-            <div id="chart-1">
-              <p>
-                <b>Active service on AWS</b>
-              </p>
-              <b>1</b>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {/* Widgets for Admin */}
+        {role === "ADMIN" && (
+          <>
+            <Link href="/page/FinOps">
+              <div className="bg-white p-6 h-[25vh] rounded-lg shadow hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105">
+                <div className="font-bold text-lg mb-2">Cost Control</div>
+                <p className="text-sm text-gray-600 mb-1">Budgeted</p>
+                <p className="text-sm text-gray-600 mb-1">Projected</p>
+                <p className="text-sm text-gray-600">Current Spent</p>
+              </div>
+            </Link>
+            <div className="bg-white p-6 rounded-lg  h-[25vh] shadow hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105">
+              <div className="font-bold text-lg mb-2">Security Score</div>
+              <p className="text-sm text-gray-600 mb-1">Private</p>
+              <p className="text-sm text-gray-600 mb-1">AWS</p>
+              <p className="text-sm text-gray-600">Azure</p>
             </div>
-          </div>
-
-          <div className="card card2">
-            <div id="chart-2">
-              <p>
-                <b>Active service on Azure</b>
-              </p>
-
-              <b>2</b>
+            <div className="bg-white p-6 rounded-lg  h-[25vh] shadow hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105">
+              <div className="font-bold text-lg mb-2">Business Service</div>
+              <p className="text-sm text-gray-600">3/5...</p>
             </div>
-          </div>
-
-          <div className="card card3">
-            <div id="chart-3">
-              <p>
-                <b> Service Request Pending</b>
-              </p>
-              <b>2</b>
+            <div className="bg-white p-6 rounded-lg  h-[25vh] shadow hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105">
+              <div className="font-bold text-lg mb-2">Managed Assets</div>
+              <p className="text-sm text-gray-600">100/1500</p>
             </div>
-          </div>
-
-          <div className="card card4">
-            <div id="chart-4">
-              <p>
-                <b>Active Services</b>
-              </p>
-
-              <b>5</b>
+            <div className="bg-white p-6 rounded-lg  h-[25vh] shadow hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105">
+              <div className="font-bold text-lg mb-2">Active Incidents</div>
+              <p className="text-sm text-gray-600">18</p>
             </div>
-          </div>
-        </div>
-      ) : (
-        /* For Admin */
-
-        <div className="cards-container">
-          <div className="card card1">
-            <div id="chart-1">
-              <p>
-                <b>Total Cloud Services</b>
-              </p>
-
-              <b>2</b>
+            <div className="bg-white p-6 rounded-lg  h-[25vh] shadow hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105">
+              <div className="font-bold text-lg mb-2">
+                Active Service Requests
+              </div>
+              <p className="text-sm text-gray-600">18</p>
             </div>
-          </div>
+          </>
+        )}
 
-          <div className="card card2">
-            <div id="chart-2">
-              <p>
-                <b>On-Boarded business</b>
-              </p>
-
-              <b>15</b>
+        {/* Widgets for User */}
+        {role !== "ADMIN" && (
+          <>
+            <div className="bg-white p-6 rounded-lg shadow hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105">
+              <div className="font-bold text-lg mb-2">
+                Active service on AWS
+              </div>
+              <p className="text-xl text-purple-500">1</p>
             </div>
-          </div>
-
-          <div className="card card3">
-            <div id="chart-3">
-              <p>
-                <b>Active Subscriptions in Azure</b>
-              </p>
-
-              <b>51</b>
+            <div className="bg-white p-6 rounded-lg shadow hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105">
+              <div className="font-bold text-lg mb-2">
+                Active service on Azure
+              </div>
+              <p className="text-xl text-blue-500">2</p>
             </div>
-          </div>
-
-          <div className="card card4">
-            <div id="chart-4">
-              <p>
-                <b>Active Subscriptions in AWS</b>
-              </p>
-
-              <b>36</b>
+            <div className="bg-white p-6 rounded-lg shadow hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105">
+              <div className="font-bold text-lg mb-2">
+                Service Request Pending
+              </div>
+              <p className="text-xl text-green-500">2</p>
             </div>
-          </div>
-        </div>
-      )}
-    </>
+            <div className="bg-white p-6 rounded-lg shadow hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105">
+              <div className="font-bold text-lg mb-2">Active Services</div>
+              <p className="text-xl text-yellow-500">5</p>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
   );
 };
 

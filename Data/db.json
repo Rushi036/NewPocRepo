@@ -50,7 +50,7 @@
       "name": "Birla Carbon",
       "email": "ABG3@gmail.com",
       "password": "abg@123",
-      "role": "admin",
+      "role": "BU",
       "Azure_subcriptionId": "3c3370e0-d5b7-4d7a-81bb-fe78a73dd72e",
       "Azure_vnet": "Mirgationdemo-VNet",
       "Azure_CIDR": "10.55.6.16/28",
@@ -185,9 +185,7 @@
       "AWS_ResourceGRP": "",
       "AWS_Region": "Asia-Center",
       "chartOrder": {
-        "Azure": {
-          "Cost Distribution at application level": true
-        },
+        "Azure": {},
         "AWS": {
           "Most Cost Consuming Service Per Day": true
         }
@@ -222,16 +220,8 @@
       "AWS_ResourceGRP": "",
       "AWS_Region": "Asia-Center",
       "chartOrder": {
-        "Azure": {
-          "Cost Distribution at application level": true,
-          "Average CPU Consumption in Bytes by VM": true,
-          "Average Memory Consumption in Bytes by VM": true
-        },
-        "AWS": {
-          "Most Cost Consuming Service Per Day": true,
-          "Total Unblended Cost per Day": true,
-          "Average Unblended Cost per Usage Type per Day": true
-        }
+        "Azure": {},
+        "AWS": {}
       }
     }
   ],
@@ -307,7 +297,10 @@
       "title": "j",
       "bu": "Grasim PnF",
       "bu_id": "7",
-      "cloud_server": ["AWS", "Azure"],
+      "cloud_server": [
+        "AWS",
+        "Azure"
+      ],
       "status": "Draft",
       "created_date": "25/09/2023",
       "topology_id": 7,
@@ -316,15 +309,7 @@
       "application_owner": "hb",
       "resource_owner": "jhb",
       "selected_environment": "Production",
-      "id": 7,
-      "product": "Virtual Machines Esv5 Series",
-      "quantity": 1,
-      "price": "0.947",
-      "totalPrice": 0.947,
-      "awsProduct": "AmazonEC2",
-      "awsQuantity": 1,
-      "awsProductPrice": 0.213,
-      "totalPriceAws": 0.213
+      "id": 7
     },
     {
       "title": "q",
@@ -344,21 +329,38 @@
       "id": 8
     },
     {
-      "title": "xyzhsbwbswb!!!!!!!",
+      "title": "sdsfb",
+      "bu": "Rushikesh Shiledar",
+      "bu_id": null,
+      "cloud_server": [
+        "Azure"
+      ],
+      "status": "Draft",
+      "created_date": "23/10/2023",
+      "topology_id": 9,
+      "business_sponser": "ghbn",
+      "server_owner": "ghbn",
+      "application_owner": "yghbn",
+      "resource_owner": "ghbn",
+      "selected_environment": "Test",
+      "id": 9
+    },
+    {
+      "title": "demo",
       "bu": "Rajit Bhat",
       "bu_id": "2",
       "cloud_server": [
         "AWS"
       ],
       "status": "Approved By User",
-      "created_date": "18/10/2023",
-      "topology_id": 9,
-      "business_sponser": "xhwv ghax gv xa",
-      "server_owner": "dnbwhbjvhdvwghe",
-      "application_owner": "dwebhdbwhgec",
-      "resource_owner": "dwhgvghedvwghed wve dvwe",
-      "selected_environment": "UAT",
-      "id": 9,
+      "created_date": "25/10/2023",
+      "topology_id": 10,
+      "business_sponser": "de",
+      "server_owner": "demo",
+      "application_owner": "demo",
+      "resource_owner": "deom",
+      "selected_environment": "Production",
+      "id": 10,
       "awsProduct": "AmazonEC2",
       "awsQuantity": 1,
       "awsProductPrice": 0.213,
@@ -504,21 +506,38 @@
       "id": 8
     },
     {
-      "bu_id": "2",
-      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":124,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":340.9748755143547,\"y\":100.45769397764144,\"zoom\":0.7328521394535409}}",
+      "bu_id": null,
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":124,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":343.0887096774194,\"y\":105.83870967741936,\"zoom\":0.7782258064516129}}",
       "node_details": [
         "Server"
       ],
-      "title": "xyzhsbwbswb!!!!!!!",
+      "title": "sdsfb",
+      "cloud_server": [
+        "Azure"
+      ],
+      "business_sponser": "ghbn",
+      "server_owner": "ghbn",
+      "application_owner": "yghbn",
+      "resource_owner": "ghbn",
+      "selected_environment": "Test",
+      "id": 9
+    },
+    {
+      "bu_id": "2",
+      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":120,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":340.75,\"y\":107.25,\"zoom\":0.825}}",
+      "node_details": [
+        "Server"
+      ],
+      "title": "demo",
       "cloud_server": [
         "AWS"
       ],
-      "business_sponser": "xhwv ghax gv xa",
-      "server_owner": "dnbwhbjvhdvwghe",
-      "application_owner": "dwebhdbwhgec",
-      "resource_owner": "dwhgvghedvwghed wve dvwe",
-      "selected_environment": "UAT",
-      "id": 9
+      "business_sponser": "de",
+      "server_owner": "demo",
+      "application_owner": "demo",
+      "resource_owner": "deom",
+      "selected_environment": "Production",
+      "id": 10
     }
   ],
   "finops": [
@@ -641,28 +660,28 @@
       "id": 2
     },
     {
-      "topology_id": 9,
+      "topology_id": 10,
       "node_name": "Server",
       "fields": {
-        "Description": "dwxhevxghwghw",
+        "Description": "demo",
         "VM_type": "",
-        "Series": "shwbhdxvw",
-        "vCPUs": "hwevbdhwvwq",
-        "RAM": "wbhdvedghwve",
+        "Series": "demo",
+        "vCPUs": "deo",
+        "RAM": "deo",
         "OS": "Ubuntu",
         "Version": "20.04",
         "Publisher": "Canonical",
         "License": "BYOL",
-        "OS_Disk_size": "hdwvbdhwb",
-        "OS_Disk_Name": "bdhwjvdhgwe",
-        "Disk_partition": "hdwjvdwhvjdw",
-        "Storage_Disk_Size": "djwjbjwbedjbw",
-        "Storage_Disk": "yes",
-        "Storage_Disk_Value": "dshwvdwghwvghdwvgdw",
-        "Compute_options": "yes",
-        "Compute": "dwhgbwehjdvbw",
-        "Internet_facing": "yes",
-        "NATting": "yes"
+        "OS_Disk_size": "ghbn",
+        "OS_Disk_Name": "gvhbn",
+        "Disk_partition": "hn",
+        "Storage_Disk_Size": "hjn",
+        "Storage_Disk": "no",
+        "Storage_Disk_Value": "",
+        "Compute_options": "no",
+        "Compute": "",
+        "Internet_facing": "no",
+        "NATting": "no"
       },
       "id": 3
     }

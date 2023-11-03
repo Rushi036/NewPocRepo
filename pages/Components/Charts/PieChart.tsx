@@ -18,7 +18,7 @@ const ChartComponent = (props: any) => {
   }, []);
   useEffect(() => {
     // console.log(props.data.data);
-    if (props.data) {
+    if (props && props.data) {
 
       const options: any = {
         chart: {

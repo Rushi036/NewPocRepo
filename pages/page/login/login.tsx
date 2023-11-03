@@ -63,7 +63,7 @@ const Login = () => {
       let reshead: any;
       const email: string = account.idTokenClaims.preferred_username;
       const name: string = account.idTokenClaims.name;
-      // console.log("------------------",account.idTokenClaims);
+      console.log("------------------",account.idTokenClaims);
       sessionStorage.setItem("userEmail", email);
       sessionStorage.setItem("userName", name);
       const getData = async () => {

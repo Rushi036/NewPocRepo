@@ -6,11 +6,20 @@ import CloseIcon from "@mui/icons-material/Close";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-
+import { getAllUsers } from "../api/FinopsApi/GetAllUsers";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 const UserManagement = () => {
   const [data, setData] = useState<any>(null);
   const [isOpen, setIsOpen] = useState<any>(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState<any>(false);
+  const [selectedRowData, setSelectedRowData] = useState<any>(null);
 
+  const handleViewDetailsClick = (rowData: any) => {
+    console.log("----------------", rowData);
+    setSelectedRowData(rowData);
+    setIsViewModalOpen(true);
+  };
+  let count = 1;
   const [userData, setUserData] = useState({
     businessName: "",
     ownerName: "",
@@ -98,7 +107,9 @@ const UserManagement = () => {
     dataFetch();
   }, []);
   async function dataFetch() {
-    // const res: any = await getAllTopo();
+    const res: any = await getAllUsers().then((res) => {
+      setData(res);
+    });
     // setData(res.data.sort());
   }
 
@@ -125,7 +136,18 @@ const UserManagement = () => {
 
     console.log("payload", formData);
   };
-
+  const getFilteredSubscriptions = (cloudType: any) => {
+    return selectedRowData.subscriptions.filter(
+      (subscription: any) => subscription.cloud === cloudType
+    );
+  };
+  function getContactNames(subsContactADIDs: any, users: any) {
+    return subsContactADIDs.map((contactADID: any) => {
+      const user = users.find((user: any) => user.adId === contactADID);
+      // console.log("emails", subsContactADIDs, users);
+      return user ? user.userName : contactADID;
+    });
+  }
   // console.log("All Topo Data", data);
   return (
     <div className="">
@@ -143,10 +165,10 @@ const UserManagement = () => {
       </div>
       <div className="items-center pb-4 px-4 ">
         <div className="relative overflow-x-auto mt-6">
-          <table className="w-full text-sm text-center text-gray-800 ">
-            <thead className="text-xs text-white uppercase bg-red-800 ">
+          <table className="w-full text-sm text-center text-gray-800">
+            <thead className="text-xs text-white uppercase bg-red-800">
               <tr>
-                <th scope="col" className="px-auto py-3">
+                <th scope="col" className="px-2 py-3">
                   Sr.No.
                 </th>
                 <th scope="col" className="px-auto py-3">
@@ -164,33 +186,55 @@ const UserManagement = () => {
                 <th scope="col" className="px-auto py-3">
                   Contact Email
                 </th>
-                <th scope="col" className="px-auto py-3">
+                <th scope="col" className="px-2 py-3">
                   Details
                 </th>
               </tr>
             </thead>
             <tbody>
-              {/* {data && data.length != 0 ? (
+              {data && data.length != 0 ? (
                 data.map((d: any, i: any) => {
-                  return (
-                    <tr key={i} className="bg-white border-b text-center">
-                     <td className="px-auto py-3">{i + 1}</td>
-                      <td className="px-auto py-3">{d.bu}</td>
-                      <td className="px-auto py-3">{d.title}</td>
-                      <td className="px-auto py-3">{d.status}</td>
-                      {d.cloud_server && d.cloud_server.length > 1 ? (
+                  if (d.userType === "Owner") {
+                    const uniqueContactADIDs = new Set<string>();
+                    d.subscriptions &&
+                      d.subscriptions.forEach((sub: any) => {
+                        sub.subsContactADIDs.forEach((contact: string) => {
+                          uniqueContactADIDs.add(contact);
+                        });
+                      });
+                    return (
+                      <tr key={i} className="bg-white border-b text-center">
+                        <td className="px-auto py-3">{count++}</td>
+                        <td className="px-auto py-3">{d.businessName}</td>
+                        <td className="px-auto py-3">{d.userName}</td>
+                        <td className="px-auto py-3">{d.adId}</td>
                         <td className="px-auto py-3">
-                          {d.cloud_server[0]} {d.cloud_server[1]}
+                          {getContactNames(
+                            Array.from(uniqueContactADIDs),
+                            data
+                          ).map((name: any, index: any) => (
+                            <div key={index}>{name}</div>
+                          ))}
                         </td>
-                      ) : (
-                        <td className="px-auto py-3">{d.cloud_server}</td>
-                      )}
-                      <td className="px-auto py-3">{d.created_date}</td>
-                      <td className="px-auto py-3 space-x-2">
-                     
-                      </td> 
-                    </tr>
-                  );
+
+                        <td className="px-auto py-3">
+                          {Array.from(uniqueContactADIDs).map(
+                            (contact: string, index: number) => (
+                              <div key={index}>{contact}</div>
+                            )
+                          )}
+                        </td>
+                        <td className="px-auto py-3 space-x-2">
+                          <button onClick={() => handleViewDetailsClick(d)}>
+                            <VisibilityIcon />
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  } else {
+                    // If userType is not "Owner", don't render the row
+                    return null;
+                  }
                 })
               ) : (
                 <tr className="bg-white border-b text-center ">
@@ -198,8 +242,8 @@ const UserManagement = () => {
                     No Data Found
                   </td>
                 </tr>
-              )} */}
-              <tr className="bg-white border-b text-center">
+              )}
+              {/* <tr className="bg-white border-b text-center">
                 {" "}
                 <td className="px-auto py-3">1</td>
                 <td className="px-auto py-3">ABMCPL</td>
@@ -236,7 +280,7 @@ const UserManagement = () => {
                 <td className="px-auto py-3">Rajit Bhat</td>
                 <td className="px-auto py-3">rajit.bhat@adityabirla.com</td>
                 <td className="px-auto py-3 text-blue-500">View Details</td>
-              </tr>
+              </tr> */}
             </tbody>
           </table>
         </div>
@@ -431,6 +475,110 @@ const UserManagement = () => {
                 >
                   Submit
                 </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {isViewModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="w-full max-w-4xl mx-auto my-12 bg-white rounded-lg shadow-lg overflow-y-auto max-h-screen">
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+              <div className="bg-red-800 px-4 py-2 flex items-center justify-between">
+                <h3 className="text-xl text-white font-bold">
+                  Subscription Details
+                </h3>
+                <button
+                  className="p-2 text-xl text-white"
+                  onClick={() => setIsViewModalOpen(false)}
+                >
+                  <CloseIcon />
+                </button>
+              </div>
+              <div className="p-6">
+                {/* Display Subscription Details */}
+                {selectedRowData && (
+                  <div>
+                    <h2 className="text-xl font-semibold border-b-2 mb-4">
+                      {selectedRowData.businessName} Subscriptions
+                    </h2>
+                    {getFilteredSubscriptions("Azure").length > 0 && (
+                      <div className="mb-8">
+                        <h3 className="text-lg font-semibold mb-2">
+                          Azure Subscriptions:
+                        </h3>
+                        <table className="w-full">
+                          <thead>
+                            <tr className="bg-gray-200">
+                              <th className="px-4 py-2">Sr.No.</th>
+                              <th className="px-4 py-2">Subscription ID</th>
+                              <th className="px-4 py-2">Subscription Name</th>
+                              <th className="px-4 py-2">Contacts</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {getFilteredSubscriptions("Azure").map(
+                              (subscription: any, index: any) => (
+                                <tr key={index}>
+                                  <td className="border px-4 py-2 text-center">
+                                    {index + 1}
+                                  </td>
+                                  <td className="border px-4 py-2 text-center">
+                                    {subscription.subsAccId}
+                                  </td>
+                                  <td className="border px-4 py-2 text-center">
+                                    {subscription.subsAccName}
+                                  </td>
+                                  <td className="border px-4 py-2 text-center">
+                                    {subscription.subsContactADIDs.join(", ")}
+                                  </td>
+                                </tr>
+                              )
+                            )}
+                          </tbody>
+                        </table>
+                      </div>
+                    )}
+
+                    {getFilteredSubscriptions("AWS").length > 0 && (
+                      <div>
+                        <h3 className="text-lg font-semibold mb-2">
+                          AWS Subscriptions:
+                        </h3>
+                        <table className="w-full">
+                          <thead>
+                            <tr className="bg-gray-200">
+                              <th className="px-4 py-2">Sr.No.</th>
+                              <th className="px-4 py-2">Subscription ID</th>
+                              <th className="px-4 py-2">Subscription Name</th>
+                              <th className="px-4 py-2">Contacts</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {getFilteredSubscriptions("AWS").map(
+                              (subscription: any, index: any) => (
+                                <tr key={index}>
+                                  <td className="border px-4 py-2 text-center">
+                                    {index + 1}
+                                  </td>
+                                  <td className="border px-4 py-2 text-center">
+                                    {subscription.subsAccId}
+                                  </td>
+                                  <td className="border px-4 py-2 text-center">
+                                    {subscription.subsAccName}
+                                  </td>
+                                  <td className="border px-4 py-2 text-center">
+                                    {subscription.subsContactADIDs.join(", ")}
+                                  </td>
+                                </tr>
+                              )
+                            )}
+                          </tbody>
+                        </table>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </div>
