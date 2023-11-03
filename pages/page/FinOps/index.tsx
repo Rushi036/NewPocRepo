@@ -18,6 +18,7 @@ import {
 } from "@/pages/api/FinopsApi/GetGraphFormat";
 import { localHostBaseUrl } from "@/const";
 import BarGraph from "@/pages/Components/Charts/BarChart";
+import Table from "@/pages/Components/Charts/Table";
 // import BubbleChartComponent from "./Charts/BubbleChart";
 
 const FinOps = () => {
@@ -392,7 +393,7 @@ const FinOps = () => {
                 <div
                   key={i}
                   className={
-                    e.LineChart.series?.data?.length >= 20
+                    e.LineChart.series?.data?.length >= 10
                       ? "card !min-w-full"
                       : "card"
                   }
@@ -427,12 +428,12 @@ const FinOps = () => {
             return (
               <>
                 <div key={i} className="card">
-                  {/* <Table data={e} /> */}
+                  <Table data={e} />
                 </div>
               </>
             )
           })}
- 
+
           {/*
           {tableData.Table?.map((e: any, i: any) => {
             // <Table data={e} />

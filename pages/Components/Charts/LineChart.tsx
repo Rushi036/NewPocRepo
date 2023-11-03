@@ -1,23 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { getUnBlendedCost } from "@/pages/api/FinopsApi/GetUnblendedCost";
 
 const LineChartComponent = (props: any) => {
-  //   console.log("props in chart", id);
   const chartContainer = useRef(null);
-  // const [unBlendCostData, setUnBlendCostData] = useState<any>();
-  // const getData = async () => {
-  //   await getUnBlendedCost(id).then((res) => {
-  //     // console.log("res in chart", res);
-  //     setUnBlendCostData(res);
-  //   });
-  // };
-  // useEffect(() => {
-  //   getData();
-  // }, [id]);
+
   useEffect(() => {
-    // console.log("unblend in chart", props.data);
     if (chartContainer.current) {
       const newData =
         props &&
@@ -29,16 +18,13 @@ const LineChartComponent = (props: any) => {
               new Date(x[0]).toLocaleString("en-US", {
                 month: "short",
                 day: "2-digit",
-                // year: "numeric",
-                // hour: "2-digit",
-                // minute: "2-digit",
               }),
               x[1],
             ];
           });
           return { name: e.name, data: changedData };
         });
-      // console.log("tline chart data ", newData)
+
       const options: any = {
         title: {
           text: props.data.title,
@@ -57,12 +43,17 @@ const LineChartComponent = (props: any) => {
           },
           type: "category",
         },
-
         legend: {
-          layout: "vertical",
-          align: "right",
-          verticalAlign: "middle",
+          layout: "horizontal",
+          align: "center",
+          verticalAlign: "bottom",
+          itemStyle: {
+            fontSize: "10px", // Adjust font size of legends
+          },
+          itemWidth: 150, // Set the width of each legend item
+          itemDistance: 5,
         },
+
         noData: {
           style: {
             fontWeight: "bold",
@@ -78,11 +69,14 @@ const LineChartComponent = (props: any) => {
             label: {
               connectorAllowed: false,
             },
-            // pointStart: 1,
           },
         },
 
         series: newData,
+
+        chart: {
+          height: 600, // Increase the height of the chart
+        },
 
         responsive: {
           rules: [
@@ -102,13 +96,11 @@ const LineChartComponent = (props: any) => {
         },
       };
 
-      // console.log(options);
-
       Highcharts.chart(chartContainer.current, options);
     }
-  }, [props.data]); // Empty dependency array ensures the effect runs once after initial render
+  }, [props.data]);
 
-  return <div ref={chartContainer} style={{ height: "400px" }} />;
+  return <div ref={chartContainer} style={{ height: "600px" }} />;
 };
 
 export default LineChartComponent;
