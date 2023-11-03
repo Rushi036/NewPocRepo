@@ -19,7 +19,8 @@ export const getAllSubscriptions = async (cloud: any) => {
     })
     .then((data) => {
       retData = data;
-    });
+    })
+    .catch(()=>{retData={}});
   // console.log(retData);
 
   return retData;

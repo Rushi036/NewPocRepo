@@ -40,7 +40,7 @@ const Layout: React.FC<LayoutProps> = ({ children }: any) => {
       <Sidebar />
       <div className="flex-auto relative h-[100vh] bg-gray-100 overflow-auto">
         <Navbar />
-        <main className="mt-16 overflow-auto p-4 min-h-[calc(100vh-8rem)]">
+        <main className="mt-10 overflow-auto p-4 min-h-[calc(100vh-8rem)]">
           {children}
         </main>
         <Footer />

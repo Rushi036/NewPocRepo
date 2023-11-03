@@ -40,7 +40,7 @@ const BarGraph = (props: any) => {
 
           },
           stackLabels: {
-            enabled: props?.data?.stacking || false,
+            enabled: false,
           },
         },
         legend: {

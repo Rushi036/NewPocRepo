@@ -18,6 +18,7 @@ import BarGraph from "@/pages/Components/Charts/BarChart";
 import Table from "@/pages/Components/Table";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import { Box, Tab, Tabs } from "@mui/material";
 // import BubbleChartComponent from "./Charts/BubbleChart";
 
 const FinOps = () => {
@@ -212,9 +213,11 @@ const FinOps = () => {
     //For Admin
     await getAllSubscriptions(cloud).then((res: any) => {
       // console.info("res - ",res.data)
-      setSubData(res.data);
-      setSubACCName(res.data[0]?.subsAccName)
-      setSubscId(res.data[0]?.subsAccId);
+      if (res.data) {
+        setSubData(res?.data);
+        setSubACCName(res?.data[0]?.subsAccName)
+        setSubscId(res?.data[0]?.subsAccId);
+      }
 
     })
   };
@@ -233,7 +236,7 @@ const FinOps = () => {
         lte: value[1],
         subscription_name: [subACCName],
       };
-      fetchDataAzure(body).then(res => { return res.json() }).then((data) => setRes(data))
+      fetchDataAzure(body).then((data) => setRes(data))
     }
     else {
       let body = {
@@ -248,13 +251,21 @@ const FinOps = () => {
   }, [cloud, value, subACCName, subscId]);
 
   async function fetchDataAzure(body: any) {
-    return await fetch("http://10.47.98.164:9201/AzureFinopsDashboardData", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
+    let resData: any;
+    try {
+      resData = await fetch("http://10.47.98.164:9201/AzureFinopsDashboardData", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      })
+      resData = await resData.json()
+    }
+    catch {
+      resData = ""
+    }
+    return resData
   }
 
   async function fetchDataAWS(body: any) {
@@ -331,6 +342,12 @@ const FinOps = () => {
 
   }
 
+  const [value1, setValue1] = React.useState(0);
+
+  const handleChange = (event: React.SyntheticEvent) => {
+    setValue1(1);
+  };
+
   return (
     <div className="finops-container h-auto">
       <div className="text-xl border-b-2 px-4 border-slate-400 pb-2">
@@ -338,97 +355,104 @@ const FinOps = () => {
       </div>
       {/* {data ? ( */}
       <div className="p-4 h-auto">
-      <div className="flex justify-start overflow-x-scroll">
-                <div className="min-w-[200px] h-[70px] mb-4">
-                    <Link className="w-full flex justify-center items-center h-full" href={"/page/FinOps"}>
-                        <div className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
-                            <div className="w-[4px] h-full bg-red-400 absolute left-0 top-0"></div>
-                            <p className="text-slate-500 text-lg">
-                                Current Total Consumption
-                            </p>
-                        </div>
-                    </Link>
-                </div>
+        {/* <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
+          <Tabs value={value} onChange={handleChange} centered>
+            <Tab label="Item One" />
+            <Tab label="Item Two" />
+            <Tab label="Item Three" />
+          </Tabs>
+        </Box> */}
+        <div className="flex flex-wrap justify-start">
+          <div className="min-w-[100px] h-[45px] mb-4">
+            <Link className="w-full flex justify-center items-center h-full" href={"/page/FinOps"}>
+              <div className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-center overflow-hidden items-start flex-col shadow-md">
+                <div className="w-[4px] h-full bg-red-400 absolute left-0 top-0"></div>
+                <p className="text-slate-500 text-lg">
+                  Asset wise
+                </p>
+              </div>
+            </Link>
+          </div>
 
-                <div className="min-w-[200px] h-[70px] flex justify-center items-center mb-4">
-                    <Link className="w-full flex justify-center items-center h-full" href={"/page/FinOps"}>
-                        <div className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
-                            <div className="w-[4px] h-full bg-green-400 absolute left-0 top-0"></div>
-                            <p className="text-slate-500 text-lg">
-                                Current Total Consumption
-                            </p>
-                        </div>
-                    </Link>
-                </div>
+          <div className="min-w-[100px] h-[45px] flex justify-center items-center mb-4">
+            <Link className="w-full flex justify-center items-center h-full" href={"/page/FinOps"}>
+              <div className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-center overflow-hidden items-start flex-col shadow-md">
+                <div className="w-[4px] h-full bg-green-400 absolute left-0 top-0"></div>
+                <p className="text-slate-500 text-lg">
+                  Cost wise
+                </p>
+              </div>
+            </Link>
+          </div>
 
-                <div className="min-w-[200px] h-[70px] flex justify-center items-center mb-4">
-                    <Link className="w-full flex justify-center items-center h-full" href={"/page/FinOps"}>
-                        <div className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
-                            <div className="w-[4px] h-full bg-yellow-400 absolute left-0 top-0"></div>
-                            <div className="w-[4px] h-full bg-blue-400 absolute left-0 top-0"></div>
-                            <p className="text-slate-500 text-lg">
-                                Cost Governance
-                            </p>
-                        </div>
-                    </Link>
-                </div>
+          <div className="min-w-[100px] h-[45px] flex justify-center items-center mb-4">
+            <Link className="w-full flex justify-center items-center h-full" href={"/page/FinOps"}>
+              <div className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-center overflow-hidden items-start flex-col shadow-md">
+                <div className="w-[4px] h-full bg-yellow-400 absolute left-0 top-0"></div>
+                <div className="w-[4px] h-full bg-blue-400 absolute left-0 top-0"></div>
+                <p className="text-slate-500 text-lg">
+                  Recommendations
+                </p>
+              </div>
+            </Link>
+          </div>
 
-                <div className="min-w-[200px] h-[70px] flex justify-center items-center mb-4">
-                    <Link className="w-full flex justify-center items-center h-full" href={"/page/FinOps"}>
-                        <div className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
-                            <div className="w-[4px] h-full bg-pink-400 absolute left-0 top-0"></div>
-                            <p className="text-slate-500 text-lg">
-                                Total Asset
-                            </p>
-                        </div>
-                    </Link>
-                </div>
+          <div className="min-w-[100px] h-[45px] flex justify-center items-center mb-4">
+            <Link className="w-full flex justify-center items-center h-full" href={"/page/FinOps"}>
+              <div className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-center overflow-hidden items-start flex-col shadow-md">
+                <div className="w-[4px] h-full bg-pink-400 absolute left-0 top-0"></div>
+                <p className="text-slate-500 text-lg">
+                  Forecast
+                </p>
+              </div>
+            </Link>
+          </div>
 
-                <div className="min-w-[200px] h-[70px] flex justify-center items-center mb-4">
-                    <Link className="w-full flex justify-center items-center h-full" href={"/page/FinOps"}>
-                        <div className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
-                            <div className="w-[4px] h-full bg-orange-400 absolute left-0 top-0"></div>
-                            <p className="text-slate-500 text-lg">
-                                Consumption Trend
-                            </p>
-                        </div>
-                    </Link>
-                </div>
+          <div className="min-w-[100px] h-[45px] flex justify-center items-center mb-4">
+            <Link className="w-full flex justify-center items-center h-full" href={"/page/FinOps"}>
+              <div className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-center overflow-hidden items-start flex-col shadow-md">
+                <div className="w-[4px] h-full bg-orange-400 absolute left-0 top-0"></div>
+                <p className="text-slate-500 text-lg">
+                  ABG Cloud Gateway
+                </p>
+              </div>
+            </Link>
+          </div>
 
-                <div className="min-w-[200px] h-[70px] flex justify-center items-center mb-4">
-                    <Link className="w-full flex justify-center items-center h-full" href={"/page/FinOps"}>
-                        <div className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
-                            <div className="w-[4px] h-full bg-purple-400 absolute left-0 top-0"></div>
-                            <p className="text-slate-500 text-lg">
-                                Cloud Gateway
-                            </p>
-                        </div>
-                    </Link>
-                </div>
+          <div className="min-w-[100px] h-[45px] flex justify-center items-center mb-4">
+            <Link className="w-full flex justify-center items-center h-full" href={"/page/FinOps"}>
+              <div className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-center overflow-hidden items-start flex-col shadow-md">
+                <div className="w-[4px] h-full bg-purple-400 absolute left-0 top-0"></div>
+                <p className="text-slate-500 text-lg">
+                  Managed Service
+                </p>
+              </div>
+            </Link>
+          </div>
 
-                <div className="min-w-[200px] h-[70px] flex justify-center items-center mb-4">
-                    <Link className="w-full flex justify-center items-center h-full" href={"/page/FinOps"}>
-                        <div className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
-                            <div className="w-[4px] h-full bg-purple-400 absolute left-0 top-0"></div>
-                            <p className="text-slate-500 text-lg">
-                                Forecast & Recommendation
-                            </p>
-                        </div>
-                    </Link>
-                </div>
+          {/* <div className="min-w-[100px] h-[45px] flex justify-center items-center mb-4">
+            <Link className="w-full flex justify-center items-center h-full" href={"/page/FinOps"}>
+              <div className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-center overflow-hidden items-start flex-col shadow-md">
+                <div className="w-[4px] h-full bg-rose-400 absolute left-0 top-0"></div>
+                <p className="text-slate-500 text-lg">
+                  Forecast & Recommendation
+                </p>
+              </div>
+            </Link>
+          </div> */}
 
-                <div className="min-w-[200px] h-[70px] flex justify-center items-center mb-4">
-                    <Link className="w-full flex justify-center items-center h-full" href={"/page/FinOps"}>
-                        <div className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
-                            <div className="w-[4px] h-full bg-purple-400 absolute left-0 top-0"></div>
-                            <p className="text-slate-500 text-lg">
-                            Managed Services Cost
-                            </p>
-                        </div>
-                    </Link>
-                </div>
+          {/* <div className="min-w-[100px] h-[45px] flex justify-center items-center mb-4">
+            <Link className="w-full flex justify-center items-center h-full" href={"/page/FinOps"}>
+              <div className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-center overflow-hidden items-start flex-col shadow-md">
+                <div className="w-[4px] h-full bg-yellow-400 absolute left-0 top-0"></div>
+                <p className="text-slate-500 text-lg">
+                  Managed Services Cost
+                </p>
+              </div>
+            </Link>
+          </div> */}
 
-            </div>
+        </div>
         <div className="flex justify-between items-center mb-4 p-3 bg-white rounded-lg">
           <div className="w-1/3">
             <label className="text-lg">Select Cloud : </label>

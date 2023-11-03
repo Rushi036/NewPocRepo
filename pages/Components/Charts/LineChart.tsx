@@ -9,26 +9,30 @@ const LineChartComponent = (props: any) => {
     if (chartContainer.current) {
       const newData = (props?.data?.data || []).map((e: any) => {
         let changedData = e?.data?.map((x: any) => {
+          // new Date(x[0]).toLocaleString("en-US", {
+          //   month: "short",
+          //   day: "2-digit",
+          //   // year: "numeric",
+          //   // hour: "2-digit",
+          //   // minute: "2-digit",
+          // }),
           return [
-            new Date(x[0]).toLocaleString("en-US", {
-              month: "short",
-              day: "2-digit",
-              // year: "numeric",
-              // hour: "2-digit",
-              // minute: "2-digit",
-            }),
-            x[1],
+            x[0],x[1],
           ];
         });
         return { name: e.name, data: changedData };
       });
       const options: any = {
         chart: {
+          height: props?.reports ? "244" : "",
           zoomType: 'x'
         },
         title: {
           text: props?.data?.title || "",
           align: "left",
+          style: {
+            color: props.titleColor? props.titleColor:'#000',
+          }
         },
 
         yAxis: {
@@ -45,9 +49,9 @@ const LineChartComponent = (props: any) => {
         },
 
         legend: {
-          layout: "vertical",
-          align: "right",
-          verticalAlign: "middle",
+          layout: "horizontal",
+          align: "center",
+          verticalAlign: "bottom",
         },
         noData: {
           style: {
@@ -98,7 +102,8 @@ const LineChartComponent = (props: any) => {
     }
   }, [props.data]); // Empty dependency array ensures the effect runs once after initial render
 
-  return <div ref={chartContainer} style={{ height: "400px" }} />;
+  // return <div ref={chartContainer} />;
+  return <div ref={chartContainer} style={{ height: props?.reports ? "auto" : "400px" }} />;
 };
 
 export default LineChartComponent;

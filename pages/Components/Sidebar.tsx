@@ -44,7 +44,7 @@ const Sidebar = () => {
         <div
           className={`${
             !state && "rotate-180"
-          }  absolute mr-1.5 text-xl bg-white fill-slate-800 rounded-full cursor-pointer top-6 -right-10`}
+          }  absolute mr-1.5 text-xl bg-white fill-slate-800 rounded-full cursor-pointer top-3 -right-10`}
           onClick={toggleStateHere}
         >
           <GiHamburgerMenu />
@@ -150,6 +150,24 @@ const Sidebar = () => {
                   className={`${!state && "hidden"} origin-left hover:block`}
                 >
                   FinOps
+                </span>
+              </Link>
+            </li>
+          )}
+          {uRole != "admin" && (
+            <li className="hs-accordion" id="account-accordion">
+              <Link
+                href="/page/FinOps/newFinops"
+                className={`flex items-center gap-x-3.5 py-2 px-2.5 text-base
+              text-slate-700 rounded-md hover:bg-gray-100
+              ${activeLink === 3 ? "bg-gray-100" : ""}`}
+                onClick={() => handleLinkClick(3)}
+              >
+                <SpaceDashboardIcon className="h-7 w-7" />
+                <span
+                  className={`${!state && "hidden"} origin-left hover:block`}
+                >
+                  New FinOps
                 </span>
               </Link>
             </li>

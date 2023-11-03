@@ -37,7 +37,9 @@ export const getUnBlendedCost = async (data: any) => {
       retData = data;
       // console.log(retData);
       // return data;
-    });
+    })
+    .catch(()=>{retData=[]});
+    ;
   // console.log(retData);
 
   return retData;
