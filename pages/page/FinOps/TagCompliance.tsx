@@ -101,7 +101,7 @@ function TagCompliance() {
                         <table>
                             <thead>
                                 <th className='bg-slate-400 border border-solid'>
-                                    <td className='p-2 bg-red-700 text-white'>Usser Name Tags</td>
+                                    <td className='p-2 bg-red-700 text-white'>User Name Tags</td>
                                 </th>
                             </thead>
                             <tbody>

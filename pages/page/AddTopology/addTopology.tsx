@@ -111,7 +111,7 @@ const addTopology = () => {
         });
         flow = JSON.stringify(flow);
         let topologyData = {
-          bu_id: localStorage.getItem("bu_id"),
+          bu_id: sessionStorage.getItem("bu_id"),
           flowChart: flow,
           node_details: arr,
           title: topologyTitle,
@@ -150,8 +150,8 @@ const addTopology = () => {
           const date = new Date().toLocaleDateString("en-GB");
           const topologyTableData = {
             title: topologyTitle,
-            bu: localStorage.getItem("userName"),
-            bu_id: localStorage.getItem("bu_id"),
+            bu: sessionStorage.getItem("userName"),
+            bu_id: sessionStorage.getItem("bu_id"),
             cloud_server: selectedClouds,
             status: "Draft",
             created_date: date,
@@ -171,7 +171,7 @@ const addTopology = () => {
         }
       })
       .then(async () => {
-        let id = localStorage.getItem("bu_id");
+        let id = sessionStorage.getItem("bu_id");
         return await getUserData(id);
       })
       .then((res: any) => {
@@ -205,7 +205,7 @@ const addTopology = () => {
   };
 
   useEffect(() => {
-    setRole(localStorage.getItem("role"));
+    setRole(sessionStorage.getItem("userRole"));
   });
 
   function setData(e: any) {
@@ -631,7 +631,7 @@ const addTopology = () => {
                     <div>Series :</div>
                     <input
                       type="text"
-                      disabled={role == "admin" ? true : false}
+                      disabled={role == "ADMIN" ? true : false}
                       required
                       value={serverData?.Series}
                       onChange={(e) => {
@@ -650,7 +650,7 @@ const addTopology = () => {
                     <div>vCPUs :</div>
                     <input
                       type="text"
-                      disabled={role == "admin" ? true : false}
+                      disabled={role == "ADMIN" ? true : false}
                       required
                       value={serverData?.vCPUs}
                       onChange={(e) => {
@@ -669,7 +669,7 @@ const addTopology = () => {
                     <div>RAM :</div>
                     <input
                       type="text"
-                      disabled={role == "admin" ? true : false}
+                      disabled={role == "ADMIN" ? true : false}
                       required
                       value={serverData?.RAM}
                       onChange={(e) => {

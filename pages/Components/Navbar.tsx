@@ -14,8 +14,8 @@ const Navbar = () => {
   const [uname, setUname] = useState<any>(false);
 
   useEffect(() => {
-    // setUname(sessionStorage.getItem("userName"));
-    setUname(localStorage.getItem("userName"));
+    setUname(sessionStorage.getItem("userName"));
+    // setUname(localStorage.getItem("userName"));
   }, []);
 
   const handleClientNameClick = () => {
@@ -39,7 +39,7 @@ const Navbar = () => {
     // Perform sign-out logic here
 
     localStorage.clear();
-
+    sessionStorage.clear();
     setSignOutModalOpen(false);
   };
 

@@ -65,7 +65,7 @@ const Reports = () => {
         "yAxis": ""
     }
     useEffect(() => {
-        setRole(localStorage.getItem("role"));
+        setRole(sessionStorage.getItem("userRole"));
     }, []);
     return (
         <>
@@ -77,7 +77,7 @@ const Reports = () => {
                 <div className="w-[50%] h-[130px] mb-4">
                     <Link
                         className="w-full flex justify-center items-center h-full"
-                        href={"/page/FinOps"}
+                        href={"/page/FinOps/newFinops"}
                     >
                         <div className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
                             <div className="w-[4px] h-full bg-red-400 absolute left-0 top-0"></div>
@@ -95,7 +95,7 @@ const Reports = () => {
                 <div className="w-[50%] h-[130px] flex justify-center items-center mb-4">
                     <Link
                         className="w-full flex justify-center items-center h-full"
-                        href={"/page/FinOps"}
+                        href={"/page/FinOps/newFinops"}
                     >
                         <div className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
                             <div className="w-[4px] h-full bg-green-400 absolute left-0 top-0"></div>

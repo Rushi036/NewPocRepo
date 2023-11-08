@@ -176,10 +176,8 @@ const FinOps = () => {
         await getCurrentUserData().then((res) => setGraphFormat(res.data[0]))
     }
     useEffect(() => {
-        // setUserADID(sessionStorage.getItem("userEmail"));
-        // setUserRole(sessionStorage.getItem("userRole"));   --------these are for sso login
-        setUserADID(localStorage.getItem("userEmail"));
-        setUserRole(localStorage.getItem("userRole"));
+        setUserADID(sessionStorage.getItem("userEmail"));
+        setUserRole(sessionStorage.getItem("userRole"));
         getGraphFormat();
     }, []);
 
@@ -217,7 +215,7 @@ const FinOps = () => {
     };
 
     const getAllsubsData = async () => {
-        //For Admin
+        //For ADMIN
         await getAllSubscriptions(cloud).then((res: any) => {
             // console.info("res - ",res.data)
             if (res.data) {
@@ -323,7 +321,7 @@ const FinOps = () => {
     }
 
     function fullScreenTable() {
-        let myDocument = document.documentElement;
+        let myDocument : any = document.documentElement;
         if (myDocument.requestFullscreen) {
             myDocument.requestFullscreen();
         }
@@ -356,7 +354,7 @@ const FinOps = () => {
 
     const [value1, setValue1] = useState('1');
 
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    const handleChange = (event: React.SyntheticEvent, newValue: any) => {
         setValue1(newValue);
     };
 

@@ -10,8 +10,8 @@ const Assets = () => {
   const [data, setData] = useState<any>(null);
   // if (typeof window !== "undefined") {
   useEffect(() => {
-    role = localStorage.getItem("role");
-    bu_id = localStorage.getItem("bu_id");
+    role = sessionStorage.getItem("userRole");
+    bu_id = sessionStorage.getItem("bu_id");
     dataFetch();
   }, []);
   // }

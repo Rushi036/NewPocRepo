@@ -4,149 +4,95 @@ import React, { useEffect, useState } from "react";
 
 const Dashboard = () => {
   const [role, setRole] = useState<any>();
-  const percent= (100/1500)*100;
+  const percent = (100 / 1500) * 100;
   useEffect(() => {
-    setRole(localStorage.getItem("role"));
+    setRole(sessionStorage.getItem("userRole"));
   }, []);
   return (
     <>
       <div className="text-xl border-b-2  border-slate-400 pb-2 px-4">
         Dashboard
       </div>
-
-      {/* For Business User */}
-      {role != "admin" ? (
-        <div className="flex flex-wrap mt-4 justify-start">
-          <div className="w-[25%] h-[130px] mb-4">
-            <Link className="w-full flex justify-center items-center h-full" href={"/page/FinOps/reports"}>
-              <div className="cursor-pointer  hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
-                <div className="w-[4px] h-full bg-red-400 absolute left-0 top-0"></div>
-                <p className="text-red-400 font-bold text-lg">
-                  Cost Summary
-                </p>
-                <div className="flex flex-col">
-                  <span>• Budgeted</span>
-                  <span>• Projected</span>
-                  <span>• Current Spend</span>
-                </div>
-              </div>
-            </Link>
-          </div>
-
-          <div className="w-[25%] h-[130px] flex justify-center items-center mb-4">
+      <div className="flex flex-wrap mt-4 justify-start">
+        <div className="w-[25%] h-[130px] mb-4">
+          <Link
+            className="w-full flex justify-center items-center h-full"
+            href={"/page/FinOps/reports"}
+          >
             <div className="cursor-pointer  hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
-              <div className="w-[4px] h-full bg-green-400 absolute left-0 top-0"></div>
-              <p className="text-green-500 font-bold text-lg">
-                Security Score
-              </p>
-
+              <div className="w-[4px] h-full bg-red-400 absolute left-0 top-0"></div>
+              <p className="text-red-400 font-bold text-lg">Cost Summary</p>
               <div className="flex flex-col">
-                <span>• Private</span>
-                <span>• AWS</span>
-                <span>• Azure</span>
+                <span>• Budgeted</span>
+                <span>• Projected</span>
+                <span>• Current Spend</span>
               </div>
             </div>
-          </div>
-
-          <div className="w-[25%] h-[130px] flex justify-center items-center mb-4">
-            <div className="cursor-pointer  hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
-              <div className="w-[4px] h-full bg-blue-400 absolute left-0 top-0"></div>
-              <p className="text-blue-500 font-bold text-lg">
-                Business Service
-              </p>
-
-              <div className="flex flex-col">
-                <span className="text-xl">3/5</span>
-                <Loader percent={(3/5)*100} color={"blue"}/>
-              </div>
-            </div>
-          </div>
-
-          <div className="w-[25%] h-[130px] flex justify-center items-center mb-4">
-            <div className="cursor-pointer  hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
-              <div className="w-[4px] h-full bg-pink-400 absolute left-0 top-0"></div>
-              <p className="text-pink-500 font-bold text-lg">
-                Managed Asset
-              </p>
-
-              <div className="flex flex-col">
-                <span className="text-xl">100/1500</span>
-                <Loader percent={percent} color={"pink"}/>
-              </div>
-            </div>
-          </div>
-
-          <div className="w-[25%] h-[130px] flex justify-center items-center mb-4">
-            <div className="cursor-pointer  hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
-              <div className="w-[4px] h-full bg-orange-400 absolute left-0 top-0"></div>
-              <p className="text-orange-500 font-bold text-lg">
-                Active Incidents
-              </p>
-              <div className="flex flex-col items-center w-full mt-4">
-                <span className=" text-center text-3xl">18</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="w-[25%] h-[130px] flex justify-center items-center mb-4">
-            <div className="cursor-pointer  hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
-              <div className="w-[4px] h-full bg-purple-400 absolute left-0 top-0"></div>
-              <p className="text-purple-400 font-bold text-lg">
-                Active Service Request
-              </p>
-
-              <div className="flex flex-col items-center w-full mt-4">
-                <span className=" text-center text-3xl">18</span>
-              </div>
-            </div>
-          </div>
-
+          </Link>
         </div>
-      ) : (
-        /* For Admin */
 
-        <div className="cards-container">
-          <div className="card card1">
-            <div id="chart-1">
-              <p>
-                <b>Total Cloud Platform</b>
-              </p>
+        <div className="w-[25%] h-[130px] flex justify-center items-center mb-4">
+          <div className="cursor-pointer  hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
+            <div className="w-[4px] h-full bg-green-400 absolute left-0 top-0"></div>
+            <p className="text-green-500 font-bold text-lg">Security Score</p>
 
-              <b>3</b>
-            </div>
-          </div>
-
-          <div className="card card2">
-            <div id="chart-2">
-              <p>
-                <b>New Services Request</b>
-              </p>
-
-              <b>10</b>
-            </div>
-          </div>
-
-          <div className="card card3">
-            <div id="chart-3">
-              <p>
-                <b>Cost Estimation For Approval</b>
-              </p>
-
-              <b>4</b>
-            </div>
-          </div>
-
-          <div className="card card4">
-            <div id="chart-4">
-              <p>
-                <b>New Notifications</b>
-              </p>
-
-              <b>5</b>
+            <div className="flex flex-col">
+              <span>• Private</span>
+              <span>• AWS</span>
+              <span>• Azure</span>
             </div>
           </div>
         </div>
-      )}
+
+        <div className="w-[25%] h-[130px] flex justify-center items-center mb-4">
+          <div className="cursor-pointer  hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
+            <div className="w-[4px] h-full bg-blue-400 absolute left-0 top-0"></div>
+            <p className="text-blue-500 font-bold text-lg">Business Service</p>
+
+            <div className="flex flex-col">
+              <span className="text-xl">3/5</span>
+              <Loader percent={(3 / 5) * 100} color={"blue"} />
+            </div>
+          </div>
+        </div>
+
+        <div className="w-[25%] h-[130px] flex justify-center items-center mb-4">
+          <div className="cursor-pointer  hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
+            <div className="w-[4px] h-full bg-pink-400 absolute left-0 top-0"></div>
+            <p className="text-pink-500 font-bold text-lg">Managed Asset</p>
+
+            <div className="flex flex-col">
+              <span className="text-xl">100/1500</span>
+              <Loader percent={percent} color={"pink"} />
+            </div>
+          </div>
+        </div>
+
+        <div className="w-[25%] h-[130px] flex justify-center items-center mb-4">
+          <div className="cursor-pointer  hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
+            <div className="w-[4px] h-full bg-orange-400 absolute left-0 top-0"></div>
+            <p className="text-orange-500 font-bold text-lg">
+              Active Incidents
+            </p>
+            <div className="flex flex-col items-center w-full mt-4">
+              <span className=" text-center text-3xl">18</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="w-[25%] h-[130px] flex justify-center items-center mb-4">
+          <div className="cursor-pointer  hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
+            <div className="w-[4px] h-full bg-purple-400 absolute left-0 top-0"></div>
+            <p className="text-purple-400 font-bold text-lg">
+              Active Service Request
+            </p>
+
+            <div className="flex flex-col items-center w-full mt-4">
+              <span className=" text-center text-3xl">18</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 };

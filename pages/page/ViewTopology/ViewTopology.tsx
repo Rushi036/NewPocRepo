@@ -72,14 +72,14 @@ const viewTopology = () => {
   const [serverData, setServerData] = useState<any>(sd);
 
   useEffect(() => {
-    setRole(localStorage.getItem("role"));
+    setRole(sessionStorage.getItem("userRole"));
   }, []);
 
   useEffect(() => {
     async function dataFetch() {
-      let buId = localStorage.getItem("bu_id");
-      let userRole = localStorage.getItem("role");
-      userRole != "admin"
+      let buId = sessionStorage.getItem("bu_id");
+      let userRole = sessionStorage.getItem("userRole");
+      userRole != "ADMIN"
         ? await getTopologyData(buId, id).then((res) => {
             if (res && res.data[0]) {
               setTitle(res.data[0].title);
@@ -151,7 +151,7 @@ const viewTopology = () => {
 
   useEffect(() => {
     async function topoDataFetch() {
-      let buId = localStorage.getItem("bu_id");
+      let buId = sessionStorage.getItem("bu_id");
       // let buIdOfUser;
       await fetchestimation(id).then((res) => {
         if (res && res.data[0]) {
@@ -162,7 +162,7 @@ const viewTopology = () => {
           // buIdOfUser = res.data[0].bu_id;
         }
       });
-      if (role != "admin") {
+      if (role != "ADMIN") {
         await getUserData(buId).then((res) => {
           // console.log("userData",res)
           if (res && res.data[0]) {
@@ -300,7 +300,7 @@ const viewTopology = () => {
     <>
       <div className="">
         <div className="flex text-xl px-4 border-b-2 border-slate-400 pb-2 items-center">
-          {role != "admin" ? (
+          {role != "ADMIN" ? (
             <Link href="/Components/Assets">
               <ArrowBackIosIcon className="flex items-center h-full" />
             </Link>
@@ -840,7 +840,7 @@ const viewTopology = () => {
                 </div>
 
                 <div className="flex justify-center gap-[6.5rem]">
-                  {role == "admin" && topoStatus == "Approved By User" && (
+                  {role == "ADMIN" && topoStatus == "Approved By User" && (
                     <label
                       htmlFor=""
                       className="font-semibold text-base flex flex-col justify-start"
@@ -875,7 +875,7 @@ const viewTopology = () => {
               </div>
             </div>
           </form>
-          {role == "admin" && topoStatus == "Draft" && (
+          {role == "ADMIN" && topoStatus == "Draft" && (
             <div className="mt-4 flex justify-end">
               <button
                 type="submit"
@@ -886,7 +886,7 @@ const viewTopology = () => {
               </button>
             </div>
           )}
-          {role == "admin" && topoStatus == "Approved By User" && (
+          {role == "ADMIN" && topoStatus == "Approved By User" && (
             <div className="flex flex-row mt-2 mb-2 space-x-2 bottom-4 justify-end">
               <button
                 onClick={sendAutomation}

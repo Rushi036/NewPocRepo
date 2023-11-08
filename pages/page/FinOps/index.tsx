@@ -169,10 +169,8 @@ const FinOps = () => {
     await getCurrentUserData().then((res) => setGraphFormat(res.data[0]))
   }
   useEffect(() => {
-    // setUserADID(sessionStorage.getItem("userEmail"));
-    // setUserRole(sessionStorage.getItem("userRole"));   --------these are for sso login
-    setUserADID(localStorage.getItem("userEmail"));
-    setUserRole(localStorage.getItem("userRole"));
+    setUserADID(sessionStorage.getItem("userEmail"));
+    setUserRole(sessionStorage.getItem("userRole"));
     getGraphFormat();
   }, []);
 

@@ -19,7 +19,7 @@ const Sidebar = () => {
   const [uRole, setUrole] = useState<any>(false);
 
   useEffect(() => {
-    setUrole(localStorage.getItem("role"));
+    setUrole(sessionStorage.getItem("userRole"));
   }, []);
   // Function to handle link clicks and set the active link
   const handleLinkClick = (index: any) => {
@@ -65,7 +65,7 @@ const Sidebar = () => {
               </span>
             </Link>
           </li>
-          {uRole == "admin" ? (
+          {uRole == "ADMIN" ? (
             <li className="hs-accordion" id="users-accordion">
               <Link
                 href="/Components/AssetsForAdmin"
@@ -100,7 +100,7 @@ const Sidebar = () => {
               </Link>
             </li>
           )}
-          {uRole == "admin" && (
+          {uRole == "ADMIN" && (
             <li>
               <Link
                 href="/Components/Manage"
@@ -118,7 +118,7 @@ const Sidebar = () => {
               </Link>
             </li>
           )}
-          {uRole != "admin" && (
+          {uRole != "ADMIN" && (
             <li>
               <Link
                 href="/Components/Observability"
@@ -136,7 +136,7 @@ const Sidebar = () => {
               </Link>
             </li>
           )}
-          {uRole != "admin" && (
+          {/* {uRole != "ADMIN" && ( */}
             <li className="hs-accordion" id="account-accordion">
               <Link
                 href="/page/FinOps"
@@ -153,8 +153,8 @@ const Sidebar = () => {
                 </span>
               </Link>
             </li>
-          )}
-          {uRole != "admin" && (
+          {/* )} */}
+          {/* {uRole != "ADMIN" && ( */}
             <li className="hs-accordion" id="account-accordion">
               <Link
                 href="/page/FinOps/newFinops"
@@ -171,7 +171,7 @@ const Sidebar = () => {
                 </span>
               </Link>
             </li>
-          )}
+          {/* )} */}
         </ul>
       </div>
     </>
