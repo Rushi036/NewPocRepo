@@ -14,8 +14,8 @@ const Navbar = () => {
   const [uname, setUname] = useState<any>(false);
 
   useEffect(() => {
-    // setUname(sessionStorage.getItem("userName"));
     setUname(sessionStorage.getItem("userName"));
+    // setUname(localStorage.getItem("userName"));
   }, []);
 
   const handleClientNameClick = () => {
@@ -39,7 +39,6 @@ const Navbar = () => {
     // Perform sign-out logic here
     localStorage.clear();
     sessionStorage.clear();
-
     setSignOutModalOpen(false);
   };
 
@@ -79,7 +78,7 @@ const Navbar = () => {
 
   return (
     <div onClick={handleOutsideClick}>
-      <nav className="bg-white border-gray-700 shadow-lg w-full z-20 h-16 flex fixed top-0 right-0">
+      <nav className="bg-white border-gray-700 shadow-lg w-full z-20 h-10 flex fixed top-0 right-0">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between p-4">
           <Link href="/" className="flex items-center"></Link>
         </div>

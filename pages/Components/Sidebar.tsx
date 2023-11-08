@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BsArrowLeftCircle } from "react-icons/bs";
+import { GiHamburgerMenu } from "react-icons/gi";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PreviewIcon from "@mui/icons-material/Preview";
 import TabIcon from "@mui/icons-material/Tab";
@@ -44,10 +44,10 @@ const Sidebar = () => {
         <div
           className={`${
             !state && "rotate-180"
-          }  absolute mr-1.5 text-xl bg-white fill-slate-800 rounded-full cursor-pointer top-6 -right-4`}
+          }  absolute mr-1.5 text-xl bg-white fill-slate-800 rounded-full cursor-pointer top-3 -right-10`}
           onClick={toggleStateHere}
         >
-          <BsArrowLeftCircle />
+          <GiHamburgerMenu />
         </div>
 
         <ul className="space-y-1.5 pt-5">
@@ -136,20 +136,24 @@ const Sidebar = () => {
               </Link>
             </li>
           )}
-          <li className="hs-accordion" id="account-accordion">
-            <Link
-              href="/page/FinOps"
-              className={`flex items-center gap-x-3.5 py-2 px-2.5 text-base
+          {/* {uRole != "ADMIN" && ( */}
+            <li className="hs-accordion" id="account-accordion">
+              <Link
+                href="/page/FinOps"
+                className={`flex items-center gap-x-3.5 py-2 px-2.5 text-base
               text-slate-700 rounded-md hover:bg-gray-100
               ${activeLink === 3 ? "bg-gray-100" : ""}`}
-              onClick={() => handleLinkClick(3)}
-            >
-              <SpaceDashboardIcon className="h-7 w-7" />
-              <span className={`${!state && "hidden"} origin-left hover:block`}>
-                FinOps
-              </span>
-            </Link>
-          </li>
+                onClick={() => handleLinkClick(3)}
+              >
+                <SpaceDashboardIcon className="h-7 w-7" />
+                <span
+                  className={`${!state && "hidden"} origin-left hover:block`}
+                >
+                  FinOps
+                </span>
+              </Link>
+            </li>
+          {/* )} */}
         </ul>
       </div>
     </>

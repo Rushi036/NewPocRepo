@@ -19,7 +19,9 @@ export const getSubscriptionIds = async (cloud: any, adid: any) => {
     })
     .then((data) => {
       retData = data;
-    });
+    })
+    .catch(()=>{retData=[]});
+    ;
   // console.log(retData);
 
   return retData;

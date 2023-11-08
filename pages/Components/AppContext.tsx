@@ -10,11 +10,11 @@ const AppContext = createContext<{
   timeEnd: any;
   toggleTimeEnd: (timeEnd: any) => void;
 }>({
-  state: true,
+  state: false,
   toggleState: () => {},
   estimateCalc: false,
   toggleEstimateCalc: () => {},
-  time: moment().subtract(1, "hour").format("YYYY-MM-DDTHH:mm:ss"),
+  time: moment().subtract(15, "day").format("YYYY-MM-DDTHH:mm:ss"),
 
   toggleTime: (time) => {},
 
@@ -24,11 +24,11 @@ const AppContext = createContext<{
 });
 
 export const AppContextProvider: React.FC<any> = ({ children }: any) => {
-  const [state, setState] = useState(true);
+  const [state, setState] = useState(false);
   const [estimateCalc, setEstimateCalc] = useState(false);
 
   const toggleState = () => {
-    setState((prevState) => !prevState);
+    setState(!state);
   };
   const toggleEstimateCalc = () => {
     setEstimateCalc((prevState) => !prevState);

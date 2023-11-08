@@ -4,60 +4,54 @@ import HighchartsReact from "highcharts-react-official";
 import { getUnBlendedCost } from "@/pages/api/FinopsApi/GetUnblendedCost";
 
 const LineChartComponent = (props: any) => {
-  //   console.log("props in chart", id);
   const chartContainer = useRef(null);
-  // const [unBlendCostData, setUnBlendCostData] = useState<any>();
-  // const getData = async () => {
-  //   await getUnBlendedCost(id).then((res) => {
-  //     // console.log("res in chart", res);
-  //     setUnBlendCostData(res);
-  //   });
-  // };
-  // useEffect(() => {
-  //   getData();
-  // }, [id]);
   useEffect(() => {
-    // console.log("unblend in chart", props.data);
     if (chartContainer.current) {
-      const newData = props?.data?.data.map((e: any) => {
-        let changedData = e.data?.map((x: any) => {
+      const newData = (props?.data?.data || []).map((e: any) => {
+        let changedData = e?.data?.map((x: any) => {
+          // new Date(x[0]).toLocaleString("en-US", {
+          //   month: "short",
+          //   day: "2-digit",
+          //   // year: "numeric",
+          //   // hour: "2-digit",
+          //   // minute: "2-digit",
+          // }),
           return [
-            new Date(x[0]).toLocaleString("en-US", {
-              month: "short",
-              day: "2-digit",
-              year: "numeric",
-              // hour: "2-digit",
-              // minute: "2-digit",
-            }),
-            x[1],
+            x[0],x[1],
           ];
         });
         return { name: e.name, data: changedData };
       });
-      // console.log("tline chart data ", newData)
       const options: any = {
+        chart: {
+          height: props?.reports ? "244" : "",
+          zoomType: 'x'
+        },
         title: {
-          text: props.data.title,
+          text: props?.data?.title || "",
           align: "left",
+          style: {
+            color: props.titleColor? props.titleColor:'#000',
+          }
         },
 
         yAxis: {
           title: {
-            text: props.data.yAxis || "",
+            text: props?.data?.yAxis || "",
           },
         },
 
         xAxis: {
           title: {
-            text: props.data.xAxis || "",
+            text: props?.data?.xAxis || "",
           },
           type: "category"
         },
 
         legend: {
-          layout: "vertical",
-          align: "right",
-          verticalAlign: "middle",
+          layout: "horizontal",
+          align: "center",
+          verticalAlign: "bottom",
         },
         noData: {
           style: {
@@ -77,8 +71,12 @@ const LineChartComponent = (props: any) => {
             // pointStart: 1,
           },
         },
+        tooltip: {
+          shared: true,
+          crosshairs: true
+        },
 
-        series: newData,
+        series: newData || [],
 
         responsive: {
           rules: [
@@ -104,7 +102,8 @@ const LineChartComponent = (props: any) => {
     }
   }, [props.data]); // Empty dependency array ensures the effect runs once after initial render
 
-  return <div ref={chartContainer} style={{ height: "400px" }} />;
+  // return <div ref={chartContainer} />;
+  return <div ref={chartContainer} style={{ height: props?.reports ? "auto" : "400px" }} />;
 };
 
 export default LineChartComponent;

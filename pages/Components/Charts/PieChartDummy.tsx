@@ -10,11 +10,11 @@ import HighchartsAccessibility from "highcharts/modules/accessibility";
 
 const ChartComponent = (props: any) => {
   useEffect(() => {
-    HighchartsExporting(Highcharts);
-    HighchartsExportData(Highcharts);
-    HighchartsAccessibility(Highcharts);
-    HighchartsVariablePie(Highcharts);
-    NoDataToDisplay(Highcharts);
+    // HighchartsExporting(Highcharts);
+    // HighchartsExportData(Highcharts);
+    // HighchartsAccessibility(Highcharts);
+    // HighchartsVariablePie(Highcharts);
+    // NoDataToDisplay(Highcharts);
   }, []);
   useEffect(() => {
     // console.log(props.data.data);
@@ -47,7 +47,7 @@ const ChartComponent = (props: any) => {
             (this as any).update({
               plotOptions: {
                 pie: {
-                  size: '150px',
+                  size: '100px',
                   allowPointSelect: true,
                   cursor: 'pointer',
                   dataLabels: {
@@ -67,7 +67,7 @@ const ChartComponent = (props: any) => {
         },
         plotOptions: {
           pie: {
-            size: '150px',
+            size: '100px',
             allowPointSelect: true,
             cursor: 'pointer',
             dataLabels: {
@@ -95,7 +95,7 @@ const ChartComponent = (props: any) => {
           },
     },
     legend: {
-      enabled: true,
+      enabled: false,
           // align: 'right',
           // verticalAlign: 'top',
           // layout: 'vertical',
@@ -104,7 +104,7 @@ const ChartComponent = (props: any) => {
       {
         type: "pie",
         minPointSize: 100,
-        innerSize: "40%",
+        innerSize: "60%",
         zMin: 0,
         name: "networks",
         borderRadius: 0,
@@ -118,7 +118,7 @@ const ChartComponent = (props: any) => {
 }
   }, [props.data]); // Empty dependency array ensures the effect runs once after initial render
 
-return <div id={"container-" + props.id} style={{ height: "400px" }} />;
+return <div id={"container-" + props.id} style={{ height: "250px" }} />;
 };
 
 export default ChartComponent;

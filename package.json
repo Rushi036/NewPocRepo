@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "json-server-dev": "json-server -p 8000 -w Data/db.json",
-    "json-server": "json-server -p 8000 -w Data/db.json"
+    "json-server": "json-server --host 10.47.98.164 -p 9250 -w Data/db.json"
   },
   "dependencies": {
     "@azure/msal-browser": "^2.37.0",
@@ -45,6 +45,7 @@
     "material-ui": "^0.20.2",
     "moment": "^2.29.4",
     "next": "13.4.19",
+    "nextjs-progressbar": "^0.0.16",
     "postcss": "8.4.28",
     "react": "18.2.0",
     "react-datepicker": "^4.16.0",

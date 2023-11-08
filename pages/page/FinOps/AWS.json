@@ -1,9 +1,172 @@
 {
-  "Metric": {
-    "title": "abmcpl",
-    "value": 125
-  },
-  "Table": [],
+  "Table": [
+    {
+      "title": "Data Trends Over Time",
+      "headers": ["sr_no", "application_name", "data_usage", "data_cost"],
+      "data": [
+        [
+          ["sr_no", 1],
+          ["application_name", "-"],
+          ["data_usage", 20.3],
+          ["data_cost", 2.17]
+        ],
+        [
+          ["sr_no", 2],
+          ["application_name", "Prashant Agarwal"],
+          ["data_usage", 90.93],
+          ["data_cost", 8.47]
+        ],
+        [
+          ["sr_no", 3],
+          ["application_name", "Application"],
+          ["data_usage", 0.54],
+          ["data_cost", 0.05]
+        ],
+        [
+          ["sr_no", 4],
+          ["application_name", "Mpowerminds CRM"],
+          ["data_usage", 0.29],
+          ["data_cost", 0.03]
+        ],
+        [
+          ["sr_no", 5],
+          ["application_name", "Autoplant"],
+          ["data_usage", 0.07],
+          ["data_cost", 0.01]
+        ],
+        [
+          ["sr_no", 6],
+          ["application_name", "Pulp&Fibre"],
+          ["data_usage", 0.18],
+          ["data_cost", 0.02]
+        ],
+        [
+          ["sr_no", 7],
+          ["application_name", "Applicatio"],
+          ["data_usage", 0.04],
+          ["data_cost", 0]
+        ]
+      ]
+    },
+    {
+      "Table": {
+        "title": "Data Show Back By Application",
+        "headers": ["sr_no", "application", "data_resources", "costs"],
+        "data": [
+          [
+            ["sr_no", 1],
+            ["application", "-"],
+            ["data_resources", "APS3-APN1-AWS-Out-Bytes"],
+            ["costs", 0.01]
+          ],
+          [
+            ["sr_no", 2],
+            ["application", "-"],
+            ["data_resources", "APS3-APS1-AWS-Out-Bytes"],
+            ["costs", 0.01]
+          ],
+          [
+            ["sr_no", 3],
+            ["application", "-"],
+            ["data_resources", "APS3-DataTransfer-Out-Bytes"],
+            ["costs", 2.79]
+          ],
+          [
+            ["sr_no", 4],
+            ["application", "-"],
+            ["data_resources", "APS3-EUC1-AWS-Out-Bytes"],
+            ["costs", 0.03]
+          ],
+          [
+            ["sr_no", 5],
+            ["application", "-"],
+            ["data_resources", "APS3-USE1-AWS-Out-Bytes"],
+            ["costs", 0.01]
+          ],
+          [
+            ["sr_no", 6],
+            ["application", "-"],
+            ["data_resources", "APS3-USW2-AWS-Out-Bytes"],
+            ["costs", 0.17]
+          ],
+          [
+            ["sr_no", 7],
+            ["application", "Prashant Agarwal"],
+            ["data_resources", "CA-DataTransfer-Out-Bytes"],
+            ["costs", 0.06]
+          ],
+          [
+            ["sr_no", 8],
+            ["application", "Prashant Agarwal"],
+            ["data_resources", "EU-DataTransfer-Out-Bytes"],
+            ["costs", 0.72]
+          ],
+          [
+            ["sr_no", 9],
+            ["application", "Prashant Agarwal"],
+            ["data_resources", "IN-DataTransfer-Out-Bytes"],
+            ["costs", 10.09]
+          ],
+          [
+            ["sr_no", 10],
+            ["application", "Prashant Agarwal"],
+            ["data_resources", "IN-DataTransfer-Out-OBytes"],
+            ["costs", 0.11]
+          ],
+          [
+            ["sr_no", 11],
+            ["application", "Application"],
+            ["data_resources", "APS3-DataTransfer-Out-Bytes"],
+            ["costs", 0.02]
+          ],
+          [
+            ["sr_no", 12],
+            ["application", "Application"],
+            ["data_resources", "APS3-USW2-AWS-Out-Bytes"],
+            ["costs", 0.05]
+          ],
+          [
+            ["sr_no", 13],
+            ["application", "Mpowerminds CRM"],
+            ["data_resources", "APS3-DataTransfer-Out-Bytes"],
+            ["costs", 0.04]
+          ],
+          [
+            ["sr_no", 14],
+            ["application", "Autoplant"],
+            ["data_resources", "APS3-DataTransfer-Out-Bytes"],
+            ["costs", 0.01]
+          ],
+          [
+            ["sr_no", 15],
+            ["application", "Pulp&Fibre"],
+            ["data_resources", "APS3-DataTransfer-Out-Bytes"],
+            ["costs", 0.02]
+          ],
+          [
+            ["sr_no", 16],
+            ["application", "Pulp&Fibre"],
+            ["data_resources", "APS3-USW2-AWS-Out-Bytes"],
+            ["costs", 0.01]
+          ]
+        ]
+      }
+    }
+  ],
+  "Metric": [
+    {
+      "title": "Unique Instance Count",
+      "value": 125
+    },
+    {
+      "title": "Total Cost For Each Account",
+      "value": 34892.29
+    },
+    {
+      "title": "Data Cost By Account",
+      "value": 114.84
+    }
+  ],
   "Graph": [
     {
       "PieChart": {
@@ -18,44 +181,1163 @@
     },
     {
       "PieChart": {
-        "title": "Most Cost Consuming Service Per Day",
+        "title": "Most Cost Consummed Service Per Day",
         "data": [
-          ["Amazon Elastic Compute Cloud - Compute", 311.05],
-          ["EC2 - Other", 114.31],
-          ["Amazon Virtual Private Cloud", 70.57],
-          ["Amazon Relational Database Service", 54.83],
-          ["AmazonCloudWatch", 36.43],
-          ["Amazon Elastic Compute Cloud - Compute", 302.52],
-          ["EC2 - Other", 97.16],
-          ["Amazon Virtual Private Cloud", 67.36],
-          ["Amazon Relational Database Service", 52.65],
-          ["AmazonCloudWatch", 35.46]
+          ["Amazon Elastic Compute Cloud - Compute", 6289.33],
+          ["EC2 - Other", 1706.39],
+          ["Amazon Virtual Private Cloud", 1564.13],
+          ["Amazon Relational Database Service", 1225.11],
+          ["AmazonCloudWatch", 839.08]
+        ]
+      }
+    },
+    {
+      "PieChart": {
+        "title": "Data Usage By Application",
+        "data": [
+          ["-", 20.3],
+          ["Prashant Agarwal", 90.93],
+          ["Application", 0.54],
+          ["Mpowerminds CRM", 0.29],
+          ["ABMCP-Schools", 0],
+          ["CSR Software", 0],
+          ["Autoplant", 0.07],
+          ["Pulp&Fibre", 0.18],
+          ["Applicatio", 0.04],
+          ["AB Renewables", 0]
+        ]
+      }
+    },
+    {
+      "PieChart": {
+        "title": "Data Cost By Application",
+        "data": [
+          ["-", 2.17],
+          ["Prashant Agarwal", 8.47],
+          ["Application", 0.05],
+          ["Mpowerminds CRM", 0.03],
+          ["ABMCP-Schools", 0],
+          ["CSR Software", 0],
+          ["Autoplant", 0.01],
+          ["Pulp&Fibre", 0.02],
+          ["Applicatio", 0],
+          ["AB Renewables", 0]
         ]
       }
     },
     {
       "LineChart": {
         "title": "Total Unblended Cost per Day",
+        "data": {
+          "name": "Unblended Cost",
+          "data": [
+            ["3 Oct", 0],
+            ["4 Oct", 0],
+            ["5 Oct", 0],
+            ["6 Oct", 0],
+            ["7 Oct", 0],
+            ["8 Oct", 0],
+            ["9 Oct", 0],
+            ["10 Oct", 0],
+            ["11 Oct", 0],
+            ["12 Oct", 0],
+            ["13 Oct", 0],
+            ["14 Oct", 0],
+            ["15 Oct", 0],
+            ["16 Oct", 0],
+            ["17 Oct", 0],
+            ["18 Oct", 0],
+            ["19 Oct", 0],
+            ["20 Oct", 0],
+            ["21 Oct", 0],
+            ["22 Oct", 0],
+            ["23 Oct", 0],
+            ["24 Oct", 0],
+            ["25 Oct", 0],
+            ["26 Oct", 0],
+            ["27 Oct", 0],
+            ["28 Oct", 0],
+            ["29 Oct", 0],
+            ["30 Oct", 0],
+            ["31 Oct", 0],
+            ["1 Nov", 0],
+            ["2 Nov", 0],
+            ["3 Nov", 0],
+            ["4 Nov", 0],
+            ["5 Nov", 0],
+            ["6 Nov", 0],
+            ["7 Nov", 0],
+            ["8 Nov", 0],
+            ["9 Nov", 0],
+            ["10 Nov", 0],
+            ["11 Nov", 0],
+            ["12 Nov", 0],
+            ["13 Nov", 0],
+            ["14 Nov", 0],
+            ["15 Nov", 0],
+            ["16 Nov", 0],
+            ["17 Nov", 0],
+            ["18 Nov", 0],
+            ["19 Nov", 0],
+            ["20 Nov", 0],
+            ["21 Nov", 0],
+            ["22 Nov", 0],
+            ["23 Nov", 0],
+            ["24 Nov", 0],
+            ["25 Nov", 0],
+            ["26 Nov", 0],
+            ["27 Nov", 0],
+            ["28 Nov", 0],
+            ["29 Nov", 0],
+            ["30 Nov", 0],
+            ["1 Dec", 0],
+            ["2 Dec", 0],
+            ["3 Dec", 0],
+            ["4 Dec", 0],
+            ["5 Dec", 0],
+            ["6 Dec", 0],
+            ["7 Dec", 0],
+            ["8 Dec", 0],
+            ["9 Dec", 0],
+            ["10 Dec", 0],
+            ["11 Dec", 0],
+            ["12 Dec", 0],
+            ["13 Dec", 0],
+            ["14 Dec", 0],
+            ["15 Dec", 0],
+            ["16 Dec", 0],
+            ["17 Dec", 0],
+            ["18 Dec", 0],
+            ["19 Dec", 0],
+            ["20 Dec", 0],
+            ["21 Dec", 0],
+            ["22 Dec", 0],
+            ["23 Dec", 0],
+            ["24 Dec", 0],
+            ["25 Dec", 0],
+            ["26 Dec", 0],
+            ["27 Dec", 0],
+            ["28 Dec", 0],
+            ["29 Dec", 0],
+            ["30 Dec", 0],
+            ["31 Dec", 0],
+            ["1 Jan", 0],
+            ["2 Jan", 0],
+            ["3 Jan", 0],
+            ["4 Jan", 0],
+            ["5 Jan", 0],
+            ["6 Jan", 0],
+            ["7 Jan", 0],
+            ["8 Jan", 0],
+            ["9 Jan", 0],
+            ["10 Jan", 0],
+            ["11 Jan", 0],
+            ["12 Jan", 0],
+            ["13 Jan", 0],
+            ["14 Jan", 0],
+            ["15 Jan", 0],
+            ["16 Jan", 0],
+            ["17 Jan", 0],
+            ["18 Jan", 0],
+            ["19 Jan", 0],
+            ["20 Jan", 0],
+            ["21 Jan", 0],
+            ["22 Jan", 0],
+            ["23 Jan", 0],
+            ["24 Jan", 0],
+            ["25 Jan", 0],
+            ["26 Jan", 0],
+            ["27 Jan", 0],
+            ["28 Jan", 0],
+            ["29 Jan", 0],
+            ["30 Jan", 0],
+            ["31 Jan", 0],
+            ["1 Feb", 0],
+            ["2 Feb", 0],
+            ["3 Feb", 0],
+            ["4 Feb", 0],
+            ["5 Feb", 0],
+            ["6 Feb", 0],
+            ["7 Feb", 0],
+            ["8 Feb", 0],
+            ["9 Feb", 0],
+            ["10 Feb", 0],
+            ["11 Feb", 0],
+            ["12 Feb", 0],
+            ["13 Feb", 0],
+            ["14 Feb", 0],
+            ["15 Feb", 0],
+            ["16 Feb", 0],
+            ["17 Feb", 0],
+            ["18 Feb", 0],
+            ["19 Feb", 0],
+            ["20 Feb", 0],
+            ["21 Feb", 0],
+            ["22 Feb", 0],
+            ["23 Feb", 0],
+            ["24 Feb", 0],
+            ["25 Feb", 0],
+            ["26 Feb", 0],
+            ["27 Feb", 0],
+            ["28 Feb", 0],
+            ["1 Mar", 0],
+            ["2 Mar", 0],
+            ["3 Mar", 0],
+            ["4 Mar", 0],
+            ["5 Mar", 0],
+            ["6 Mar", 0],
+            ["7 Mar", 0],
+            ["8 Mar", 0],
+            ["9 Mar", 0],
+            ["10 Mar", 0],
+            ["11 Mar", 0],
+            ["12 Mar", 0],
+            ["13 Mar", 0],
+            ["14 Mar", 0],
+            ["15 Mar", 0],
+            ["16 Mar", 0],
+            ["17 Mar", 0],
+            ["18 Mar", 0],
+            ["19 Mar", 0],
+            ["20 Mar", 0],
+            ["21 Mar", 0],
+            ["22 Mar", 0],
+            ["23 Mar", 0],
+            ["24 Mar", 0],
+            ["25 Mar", 0],
+            ["26 Mar", 0],
+            ["27 Mar", 0],
+            ["28 Mar", 0],
+            ["29 Mar", 0],
+            ["30 Mar", 0],
+            ["31 Mar", 0],
+            ["1 Apr", 0],
+            ["2 Apr", 0],
+            ["3 Apr", 0],
+            ["4 Apr", 0],
+            ["5 Apr", 0],
+            ["6 Apr", 0],
+            ["7 Apr", 0],
+            ["8 Apr", 0],
+            ["9 Apr", 0],
+            ["10 Apr", 0],
+            ["11 Apr", 0],
+            ["12 Apr", 0],
+            ["13 Apr", 0],
+            ["14 Apr", 0],
+            ["15 Apr", 0],
+            ["16 Apr", 0],
+            ["17 Apr", 0],
+            ["18 Apr", 0],
+            ["19 Apr", 0],
+            ["20 Apr", 0],
+            ["21 Apr", 0],
+            ["22 Apr", 0],
+            ["23 Apr", 0],
+            ["24 Apr", 0],
+            ["25 Apr", 0],
+            ["26 Apr", 0],
+            ["27 Apr", 0],
+            ["28 Apr", 0],
+            ["29 Apr", 0],
+            ["30 Apr", 0],
+            ["1 May", 0],
+            ["2 May", 0],
+            ["3 May", 0],
+            ["4 May", 0],
+            ["5 May", 0],
+            ["6 May", 0],
+            ["7 May", 0],
+            ["8 May", 0],
+            ["9 May", 0],
+            ["10 May", 0],
+            ["11 May", 0],
+            ["12 May", 0],
+            ["13 May", 0],
+            ["14 May", 0],
+            ["15 May", 0],
+            ["16 May", 0],
+            ["17 May", 0],
+            ["18 May", 0],
+            ["19 May", 0],
+            ["20 May", 0],
+            ["21 May", 0],
+            ["22 May", 0],
+            ["23 May", 0],
+            ["24 May", 0],
+            ["25 May", 0],
+            ["26 May", 0],
+            ["27 May", 0],
+            ["28 May", 0],
+            ["29 May", 0],
+            ["30 May", 0],
+            ["31 May", 0],
+            ["1 Jun", 0],
+            ["2 Jun", 0],
+            ["3 Jun", 0],
+            ["4 Jun", 0],
+            ["5 Jun", 0],
+            ["6 Jun", 0],
+            ["7 Jun", 0],
+            ["8 Jun", 0],
+            ["9 Jun", 0],
+            ["10 Jun", 0],
+            ["11 Jun", 0],
+            ["12 Jun", 0],
+            ["13 Jun", 0],
+            ["14 Jun", 0],
+            ["15 Jun", 0],
+            ["16 Jun", 0],
+            ["17 Jun", 0],
+            ["18 Jun", 0],
+            ["19 Jun", 0],
+            ["20 Jun", 0],
+            ["21 Jun", 0],
+            ["22 Jun", 0],
+            ["23 Jun", 0],
+            ["24 Jun", 0],
+            ["25 Jun", 0],
+            ["26 Jun", 0],
+            ["27 Jun", 0],
+            ["28 Jun", 0],
+            ["29 Jun", 0],
+            ["30 Jun", 0],
+            ["1 Jul", 0],
+            ["2 Jul", 0],
+            ["3 Jul", 0],
+            ["4 Jul", 0],
+            ["5 Jul", 0],
+            ["6 Jul", 0],
+            ["7 Jul", 0],
+            ["8 Jul", 0],
+            ["9 Jul", 0],
+            ["10 Jul", 0],
+            ["11 Jul", 0],
+            ["12 Jul", 0],
+            ["13 Jul", 0],
+            ["14 Jul", 0],
+            ["15 Jul", 0],
+            ["16 Jul", 0],
+            ["17 Jul", 0],
+            ["18 Jul", 0],
+            ["19 Jul", 0],
+            ["20 Jul", 0],
+            ["21 Jul", 0],
+            ["22 Jul", 0],
+            ["23 Jul", 0],
+            ["24 Jul", 0],
+            ["25 Jul", 0],
+            ["26 Jul", 0],
+            ["27 Jul", 0],
+            ["28 Jul", 0],
+            ["29 Jul", 0],
+            ["30 Jul", 0],
+            ["31 Jul", 0],
+            ["1 Aug", 0],
+            ["2 Aug", 0],
+            ["3 Aug", 0],
+            ["4 Aug", 0],
+            ["5 Aug", 0],
+            ["6 Aug", 0],
+            ["7 Aug", 0],
+            ["8 Aug", 0],
+            ["9 Aug", 0],
+            ["10 Aug", 0],
+            ["11 Aug", 0],
+            ["12 Aug", 0],
+            ["13 Aug", 0],
+            ["14 Aug", 0],
+            ["15 Aug", 0],
+            ["16 Aug", 0],
+            ["17 Aug", 0],
+            ["18 Aug", 0],
+            ["19 Aug", 0],
+            ["20 Aug", 0],
+            ["21 Aug", 0],
+            ["22 Aug", 0],
+            ["23 Aug", 0],
+            ["24 Aug", 0],
+            ["25 Aug", 0],
+            ["26 Aug", 0],
+            ["27 Aug", 0],
+            ["28 Aug", 0],
+            ["29 Aug", 0],
+            ["30 Aug", 0],
+            ["31 Aug", 0],
+            ["1 Sep", 0],
+            ["2 Sep", 0],
+            ["3 Sep", 0],
+            ["4 Sep", 0],
+            ["5 Sep", 0],
+            ["6 Sep", 0],
+            ["7 Sep", 0],
+            ["8 Sep", 3083.57],
+            ["9 Sep", 0],
+            ["10 Sep", 0],
+            ["11 Sep", 1336.6],
+            ["12 Sep", 1571.7],
+            ["13 Sep", 1718.97],
+            ["14 Sep", 1094.4],
+            ["15 Sep", 1741.8],
+            ["16 Sep", 1602.25],
+            ["17 Sep", 1491.88],
+            ["18 Sep", 1470.76],
+            ["19 Sep", 1605.4],
+            ["20 Sep", 1676.15],
+            ["21 Sep", 1724.63],
+            ["22 Sep", 1780.07],
+            ["23 Sep", 1580.55],
+            ["24 Sep", 1431.27],
+            ["25 Sep", 1448.37],
+            ["26 Sep", 1777.26],
+            ["27 Sep", 1695.07],
+            ["28 Sep", 1555.12],
+            ["29 Sep", 814.39],
+            ["30 Sep", 1404.89],
+            ["1 Oct", 1287.2],
+            ["2 Oct", 1912.46],
+            ["3 Oct", 1096.54],
+            ["4 Oct", 2132.02],
+            ["5 Oct", 2014.29],
+            ["6 Oct", 1893.42],
+            ["7 Oct", 1268.36],
+            ["8 Oct", 1613.95],
+            ["9 Oct", 1014.77]
+          ]
+        },
+        "xAxis": "day",
+        "yAxis": "cost"
+      }
+    },
+    {
+      "LineChart": {
+        "title": "Average Unblended Cost per Usage Type per Day",
         "data": [
           {
-            "name": "abmcpl",
+            "name": "APS3-BoxUsage:c5.2xlarge",
             "data": [
-              ["2023-10-03T00:00:00.000Z", 1096.54],
-              ["2023-10-04T00:00:00.000Z", 9000],
-              ["2023-10-05T00:00:00.000Z", 1096.54],
-              ["2023-10-06T00:00:00.000Z", 106.54],
-              ["2023-10-07T00:00:00.000Z", null],
-              ["2023-10-08T00:00:00.000Z", null],
-              ["2023-10-09T00:00:00.000Z", null],
-              ["2023-10-10T00:00:00.000Z", null],
-              ["2023-10-11T00:00:00.000Z", 2132.02],
-              ["2023-10-12T00:00:00.000Z", 132.02],
-              ["2023-10-13T00:00:00.000Z", 232.02],
-              ["2023-10-14T00:00:00.000Z", 212.02],
-              ["2023-10-15T00:00:00.000Z", 213.02],
-              ["2023-10-16T00:00:00.000Z", 22.02],
-              ["2023-10-17T00:00:00.000Z", 3200.02]
+              ["4 Oct", 36.7],
+              ["5 Oct", 35.03],
+              ["6 Oct", 36.7]
             ]
+          },
+          {
+            "name": "APS3-BoxUsage:c5a.2xlarge",
+            "data": [
+              ["4 Oct", 27.05],
+              ["5 Oct", 29.04],
+              ["6 Oct", 27.98]
+            ]
+          },
+          {
+            "name": "APS3-BoxUsage:m4.4xlarge",
+            "data": [
+              ["4 Oct", 34.67],
+              ["5 Oct", 33.1],
+              ["6 Oct", 34.67]
+            ]
+          },
+          {
+            "name": "APS3-BoxUsage:m5.4xlarge",
+            "data": [
+              ["4 Oct", 21.41],
+              ["5 Oct", 20.43],
+              ["6 Oct", 21.41]
+            ]
+          },
+          {
+            "name": "APS3-BoxUsage:m5a.8xlarge",
+            "data": [
+              ["4 Oct", 22.26],
+              ["6 Oct", 27.72]
+            ]
+          },
+          {
+            "name": "APS3-BoxUsage:r5.2xlarge",
+            "data": [
+              ["4 Oct", 19.54],
+              ["5 Oct", 18.65],
+              ["6 Oct", 19.54]
+            ]
+          },
+          {
+            "name": "APS3-BoxUsage:t3.xlarge",
+            "data": [
+              ["4 Oct", 21.68],
+              ["5 Oct", 20.7],
+              ["6 Oct", 21.68]
+            ]
+          },
+          {
+            "name": "APS3-CW:GMD-Metrics",
+            "data": [
+              ["5 Oct", 18.01],
+              ["6 Oct", 17.75]
+            ]
+          },
+          {
+            "name": "APS3-EBS:VolumeUsage.gp2",
+            "data": [
+              ["4 Oct", 29.19],
+              ["5 Oct", 25.94],
+              ["6 Oct", 23.97]
+            ]
+          },
+          {
+            "name": "APS3-NatGateway-Bytes",
+            "data": [
+              ["4 Oct", 29.17],
+              ["5 Oct", 26.96]
+            ]
+          },
+          {
+            "name": "APS3-TransitGateway-Hours",
+            "data": [
+              ["4 Oct", 61.18],
+              ["5 Oct", 58.52],
+              ["6 Oct", 58.52]
+            ]
+          }
+        ],
+        "xAxis": "day",
+        "yAxis": "cost"
+      }
+    },
+    {
+      "LineChart": {
+        "title": " Cost Trend Over Time",
+        "data": {
+          "name": "Cost Trend",
+          "data": [
+            ["4 Sep", 3083.57],
+            ["11 Sep", 10557.6],
+            ["18 Sep", 11268.83],
+            ["25 Sep", 9982.29],
+            ["2 Oct", 5141.01]
+          ]
+        },
+        "xAxis": "day",
+        "yAxis": "cost"
+      }
+    },
+    {
+      "LineChart": {
+        "title": "Data Usage By Account",
+        "data": {
+          "name": "Data Usage",
+          "data": [
+            ["Sep", 1535.89],
+            ["Oct", 194.28]
+          ]
+        },
+        "xAxis": "day",
+        "yAxis": "cost"
+      }
+    },
+    {
+      "LineChart": {
+        "title": "Devices With Lowest CPU Utilization",
+        "data": [
+          {
+            "name": "ABMC-AW-ABMH-U-APP-01",
+            "data": [
+              ["4 Oct", 0.21],
+              ["5 Oct", 0.21],
+              ["6 Oct", 0.19]
+            ]
+          },
+          {
+            "name": "ABMC-AW-VEN-P-APP",
+            "data": [
+              ["4 Oct", 0.14],
+              ["5 Oct", 0.14],
+              ["6 Oct", 0.12]
+            ]
+          },
+          {
+            "name": "ABMC-AW-VEN-P-DB",
+            "data": [
+              ["4 Oct", 0.1],
+              ["5 Oct", 0.1],
+              ["6 Oct", 0.08]
+            ]
+          },
+          {
+            "name": "Aditya-Birla-Venture-Db-Server",
+            "data": [["4 Oct", 0.21]]
+          },
+          {
+            "name": "DNA-Pulp&Fibre-DF",
+            "data": [["6 Oct", 0.14]]
+          },
+          {
+            "name": "DnA-Autoplant-DB",
+            "data": [["5 Oct", 0.38]]
+          },
+          {
+            "name": "DnA-Autoplant-Mines",
+            "data": [
+              ["4 Oct", 0.32],
+              ["5 Oct", 0.31],
+              ["6 Oct", 0.29]
+            ]
+          },
+          {
+            "name": "DnA-DomTextile-Prowl-UAT",
+            "data": [
+              ["4 Oct", 0.28],
+              ["5 Oct", 0.38],
+              ["6 Oct", 0.24]
+            ]
+          },
+          {
+            "name": "DnA-UTCL-FMO-Dev",
+            "data": [
+              ["4 Oct", 0.25],
+              ["5 Oct", 0.15],
+              ["6 Oct", 0.13]
+            ]
+          },
+          {
+            "name": "DnA-UTCL-FPO-Prod",
+            "data": [
+              ["4 Oct", 0.22],
+              ["5 Oct", 0.22],
+              ["6 Oct", 0.19]
+            ]
+          },
+          {
+            "name": "Sarala-Birla-Private-VM",
+            "data": [
+              ["4 Oct", 0.12],
+              ["5 Oct", 0.13],
+              ["6 Oct", 0.11]
+            ]
+          },
+          {
+            "name": "Sarala-Birla-Public-VM",
+            "data": [
+              ["4 Oct", 0.13],
+              ["5 Oct", 0.13],
+              ["6 Oct", 0.12]
+            ]
+          }
+        ],
+        "detail": "deviceswithLowestCPUutilizationFunction",
+        "xAxis": "Byte",
+        "yAxis": "Percentage"
+      }
+    },
+    {
+      "LineChart": {
+        "title": "Devices with Highest Network In Bytes",
+        "data": [
+          {
+            "name": "ABG-YTM-GHR",
+            "data": [
+              ["4 Oct", 63643.41],
+              ["5 Oct", 58121.56],
+              ["6 Oct", 266055.09]
+            ]
+          },
+          {
+            "name": "ABMC-AW-ABCPA-U-APP-01",
+            "data": [["6 Oct", 22952.6]]
+          },
+          {
+            "name": "ABMC-PROD-WEB-SERVER",
+            "data": [
+              ["4 Oct", 96220.65],
+              ["5 Oct", 87713.75],
+              ["6 Oct", 30287.68]
+            ]
+          },
+          {
+            "name": "ABMCPL-AW-ABMH-P-A-01",
+            "data": [
+              ["4 Oct", 1299793.26],
+              ["5 Oct", 1364913.96],
+              ["6 Oct", 875599.12]
+            ]
+          },
+          {
+            "name": "ABMCPL-AW-SW-P-A-01",
+            "data": [
+              ["4 Oct", 219949.71],
+              ["5 Oct", 215903.02],
+              ["6 Oct", 179020.8]
+            ]
+          },
+          {
+            "name": "ABNA-APP-ThePawpstar",
+            "data": [["6 Oct", 12684.82]]
+          },
+          {
+            "name": "ABNA-DB-ThePawpstar",
+            "data": [["6 Oct", 9688.94]]
+          },
+          {
+            "name": "CMS-LAMP-Server-prod",
+            "data": [
+              ["4 Oct", 37253.22],
+              ["5 Oct", 32709.83]
+            ]
+          },
+          {
+            "name": "DNA-PBIGateway-Windows",
+            "data": [
+              ["4 Oct", 63323.14],
+              ["5 Oct", 63296.85]
+            ]
+          },
+          {
+            "name": "DnA-DomTextile-Python",
+            "data": [
+              ["4 Oct", 38401.49],
+              ["5 Oct", 34559.68],
+              ["6 Oct", 33975.64]
+            ]
+          },
+          {
+            "name": "DnA-Hindalco-ModelVM-L-NEW-03-08-2021",
+            "data": [
+              ["4 Oct", 160777.6],
+              ["5 Oct", 160941.16]
+            ]
+          },
+          {
+            "name": "DnA-P&F-VS-UAT",
+            "data": [["6 Oct", 23811.79]]
+          },
+          {
+            "name": "RIN_server",
+            "data": [
+              ["4 Oct", 28906.12],
+              ["5 Oct", 29283.87],
+              ["6 Oct", 29676.08]
+            ]
+          },
+          {
+            "name": "workerenv-1604729220717113-f99f07f2-c1cb-46a1-8186-63b54e521f8a-worker",
+            "data": [
+              ["4 Oct", 2670016.95],
+              ["5 Oct", 2574862.21]
+            ]
+          }
+        ],
+        "xAxis": "day",
+        "yAxis": "cost"
+      }
+    },
+    {
+      "LineChart": {
+        "title": "Devices with Highest Network Out Bytes",
+        "data": [
+          {
+            "name": "ABG-YTM-GHR",
+            "data": [
+              ["4 Oct", 38267.25],
+              ["5 Oct", 33484.29],
+              ["6 Oct", 10559.38]
+            ]
+          },
+          {
+            "name": "ABMC-AW-ABCPA-U-DBA-01",
+            "data": [
+              ["4 Oct", 23662.36],
+              ["5 Oct", 22833.28],
+              ["6 Oct", 22769.55]
+            ]
+          },
+          {
+            "name": "ABMC-PROD-DB-SERVER",
+            "data": [
+              ["4 Oct", 73237.7],
+              ["5 Oct", 65435.48],
+              ["6 Oct", 25230.09]
+            ]
+          },
+          {
+            "name": "ABMC-PROD-WEB-SERVER",
+            "data": [
+              ["4 Oct", 734063.11],
+              ["5 Oct", 716016.77],
+              ["6 Oct", 248504.89]
+            ]
+          },
+          {
+            "name": "ABMCPL-AW-ABMH-P-A-01",
+            "data": [
+              ["4 Oct", 78339.82],
+              ["5 Oct", 78783.61],
+              ["6 Oct", 14831.39]
+            ]
+          },
+          {
+            "name": "ABMCPL-AW-ABMH-P-D-01",
+            "data": [
+              ["4 Oct", 1297084.61],
+              ["5 Oct", 1362691.96],
+              ["6 Oct", 875416.69]
+            ]
+          },
+          {
+            "name": "ABMCPL-AW-SW-P-A-01",
+            "data": [
+              ["4 Oct", 44431.35],
+              ["5 Oct", 43867.69],
+              ["6 Oct", 25900.14]
+            ]
+          },
+          {
+            "name": "ABNA-APP-ThePawpstar",
+            "data": [["6 Oct", 10111.84]]
+          },
+          {
+            "name": "ABNA-APP-ThePawpstar Replica 17-06-2021",
+            "data": [["6 Oct", 10176.35]]
+          },
+          {
+            "name": "ABNA-DB-ThePawpstar",
+            "data": [["6 Oct", 9868.85]]
+          },
+          {
+            "name": "CMS-LAMP-Server-DB-PUB",
+            "data": [
+              ["4 Oct", 34838.78],
+              ["5 Oct", 30119.45]
+            ]
+          },
+          {
+            "name": "DNA-Pulp&Fibre-DF",
+            "data": [["5 Oct", 90586.92]]
+          },
+          {
+            "name": "DnA-DomTextile-Python",
+            "data": [["4 Oct", 28005.16]]
+          },
+          {
+            "name": "workerenv-1604729220717113-f99f07f2-c1cb-46a1-8186-63b54e521f8a-worker",
+            "data": [
+              ["4 Oct", 67479.18],
+              ["5 Oct", 111159.43]
+            ]
+          }
+        ],
+        "xAxis": "day",
+        "yAxis": "cost"
+      }
+    },
+    {
+      "BarGraph": {
+        "title": "Service wise cost for Each Account",
+        "type": "column",
+        "stacking": "false",
+        "categories": ["Sep", "Oct"],
+        "data": [
+          {
+            "name": "Amazon Elastic Compute Cloud - Compute",
+            "data": [5063.99, 1543.43]
+          },
+          {
+            "name": "EC2 - Other",
+            "data": [1335.83, 1543.43]
+          },
+          {
+            "name": "Amazon Virtual Private Cloud",
+            "data": [1263.57, 449.15]
+          },
+          {
+            "name": "Amazon Relational Database Service",
+            "data": [990.89, 449.15]
+          },
+          {
+            "name": "AmazonCloudWatch",
+            "data": [710.99, 368.5]
+          },
+          {
+            "name": "Databricks Lakehouse Platform",
+            "data": [218, 368.5]
+          },
+          {
+            "name": "AWS CloudTrail",
+            "data": [195.81, 289.05]
+          },
+          {
+            "name": "AWS Glue",
+            "data": [166.98, 289.05]
+          },
+          {
+            "name": "Red Hat Enterprise Linux (RHEL) 7.8 with support by ProComputers",
+            "data": [158, 159.04]
+          },
+          {
+            "name": "AWS Transfer Family",
+            "data": [137.33, 159.04]
+          },
+          {
+            "name": "Amazon Elastic Load Balancing",
+            "data": [130.63, 96.01]
+          },
+          {
+            "name": "AWS Config",
+            "data": [123.71, 83.23]
+          },
+          {
+            "name": "Amazon CloudFront",
+            "data": [115.18, 83.23]
+          },
+          {
+            "name": "Amazon Route 53",
+            "data": [114.69, 63.36]
+          },
+          {
+            "name": "Amazon ElastiCache",
+            "data": [69.35, 63.36]
+          },
+          {
+            "name": "Amazon GuardDuty",
+            "data": [45.77, 62]
+          },
+          {
+            "name": "Amazon Simple Storage Service",
+            "data": [32.21, 62]
+          },
+          {
+            "name": "Amazon EC2 Container Registry (ECR)",
+            "data": [15.84, 48.5]
+          },
+          {
+            "name": "AWS Key Management Service",
+            "data": [10.33, 46.4]
+          },
+          {
+            "name": "AWS CodeCommit",
+            "data": [9, 46.4]
+          },
+          {
+            "name": "AWS Secrets Manager",
+            "data": [7.27, 41.14]
+          },
+          {
+            "name": "AWS WAF",
+            "data": [5.5, 41.14]
+          },
+          {
+            "name": "Amazon Redshift",
+            "data": [5.33, 35.6]
+          },
+          {
+            "name": "AWS Cost Explorer",
+            "data": [1.23, 35.6]
+          },
+          {
+            "name": "Amazon Elastic File System",
+            "data": [0.67, 34.87]
+          },
+          {
+            "name": "Amazon Simple Queue Service",
+            "data": [0.19, 34.87]
+          },
+          {
+            "name": "Amazon API Gateway",
+            "data": [0.19, 31.71]
+          },
+          {
+            "name": "Amazon Simple Notification Service",
+            "data": [0.15, 31.71]
+          },
+          {
+            "name": "AWS Lambda",
+            "data": [0.14, 31.66]
+          },
+          {
+            "name": "Amazon Athena",
+            "data": [0.04, 31.66]
+          },
+          {
+            "name": "AWS Security Hub",
+            "data": [0.03, 20.45]
+          },
+          {
+            "name": "CloudWatch Events",
+            "data": [0.01, 20.45]
+          }
+        ],
+        "xAxis": "month",
+        "yAxis": "cost"
+      }
+    },
+    {
+      "BarGraph": {
+        "title": "Monthly VM Consumption",
+        "type": "column",
+        "stacking": "True",
+        "categories": ["Sep", "Oct"],
+        "data": [
+          {
+            "name": "",
+            "data": [32.21, 221.64]
+          }
+        ],
+        "xAxis": "Month",
+        "yAxis": "Cost"
+      }
+    },
+    {
+      "BarGraph": {
+        "title": "Monthly Consumption Other Services",
+        "type": "column",
+        "stacking": "False",
+        "categories": ["2023-09-01T00:00:00.000Z", "2023-10-01T00:00:00.000Z"],
+        "data": [
+          {
+            "name": "",
+            "data": [1230.07, 5127.73]
+          }
+        ],
+        "xAxis": "Month",
+        "yAxis": "Cost"
+      }
+    },
+    {
+      "BarGraph": {
+        "title": "Monthly Disk Consumption",
+        "type": "column",
+        "stacking": "False",
+        "categories": ["2023-09-01T00:00:00.000Z", "2023-10-01T00:00:00.000Z"],
+        "data": [
+          {
+            "name": "",
+            "data": [6557.82, 25463.16]
+          }
+        ],
+        "xAxis": "Month",
+        "yAxis": "Cost"
+      }
+    },
+    {
+      "BarGraph": {
+        "title": "Monthly Paas Consumption",
+        "type": "column",
+        "stacking": "False",
+        "categories": ["Sep", "Oct"],
+        "data": [
+          {
+            "name": "",
+            "data": [3108.62, 9850.52]
+          }
+        ],
+        "xAxis": "Month",
+        "yAxis": "Cost"
+      }
+    },
+    {
+      "BarGraph": {
+        "title": "Application wise Total Cost",
+        "type": "column",
+        "stacking": true,
+        "categories": ["Sep", "Oct"],
+        "data": [
+          {
+            "name": "-",
+            "data": [1601.51]
+          },
+          {
+            "name": "Prashant Agarwal",
+            "data": [32.61]
+          },
+          {
+            "name": "Application",
+            "data": [324.42]
+          },
+          {
+            "name": "Mpowerminds CRM",
+            "data": [103.07]
+          },
+          {
+            "name": "ABMCP-Schools",
+            "data": [80.01]
+          },
+          {
+            "name": "CSR Software",
+            "data": [363.82]
+          },
+          {
+            "name": "Autoplant",
+            "data": [98.1]
+          },
+          {
+            "name": "Pulp&Fibre",
+            "data": [306.62]
+          },
+          {
+            "name": "Applicatio",
+            "data": [37.58]
+          },
+          {
+            "name": "AB Renewables",
+            "data": [49.64]
+          },
+          {
+            "name": "PROWL",
+            "data": [35.81]
+          },
+          {
+            "name": "ABCPA INT Website",
+            "data": [47.23]
+          },
+          {
+            "name": "Virtual Sensing",
+            "data": [34.98]
+          },
+          {
+            "name": "www.adityabirlaventures.com",
+            "data": [34.13]
+          },
+          {
+            "name": "ABMH UAT Website",
+            "data": [42.64]
+          },
+          {
+            "name": "Tally",
+            "data": [22.37]
+          },
+          {
+            "name": "Aditya Birla Scholars website",
+            "data": [61.63]
+          },
+          {
+            "name": "ALM summit",
+            "data": [28.59]
+          },
+          {
+            "name": "CSR Softwar",
+            "data": [98.1]
+          },
+          {
+            "name": "ABMCPL VAPT Jump server",
+            "data": [73.9]
+          },
+          {
+            "name": "ABMCPL-Schools",
+            "data": [26.62]
+          },
+          {
+            "name": "Aditya Birla Memorial Hospital",
+            "data": [10.43]
+          },
+          {
+            "name": "Aditya Birla Scholars website",
+            "data": [0.56]
+          },
+          {
+            "name": "ABMH",
+            "data": [26.46]
+          },
+          {
+            "name": "DNA-DBX",
+            "data": [13.23]
           }
         ],
         "xAxis": "day",
