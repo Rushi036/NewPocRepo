@@ -220,7 +220,11 @@
       "AWS_ResourceGRP": "",
       "AWS_Region": "Asia-Center",
       "chartOrder": {
-        "Azure": {},
+        "Azure": {
+          "Resource Group Distribution": true,
+          "Application Wise Cost Distribution ": true,
+          "Data Allocation Tags": true
+        },
         "AWS": {}
       }
     }

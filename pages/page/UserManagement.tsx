@@ -15,7 +15,7 @@ const UserManagement = () => {
   const [selectedRowData, setSelectedRowData] = useState<any>(null);
 
   const handleViewDetailsClick = (rowData: any) => {
-    console.log("----------------", rowData);
+    // console.log("----------------", rowData);
     setSelectedRowData(rowData);
     setIsViewModalOpen(true);
   };
@@ -114,9 +114,9 @@ const UserManagement = () => {
   }
 
   const handleUpload = () => {
-    console.log("userdata", userData);
-    console.log("subscription", subscriptionDetail);
-    console.log("contact", contactDetails);
+    // console.log("userdata", userData);
+    // console.log("subscription", subscriptionDetail);
+    // console.log("contact", contactDetails);
 
     const formData = {
       businessName: userData.businessName,
@@ -134,7 +134,7 @@ const UserManagement = () => {
       })),
     };
 
-    console.log("payload", formData);
+    // console.log("payload", formData);
   };
   const getFilteredSubscriptions = (cloudType: any) => {
     return selectedRowData.subscriptions.filter(

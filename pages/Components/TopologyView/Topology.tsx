@@ -370,7 +370,7 @@ function Topology(props: any) {
                   position: "bottom-right",
                   autoClose: 1000,
                   onClose: () => {
-                    router.push("/Components/AssetsForAdmin");
+                    router.push("/page/AssetsForAdmin");
                   },
                 });
               });
@@ -399,7 +399,7 @@ function Topology(props: any) {
                   position: "bottom-right",
                   autoClose: 1000,
                   onClose: () => {
-                    router.push("/Components/AssetsForAdmin");
+                    router.push("/page/AssetsForAdmin");
                   },
                 });
               });
@@ -436,7 +436,7 @@ function Topology(props: any) {
                 position: "bottom-right",
                 autoClose: 1000,
                 onClose: () => {
-                  router.push("/Components/AssetsForAdmin");
+                  router.push("/page/AssetsForAdmin");
                 },
               });
             });

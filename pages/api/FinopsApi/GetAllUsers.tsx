@@ -1,10 +1,10 @@
-import { finopsBaseUrl, finopsServerBaseUrl } from "@/const";
+import { finopsBaseUrl, finopsServerBaseUrl, localHostBaseUrl } from "@/const";
 import { useState } from "react";
 
 export const getAllUsers = async () => {
   let retData: any;
   // console.log("details in  api", cloud);
-  const res = await fetch("http://localhost:9201/all", {
+  const res = await fetch(`${finopsServerBaseUrl}/all`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

@@ -69,7 +69,7 @@ const Sidebar = () => {
           {uRole == "ADMIN" ? (
             <li className="hs-accordion" id="users-accordion">
               <Link
-                href="/Components/AssetsForAdmin"
+                href="/page/AssetsForAdmin"
                 className={`flex items-center gap-x-3.5 py-2 px-2.5 text-base
               text-slate-700 rounded-md hover:bg-gray-100
               ${activeLink === 1 ? "bg-gray-100" : ""}`}
@@ -86,7 +86,7 @@ const Sidebar = () => {
           ) : (
             <li className="hs-accordion" id="users-accordion">
               <Link
-                href="/Components/Assets"
+                href="/page/Assets"
                 className={`flex items-center gap-x-3.5 py-2 px-2.5 text-base
               text-slate-700 rounded-md hover:bg-gray-100
               ${activeLink === 1 ? "bg-gray-100" : ""}`}
@@ -104,7 +104,7 @@ const Sidebar = () => {
           {uRole == "ADMIN" && (
             <li>
               <Link
-                href="/Components/UserManagement"
+                href="/page/UserManagement"
                 className={`flex items-center gap-x-3.5 py-2 px-2.5 text-base
               text-slate-700 rounded-md hover:bg-gray-100
               ${activeLink === 2 ? "bg-gray-100" : ""}`}
@@ -122,7 +122,7 @@ const Sidebar = () => {
           {uRole != "ADMIN" && (
             <li>
               <Link
-                href="/Components/Observability"
+                href="/page/Observability"
                 className={`flex items-center gap-x-3.5 py-2 px-2.5 text-base
               text-slate-700 rounded-md hover:bg-gray-100
               ${activeLink === 2 ? "bg-gray-100" : ""}`}

@@ -29,47 +29,47 @@ const Login = () => {
   const handlePasswordChange = (e: any) => {
     setPassword(e.target.value);
   };
-  console.log("isloggedin", isLoggedIn);
+  // console.log("isloggedin", isLoggedIn);
   //----------------------SSO LOGIN CODE ------------------------------------------------
 
   const request = {
     scopes: ["user.read", "user.readbasic.all"],
   };
 
-  const handleSignIn = () => {
-    instance
-      .loginPopup(request)
-      .then((response: any) => {
-        // getEmployeesImages(response.accessToken);
-        // //console.log(response.accessToken);
-        sessionStorage.setItem("accessTokenMSAL", response.accessToken);
-        // if (isAuthenticated) {
-        //   router.push("/page/Dashboard/Dashboard");
-        // }
-      })
-      .catch((error: any) => {
-        //console.log("Error:", error);
-      });
-  };
-  console.log(isAuthenticated);
+  // const handleSignIn = () => {
+  //   instance
+  //     .loginPopup(request)
+  //     .then((response: any) => {
+  //       // getEmployeesImages(response.accessToken);
+  //       // //console.log(response.accessToken);
+  //       sessionStorage.setItem("accessTokenMSAL", response.accessToken);
+  //       // if (isAuthenticated) {
+  //       //   router.push("/page/Dashboard/Dashboard");
+  //       // }
+  //     })
+  //     .catch((error: any) => {
+  //       //console.log("Error:", error);
+  //     });
+  // };
+  // console.log(isAuthenticated);
   useEffect(() => {
     if (isAuthenticated) {
       router.push("/page/Dashboard/Dashboard");
     }
   }, [isAuthenticated]);
-  console.log("isauthenticated", isAuthenticated);
+  // console.log("isauthenticated", isAuthenticated);
   useEffect(() => {
     if (account?.idTokenClaims) {
       let reshead: any;
       const email: string = account.idTokenClaims.preferred_username;
       const name: string = account.idTokenClaims.name;
-      console.log("------------------",account.idTokenClaims);
+      // console.log("------------------",account.idTokenClaims);
       sessionStorage.setItem("userEmail", email);
       sessionStorage.setItem("userName", name);
       const getData = async () => {
         const fetchedData = await getUserRole(email);
         // setUserData(fetchedData);
-        console.log("response data--------------", fetchedData);
+        // console.log("response data--------------", fetchedData);
         // toggleIsLoggedIn(true);
         if (fetchedData) {
           sessionStorage.setItem("userRole", fetchedData.data.role);
@@ -81,30 +81,30 @@ const Login = () => {
 
   //----------------------SSO LOGIN CODE ENDS------------------------------------------------
 
-  console.log("------------", email, password);
-  // const handleSubmit = (e: any) => {
-  //   e.preventDefault();
-  //   async function dataFetch() {
-  //     const data = await login(email, password);
-  //     console.log("------------------", data);
-  //     if (data?.data[0]) {
-  //       sessionStorage.setItem("userEmail", data.data[0].email);
-  //       sessionStorage.setItem("userName", data.data[0].name);
-  //       sessionStorage.setItem("userRole", data.data[0].role);
-  //       if (data.data[0].role != "ADMIN") {
-  //         sessionStorage.setItem("bu_id", data.data[0].id);
-  //       }
-  //       // }else {
-  //       router.push("/page/Dashboard/Dashboard");
-  //     } else {
-  //       window.alert(
-  //         "Login failed. Please check your email and password and try again."
-  //       );
-  //     }
-  //   }
+  // console.log("------------", email, password);
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    async function dataFetch() {
+      const data = await login(email, password);
+      // console.log("------------------", data);
+      if (data?.data[0]) {
+        sessionStorage.setItem("userEmail", data.data[0].email);
+        sessionStorage.setItem("userName", data.data[0].name);
+        sessionStorage.setItem("userRole", data.data[0].role);
+        if (data.data[0].role != "ADMIN") {
+          sessionStorage.setItem("bu_id", data.data[0].id);
+        }
+        // }else {
+        router.push("/page/Dashboard/Dashboard");
+      } else {
+        window.alert(
+          "Login failed. Please check your email and password and try again."
+        );
+      }
+    }
 
-  //   dataFetch();
-  // };
+    dataFetch();
+  };
 
   return (
     <div className="">
@@ -123,7 +123,7 @@ const Login = () => {
             className="mx-auto mb-4"
           />
           <br></br>
-          {/* <h1 className="text-xl font-bold pb-4 leading-tight tracking-tight text-gray-900 ">
+          <h1 className="text-xl font-bold pb-4 leading-tight tracking-tight text-gray-900 ">
             Sign in to your account
           </h1>
           <form className="md:space-y-4 w-full" onSubmit={handleSubmit}>
@@ -165,14 +165,14 @@ const Login = () => {
             >
               Sign in
             </button>
-          </form> */}
-          <button
+          </form>
+          {/* <button
             className="flex flex-row-reverse items-center p-1 btn join-item rounded-none bg-white text-black border-2 "
             onClick={handleSignIn}
           >
             Sign In with Microsoft
             <img src="/microsoft_logo.png" alt="" width={30} height={30} />
-          </button>
+          </button> */}
           <br></br>
         </div>
       </div>

@@ -16,10 +16,12 @@ import {
   getCurrentUserData,
   unpinGraphAPI,
 } from "@/pages/api/FinopsApi/GetGraphFormat";
-import { localHostBaseUrl } from "@/const";
+import { finopsServerBaseUrl, localHostBaseUrl } from "@/const";
 import BarGraph from "@/pages/Components/Charts/BarChart";
 import Table from "@/pages/Components/Charts/Table";
+import ViewCompactIcon from "@mui/icons-material/ViewCompact";
 // import BubbleChartComponent from "./Charts/BubbleChart";
+import CloseIcon from "@mui/icons-material/Close";
 
 const FinOps = () => {
   // const userADID
@@ -38,6 +40,8 @@ const FinOps = () => {
   const [graphFormat, setGraphFormat] = useState<any>(null);
   const [userADID, setUserADID] = useState<any>(null); //this will populate from the session storage
   const [userRole, setUserRole] = useState<any>(null); //this will populate from the session storage
+  const [titleValueCount, setTitleValueCount] = useState(0);
+  const [isOpen, setIsOpen] = useState<any>(false);
   const [value, setValue] = React.useState<any>([
     new Date(time),
     new Date(timeEnd),
@@ -171,12 +175,32 @@ const FinOps = () => {
       setSubscId(res.data[0]?.subsAccId);
     });
   };
-  console.log("sub data", subData);
+  // console.log("sub data", subData);
+  // res && console.log("res data", res.Metric[1].Table[0].data);
   useEffect(() => {
     value && toggleTime(value[0]);
     value && toggleTimeEnd(value[1]);
   }, [value]);
 
+  useEffect(() => {
+    // Function to count the titles and values in Metric array
+    const countTitleValues = () => {
+      let count = 0;
+      if (res && res.Metric) {
+        count = res.Metric.reduce((total: any, metric: any) => {
+          if (metric && metric.title && metric.value) {
+            return total + 1;
+          }
+          return total;
+        }, 0);
+      }
+      return count;
+    };
+
+    // Set the title and value count to the state
+    setTitleValueCount(countTitleValues());
+  }, [res]);
+  // console.log("count", titleValueCount);
   useEffect(() => {
     if (cloud == "Azure") {
       let body = {
@@ -205,7 +229,7 @@ const FinOps = () => {
   }, [cloud, value, subsIndexName, subscId]);
 
   async function fetchDataAzure(body: any) {
-    return await fetch("http://10.47.98.164:9201/AzureFinopsDashboardData", {
+    return await fetch(`${finopsServerBaseUrl}/AzureFinopsDashboardData`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -215,8 +239,8 @@ const FinOps = () => {
   }
 
   async function fetchDataAWS(body: any) {
-    // return await fetch("http://10.47.98.164:9201/AwsFinopsDashboardData", {
-    return await fetch(`${localHostBaseUrl}/awsFinopsDashboardData`, {
+    return await fetch(`${finopsServerBaseUrl}/awsFinopsDashboardData`, {
+      // return await fetch(`${localHostBaseUrl}/awsFinopsDashboardData`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -280,7 +304,12 @@ const FinOps = () => {
             {/* {cloud == "Azure" ? ( */}
             {/* <label className="text-lg">Select Account Id : </label> */}
             {/* // ) : ( */}
-            <label className="text-lg">{cloud == "Azure" ? "Select Subscription Name" : "Select Account Name"} : </label>
+            <label className="text-lg">
+              {cloud == "Azure"
+                ? "Select Subscription Name"
+                : "Select Account Name"}{" "}
+              :{" "}
+            </label>
             {/* )} */}
             {/* <label className="text-lg ">Select Id : </label> */}
             <select
@@ -289,10 +318,12 @@ const FinOps = () => {
               value={subACCName}
             >
               {/* subscription id or account id */}
-              <option>Select Id</option>
+              <option>Select Name</option>
               {subData &&
                 subData.map((e: any, i: any) => (
-                  <option key={i} value={e.subsAccName}>{e.subsAccName}</option>
+                  <option key={i} value={e.subsAccName}>
+                    {e.subsAccName}
+                  </option>
                 ))}
             </select>
           </div>
@@ -312,15 +343,18 @@ const FinOps = () => {
             />
           </div>
         </div>
-        <div className="flex space-x-4 justify-content-between">
+        {/* <div className="flex space-x-4 justify-content-between">
           <div className="card !w-1/2">
-            <b>
-              {/* <span className="flex w-full items-center justify-between">{res && res.Metric ? res.Metric[0]?.title + " " : "No data"} <span className="cursor-pointer" onClick={fullScreenTable}><BsTable /></span></span> */}
-            </b>
- 
-            {/* <br /> */}
-            <span>{cloud == "Azure" ? "Total Subscription Cost" : "Total Account Cost"} - </span>
-            <span>{cloud == "Azure" ? "₹" : "$"} {res && res.Metric ? res.Metric[0]?.value : ""} </span>
+            <span>
+              {cloud == "Azure"
+                ? "Total Subscription Cost"
+                : "Total Account Cost"}{" "}
+              -{" "}
+            </span>
+            <span>
+              {cloud == "Azure" ? "₹" : "$"}{" "}
+              {res && res.Metric ? res.Metric[0]?.value : ""}{" "}
+            </span>
           </div>
           <div className="card !w-1/2">
             <b>
@@ -328,119 +362,264 @@ const FinOps = () => {
             </b>
             <span>{subscId}</span>
           </div>
-        </div>
-        <div className="mt-4 h-auto flex flex-wrap gap-4">
-          {res && res.Graph?.map((e: any, i: any) => {
-            if (e && e.PieChart && e.PieChart.data && Array.isArray(e.PieChart.data) && graphFormat?.chartOrder?.[cloud]?.[e.PieChart.title]) {
-              return (
-                <div key={i} className="card">
-                  <span className="flex justify-end cursor-pointer" onClick={() => unpinGraph(e.PieChart.title)}>
-                    <BsPinAngleFill />
-                  </span>
-                  <PieChartComponent id={i} data={e.PieChart} />
-                </div>
-              );
-            } else if (e && e.LineChart && e.LineChart.data && Array.isArray(e.LineChart.data) && graphFormat?.chartOrder?.[cloud]?.[e.LineChart.title]) {
-              return (
-                <div
-                  key={i}
-                  className={
-                    e.LineChart.series?.data?.length >= 20
-                      ? "card !min-w-full"
-                      : "card"
-                  }
-                >
-                  <span className="flex justify-end cursor-pointer" onClick={() => unpinGraph(e.LineChart.title)}>
-                    <BsPinAngleFill />
-                  </span>
-                  <LineChartComponent id={i} data={e.LineChart} />
-                </div>
-              );
-            }
-            else if (e && e.BarGraph && e.BarGraph.data && Array.isArray(e.BarGraph.data) && graphFormat?.chartOrder?.[cloud]?.[e.BarGraph.title]) {
-              return (
-                <div
-                  key={i}
-                  className={
-                    e.BarGraph.data.length >= 8
-                      ? "card !min-w-full"
-                      : "card"
-                  }
-                >
-                  <span className="flex justify-end cursor-pointer" onClick={() => unpinGraph(e.BarGraph.title)}>
-                    <BsPinAngleFill />
-                  </span>
-                  <BarGraph id={i} date={value} data={e.BarGraph} />
-                </div>
-              );
-            }
- 
-          })}
- 
- 
-          {res && res.Graph?.map((e: any, i: any) => {
-            if (e && e.PieChart && e.PieChart.data && Array.isArray(e.PieChart.data) && !graphFormat.chartOrder?.[cloud]?.[e.PieChart.title]) {
-              return (
-                <div key={i} className="card">
-                  <span className="flex justify-end cursor-pointer" onClick={() => pinGraph(e.PieChart.title)}>
-                    <BsPinAngle />
-                  </span>
-                  <PieChartComponent id={i} data={e.PieChart} />
-                </div>
-              );
-            } else if (e && e.LineChart && e.LineChart.data && Array.isArray(e.LineChart.data) && !graphFormat.chartOrder?.[cloud]?.[e.LineChart.title]) {
-              return (
-                <div
-                  key={i}
-                  className={
-                    e.LineChart.series?.data?.length >= 10
-                      ? "card !min-w-full"
-                      : "card"
-                  }
-                >
-                  <span className="flex justify-end cursor-pointer" onClick={() => pinGraph(e.LineChart.title)}>
-                    <BsPinAngle />
-                  </span>
-                  <LineChartComponent id={i} data={e.LineChart} />
-                </div>
-              );
-            }
-            else if (e && e.BarGraph && e.BarGraph.data && Array.isArray(e.BarGraph.data) && !graphFormat.chartOrder?.[cloud]?.[e.BarGraph.title]) {
-              return (
-                <div
-                  key={i}
-                  className={
-                    e.BarGraph.data.length >= 8
-                      ? "card !min-w-full"
-                      : "card"
-                  }
-                >
-                  <span className="flex justify-end cursor-pointer" onClick={() => pinGraph(e.BarGraph.title)}>
-                    <BsPinAngle />
-                  </span>
-                  <BarGraph id={i} date={value} data={e.BarGraph} />
-                </div>
-              );
-            }
-          })}
- 
-          {res && res.Table?.map((e: any, i: any) => {
-            return (
-              <>
-                <div key={i} className="card">
-                  <Table data={e} />
-                </div>
-              </>
-            )
-          })}
+        </div> */}
+        <div className="flex flex-wrap gap-4">
+          {/* Conditional rendering based on titleValueCount */}
+          <div className="card w-full md:w-1/2">
+            <b>Subscription Id : </b>
+            <span>{subscId}</span>
+          </div>
+          {titleValueCount >= 1 && (
+            <div className="card flex w-full md:w-1/2 justify-content-between">
+              <div>
+                <b>{res.Metric && res.Metric[0] && res.Metric[0].title} : </b>
+                <span>
+                  {cloud === "Azure" ? "₹" : ""}
+                  {res.Metric && res.Metric[0] && res.Metric[0].value}
+                </span>
+              </div>
 
-          {/*
-          {tableData.Table?.map((e: any, i: any) => {
-            // <Table data={e} />
-            <div>hi</div>
-          })} */}
+              <span className="ml-auto">
+                {cloud === "Azure" ? (
+                  <button className="" onClick={() => setIsOpen(true)}>
+                    <ViewCompactIcon />
+                  </button>
+                ) : (
+                  ""
+                )}
+              </span>
+            </div>
+          )}
+          {titleValueCount >= 2 && (
+            <div className="card w-full md:w-1/2">
+              <b>{res.Metric && res.Metric[1] && res.Metric[1].title} : </b>
+              <span>
+                {cloud === "Azure" ? "₹" : "$"}
+                {res.Metric && res.Metric[1] && res.Metric[1].value}
+              </span>
+            </div>
+          )}
+
+          {titleValueCount === 3 && (
+            <div className="card w-full md:w-1/2">
+              <b>{res.Metric && res.Metric[2] && res.Metric[2].title} : </b>
+              <span>
+                {cloud === "Azure" ? "₹" : "$"}
+                {res.Metric && res.Metric[2] && res.Metric[2].value}
+              </span>
+            </div>
+          )}
         </div>
- 
+
+        <div className="mt-4 h-auto flex flex-wrap gap-4">
+          {res &&
+            res.Graph?.map((e: any, i: any) => {
+              if (
+                e &&
+                e.PieChart &&
+                e.PieChart.data &&
+                Array.isArray(e.PieChart.data) &&
+                graphFormat?.chartOrder?.[cloud]?.[e.PieChart.title]
+              ) {
+                return (
+                  <div key={i} className="card">
+                    <span
+                      className="flex justify-end cursor-pointer"
+                      onClick={() => unpinGraph(e.PieChart.title)}
+                    >
+                      <BsPinAngleFill />
+                    </span>
+                    <PieChartComponent id={i} data={e.PieChart} />
+                  </div>
+                );
+              } else if (
+                e &&
+                e.LineChart &&
+                e.LineChart.data &&
+                Array.isArray(e.LineChart.data) &&
+                graphFormat?.chartOrder?.[cloud]?.[e.LineChart.title]
+              ) {
+                return (
+                  <div
+                    key={i}
+                    className={
+                      e.LineChart.series?.data?.length >= 20
+                        ? "card !min-w-full"
+                        : "card"
+                    }
+                  >
+                    <span
+                      className="flex justify-end cursor-pointer"
+                      onClick={() => unpinGraph(e.LineChart.title)}
+                    >
+                      <BsPinAngleFill />
+                    </span>
+                    <LineChartComponent id={i} data={e.LineChart} />
+                  </div>
+                );
+              } else if (
+                e &&
+                e.BarGraph &&
+                e.BarGraph.data &&
+                Array.isArray(e.BarGraph.data) &&
+                graphFormat?.chartOrder?.[cloud]?.[e.BarGraph.title]
+              ) {
+                return (
+                  <div
+                    key={i}
+                    className={
+                      e.BarGraph.data.length >= 8 ? "card !min-w-full" : "card"
+                    }
+                  >
+                    <span
+                      className="flex justify-end cursor-pointer"
+                      onClick={() => unpinGraph(e.BarGraph.title)}
+                    >
+                      <BsPinAngleFill />
+                    </span>
+                    <BarGraph id={i} date={value} data={e.BarGraph} />
+                  </div>
+                );
+              }
+            })}
+
+          {res &&
+            res.Graph?.map((e: any, i: any) => {
+              if (
+                e &&
+                e.PieChart &&
+                e.PieChart.data &&
+                Array.isArray(e.PieChart.data) &&
+                !graphFormat.chartOrder?.[cloud]?.[e.PieChart.title]
+              ) {
+                return (
+                  <div key={i} className="card">
+                    <span
+                      className="flex justify-end cursor-pointer"
+                      onClick={() => pinGraph(e.PieChart.title)}
+                    >
+                      <BsPinAngle />
+                    </span>
+                    <PieChartComponent id={i} data={e.PieChart} />
+                  </div>
+                );
+              } else if (
+                e &&
+                e.LineChart &&
+                e.LineChart.data &&
+                Array.isArray(e.LineChart.data) &&
+                !graphFormat.chartOrder?.[cloud]?.[e.LineChart.title]
+              ) {
+                return (
+                  <div
+                    key={i}
+                    className={
+                      e.LineChart.series?.data?.length >= 10
+                        ? "card !min-w-full"
+                        : "card"
+                    }
+                  >
+                    <span
+                      className="flex justify-end cursor-pointer"
+                      onClick={() => pinGraph(e.LineChart.title)}
+                    >
+                      <BsPinAngle />
+                    </span>
+                    <LineChartComponent id={i} data={e.LineChart} />
+                  </div>
+                );
+              } else if (
+                e &&
+                e.BarGraph &&
+                e.BarGraph.data &&
+                Array.isArray(e.BarGraph.data) &&
+                !graphFormat.chartOrder?.[cloud]?.[e.BarGraph.title]
+              ) {
+                return (
+                  <div
+                    key={i}
+                    className={
+                      e.BarGraph.data.length >= 8 ? "card !min-w-full" : "card"
+                    }
+                  >
+                    <span
+                      className="flex justify-end cursor-pointer"
+                      onClick={() => pinGraph(e.BarGraph.title)}
+                    >
+                      <BsPinAngle />
+                    </span>
+                    <BarGraph id={i} date={value} data={e.BarGraph} />
+                  </div>
+                );
+              }
+            })}
+
+          {res &&
+            res.Table &&
+            res.Table?.map((e: any, i: any) => {
+              return (
+                <>
+                  <div key={i} className="card">
+                    <Table data={e} />
+                  </div>
+                </>
+              );
+            })}
+
+          {isOpen && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+              <div className="w-full max-w-3xl mx-auto my-12 bg-white rounded-lg shadow-lg overflow-y-auto max-h-screen">
+                <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                  <div className="bg-red-800 px-4 py-2 flex items-center justify-between">
+                    <h3 className="text-xl text-white">
+                      Service wise cost for Each Subscription
+                    </h3>
+                    <button
+                      className="p-2 text-xl text-white"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <CloseIcon />
+                    </button>
+                  </div>
+                  <div className="p-6">
+                    <div className="relative overflow-x-auto">
+                      <table className="w-full text-sm text-center text-gray-800">
+                        <thead className="text-xs uppercase bg-gray-200">
+                          <tr>
+                            <th scope="col" className="px-2 py-3">
+                              Month
+                            </th>
+                            <th scope="col" className="px-2 py-3">
+                              Application Name
+                            </th>
+                            <th scope="col" className="px-2 py-3">
+                              Cost (₹)
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {res &&
+                            res.Metric[1].Table[0].data.map(
+                              (item: any, index: number) => (
+                                <tr
+                                  key={index}
+                                  className="bg-white border-b text-center"
+                                >
+                                  <td className="px-2 py-3">{item[0][1]}</td>
+                                  <td className="px-2 py-3">{item[1][1]}</td>
+                                  <td className="px-2 py-3">{item[2][1]}</td>
+                                </tr>
+                              )
+                            )}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -72,7 +72,7 @@ const BarGraph = (props: any) => {
           series: props.data.data,
         };
 
-        console.log(props.data);
+        // console.log(props.data);
 
         Highcharts.chart(chartContainer.current, options);
       }
