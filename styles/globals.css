@@ -394,3 +394,7 @@ background-color: white;
 border-radius: 0.75rem;
   
 }
+
+.css-13xfq8m-MuiTabPanel-root{
+  padding: 0 !important;
+}

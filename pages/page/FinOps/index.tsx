@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { finOps } from "../../api/finOps";
 import { DateRangePicker } from "rsuite";
 import moment from "moment";
-import fun, { useAppContext } from "../../Components/AppContext";
+import { useAppContext } from "../../Components/AppContext";
 import "rsuite/dist/rsuite.min.css";
 import PieChartComponent from "../../Components/Charts/PieChart";
-import StackChartComponent from "../../Components/Charts/StackChart";
 import LineChartComponent from "../../Components/Charts/LineChart";
-import AzureData from "./Azure.json";
-import AWSData from "./AWS.json";
+// import AzureData from "./Azure.json";
+// import AWSData from "./AWS.json";
 import { BsPinAngleFill, BsPinAngle } from "react-icons/bs";
 import { getSubscriptionIds } from "@/pages/api/FinopsApi/GetSubscriptionId";
 import { getAllSubscriptions } from "@/pages/api/FinopsApi/GetAllSubscriptions";

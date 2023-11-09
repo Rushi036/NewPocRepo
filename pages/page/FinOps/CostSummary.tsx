@@ -163,26 +163,22 @@ const CostSummary = () => {
             onChange={CloudChange}
             centered
             orientation="vertical"
+            className=""
           >
             <Tab
               value={"aws"}
               label="AWS"
-              className="bg-white border border-[#D5C5EE] border-solid !text-black !rounded-lg mb-2 !max-h-[5rem] !h-[5rem]"
+              className="bg-white border border-[#D5C5EE] border-solid !text-black !rounded-lg !mb-4 !max-h-[5rem] !h-[5rem]"
             />
             <Tab
               value={"azure"}
               label="Azure"
-              className="border border-[#D5C5EE] bg-white border-solid !text-black !rounded-lg mb-2 !max-h-[5rem] !h-[5rem]"
-            />
-            <Tab
-              value={"google"}
-              label="Google"
-              className="border border-[#D5C5EE] bg-white border-solid !text-black !rounded-lg mb-2 !max-h-[5rem] !h-[5rem]"
+              className="border border-[#D5C5EE] bg-white border-solid !text-black !rounded-lg !mb-4 !max-h-[5rem] !h-[5rem]"
             />
             <Tab
               value={"4"}
               label="Default"
-              className="border border-[#D5C5EE] bg-white border-solid !text-black !rounded-lg mb-2 !max-h-[5rem] !h-[5rem]"
+              className="border border-[#D5C5EE] bg-white border-solid !text-black !rounded-lg !mb-4 !max-h-[5rem] !h-[5rem]"
             />
           </Tabs>
         </div>
@@ -231,30 +227,6 @@ const CostSummary = () => {
               <div className="pl-4 mb-4 w-[50%]">
                 <div className="bg-white p-4 rounded-lg h-full">
                   <PieChartComponent id={"new8"} data={dummyData8} />
-                </div>
-              </div>
-            </div>
-          </TabPanel>
-          <TabPanel value="google">
-            <div className="w-full flex flex-wrap">
-              <div className="pl-4 mb-4 w-[50%]">
-                <div className="bg-white p-4 rounded-lg h-full">
-                  <LineChartComponent id={"new5"} data={dummyData1} />
-                </div>
-              </div>
-              <div className="pl-4 mb-4 w-[50%]">
-                <div className="bg-white p-4 rounded-lg h-full">
-                  <BarGraph id={"new6"} date={""} data={dummyData2} />
-                </div>
-              </div>
-              <div className="pl-4 mb-4 w-[50%]">
-                <div className="bg-white p-4 rounded-lg h-full">
-                  <BarGraph id={"new7"} date={""} data={dummyData3} />
-                </div>
-              </div>
-              <div className="pl-4 mb-4 w-[50%]">
-                <div className="bg-white p-4 rounded-lg h-full">
-                  <PieChartComponent id={"new8"} data={dummyData4} />
                 </div>
               </div>
             </div>
