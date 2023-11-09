@@ -344,31 +344,31 @@ const FinOps = () => {
     await unpinGraphAPI(graphFormat?.id, data).then(getGraphFormat);
   }
 
-  function fullScreenTable() {
-    let myDocument: any = document.documentElement;
-    if (myDocument.requestFullscreen) {
-      myDocument.requestFullscreen();
-    } else if (myDocument.msRequestFullscreen) {
-      myDocument.msRequestFullscreen();
-    } else if (myDocument.mozRequestFullScreen) {
-      myDocument.mozRequestFullScreen();
-    } else if (myDocument.webkitRequestFullscreen) {
-      myDocument.webkitRequestFullscreen();
-    }
-  }
+//   function fullScreenTable() {
+//     let myDocument: any = document.documentElement;
+//     if (myDocument.requestFullscreen) {
+//       myDocument.requestFullscreen();
+//     } else if (myDocument.msRequestFullscreen) {
+//       myDocument.msRequestFullscreen();
+//     } else if (myDocument.mozRequestFullScreen) {
+//       myDocument.mozRequestFullScreen();
+//     } else if (myDocument.webkitRequestFullscreen) {
+//       myDocument.webkitRequestFullscreen();
+//     }
+//   }
 
-  function closeFullScreenTable() {
-    const doc: any = document;
-    if (doc.exitFullscreen) {
-      doc.exitFullscreen();
-    } else if (doc.msexitFullscreen) {
-      doc.msexitFullscreen();
-    } else if (doc.mozExitFullscreen) {
-      doc.mozExitFullscreen();
-    } else if (doc.webkitExitFullscreen) {
-      doc.webkitExitFullscreen();
-    }
-  }
+//   function closeFullScreenTable() {
+//     const doc: any = document;
+//     if (doc.exitFullscreen) {
+//       doc.exitFullscreen();
+//     } else if (doc.msexitFullscreen) {
+//       doc.msexitFullscreen();
+//     } else if (doc.mozExitFullscreen) {
+//       doc.mozExitFullscreen();
+//     } else if (doc.webkitExitFullscreen) {
+//       doc.webkitExitFullscreen();
+//     }
+//   }
 
   const [value1, setValue1] = useState("1");
 
