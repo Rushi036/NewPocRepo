@@ -10,7 +10,7 @@ const BarGraph = (props: any) => {
       const options: any = {
         chart: {
           // height: (9 / 16 * 100) + '%',
-          height: 400,
+          height: 500,
           type: props?.data?.type || "column",
         },
         title: {
@@ -44,15 +44,14 @@ const BarGraph = (props: any) => {
           },
         },
         legend: {
-          // align: "left",
-          // x: 70,
-          // verticalAlign: "top",
-          // y: 70,
-          // floating: true,
-          // backgroundColor: "white",
-          // borderColor: "#CCC",
-          // borderWidth: 1,
-          // shadow: false,
+          layout: "horizontal",
+          align: "center",
+          verticalAlign: "bottom",
+          itemStyle: {
+            fontSize: "10px", 
+          },
+          itemWidth: 150,
+          itemDistance: 5,
         },
         tooltip: {
           headerFormat: "<b>{point.x}</b><br/>",

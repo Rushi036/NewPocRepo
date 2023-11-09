@@ -3,7 +3,7 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { getUnBlendedCost } from "@/pages/api/FinopsApi/GetUnblendedCost";
 
-const LineChartComponent = (props: any) => {
+const SmallLineChartComponent = (props: any) => {
   const chartContainer = useRef(null);
 
   useEffect(() => {
@@ -92,7 +92,7 @@ const LineChartComponent = (props: any) => {
         series: newData,
 
         chart: {
-          height: 500, // Adjust the height of the chart based on the reports prop
+          height: 245, // Adjust the height of the chart based on the reports prop
         },
 
         responsive: {
@@ -117,7 +117,7 @@ const LineChartComponent = (props: any) => {
     }
   }, [props.data, props.reports]);
 
-  return <div ref={chartContainer} style={{ height: "500px" }} />;
+  return <div ref={chartContainer}  />;
 };
 
-export default LineChartComponent;
+export default SmallLineChartComponent;

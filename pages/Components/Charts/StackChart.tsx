@@ -42,15 +42,14 @@ const StackChartComponent = (props: any) => {
           },
         },
         legend: {
-          // align: "left",
-          // x: 70,
-          // verticalAlign: "top",
-          // y: 70,
-          // floating: true,
-          // backgroundColor: "white",
-          // borderColor: "#CCC",
-          // borderWidth: 1,
-          // shadow: false,
+          layout: "horizontal",
+          align: "center",
+          verticalAlign: "bottom",
+          itemStyle: {
+            fontSize: "10px", // Adjust font size of legends
+          },
+          itemWidth: 150, // Set the width of each legend item
+          itemDistance: 5,
         },
         tooltip: {
           headerFormat: "<b>{point.x}</b><br/>",
@@ -71,7 +70,7 @@ const StackChartComponent = (props: any) => {
     }
   }, [props.data]); // Empty dependency array ensures the effect runs once after initial render
 
-  return <div ref={chartContainer} style={{ height: "400px" }} />;
+  return <div ref={chartContainer} style={{ height: "500px" }} />;
 };
 
 export default StackChartComponent;

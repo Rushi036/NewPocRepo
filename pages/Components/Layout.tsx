@@ -10,26 +10,26 @@ interface LayoutProps {
   children: ReactNode;
 }
 
-const Footer = () => {
-  const { state, toggleState } = useAppContext();
-  return (
-    <footer
-      className={`px-4 flex footer bg-white bottom-0 text-neutral-content w-full z-10`}
-    >
-      <div className="flex justify-center  w-full items-center h-16">
-        <div className={` flex items-center text-black`}>
-          <p className="mr-2 stroke--black">
-            {" "}
-            &copy;2023 - All Rights Reserved,{" "}
-            <strong className="text-red-800">
-            Aditya Birla Group
-            </strong>
-          </p>
-        </div>
-      </div>
-    </footer>
-  );
-};
+import { memo } from "react";
+
+const Footer = memo(() => (
+  <footer
+    className={`px-4 h-12 footer items-center text-center bg-white bottom-0 text-neutral-content w-full z-10`}
+  >
+    <p className="text-black text-center">
+      <span className="text-xs">&copy; 2023</span>{" "}
+      <strong className="text-red-800 text-xs">
+        Birla Management Centre Services Private Limited (BMCSPL).
+      </strong>{" "}
+      <span className="text-xs">All Rights Reserved.</span>
+    </p>
+    <p className="text-xs text-center">
+      All content, trademarks, logos, and intellectual property on this portal
+      are the property of the Aditya Birla Group and its entities. Any
+      unauthorized use, reproduction, or distribution is strictly prohibited.
+    </p>
+  </footer>
+));
 
 const Layout: React.FC<LayoutProps> = ({ children }: any) => {
   const { state, toggleState } = useAppContext();
@@ -40,7 +40,7 @@ const Layout: React.FC<LayoutProps> = ({ children }: any) => {
       <Sidebar />
       <div className="flex-auto relative h-[100vh] bg-gray-100 overflow-auto">
         <Navbar />
-        <main className="mt-10 overflow-auto p-4 min-h-[calc(100vh-8rem)]">
+        <main className="mt-10 overflow-auto p-4 min-h-[calc(100vh-5.5rem)]">
           {children}
         </main>
         <Footer />

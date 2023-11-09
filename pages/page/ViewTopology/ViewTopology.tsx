@@ -301,11 +301,11 @@ const viewTopology = () => {
       <div className="">
         <div className="flex text-xl px-4 border-b-2 border-slate-400 pb-2 items-center">
           {role != "ADMIN" ? (
-            <Link href="/Components/Assets">
+            <Link href="/page/Assets">
               <ArrowBackIosIcon className="flex items-center h-full" />
             </Link>
           ) : (
-            <Link href="/Components/AssetsForAdmin">
+            <Link href="/page/AssetsForAdmin">
               <ArrowBackIosIcon className="flex items-center h-full" />
             </Link>
           )}

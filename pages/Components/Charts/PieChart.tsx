@@ -19,106 +19,114 @@ const ChartComponent = (props: any) => {
   useEffect(() => {
     // console.log(props.data.data);
     if (props?.data) {
-
       const options: any = {
         chart: {
           plotBackgroundColor: null,
           plotBorderWidth: null,
           plotShadow: false,
-          type: 'pie',
+          type: "pie",
           events: {
-            fullscreenOpen : function() {
-            (this as any).update({
-              plotOptions: {
-                pie: {
-                  size: '400px',
-                  allowPointSelect: true,
-                  cursor: 'pointer',
-                  dataLabels: {
-                    enabled: true,
-                    format: '{point.percentage:.1f} %'
+            fullscreenOpen: function () {
+              (this as any).update({
+                plotOptions: {
+                  pie: {
+                    size: "400px",
+                    allowPointSelect: true,
+                    cursor: "pointer",
+                    dataLabels: {
+                      enabled: true,
+                      format: "{point.percentage:.1f} %",
+                    },
+                    showInLegend: true,
                   },
-                  showInLegend: true
-                }
-              },
-            });
+                },
+              });
+            },
+            fullscreenClose: function () {
+              (this as any).update({
+                plotOptions: {
+                  pie: {
+                    size: "150px",
+                    allowPointSelect: true,
+                    cursor: "pointer",
+                    dataLabels: {
+                      enabled: true,
+                      format: "{point.percentage:.1f} %",
+                    },
+                    showInLegend: true,
+                  },
+                },
+              });
+            },
           },
-          fullscreenClose: function () {
-            (this as any).update({
-              plotOptions: {
-                pie: {
-                  size: '150px',
-                  allowPointSelect: true,
-                  cursor: 'pointer',
-                  dataLabels: {
-                    enabled: true,
-                    format: '{point.percentage:.1f} %'
-                  },
-                  showInLegend: true
-                }
-              },
-            });
-          }
-        }
-      },
+        },
         title: {
           text: props?.data?.title || "",
           align: "left",
         },
         plotOptions: {
           pie: {
-            size: '150px',
+            size: "200px",
             allowPointSelect: true,
-            cursor: 'pointer',
+            cursor: "pointer",
             dataLabels: {
               enabled: true,
-              format: '{point.percentage:.1f} %'
+              format: "{point.percentage:.1f} %",
             },
-            showInLegend: true
-          }
+            showInLegend: true,
+            center: ["50%", "50%"],
+          },
         },
         tooltip: {
           headerFormat: "",
           pointFormat:
-          '<span style="color:{point.color}">\u25CF</span> <b> {point.name}</b><br/>'
-            +
-        `Total: <b>{point.y}</b> ${props?.data?.xAxis || ""}<br/>`,
+            '<span style="color:{point.color}">\u25CF</span> <b> {point.name}</b><br/>' +
+            `Total: <b>{point.y}</b> ${props?.data?.xAxis || ""}<br/>`,
         },
-    lang: {
-      noData: "No Data to Display",
+        lang: {
+          noData: "No Data to Display",
         },
-    noData: {
-      style: {
-        fontWeight: "bold",
-          fontSize: "15px",
+        noData: {
+          style: {
+            fontWeight: "bold",
+            fontSize: "15px",
             color: "#303030",
           },
-    },
-    legend: {
-      enabled: true,
-          // align: 'right',
-          // verticalAlign: 'top',
-          // layout: 'vertical',
         },
-    series: [
-      {
-        type: "pie",
-        minPointSize: 100,
-        innerSize: "40%",
-        zMin: 0,
-        name: "networks",
-        borderRadius: 0,
-        colorByPoint: true,
-        data: props?.data?.data || []
-      }
-    ]
-  }
+        legend: {
+          layout: "horizontal",
+          align: "center",
+          verticalAlign: "bottom",
+          itemStyle: {
+            fontSize: "10px",
+          },
+          itemWidth: 150,
+          itemDistance: 5,
+        },
+        series: [
+          {
+            type: "pie",
+            minPointSize: 100,
+            innerSize: "40%",
+            zMin: 0,
+            name: "networks",
+            borderRadius: 0,
+            colorByPoint: true,
+            data: props?.data?.data || [],
+          },
+        ],
+      };
 
       Highcharts.chart("container-" + props.id, options);
-}
+    }
   }, [props.data]); // Empty dependency array ensures the effect runs once after initial render
-
-return <div id={"container-" + props.id} style={{ height: "400px" }} />;
+  const containerStyle = {
+    height: "500px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  };
+  return <div id={"container-" + props.id} style={containerStyle} />;
 };
 
 export default ChartComponent;

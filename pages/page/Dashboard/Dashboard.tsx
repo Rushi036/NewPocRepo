@@ -37,9 +37,7 @@ const Dashboard = () => {
             <p className="text-green-500 font-bold text-lg">Security Score</p>
 
             <div className="flex flex-col">
-              <span>• Private</span>
-              <span>• AWS</span>
-              <span>• Azure</span>
+              <span>Coming Soon...</span>
             </div>
           </div>
         </div>
@@ -50,8 +48,8 @@ const Dashboard = () => {
             <p className="text-blue-500 font-bold text-lg">Business Service</p>
 
             <div className="flex flex-col">
-              <span className="text-xl">3/5</span>
-              <Loader percent={(3 / 5) * 100} color={"blue"} />
+              <span>Coming Soon...</span>
+              {/* <Loader percent={(3 / 5) * 100} color={"blue"} /> */}
             </div>
           </div>
         </div>
@@ -62,8 +60,8 @@ const Dashboard = () => {
             <p className="text-pink-500 font-bold text-lg">Managed Asset</p>
 
             <div className="flex flex-col">
-              <span className="text-xl">100/1500</span>
-              <Loader percent={percent} color={"pink"} />
+              <span>Coming Soon...</span>
+              {/* <Loader percent={percent} color={"pink"} /> */}
             </div>
           </div>
         </div>
@@ -74,8 +72,8 @@ const Dashboard = () => {
             <p className="text-orange-500 font-bold text-lg">
               Active Incidents
             </p>
-            <div className="flex flex-col items-center w-full mt-4">
-              <span className=" text-center text-3xl">18</span>
+            <div className="flex flex-col">
+              <span>Coming Soon...</span>
             </div>
           </div>
         </div>
@@ -87,8 +85,8 @@ const Dashboard = () => {
               Active Service Request
             </p>
 
-            <div className="flex flex-col items-center w-full mt-4">
-              <span className=" text-center text-3xl">18</span>
+            <div className="flex flex-col">
+              <span>Coming Soon...</span>
             </div>
           </div>
         </div>

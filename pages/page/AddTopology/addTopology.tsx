@@ -279,14 +279,14 @@ const addTopology = () => {
     await addResourseData(data).then(() => {
       setLoading(false);
       // setRedirectState(true);
-      router.push("/Components/Assets");
+      router.push("/page/Assets");
     });
   }
 // console.log("serverdata",serverData)
   return (
     <>
       <div className="text-xl px-4 border-b-2 border-slate-400 pb-2 flex items-center">
-        <Link href="/Components/Assets">
+        <Link href="/page/Assets">
           <ArrowBackIosIcon className="flex items-center h-full" />
         </Link>
 

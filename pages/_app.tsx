@@ -9,6 +9,8 @@ import { useState, useEffect } from "react";
 import { MsalProvider } from "@azure/msal-react";
 import NextNProgress from 'nextjs-progressbar';
 import { PublicClientApplication } from "@azure/msal-browser";
+
+
 export default function App({ Component, pageProps }: any) {
   // Use the layout defined at the page level, if available
   const [isBrowser, setIsBrowser] = useState(false);
