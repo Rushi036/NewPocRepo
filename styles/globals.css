@@ -398,3 +398,42 @@ border-radius: 0.75rem;
 .css-13xfq8m-MuiTabPanel-root{
   padding: 0 !important;
 }
+
+.circle-loader{
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+  top: 0;
+  left: 0;
+  height: 100dvh;
+  width: 100dvw;
+  background: rgb(0, 0, 0, 0.3);
+  backdrop-filter: blur(2px);
+  z-index: 10000;
+}
+.circle-loader::after{
+  content: "Loading";
+  color: white;
+  font-size: 18px;
+}
+
+
+.circle-loader::before{
+  content: "";
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 5px solid white;
+  border-bottom-color: transparent;
+  animation: loader 1s infinite;
+}
+@keyframes loader {
+  0%{
+    transform: rotateZ(0deg);
+  }100%{
+    transform: rotateZ(360deg);
+  }
+}
