@@ -33,9 +33,9 @@ const SmallLineChartComponent = (props: any) => {
             const formattedDate = isValidMonth
               ? x[0] // If it's a valid month name, use it as-is
               : new Date(x[0]).toLocaleString("en-US", {
-                  month: "short",
-                  day: "2-digit",
-                });
+                month: "short",
+                day: "2-digit",
+              });
 
             return [formattedDate, x[1]];
           });
@@ -48,12 +48,19 @@ const SmallLineChartComponent = (props: any) => {
           align: "left",
         },
 
-        yAxis: {
-          title: {
-            text: props.data.yAxis || "",
+        yAxis: [
+          {
+            title: {
+              text: props.data.firstYAxis || "Rupees",
+            },
           },
-        },
-
+          {
+            title: {
+              text: props.data.secondYAxis || "Dollar",
+            },
+            opposite: true, // Place this y-axis on the opposite side
+          },
+        ],
         xAxis: {
           title: {
             text: props.data.xAxis || "",
@@ -117,7 +124,7 @@ const SmallLineChartComponent = (props: any) => {
     }
   }, [props.data, props.reports]);
 
-  return <div ref={chartContainer}  />;
+  return <div ref={chartContainer} />;
 };
 
 export default SmallLineChartComponent;

@@ -9,6 +9,7 @@ import HighchartsExporting from "highcharts/modules/exporting";
 import HighchartsExportData from "highcharts/modules/export-data";
 import HighchartsAccessibility from "highcharts/modules/accessibility";
 import SmallLineChartComponent from "@/pages/Components/Charts/SmallLinechart";
+import { getReportsDashboard } from "@/pages/api/FinopsApi/getReports";
 
 const Reports = () => {
     useEffect(() => {
@@ -19,33 +20,12 @@ const Reports = () => {
         NoDataToDisplay(Highcharts);
     }, []);
     const [role, setRole] = useState<any>();
-    const data: any = {
-        title: "Consumption Trend",
-        data: [
-            {
-                name: "Azure",
-                data: [
-                    ["1 Oct", 10.0],
-                    ["2 Oct", 95.0],
-                    ["3 Oct", 2.0],
-                    ["4 Oct", 11.0],
-                ],
-            },
-            {
-                name: "AWS",
-                data: [
-                    ["1 Oct", 80.0],
-                    ["2 Oct", 40.0],
-                    ["3 Oct", 70.0],
-                    ["4 Oct", 50.0],
-                ],
-            },
-        ],
-        xAxis: "",
-        yAxis: "",
-    };
+    const [res, setRes] = useState<any>();
     useEffect(() => {
         setRole(sessionStorage.getItem("userRole"));
+        getReportsDashboard().then((data: any) => {
+            setRes(data.data)
+        })
     }, []);
     return (
         <>
@@ -64,10 +44,13 @@ const Reports = () => {
                             <p className="text-red-400 font-bold text-lg">
                                 Total Consumption Monthly
                             </p>
-                            <div className="flex flex-col">
-                                <span>₹12,345.00</span>
-                                <span className="text-slate-500 text-sm">Last Month’s</span>
-                            </div>
+                            {res &&
+                                <div className="flex flex-col">
+                                    <span>AWS - ${res?.Metric[0]?.value?.AWS}</span>
+                                    <span>Azure - ₹{res?.Metric[0]?.value?.Azure}</span>
+                                    {/* <span className="text-slate-500 text-sm">Last Month’s</span> */}
+                                </div>
+                            }
                         </div>
                     </Link>
                 </div>
@@ -83,10 +66,12 @@ const Reports = () => {
                                 Total Consumption Weekly
                             </p>
 
-                            <div className="flex flex-col">
-                                <span>₹12,345.00</span>
-                                <span className="text-slate-500 text-sm">Last Week’s</span>
-                            </div>
+                            {res &&
+                                <div className="flex flex-col">
+                                    <span>AWS - ${res?.Metric[1]?.value?.AWS}</span>
+                                    <span>Azure - ₹{res?.Metric[1]?.value?.Azure}</span>
+                                </div>
+                            }
                         </div>
                     </Link>
                 </div>
@@ -121,11 +106,13 @@ const Reports = () => {
                             <div className="w-[4px] h-full bg-pink-400 absolute left-0 top-0"></div>
                             <p className="text-pink-500 font-bold text-lg">Total Asset</p>
 
-                            <div className="flex flex-row">
-                                <span>1400</span>
-                                <span className="">/1500</span>
-                                <Loader percent={(1400 / 1500) * 100} color={"pink"} />
-                            </div>
+                            {res &&
+                                <div className="flex flex-row">
+                                    <span>{res?.Metric[2]?.value}</span>
+                                    {/* <span className="">/1500</span> */}
+                                    {/* <Loader percent={(1400 / 1500) * 100} color={"pink"} /> */}
+                                </div>
+                            }
                         </div>
                         {/* </Link> */}
                     </div>
@@ -198,13 +185,14 @@ const Reports = () => {
                 </div>
                 <div key={121} className="relative card h-[fit-content] shadow-lg">
                     <div className="!w-[4px] h-full bg-orange-400 absolute left-0 top-0"></div>
-
-                    <SmallLineChartComponent
-                        id={121}
-                        data={data}
-                        reports={true}
-                        titleColor={"rgb(251,146,60)"}
-                    />
+                    {res &&
+                        <SmallLineChartComponent
+                            id={121}
+                            data={res.Graph[0].LineChart} 
+                            reports={true}
+                            titleColor={"rgb(251,146,60)"}
+                        />
+                    }
                 </div>
             </div>
         </>
