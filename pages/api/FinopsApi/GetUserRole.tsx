@@ -1,4 +1,4 @@
-import { finopsBaseUrl, finopsServerBaseUrl } from "@/const";
+import { finopsBaseUrl, finopsServerBaseUrl, localHostBaseUrl } from "@/const";
 import { useState } from "react";
 
 export const getUserRole = async (email: any) => {
@@ -7,6 +7,7 @@ export const getUserRole = async (email: any) => {
 
   const res = await fetch(
     `${finopsServerBaseUrl}/getUserroleByEmail?adId=${email}`,
+    // `${localHostBaseUrl}/getUserroleByEmail?adId=${email}`,
     // `${finopsServerBaseUrl}/GetroleByEmail?emailid=gajanan.mundada%40adityabirla.com`,
 
     {

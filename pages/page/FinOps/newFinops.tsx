@@ -51,7 +51,7 @@ const FinOps = () => {
   const [graphFormat, setGraphFormat] = useState<any>(null);
   const [userADID, setUserADID] = useState<any>(null); //this will populate from the session storage
   const [subsIndexName, setSubsIndexName] = useState<any>();
-
+  const [subsType, setSubsType] = useState<any>();
   const [userRole, setUserRole] = useState<any>(null); //this will populate from the session storage
   const [value, setValue] = React.useState<any>([
     new Date(time),
@@ -217,10 +217,13 @@ const FinOps = () => {
     if (selectedSubAcc) {
       setSubscId(selectedSubAcc.subsAccId);
       setSubsIndexName(selectedSubAcc.subsIndexName);
+      setSubsType(selectedSubAcc.subsType);
     } else {
       setSubscId("");
     }
   };
+  // console.log("type", subsType);
+
   const handleCloudChange = (e: any) => {
     setCloud(e.target.value);
   };
@@ -249,6 +252,7 @@ const FinOps = () => {
         setSubACCName(res?.data[0]?.subsAccName);
         setSubscId(res?.data[0]?.subsAccId);
         setSubsIndexName(res.data[0]?.subsIndexName);
+        setSubsType(res.data[0]?.subsType);
       }
     });
   };
@@ -264,7 +268,9 @@ const FinOps = () => {
         gte: value[0],
         lte: value[1],
         subscription_name: [subACCName],
+        type: subsType, //pass this as new payload
       };
+
       fetchDataAzure(body).then((data) => setRes(data));
     } else {
       let body = {
@@ -279,8 +285,7 @@ const FinOps = () => {
         })
         .then((data) => setRes(data));
     }
-
-  }, [cloud, value,subsIndexName, subscId]);
+  }, [cloud, value, subsIndexName, subsType, subscId]);
 
   async function fetchDataAzure(body: any) {
     let resData: any;

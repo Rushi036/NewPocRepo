@@ -8,17 +8,28 @@ import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { getAllUsers } from "../api/FinopsApi/GetAllUsers";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import EditIcon from "@mui/icons-material/Edit";
 const UserManagement = () => {
   const [data, setData] = useState<any>(null);
   const [isOpen, setIsOpen] = useState<any>(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState<any>(false);
   const [selectedRowData, setSelectedRowData] = useState<any>(null);
+  const [editModalOpen, setEditModalOpen] = useState<any>(false);
 
   const handleViewDetailsClick = (rowData: any) => {
     // console.log("----------------", rowData);
     setSelectedRowData(rowData);
     setIsViewModalOpen(true);
   };
+
+  console.log("selected data", selectedRowData);
+
+  const handleEditDetailsClick = (rowData: any) => {
+    // console.log("----------------", rowData);
+    setSelectedRowData(rowData);
+    setEditModalOpen(true);
+  };
+
   let count = 1;
   const [userData, setUserData] = useState({
     businessName: "",
@@ -33,6 +44,80 @@ const UserManagement = () => {
   const [subscriptionDetail, setSubscriptionDetail] = useState<any>([
     { cloud: "", subsAccName: "", subsAccId: "" },
   ]);
+
+  const [editedUserData, setEditedUserData] = useState({
+    businessName: "",
+    ownerName: "",
+    ownerEmail: "",
+    role: "BE",
+  });
+
+  const [editedContactDetails, setEditedContactDetails] = useState<any>([
+    { contactName: "", contactEmail: "" },
+  ]);
+
+  const [editedSubscriptionDetail, setEditedSubscriptionDetail] = useState<any>(
+    [{ cloud: "", subsAccName: "", subsAccId: "" }]
+  );
+
+  useEffect(() => {
+    if (selectedRowData) {
+      setEditedUserData({
+        businessName: selectedRowData.businessName,
+        ownerName: selectedRowData.userName,
+        ownerEmail: selectedRowData.adId,
+        role: selectedRowData.role,
+      });
+      setEditedContactDetails(selectedRowData.contactDetails);
+      setEditedSubscriptionDetail(selectedRowData.subscriptionDetail);
+    }
+  }, [selectedRowData]);
+
+  const handleEditUserDataChange = (e: any) => {
+    const { name, value } = e.target;
+    setEditedUserData((prevUserData) => ({
+      ...prevUserData,
+      [name]: value,
+    }));
+  };
+
+  const handleEditContactChange = (index: any, event: any) => {
+    const updatedContacts: any = [...editedContactDetails];
+    updatedContacts[index][event.target.name] = event.target.value;
+    setEditedContactDetails(updatedContacts);
+  };
+
+  const handleEditSubscriptionChange = (index: any, event: any) => {
+    const updatedSubscriptions: any = [...editedSubscriptionDetail];
+    updatedSubscriptions[index][event.target.name] = event.target.value;
+    setEditedSubscriptionDetail(updatedSubscriptions);
+  };
+
+  const handleEditAddContact = () => {
+    setEditedContactDetails([
+      ...editedContactDetails,
+      { contactName: "", contactEmail: "" },
+    ]);
+  };
+
+  const handleEditAddSubscription = () => {
+    setEditedSubscriptionDetail([
+      ...editedSubscriptionDetail,
+      { cloud: "", subsAccName: "", subsAccId: "" },
+    ]);
+  };
+
+  const handleEditRemoveContact = (index: any) => {
+    const updatedContacts = [...editedContactDetails];
+    updatedContacts.splice(index, 1);
+    setEditedContactDetails(updatedContacts);
+  };
+
+  const handleEditRemoveSubscription = (index: any) => {
+    const updatedSubscriptions = [...editedSubscriptionDetail];
+    updatedSubscriptions.splice(index, 1);
+    setEditedSubscriptionDetail(updatedSubscriptions);
+  };
 
   const isFormValid = () => {
     const isBusinessNameValid = userData.businessName.trim() !== "";
@@ -107,7 +192,7 @@ const UserManagement = () => {
     dataFetch();
   }, []);
   async function dataFetch() {
-    const res: any = await getAllUsers().then((res:any) => {
+    const res: any = await getAllUsers().then((res: any) => {
       setData(res);
     });
     // setData(res.data.sort());
@@ -141,6 +226,7 @@ const UserManagement = () => {
       (subscription: any) => subscription.cloud === cloudType
     );
   };
+  data && console.log("data", data[0].subscriptions);
   function getContactNames(subsContactADIDs: any, users: any) {
     return subsContactADIDs.map((contactADID: any) => {
       const user = users.find((user: any) => user.adId === contactADID);
@@ -207,27 +293,31 @@ const UserManagement = () => {
                         <td className="px-auto py-3">{count++}</td>
                         <td className="px-auto py-3">{d.businessName}</td>
                         <td className="px-auto py-3">{d.userName}</td>
-                        <td className="px-auto py-3">{d.adId}</td>
-                        <td className="px-auto py-3">
-                          {getContactNames(
-                            Array.from(uniqueContactADIDs),
-                            data
-                          ).map((name: any, index: any) => (
-                            <div key={index}>{name}</div>
-                          ))}
-                        </td>
-
-                        <td className="px-auto py-3">
-                          {Array.from(uniqueContactADIDs).map(
-                            (contact: string, index: number) => (
-                              <div key={index}>{contact}</div>
+                        <td className="px-auto py-3">{d.adId}</td>{" "}
+                        <td className="px-auto py-3"></td>{" "}
+                        <td className="px-auto py-3"></td>
+                        {/* {d.subscriptions &&
+                          d.subscriptions.map((sub: any, subIndex: any) =>
+                            sub.subsContactADIDs.map(
+                              (contact: any, contactIndex: any) => (
+                                <div key={contactIndex}>
+                                  <td className="px-auto py-3">
+                                    {contact.name}
+                                  </td>
+                                  <td className="px-auto py-3">
+                                    {contact.adid}
+                                  </td>
+                                </div>
+                              )
                             )
-                          )}
-                        </td>
-                        <td className="px-auto py-3 space-x-2">
+                          )} */}
+                        <td className="px-auto py-3 space-x-4">
                           <button onClick={() => handleViewDetailsClick(d)}>
                             <VisibilityIcon />
                           </button>
+                          {/* <button onClick={() => handleEditDetailsClick(d)}>
+                            <EditIcon />
+                          </button> */}
                         </td>
                       </tr>
                     );
@@ -243,44 +333,6 @@ const UserManagement = () => {
                   </td>
                 </tr>
               )}
-              {/* <tr className="bg-white border-b text-center">
-                {" "}
-                <td className="px-auto py-3">1</td>
-                <td className="px-auto py-3">ABMCPL</td>
-                <td className="px-auto py-3">Prashant Agarwal</td>
-                <td className="px-auto py-3">prashant.a@adityabirla.com</td>
-                <td className="px-auto py-3">Sanket Doshi</td>
-                <td className="px-auto py-3">sanket.doshi@adityabirla.com</td>
-                <td className="px-auto py-3 text-blue-500">View Details</td>
-              </tr>
-              <tr className="bg-white border-b text-center">
-                {" "}
-                <td className="px-auto py-3">2</td>
-                <td className="px-auto py-3">Birla Carbon</td>
-                <td className="px-auto py-3">Ilango Nadar</td>
-                <td className="px-auto py-3">s.ilanngo@adityabirla.com</td>
-                <td className="px-auto py-3">Sourabh Mane</td>
-                <td className="px-auto py-3">Sourabh.Mane@adityabirla.com</td>
-                <td className="px-auto py-3 text-blue-500">View Details</td>
-              </tr><tr className="bg-white border-b text-center">
-                {" "}
-                <td className="px-auto py-3">3</td>
-                <td className="px-auto py-3">BMCSL</td>
-                <td className="px-auto py-3">Prashant Pandit</td>
-                <td className="px-auto py-3">prashant.pandit@adityabirla.com</td>
-                <td className="px-auto py-3">Rajit Bhat</td>
-                <td className="px-auto py-3">rajit.bhat@adityabirla.com</td>
-                <td className="px-auto py-3 text-blue-500">View Details</td>
-              </tr><tr className="bg-white border-b text-center">
-                {" "}
-                <td className="px-auto py-3">4</td>
-                <td className="px-auto py-3">BMCSPL</td>
-                <td className="px-auto py-3">Vikas Moon</td>
-                <td className="px-auto py-3">Vikas.Moon@adityabirla.com</td>
-                <td className="px-auto py-3">Rajit Bhat</td>
-                <td className="px-auto py-3">rajit.bhat@adityabirla.com</td>
-                <td className="px-auto py-3 text-blue-500">View Details</td>
-              </tr> */}
             </tbody>
           </table>
         </div>
@@ -480,6 +532,127 @@ const UserManagement = () => {
           </div>
         </div>
       )}
+      {editModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          {/* Modal content */}
+          <div className="w-full max-w-3xl mx-auto my-12 bg-white rounded-lg shadow-lg overflow-y-auto max-h-screen">
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+              <div className="bg-red-800 px-4 py-2 flex items-center justify-between">
+                <h3 className="text-xl text-white font-bold">Edit User</h3>
+                <button
+                  className="p-2 text-2xl text-white"
+                  onClick={() => setEditModalOpen(false)}
+                >
+                  Close
+                </button>
+              </div>
+              <div className="p-6">
+                {/* User details input fields */}
+                <input
+                  name="businessName"
+                  type="text"
+                  placeholder="Business Name"
+                  value={editedUserData.businessName}
+                  className="w-full px-4 py-2 border border-gray-300 rounded shadow mb-4"
+                  onChange={handleEditUserDataChange}
+                  required
+                />
+                <input
+                  name="ownerName"
+                  type="text"
+                  placeholder="Owner Name"
+                  value={editedUserData.ownerName}
+                  className="w-full px-4 py-2 border border-gray-300 rounded shadow mb-4"
+                  onChange={handleEditUserDataChange}
+                  required
+                />
+                <input
+                  name="ownerEmail"
+                  type="email"
+                  placeholder="Owner Email"
+                  value={editedUserData.ownerEmail}
+                  className="w-full px-4 py-2 border border-gray-300 rounded shadow mb-6"
+                  onChange={handleEditUserDataChange}
+                  required
+                />
+
+                {/* Subscription details input fields */}
+                {editedSubscriptionDetail &&
+                  editedSubscriptionDetail.map(
+                    (subscription: any, index: any) => (
+                      <div className="grid grid-cols-3 gap-4 mb-2" key={index}>
+                        <select
+                          name="cloud"
+                          value={editedSubscriptionDetail.cloud}
+                          onChange={(e) =>
+                            handleEditSubscriptionChange(index, e)
+                          }
+                          className="w-full px-4 py-2 border border-gray-300 rounded shadow"
+                          required
+                        >
+                          <option value="" disabled>
+                            Select Cloud
+                          </option>
+                          <option value="Azure">Azure</option>
+                          <option value="AWS">AWS</option>
+                        </select>
+                        <input
+                          type="text"
+                          name="subsAccName"
+                          value={editedSubscriptionDetail.subsAccName}
+                          onChange={(e) =>
+                            handleEditSubscriptionChange(index, e)
+                          }
+                          placeholder="Subscription Account Name"
+                          className="w-full px-4 py-2 border border-gray-300 rounded shadow"
+                          required
+                        />
+                        <input
+                          type="text"
+                          name="subsAccId"
+                          value={editedSubscriptionDetail.subsAccId}
+                          onChange={(e) =>
+                            handleEditSubscriptionChange(index, e)
+                          }
+                          placeholder="Subscription Account ID"
+                          className="w-full px-4 py-2 border border-gray-300 rounded shadow"
+                          required
+                        />
+                      </div>
+                    )
+                  )}
+                <div className="mb-6 flex items-center justify-end">
+                  <button
+                    onClick={handleEditAddSubscription}
+                    className="text-blue-500 px-1 py-1 hover:text-blue-700"
+                  >
+                    <AddCircleOutlineIcon />
+                  </button>
+                </div>
+
+                {/* Submit button */}
+                <div className="bg-gray-200 px-4 py-3 flex justify-end">
+                  <button
+                    onClick={() => {
+                      // Handle form submission logic
+                      setIsOpen(false);
+                    }}
+                    className={`text-white px-6 py-2 rounded ${
+                      isFormValid()
+                        ? "bg-red-800 hover:bg-red-900"
+                        : "bg-gray-400 cursor-not-allowed"
+                    }`}
+                    disabled={!isFormValid()}
+                  >
+                    Save Changes
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {isViewModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="w-full max-w-4xl mx-auto my-12 bg-white rounded-lg shadow-lg overflow-y-auto max-h-screen">

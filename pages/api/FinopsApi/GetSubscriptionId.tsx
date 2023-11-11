@@ -5,7 +5,7 @@ export const getSubscriptionIds = async (cloud: any, adid: any) => {
   let retData: any;
   // console.log("details in  api", cloud, adid);
   const res = await fetch(
-    `${finopsServerBaseUrl}/getcloudSubsriptionNamesandIds?cloud=${cloud}&adid=${adid}`,
+    `${finopsServerBaseUrl}/getUserCloudSubsriptionNameandIds?cloud=${cloud}&adid=${adid}`,
     {
       method: "GET",
       headers: {
@@ -20,8 +20,9 @@ export const getSubscriptionIds = async (cloud: any, adid: any) => {
     .then((data) => {
       retData = data;
     })
-    .catch(()=>{retData=[]});
-    ;
+    .catch(() => {
+      retData = [];
+    });
   // console.log(retData);
 
   return retData;

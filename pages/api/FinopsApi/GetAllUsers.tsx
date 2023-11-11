@@ -4,7 +4,7 @@ import { useState } from "react";
 export const getAllUsers = async () => {
   let retData: any;
   // console.log("details in  api", cloud);
-  const res = await fetch(`${finopsServerBaseUrl}/all`, {
+  const res = await fetch(`${localHostBaseUrl}/allOwners`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

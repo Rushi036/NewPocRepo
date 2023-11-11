@@ -21,7 +21,10 @@ const Reports = () => {
   const [role, setRole] = useState<any>();
   const data: any = {
     title: "Consumption Trend",
-    data: [
+    xAxis: "Date",
+    firstYAxis: "Azure(Rupees)",
+    secondYAxis: "AWS(Dollar)",
+    series: [
       {
         name: "Azure",
         data: [
@@ -30,6 +33,7 @@ const Reports = () => {
           ["3 Oct", 2.0],
           ["4 Oct", 11.0],
         ],
+        yAxis: 0, 
       },
       {
         name: "AWS",
@@ -39,11 +43,11 @@ const Reports = () => {
           ["3 Oct", 70.0],
           ["4 Oct", 50.0],
         ],
+        yAxis: 1, 
       },
     ],
-    xAxis: "",
-    yAxis: "",
   };
+
   useEffect(() => {
     setRole(sessionStorage.getItem("userRole"));
   }, []);

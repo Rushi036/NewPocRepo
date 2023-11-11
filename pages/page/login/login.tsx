@@ -70,6 +70,12 @@ const Login = () => {
   //       // console.log("response data--------------", fetchedData.data.role);
   //       if (fetchedData) {
   //         sessionStorage.setItem("userRole", fetchedData.data.role);
+  // sessionStorage.setItem("userName", fetchedData.data.userName);
+  // sessionStorage.setItem("userEmail", fetchedData.data.adId);
+  // sessionStorage.setItem(
+  //           "businessLogo",
+  //           fetchedData.data.businessLogo
+  //         );
   //       }
   //     };
   //     getData();
@@ -78,21 +84,36 @@ const Login = () => {
 
   //----------------------SSO LOGIN CODE ENDS------------------------------------------------
 
-  console.log("------------", email, password);
+  // console.log("------------", email, password);
   const handleSubmit = (e: any) => {
     e.preventDefault();
     async function dataFetch() {
       const data = await login(email, password);
-      console.log("------------------", data);
+      // console.log("------------------", data);
       if (data?.data[0]) {
-        sessionStorage.setItem("userEmail", data.data[0].email);
-        sessionStorage.setItem("userName", data.data[0].name);
-        sessionStorage.setItem("userRole", data.data[0].role);
+        const getData = async () => {
+          const fetchedData = await getUserRole(email);
+          // setUserData(fetchedData);
+          // console.log("response data--------------", fetchedData.data);
+          if (fetchedData) {
+            sessionStorage.setItem("userRole", fetchedData.data.role);
+            sessionStorage.setItem("userName", fetchedData.data.userName);
+            sessionStorage.setItem("userEmail", fetchedData.data.adId);
+            sessionStorage.setItem(
+              "businessLogo",
+              fetchedData.data.businessLogo
+            );
+            router.push("/page/Dashboard/Dashboard");
+          }
+        };
+        getData();
+        // sessionStorage.setItem("userEmail", data.data[0].email);
+        // sessionStorage.setItem("userName", data.data[0].name);
+        // sessionStorage.setItem("userRole", data.data[0].role);
         if (data.data[0].role != "ADMIN") {
           sessionStorage.setItem("bu_id", data.data[0].id);
         }
         // }else {
-        router.push("/page/Dashboard/Dashboard");
       } else {
         window.alert(
           "Login failed. Please check your email and password and try again."

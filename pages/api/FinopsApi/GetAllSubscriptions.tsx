@@ -1,4 +1,4 @@
-import { finopsBaseUrl, finopsServerBaseUrl } from "@/const";
+import { finopsBaseUrl, finopsServerBaseUrl, localHostBaseUrl } from "@/const";
 import { useState } from "react";
 
 export const getAllSubscriptions = async (cloud: any) => {
@@ -6,6 +6,7 @@ export const getAllSubscriptions = async (cloud: any) => {
   // console.log("details in  api", cloud);
   const res = await fetch(
     `${finopsServerBaseUrl}/getAllCloudSubsriptionsNameandIds?cloud=${cloud}`,
+    // `${localHostBaseUrl}/getAllCloudSubsriptionsNameandIds?cloud=${cloud}`,
     {
       method: "GET",
       headers: {
@@ -20,7 +21,9 @@ export const getAllSubscriptions = async (cloud: any) => {
     .then((data) => {
       retData = data;
     })
-    .catch(()=>{retData={}});
+    .catch(() => {
+      retData = {};
+    });
   // console.log(retData);
 
   return retData;

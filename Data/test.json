@@ -1,0 +1,55 @@
+{
+  "Graph": [
+    {
+      "LineChart": {
+        "data": [
+          {
+            "name": "Azure",
+            "data": [
+              ["1 Oct", 10.0],
+              ["2 Oct", 95.0],
+              ["3 Oct", 2.0],
+              ["4 Oct", 11.0]
+            ],
+            "yAxis": 0
+          },
+          {
+            "name": "AWS",
+            "data": [
+              ["1 Oct", 80.0],
+              ["2 Oct", 40.0],
+              ["3 Oct", 70.0],
+              ["4 Oct", 50.0]
+            ],
+            "yAxis": 1
+          }
+        ],
+        "title": "Consumption Trend",
+        "xAxis": "Date",
+        "firstYAxis": "Azure(Rupees)",
+        "secondYAxis": "AWS(Dollar)"
+      }
+    }
+  ],
+
+  "Metric": [
+    {
+      "title": "Total Consumption Monthly",
+      "value": {
+        "AWS": 12000,
+        "Azure": 240000
+      }
+    },
+    {
+      "title": "Total Consumption weekly",
+      "value": {
+        "AWS": 12000,
+        "Azure": 240000
+      }
+    },
+    {
+      "title": "Total Asset ",
+      "value": 1400
+    }
+  ]
+}

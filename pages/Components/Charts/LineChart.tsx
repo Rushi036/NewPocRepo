@@ -14,30 +14,33 @@ const LineChartComponent = (props: any) => {
         props.data.data &&
         props?.data?.data.map((e: any) => {
           let changedData = e.data?.map((x: any) => {
-            const monthNames = [
-              "Jan",
-              "Feb",
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct",
-              "Nov",
-              "Dec",
-            ];
+            if (x) {
+              const monthNames = [
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec",
+              ];
 
-            const isValidMonth = monthNames.includes(x[0]);
-            const formattedDate = isValidMonth
-              ? x[0] // If it's a valid month name, use it as-is
-              : new Date(x[0]).toLocaleString("en-US", {
-                  month: "short",
-                  day: "2-digit",
-                });
+              const isValidMonth = x && monthNames.includes(x[0]);
+              const formattedDate =
+                x && isValidMonth
+                  ? x[0] // If it's a valid month name, use it as-is
+                  : new Date(x && x[0]).toLocaleString("en-US", {
+                      month: "short",
+                      day: "2-digit",
+                    });
 
-            return [formattedDate, x[1]];
+              return [formattedDate, x[1]];
+            }
           });
           return { name: e.name, data: changedData };
         });
