@@ -137,7 +137,7 @@ const Sidebar = () => {
               </Link>
             </li>
           )}
-          <li className="hs-accordion" id="account-accordion">
+          {/* <li className="hs-accordion" id="account-accordion">
             <Link
               href="/page/FinOps"
               className={`flex items-center gap-x-3.5 py-2 px-2.5 text-base
@@ -150,8 +150,8 @@ const Sidebar = () => {
                 FinOps
               </span>
             </Link>
-          </li>
-          <li className="hs-accordion" id="account-accordion">
+          </li> */}
+          {/* <li className="hs-accordion" id="account-accordion">
             <Link
               href="/page/FinOps/newFinops"
               className={`flex items-center gap-x-3.5 py-2 px-2.5 text-base
@@ -164,7 +164,7 @@ const Sidebar = () => {
                 New FinOps
               </span>
             </Link>
-          </li>
+          </li> */}
         </ul>
       </div>
     </>

@@ -44,8 +44,12 @@ const SmallLineChartComponent = (props: any) => {
 
       const options: any = {
         title: {
-          text: props.data.title,
+          text: props.data.title ?? "Consumption Trend",
           align: "left",
+          style: {
+            color: props.titleColor ?? "#000",
+            fontWeight: 'bold'
+          }
         },
 
         yAxis: [

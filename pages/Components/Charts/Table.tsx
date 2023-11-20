@@ -2,18 +2,18 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 const Table = ({ data }: any) => {
     const rowPerPage = 5;
-    const totalRows = data.data?.length;
+    const totalRows = data?.data?.length;
     const totalPages = Math.ceil(totalRows / rowPerPage);
     const [page, setPage] = useState<any>(1)
-    const currentData = data.data?.slice((rowPerPage * page) - rowPerPage, rowPerPage * page)
+    const currentData = data?.data?.slice((rowPerPage * page) - rowPerPage, rowPerPage * page)
     useEffect(()=>{
         setPage(1)
-    },[data.data])
+    },[data?.data])
     return (
         <div>
             <div className="items-center pb-4 px-4">
                 <label className="text-xl font-semibold">
-                    {data.title ? data.title : "Table"}
+                    {data?.title ? data?.title : "Table"}
                 </label>
                 <div className="relative overflow-x-auto mt-6">
                     <table className="w-full text-sm text-center text-gray-800">

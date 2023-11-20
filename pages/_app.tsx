@@ -7,7 +7,7 @@ import { ReactFlowProvider } from "reactflow";
 import { useState, useEffect } from "react";
 // import Theme from "./Components/Theme";
 import { MsalProvider } from "@azure/msal-react";
-import NextNProgress from 'nextjs-progressbar';
+import NextProgress from "next-progress";
 import { PublicClientApplication } from "@azure/msal-browser";
 
 
@@ -30,7 +30,7 @@ export default function App({ Component, pageProps }: any) {
     const getLayout = Component.getLayout || ((page: any) => page);
     return getLayout(
       <MsalProvider instance={pca}>
-        <NextNProgress />
+        <NextProgress options={{ showSpinner: false }} />
         <Component {...pageProps} />
       </MsalProvider>
     );
@@ -41,7 +41,7 @@ export default function App({ Component, pageProps }: any) {
         <AppContextProvider>
           <ReactFlowProvider>
             <Layout>
-              <NextNProgress />
+            <NextProgress options={{ showSpinner: false }} />
               <Component {...pageProps} />
             </Layout>
           </ReactFlowProvider>

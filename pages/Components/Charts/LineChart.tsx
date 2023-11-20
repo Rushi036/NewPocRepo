@@ -43,9 +43,19 @@ const LineChartComponent = (props: any) => {
         });
 
       const options: any = {
+        chart: {
+          animation: false,
+          height: 500, // Adjust the height of the chart based on the reports prop
+          zoomType: "x",
+        },
         title: {
           text: props.data.title,
           align: "left",
+        },
+        tooltip: {
+          crosshairs: true,
+          animation: true,
+          shared: true,
         },
 
         yAxis: {
@@ -90,10 +100,6 @@ const LineChartComponent = (props: any) => {
         },
 
         series: newData,
-
-        chart: {
-          height: 500, // Adjust the height of the chart based on the reports prop
-        },
 
         responsive: {
           rules: [

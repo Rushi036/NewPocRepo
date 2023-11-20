@@ -43,7 +43,7 @@
       "name": "Rajit Bhat",
       "email": "rajit.bhat@adityabirla.com",
       "password": "abg@123",
-      "role": "BE"
+      "role": "ADMIN"
     },
     {
       "id": 3,
@@ -71,9 +71,9 @@
     {
       "id": 4,
       "name": "UTCL",
-      "email": "ABG4@gmail.com",
+      "email": "bhuwan.phuloria@adityabirla.com",
       "password": "abg@123",
-      "role": "BU"
+      "role": "BE"
     },
     {
       "id": 5,
@@ -223,8 +223,7 @@
       "AWS_Region": "Asia-Center",
       "chartOrder": {
         "Azure": {
-          "Application Wise Cost Distribution ": true,
-          "Data Usage By Application": true
+          "Cost Allocation Tags": true
         },
         "AWS": {}
       }

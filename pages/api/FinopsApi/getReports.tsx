@@ -3,5 +3,10 @@ import { finopsServerBaseUrl } from "@/const";
 export async function getReportsDashboard() {
     let adid = sessionStorage.getItem("userEmail");
     let role = sessionStorage.getItem("userRole");
-    return await axios.post(finopsServerBaseUrl + `/AWSAndAzureDashBordChartsAPI?adid=bhuwan.phuloria%40adityabirla.com&role=${role}`)
+    try {
+        return await axios.post(finopsServerBaseUrl + `/AWSAndAzureDashBordChartsAPI?adid=${adid}&role=${role}`)
+    } catch (error) {
+        console.error("Error in getting Finops Report data", error)
+        return {status:"400"}
+    }
 }

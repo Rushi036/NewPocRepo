@@ -30,7 +30,7 @@ const Footer = memo(() => (
     </p>
   </footer>
 ));
-
+Footer.displayName = 'Footer';
 const Layout: React.FC<LayoutProps> = ({ children }: any) => {
   const { state, toggleState } = useAppContext();
 
@@ -40,7 +40,7 @@ const Layout: React.FC<LayoutProps> = ({ children }: any) => {
       <Sidebar />
       <div className="flex-auto relative h-[100vh] bg-gray-100 overflow-auto">
         <Navbar />
-        <main className="mt-10 overflow-auto p-4 min-h-[calc(100vh-5.5rem)]">
+        <main className="mt-10 p-4  min-h-[calc(100vh-5.5rem)]">
           {children}
         </main>
         <Footer />

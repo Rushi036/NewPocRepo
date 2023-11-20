@@ -1,10 +1,9 @@
 import BarGraph from "@/pages/Components/Charts/BarChart";
 import LineChartComponent from "@/pages/Components/Charts/LineChart";
 import PieChartComponent from "../../Components/Charts/PieChart";
-import TabPanel from "@mui/lab/TabPanel/TabPanel";
+import { TabPanel, TabContext } from "@mui/lab";
 import { Tab, Tabs } from "@mui/material";
 import React, { useState } from "react";
-import TabContext from "@mui/lab/TabContext/TabContext";
 
 const CostSummary = () => {
     const dummyData1: any = {

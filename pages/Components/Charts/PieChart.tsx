@@ -81,7 +81,7 @@ const ChartComponent = (props: any) => {
           headerFormat: "",
           pointFormat:
             '<span style="color:{point.color}">\u25CF</span> <b> {point.name}</b><br/>' +
-            `Total: <b>{point.y}</b> ${props?.data?.xAxis || ""}<br/>`,
+            `Total: <b>{point.y} ({point.percentage:.1f}%) </b> ${props?.data?.xAxis || ""}<br/>`,
         },
         lang: {
           noData: "No Data to Display",
