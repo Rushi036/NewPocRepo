@@ -153,7 +153,7 @@ const Sidebar = () => {
           </li> */}
           {/* <li className="hs-accordion" id="account-accordion">
             <Link
-              href="/page/FinOps/newFinops"
+              href="/page/FinOps"
               className={`flex items-center gap-x-3.5 py-2 px-2.5 text-base
               text-slate-700 rounded-md hover:bg-gray-100
               ${activeLink === 4 ? "bg-gray-100" : ""}`}

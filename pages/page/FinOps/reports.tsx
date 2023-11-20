@@ -84,7 +84,7 @@ const Reports = () => {
           <Link
             className="w-full flex justify-center items-center h-full"
             href={{
-              pathname: "/page/FinOps/NewFinOps",
+              pathname: "/page/FinOps",
               query: { report: "CostDrillDown" },
             }}
           >
@@ -111,7 +111,7 @@ const Reports = () => {
           <Link
             className="w-full flex justify-center items-center h-full"
             href={{
-              pathname: "/page/FinOps/NewFinOps",
+              pathname: "/page/FinOps",
               query: { report: "CostDrillDown" },
             }}
           >
@@ -193,7 +193,7 @@ const Reports = () => {
             <Link
               className="w-full flex justify-center items-center h-full"
               href={{
-                pathname: "/page/FinOps/NewFinOps",
+                pathname: "/page/FinOps",
                 query: { report: "Forcast" },
               }}
             >
