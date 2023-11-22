@@ -46,7 +46,7 @@ const ChartComponent = (props: any) => {
               (this as any).update({
                 plotOptions: {
                   pie: {
-                    size: "150px",
+                    size: props.height/3 || "200px",
                     allowPointSelect: true,
                     cursor: "pointer",
                     dataLabels: {
@@ -63,10 +63,14 @@ const ChartComponent = (props: any) => {
         title: {
           text: props?.data?.title || "",
           align: "left",
+          style: {
+            fontWeight: "bold",
+            fontSize:"12px"
+          },
         },
         plotOptions: {
           pie: {
-            size: "200px",
+            size: props.height/3 || "200px",
             allowPointSelect: true,
             cursor: "pointer",
             dataLabels: {
@@ -94,6 +98,7 @@ const ChartComponent = (props: any) => {
           },
         },
         legend: {
+          enabled: props.legendEnabled ?? true,
           layout: "horizontal",
           align: "center",
           verticalAlign: "bottom",
@@ -121,7 +126,7 @@ const ChartComponent = (props: any) => {
     }
   }, [props.data]); // Empty dependency array ensures the effect runs once after initial render
   const containerStyle = {
-    height: "500px",
+    height: props.height || "500px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",

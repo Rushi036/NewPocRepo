@@ -45,12 +45,16 @@ const LineChartComponent = (props: any) => {
       const options: any = {
         chart: {
           animation: false,
-          height: 500, // Adjust the height of the chart based on the reports prop
+          height: props.height || 500, // Adjust the height of the chart based on the reports prop
           zoomType: "x",
         },
         title: {
           text: props.data.title,
           align: "left",
+          style: {
+            fontWeight: "bold",
+            fontSize:"12px"
+          },
         },
         tooltip: {
           crosshairs: true,
@@ -71,6 +75,7 @@ const LineChartComponent = (props: any) => {
           type: "category",
         },
         legend: {
+          enabled: props.legendEnabled ?? true,
           layout: "horizontal",
           align: "center",
           verticalAlign: "bottom",

@@ -16,6 +16,7 @@ import dynamic from "next/dynamic";
 import Multiselect from "multiselect-react-dropdown";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
+import Switch from "react-switch";
 
 // dynamic imports
 const BarGraph = dynamic(() => import("@/pages/Components/Charts/BarChart"));
@@ -48,6 +49,8 @@ function CostDrillDown() {
   const [selectedReportsDropDown, setSelectedReportsDropDown] = useState<any>();
   const [selectedReports, setSelectedReports] = useState<any>();
   const [subsType, setSubsType] = useState<any>();
+  const [crossPlatformData, setCrossPlatformData] = useState<any>();
+  const [singleReport, setSingleReport] = useState<any>(false);
 
   const [userRole, setUserRole] = useState<any>(null); //this will populate from the session storage
   const [timePeriod, setTimePeriod] = React.useState<any>([
@@ -57,7 +60,10 @@ function CostDrillDown() {
   const [titleValueCount, setTitleValueCount] = useState(0);
 
   useEffect(() => {
+    // setUserADID("akash.purohit@adityabirla.com");
     setUserADID(sessionStorage.getItem("userEmail"));
+    
+    // setUserRole("ADMIN");
     setUserRole(sessionStorage.getItem("userRole"));
     getGraphFormat();
   }, []);
@@ -157,9 +163,6 @@ function CostDrillDown() {
         account_name: subsIndexName,
       };
       fetchDataAWS(body)
-        .then((res) => {
-          return res.json();
-        })
         .then((data) => setRes(data))
         .then(() => setLoader(false));
     }
@@ -186,14 +189,48 @@ function CostDrillDown() {
   }
 
   async function fetchDataAWS(body: any) {
-    return await fetch("http://10.47.98.164:9201/awsFinopsDashboardData", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
+    let resData: any;
+    try {
+      resData = await fetch("http://10.47.98.164:9201/awsFinopsDashboardData", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+      resData = await resData.json();
+    } catch {
+      resData = "";
+    }
+    return resData;
   }
+
+  async function fetchDataAcross(body: any) {
+    let resData: any;
+    try {
+      resData = await fetch("http://10.47.98.164:9201/awsAllDataByAccount", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+      resData = await resData.json();
+    } catch {
+      resData = "";
+    }
+    return resData;
+  }
+
+  useEffect(() => {
+    const body: any = {
+      gte: timePeriod[0],
+      lte: timePeriod[1],
+      // adid: "akash.purohit@adityabirla.com",
+      adid: userADID,
+    };
+    fetchDataAcross(body).then((res: any) => setCrossPlatformData(res));
+  }, [timePeriod, userADID]);
 
   async function getGraphFormat() {
     await getCurrentUserData().then((res) => setGraphFormat(res.data[0]));
@@ -203,13 +240,14 @@ function CostDrillDown() {
     <div className="flex justify-between w-full">
       {loader && <div className="circle-loader"></div>}
       <div className=" w-[75%]">
-        {res && (
+        {singleReport && res && (
           <>
             <MetricCards
               cloud={cloud}
               subscId={subscId}
               res={res}
               setIsOpen={setIsOpen}
+              isOpen={isOpen}
             />
             <ReportsCard
               res={res}
@@ -225,6 +263,14 @@ function CostDrillDown() {
             />
           </>
         )}
+
+        {!singleReport && crossPlatformData && (
+          <CrossPlatformReports
+            res={crossPlatformData}
+            timePeriod={""}
+            singleReport={singleReport}
+          />
+        )}
       </div>
 
       <FinopsFilters
@@ -239,12 +285,14 @@ function CostDrillDown() {
         setTimePeriod={setTimePeriod}
         getReport={getReport}
         selectedReportsDropDown={selectedReportsDropDown}
+        setSingleReport={setSingleReport}
+        singleReport={singleReport}
       />
     </div>
   );
 }
 
-function MetricCards({ cloud, subscId, res, setIsOpen }: any) {
+function MetricCards({ cloud, subscId, res, isOpen, setIsOpen }: any) {
   return (
     <div className="flex flex-wrap w-full gap-4">
       {/* Conditional rendering based on titleValueCount */}
@@ -260,17 +308,20 @@ function MetricCards({ cloud, subscId, res, setIsOpen }: any) {
         </b>
         <span>{subscId}</span>
       </div>
+
       {res.Metric &&
         res.Metric.map((data: any, i: any) => {
           if (!data.Table) {
             return (
               <div
                 key={i}
-                className={
-                  cloud === "Azure"
-                    ? "bg-white p-4 w-[calc(50%-0.5rem)] rounded-lg flex items-center"
-                    : "bg-white p-4 w-[calc(25%-0.75rem)] rounded-lg"
-                }
+                className={`
+                  ${
+                    cloud === "Azure"
+                      ? "  w-[calc(50%-0.5rem)] flex items-center"
+                      : "  w-[calc(25%-0.75rem)]"
+                  }
+                    bg-white p-4 rounded-lg`}
               >
                 <div>
                   <b>
@@ -295,6 +346,60 @@ function MetricCards({ cloud, subscId, res, setIsOpen }: any) {
             );
           }
         })}
+
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="w-full max-w-3xl mx-auto my-12 bg-white rounded-lg shadow-lg overflow-y-auto max-h-screen">
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+              <div className="bg-red-800 px-4 py-2 flex items-center justify-between">
+                <h3 className="text-xl text-white">
+                  Service wise cost for Each Subscription
+                </h3>
+                <button
+                  className="p-2 text-xl text-white"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <CloseIcon />
+                </button>
+              </div>
+              <div className="p-6">
+                <div className="relative overflow-x-auto">
+                  <table className="w-full text-sm text-center text-gray-800">
+                    <thead className="text-xs uppercase bg-gray-200">
+                      <tr>
+                        <th scope="col" className="px-2 py-3">
+                          Month
+                        </th>
+                        <th scope="col" className="px-2 py-3">
+                          Application Name
+                        </th>
+                        <th scope="col" className="px-2 py-3">
+                          Cost (₹)
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {res &&
+                        res.Metric[1].Table[0].data.map(
+                          (item: any, index: number) => (
+                            <tr
+                              key={index}
+                              className="bg-white border-b text-center"
+                            >
+                              <td className="px-2 py-3">{item[0][1]}</td>
+                              <td className="px-2 py-3">{item[1][1]}</td>
+                              <td className="px-2 py-3">{item[2][1]}</td>
+                            </tr>
+                          )
+                        )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -311,8 +416,9 @@ function FinopsFilters({
   getReport,
   setSelectedReportsDropDown,
   selectedReportsDropDown,
+  setSingleReport,
+  singleReport,
 }: any) {
-  const animatedComponents = makeAnimated();
   const predefinedRanges: any = [
     {
       label: "Last 1 hour",
@@ -500,60 +606,80 @@ function FinopsFilters({
   }
   return (
     <div className="sticky top-[3.75rem] w-[25%] h-fit flex flex-col justify-between items-center ml-4 mb-4 p-3 bg-white rounded-lg ">
-      <div className="w-full">
-        <label className="">Select Cloud : </label>
-        <select
-          className="block w-full py-2 px-4 border hover:bg-gray-50 focus:bg-gray-50 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-          onChange={(e) => handleCloudChange(e)}
-        >
-          <option disabled>Select Cloud</option>
-          <option value="Azure">Azure</option>
-          <option value="AWS">AWS</option>
-        </select>
-      </div>
-
-      <div className="w-full mx-2 mt-4">
-        <label className="">
-          {cloud == "Azure"
-            ? "Select Subscription Name"
-            : "Select Account Name"}{" "}
-          :{" "}
-        </label>
-        <select
-          className="block w-full py-2 px-4 border hover:bg-gray-50 focus:bg-gray-50 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-          onChange={(e) => handleSubNameChange(e)}
-          value={subACCName}
-        >
-          {/* subscription id or account id */}
-          <option>Select Id</option>
-          {subData &&
-            subData.map((e: any, i: any) => (
-              <option key={i} value={e.subsAccName}>
-                {e.subsAccName}
-              </option>
-            ))}
-        </select>
-      </div>
-
-      <div className="w-full mx-2 mt-4 z-10">
-        <div className="flex w-full justify-between items-center mb-2">
-          <label className="">Select Reports : </label>
-          <button
-            onClick={SelectAll}
-            className="border border-slate-400 text-slate-700 hover:bg-gray-100 rounded px-2 py-1"
-          >
-            select all
-          </button>
-        </div>
-        <Select
-          onChange={(val: any) => setSelectedReportsDropDown(val)}
-          closeMenuOnSelect={false}
-          value={selectedReportsDropDown}
-          defaultValue={selectedReportsDropDown}
-          isMulti
-          options={options}
+      <div className="w-full mx-2 flex items-center gap-2 justify-between">
+        <span>Across Account</span>
+        <Switch
+          onChange={(res) => setSingleReport(res)}
+          checked={singleReport}
+          uncheckedIcon={false}
+          checkedIcon={false}
+          boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+          height={20}
+          width={40}
         />
+        <span>Single Account</span>
       </div>
+
+      {singleReport && (
+        <div className="w-full mt-4">
+          <label className="">Select Cloud : </label>
+          <select
+            className="block w-full py-2 px-4 border hover:bg-gray-50 focus:bg-gray-50 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+            onChange={(e) => handleCloudChange(e)}
+          >
+            <option disabled>Select Cloud</option>
+            <option value="Azure">Azure</option>
+            <option value="AWS">AWS</option>
+          </select>
+        </div>
+      )}
+
+      {singleReport && (
+        <div className="w-full mx-2 mt-4">
+          <label className="">
+            {cloud == "Azure"
+              ? "Select Subscription Name"
+              : "Select Account Name"}{" "}
+            :{" "}
+          </label>
+          <select
+            className="block w-full py-2 px-4 border hover:bg-gray-50 focus:bg-gray-50 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+            onChange={(e) => handleSubNameChange(e)}
+            value={subACCName}
+          >
+            {/* subscription id or account id */}
+            <option>Select Id</option>
+            {subData &&
+              subData.map((e: any, i: any) => (
+                <option key={i} value={e.subsAccName}>
+                  {e.subsAccName}
+                </option>
+              ))}
+          </select>
+        </div>
+      )}
+
+      {singleReport && (
+        <div className="w-full mx-2 mt-4 z-10">
+          <div className="flex w-full justify-between items-center mb-2">
+            <label className="">Select Reports : </label>
+            <button
+              onClick={SelectAll}
+              className="border border-slate-400 text-slate-700 hover:bg-gray-100 rounded px-2 py-1"
+            >
+              select all
+            </button>
+          </div>
+          <Select
+            onChange={(val: any) => setSelectedReportsDropDown(val)}
+            closeMenuOnSelect={false}
+            value={selectedReportsDropDown}
+            defaultValue={selectedReportsDropDown}
+            isMulti
+            options={options}
+          />
+        </div>
+      )}
 
       <div className="w-full mt-4">
         <label className="">Select Date Range : </label>
@@ -571,14 +697,16 @@ function FinopsFilters({
         />
       </div>
 
-      <div className="w-full mx-2 mt-4 flex justify-center">
-        <button
-          className="bg-red-500 text-white py-1 px-2 rounded"
-          onClick={getReport}
-        >
-          Get Report
-        </button>
-      </div>
+      {singleReport && (
+        <div className="w-full mx-2 mt-4 flex justify-center">
+          <button
+            className="bg-red-500 text-white py-1 px-2 rounded"
+            onClick={getReport}
+          >
+            Get Report
+          </button>
+        </div>
+      )}
     </div>
   );
 }
@@ -587,11 +715,8 @@ function ReportsCard({
   res,
   graphFormat,
   cloud,
-  selectedReportsDropDown,
   cloudDropdown,
   getGraphFormat,
-  isOpen,
-  setIsOpen,
   timePeriod,
   selectedReports,
 }: any) {
@@ -657,12 +782,6 @@ function ReportsCard({
           ) {
             return (
               <div key={i} className="card w-1/2">
-                <span
-                  className="flex justify-end cursor-pointer"
-                  onClick={() => unpinGraph(e.PieChart.title)}
-                >
-                  <BsPinAngleFill />
-                </span>
                 <PieChartComponent id={i} data={e.PieChart} />
               </div>
             );
@@ -836,60 +955,68 @@ function ReportsCard({
               </>
             );
         })}
+    </div>
+  );
+}
 
-      {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="w-full max-w-3xl mx-auto my-12 bg-white rounded-lg shadow-lg overflow-y-auto max-h-screen">
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className="bg-red-800 px-4 py-2 flex items-center justify-between">
-                <h3 className="text-xl text-white">
-                  Service wise cost for Each Subscription
-                </h3>
-                <button
-                  className="p-2 text-xl text-white"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <CloseIcon />
-                </button>
+function CrossPlatformReports({ res, timePeriod, singleReport }: any) {
+  return (
+    <div className=" h-auto flex flex-wrap gap-4">
+      {res &&
+        res.Graph?.map((e: any, i: any) => {
+          if (
+            e &&
+            e.PieChart &&
+            e.PieChart.data &&
+            Array.isArray(e.PieChart.data)
+          ) {
+            return (
+              <div key={i} className="card w-1/2 max-h-[280px]">
+                <PieChartComponent id={i} data={e.PieChart} height={280} legendEnabled={false} />
               </div>
-              <div className="p-6">
-                <div className="relative overflow-x-auto">
-                  <table className="w-full text-sm text-center text-gray-800">
-                    <thead className="text-xs uppercase bg-gray-200">
-                      <tr>
-                        <th scope="col" className="px-2 py-3">
-                          Month
-                        </th>
-                        <th scope="col" className="px-2 py-3">
-                          Application Name
-                        </th>
-                        <th scope="col" className="px-2 py-3">
-                          Cost (₹)
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {res &&
-                        res.Metric[1].Table[0].data.map(
-                          (item: any, index: number) => (
-                            <tr
-                              key={index}
-                              className="bg-white border-b text-center"
-                            >
-                              <td className="px-2 py-3">{item[0][1]}</td>
-                              <td className="px-2 py-3">{item[1][1]}</td>
-                              <td className="px-2 py-3">{item[2][1]}</td>
-                            </tr>
-                          )
-                        )}
-                    </tbody>
-                  </table>
-                </div>
+            );
+          } else if (
+            e &&
+            e.LineChart &&
+            e.LineChart.data &&
+            Array.isArray(e.LineChart.data)
+          ) {
+            return (
+              <div
+                key={i}
+                className={
+                  e.LineChart.series?.data?.length >= 20
+                    ? "card !min-w-full max-h-[280px]"
+                    : "card max-h-[280px]"
+                }
+              >
+                <LineChartComponent id={i} data={e.LineChart} height={250} legendEnabled={false}/>
               </div>
-            </div>
-          </div>
-        </div>
-      )}
+            );
+          } else if (
+            e &&
+            e.BarGraph &&
+            e.BarGraph.data &&
+            Array.isArray(e.BarGraph.data)
+          ) {
+            return (
+              <div key={i} className="max-h-[280px] ">
+                <BarGraph id={i} date={timePeriod} data={e.BarGraph} height={250}/>
+              </div>
+            );
+          }
+        })}
+
+      {res &&
+        res.Table?.map((e: any, i: any) => {
+          return (
+            <>
+              <div key={i} className="card">
+                <Table data={e} />
+              </div>
+            </>
+          );
+        })}
     </div>
   );
 }

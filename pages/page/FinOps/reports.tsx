@@ -27,10 +27,9 @@ const Reports = () => {
     getReportsDashboard().then((data: any) => {
       setRes(data.data);
       if (data && data?.status != 200) {
-        //   console.log(Object.keys(data.data).length, data.status) 
+        //   console.log(Object.keys(data.data).length, data.status)
         setStatus(data.status);
-      } 
-      else if (Object.keys(data.data).length === 0 && data?.status == 200) {
+      } else if (Object.keys(data.data).length === 0 && data?.status == 200) {
         setStatus("404");
       }
     });
@@ -174,19 +173,21 @@ const Reports = () => {
           </div>
 
           <div className="w-full md:w-1/2 h-[130px] flex justify-center items-center mb-4">
-            {/* <Link
+            <Link
               className="w-full flex justify-center items-center h-full"
-              href={"/page/FinOps"}
-            > */}
-            <div className="hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
-              <div className="w-[4px] h-full bg-purple-400 absolute left-0 top-0"></div>
-              <p className="text-purple-500 font-bold text-lg">Cloud Gateway</p>
+              href={"/page/FinOps/CloudGateway"}
+            >
+              <div className="hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
+                <div className="w-[4px] h-full bg-purple-400 absolute left-0 top-0"></div>
+                <p className="text-purple-500 font-bold text-lg">
+                  Cloud Gateway
+                </p>
 
-              <div className="flex flex-col  w-full mt-4">
-                <span>Coming Soon...</span>
+                <div className="flex flex-col  w-full mt-4">
+                  <span>Coming Soon...</span>
+                </div>
               </div>
-            </div>
-            {/* </Link> */}
+            </Link>
           </div>
 
           <div className="w-full md:w-1/2 h-[130px] flex justify-center items-center mb-4">
