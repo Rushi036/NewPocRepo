@@ -195,10 +195,11 @@ const UserManagement = () => {
     setEditedSubscriptionDetail(newSubscriptionDetail);
   };
 
-  const handleEditRemoveSubscription = (index: any) => {
-    const updatedSubscriptions = [...editedSubscriptionDetail];
-    updatedSubscriptions.splice(index, 1);
-    setEditedSubscriptionDetail(updatedSubscriptions);
+  const handleEditRemoveSubscription = (subscriptionIndex: any) => {
+    const newSubscriptions = editedSubscriptionDetail.filter(
+      (_: any, index: any) => index !== subscriptionIndex
+    );
+    setEditedSubscriptionDetail(newSubscriptions);
   };
 
   const isFormValid = () => {
@@ -1006,7 +1007,7 @@ const UserManagement = () => {
 
                 {/* Add and Remove Subscription Buttons */}
                 <div className="mb-6 flex items-center justify-end">
-                  {subscriptionDetail.length > 1 && (
+                  {editedSubscriptionDetail.length > 1 && (
                     <button
                       onClick={() =>
                         handleEditRemoveSubscription(
