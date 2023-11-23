@@ -93,6 +93,9 @@ const ChartComponent = (props: any) => {
             color: "#303030",
           },
         },
+        credits: {
+          enabled: false,
+        },
         legend: {
           layout: "horizontal",
           align: "center",

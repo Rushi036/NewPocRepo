@@ -22,7 +22,7 @@ const UserManagement = () => {
     setIsViewModalOpen(true);
   };
 
-  console.log("selected data", selectedRowData);
+  console.log("selected row data", selectedRowData);
 
   const handleEditDetailsClick = (rowData: any) => {
     // console.log("----------------", rowData);
@@ -37,14 +37,27 @@ const UserManagement = () => {
     ownerEmail: "",
     role: "BE",
   });
-  const [contactDetails, setContactDetails] = useState<any>([
-    { contactName: "", contactEmail: "" },
-  ]);
+  // const [contactDetails, setContactDetails] = useState<any>([
+  //   { contactName: "", contactEmail: "" },
+  // ]);
 
-  const [subscriptionDetail, setSubscriptionDetail] = useState<any>([
-    { cloud: "", subsAccName: "", subsAccId: "" },
+  // const [subscriptionDetail, setSubscriptionDetail] = useState<any>([
+  //   {
+  //     cloud: "",
+  //     subsAccName: "",
+  //     subsAccId: "",
+  //     contactDetails: [contactDetails[0]],
+  //   },
+  // ]);
+  const [subscriptionDetail, setSubscriptionDetail] = useState([
+    {
+      cloud: "",
+      subsAccName: "",
+      subsAccId: "",
+      type: "",
+      contactDetails: [{ contactName: "", contactEmail: "" }],
+    },
   ]);
-
   const [editedUserData, setEditedUserData] = useState({
     businessName: "",
     ownerName: "",
@@ -52,12 +65,19 @@ const UserManagement = () => {
     role: "BE",
   });
 
-  const [editedContactDetails, setEditedContactDetails] = useState<any>([
-    { contactName: "", contactEmail: "" },
-  ]);
+  // const [editedContactDetails, setEditedContactDetails] = useState<any>([
+  //   { contactName: "", contactEmail: "" },
+  // ]);
 
   const [editedSubscriptionDetail, setEditedSubscriptionDetail] = useState<any>(
-    [{ cloud: "", subsAccName: "", subsAccId: "" }]
+    [
+      {
+        cloud: "",
+        subsAccName: "",
+        subsAccId: "",
+        contactDetails: [{ contactName: "", contactEmail: "" }],
+      },
+    ]
   );
 
   useEffect(() => {
@@ -66,13 +86,29 @@ const UserManagement = () => {
         businessName: selectedRowData.businessName,
         ownerName: selectedRowData.userName,
         ownerEmail: selectedRowData.adId,
-        role: selectedRowData.role,
+        role: selectedRowData.userRole,
       });
-      setEditedContactDetails(selectedRowData.contactDetails);
-      setEditedSubscriptionDetail(selectedRowData.subscriptionDetail);
+      setEditedSubscriptionDetail((prevData: any) => [
+        {
+          ...prevData[0],
+          contactDetails:
+            selectedRowData.subscriptions &&
+            selectedRowData.subscriptions.subsContactADIDs &&
+            selectedRowData.subscriptions.subsContactADIDs.map(
+              (contact: any) => ({
+                contactName: contact.name,
+                contactEmail: contact.adid,
+              })
+            ),
+        },
+      ]);
+
+      setEditedSubscriptionDetail(selectedRowData.subscriptions);
     }
   }, [selectedRowData]);
 
+  editedSubscriptionDetail &&
+    console.log("edited data", editedSubscriptionDetail);
   const handleEditUserDataChange = (e: any) => {
     const { name, value } = e.target;
     setEditedUserData((prevUserData) => ({
@@ -81,36 +117,82 @@ const UserManagement = () => {
     }));
   };
 
-  const handleEditContactChange = (index: any, event: any) => {
-    const updatedContacts: any = [...editedContactDetails];
-    updatedContacts[index][event.target.name] = event.target.value;
-    setEditedContactDetails(updatedContacts);
+  const handleEditContactChange = (
+    subscriptionIndex: any,
+    contactIndex: any,
+    event: any
+  ) => {
+    const newSubscriptionDetail = [...editedSubscriptionDetail];
+
+    // Destructure the relevant properties
+    const { name, value } = event.target;
+
+    // Update the nested structure
+    newSubscriptionDetail[subscriptionIndex].subsContactADIDs[0][contactIndex] =
+      {
+        ...newSubscriptionDetail[subscriptionIndex].subsContactADIDs[0][
+          contactIndex
+        ],
+        [name]: value,
+      };
+
+    // Set the updated state
+    setEditedSubscriptionDetail(newSubscriptionDetail);
   };
 
-  const handleEditSubscriptionChange = (index: any, event: any) => {
-    const updatedSubscriptions: any = [...editedSubscriptionDetail];
-    updatedSubscriptions[index][event.target.name] = event.target.value;
-    setEditedSubscriptionDetail(updatedSubscriptions);
+  const handleEditSubscriptionChange = (subscriptionIndex: any, event: any) => {
+    const newSubscriptionDetail = [...editedSubscriptionDetail];
+    newSubscriptionDetail[subscriptionIndex] = {
+      ...newSubscriptionDetail[subscriptionIndex],
+      [event.target.name]: event.target.value,
+    };
+    setEditedSubscriptionDetail(newSubscriptionDetail);
   };
 
-  const handleEditAddContact = () => {
-    setEditedContactDetails([
-      ...editedContactDetails,
-      { contactName: "", contactEmail: "" },
-    ]);
+  const handleEditAddContact = (subscriptionIndex: any) => {
+    const newSubscriptionDetail = [...editedSubscriptionDetail];
+    newSubscriptionDetail[subscriptionIndex].subsContactADIDs[0] &&
+      newSubscriptionDetail[subscriptionIndex].subsContactADIDs[0].push({
+        name: "",
+        adid: "",
+      });
+    if (!newSubscriptionDetail[subscriptionIndex].subsContactADIDs[0]) {
+      newSubscriptionDetail[subscriptionIndex].subsContactADIDs = [
+        [
+          {
+            name: "",
+            adid: "",
+          },
+        ],
+      ];
+    }
+    setEditedSubscriptionDetail(newSubscriptionDetail);
   };
 
   const handleEditAddSubscription = () => {
     setEditedSubscriptionDetail([
       ...editedSubscriptionDetail,
-      { cloud: "", subsAccName: "", subsAccId: "" },
+      {
+        cloud: "",
+        subsAccName: "",
+        subsAccId: "",
+        type: "",
+        subsContactADIDs: [[{ name: "", adid: "" }]],
+      },
     ]);
   };
 
-  const handleEditRemoveContact = (index: any) => {
-    const updatedContacts = [...editedContactDetails];
-    updatedContacts.splice(index, 1);
-    setEditedContactDetails(updatedContacts);
+  const handleEditRemoveContact = (
+    subscriptionIndex: any,
+    contactIndex: any
+  ) => {
+    const newSubscriptionDetail = [...editedSubscriptionDetail];
+    newSubscriptionDetail[subscriptionIndex].subsContactADIDs[0] &&
+      newSubscriptionDetail[subscriptionIndex].subsContactADIDs[0].splice(
+        contactIndex,
+        1
+      );
+    setEditedSubscriptionDetail(newSubscriptionDetail);
   };
 
   const handleEditRemoveSubscription = (index: any) => {
@@ -122,26 +204,80 @@ const UserManagement = () => {
   const isFormValid = () => {
     const isBusinessNameValid = userData.businessName.trim() !== "";
     const isOwnerNameValid = userData.ownerName.trim() !== "";
-    const isOwnerEmailValid = userData.ownerEmail.trim() !== "";
-    const areContactDetailsValid = contactDetails.every(
-      (contact: any) =>
-        contact.contactName.trim() !== "" && contact.contactEmail.trim() !== ""
-    );
+    const isOwnerEmailValid =
+      userData.ownerEmail.trim() !== "" && isValidEmail(userData.ownerEmail);
+
     const areSubscriptionDetailsValid = subscriptionDetail.every(
       (subscription: any) =>
         subscription.cloud.trim() !== "" &&
         subscription.subsAccName.trim() !== "" &&
-        subscription.subsAccId.trim() !== ""
+        subscription.subsAccId.trim() !== "" &&
+        subscription.contactDetails.length > 0 &&
+        subscription.contactDetails.every(
+          (contact: any) =>
+            contact.contactName.trim() !== "" &&
+            contact.contactEmail.trim() !== "" &&
+            isValidEmail(contact.contactEmail)
+        ) &&
+        (subscription.cloud !== "Azure" ||
+          (subscription.cloud === "Azure" && subscription.type.trim() !== ""))
     );
 
     return (
       isBusinessNameValid &&
       isOwnerNameValid &&
       isOwnerEmailValid &&
-      areContactDetailsValid &&
       areSubscriptionDetailsValid
     );
   };
+  const isEditFormValid = () => {
+    // Validate business name
+    const isBusinessNameValid = editedUserData.businessName.trim() !== "";
+
+    // Validate owner name
+    const isOwnerNameValid = editedUserData.ownerName.trim() !== "";
+
+    // Validate owner email
+    const isOwnerEmailValid =
+      editedUserData.ownerEmail.trim() !== "" &&
+      isValidEmail(editedUserData.ownerEmail);
+
+    // Validate subscription details
+    const areSubscriptionDetailsValid = editedSubscriptionDetail.every(
+      (subscription: any) =>
+        subscription.cloud.trim() !== "" &&
+        subscription.subsAccName.trim() !== "" &&
+        subscription.subsAccId.trim() !== "" &&
+        ((subscription.subsContactADIDs &&
+          subscription.subsContactADIDs.length === 0) || // Allow no contact details
+          (subscription.subsContactADIDs[0] &&
+            subscription.subsContactADIDs[0].length > 0 &&
+            subscription.subsContactADIDs[0].every(
+              (contact: any) =>
+                contact.name.trim() !== "" &&
+                contact.adid.trim() !== "" &&
+                isValidEmail(contact.adid)
+            ))) &&
+        (subscription.cloud !== "Azure" ||
+          (subscription.cloud === "Azure" &&
+            subscription.type &&
+            subscription.type.trim() !== ""))
+    );
+
+    return (
+      isBusinessNameValid &&
+      isOwnerNameValid &&
+      isOwnerEmailValid &&
+      areSubscriptionDetailsValid
+    );
+  };
+
+  const isValidEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  // console.log(isFormValid());
 
   const handleUserDataChange = (e: any) => {
     const { name, value } = e.target;
@@ -151,41 +287,64 @@ const UserManagement = () => {
     }));
   };
 
-  const handleContactChange = (index: any, event: any) => {
-    const updatedContacts = [...contactDetails];
-    updatedContacts[index][event.target.name] = event.target.value;
-    setContactDetails(updatedContacts);
+  const handleSubscriptionChange = (subscriptionIndex: any, event: any) => {
+    const newSubscriptionDetail = [...subscriptionDetail];
+    newSubscriptionDetail[subscriptionIndex] = {
+      ...newSubscriptionDetail[subscriptionIndex],
+      [event.target.name]: event.target.value,
+    };
+    setSubscriptionDetail(newSubscriptionDetail);
   };
 
-  const handleSubscriptionChange = (index: any, event: any) => {
-    const updatedSubscriptions = [...subscriptionDetail];
-    updatedSubscriptions[index][event.target.name] = event.target.value;
-    setSubscriptionDetail(updatedSubscriptions);
+  const handleContactChange = (
+    subscriptionIndex: any,
+    contactIndex: any,
+    event: any
+  ) => {
+    const newSubscriptionDetail = [...subscriptionDetail];
+    newSubscriptionDetail[subscriptionIndex].contactDetails[contactIndex] = {
+      ...newSubscriptionDetail[subscriptionIndex].contactDetails[contactIndex],
+      [event.target.name]: event.target.value,
+    };
+    setSubscriptionDetail(newSubscriptionDetail);
   };
 
-  const handleAddContact = () => {
-    setContactDetails([
-      ...contactDetails,
-      { contactName: "", contactEmail: "" },
-    ]);
+  const handleAddContact = (subscriptionIndex: any) => {
+    const newSubscriptionDetail = [...subscriptionDetail];
+    newSubscriptionDetail[subscriptionIndex].contactDetails.push({
+      contactName: "",
+      contactEmail: "",
+    });
+    setSubscriptionDetail(newSubscriptionDetail);
+  };
+
+  const handleRemoveContact = (subscriptionIndex: any, contactIndex: any) => {
+    const newSubscriptionDetail = [...subscriptionDetail];
+    newSubscriptionDetail[subscriptionIndex].contactDetails.splice(
+      contactIndex,
+      1
+    );
+    setSubscriptionDetail(newSubscriptionDetail);
   };
 
   const handleAddSubscription = () => {
     setSubscriptionDetail([
       ...subscriptionDetail,
-      { cloud: "", subsAccName: "", subsAccId: "" },
+      {
+        cloud: "",
+        subsAccName: "",
+        subsAccId: "",
+        type: "",
+        contactDetails: [{ contactName: "", contactEmail: "" }],
+      },
     ]);
   };
 
-  const handleRemoveContact = (index: any) => {
-    const updatedContacts = [...contactDetails];
-    updatedContacts.splice(index, 1);
-    setContactDetails(updatedContacts);
-  };
-  const handleRemoveSubscription = (index: any) => {
-    const updatedSubscriptions = [...subscriptionDetail];
-    updatedSubscriptions.splice(index, 1);
-    setSubscriptionDetail(updatedSubscriptions);
+  const handleRemoveSubscription = (subscriptionIndex: any) => {
+    const newSubscriptions = subscriptionDetail.filter(
+      (_, index) => index !== subscriptionIndex
+    );
+    setSubscriptionDetail(newSubscriptions);
   };
 
   useEffect(() => {
@@ -208,25 +367,76 @@ const UserManagement = () => {
       ownerName: userData.ownerName,
       ownerEmail: userData.ownerEmail,
       role: userData.role,
-      contactDetails: contactDetails.map((contact: any) => ({
-        contactName: contact.contactName,
-        contactEmail: contact.contactEmail,
-      })),
-      subscriptionDetail: subscriptionDetail.map((subscription: any) => ({
-        cloud: subscription.cloud,
-        subsAccName: subscription.subsAccName,
-        subsAccId: subscription.subsAccId,
-      })),
+      subscriptions: subscriptionDetail.map((subscription: any) => {
+        const subscriptionData: any = {
+          subsAccName: subscription.subsAccName,
+          subsAccId: subscription.subsAccId,
+          cloud: subscription.cloud,
+          subsContactADIDs: subscription.contactDetails.map((contact: any) => [
+            {
+              name: contact.contactName,
+              adid: contact.contactEmail,
+            },
+          ]),
+        };
+
+        if (subscription.cloud === "Azure") {
+          subscriptionData.type = subscription.type;
+        }
+
+        return subscriptionData;
+      }),
     };
 
-    // console.log("payload", formData);
+    console.log(formData);
+
+    console.log("payload", formData);
   };
+
+  const handleEditUpload = () => {
+    // console.log("userdata", userData);
+    // console.log("subscription", subscriptionDetail);
+    // console.log("contact", contactDetails);
+
+    const formData = {
+      businessName: editedUserData.businessName,
+      ownerName: editedUserData.ownerName,
+      ownerEmail: editedUserData.ownerEmail,
+      role: editedUserData.role,
+      subscriptions: editedSubscriptionDetail.map((subscription: any) => {
+        const subscriptionData: any = {
+          subsAccName: subscription.subsAccName,
+          subsAccId: subscription.subsAccId,
+          cloud: subscription.cloud,
+          subsContactADIDs:
+            subscription.subsContactADIDs[0] &&
+            subscription.subsContactADIDs[0].map((contact: any) => [
+              {
+                name: contact.name,
+                adid: contact.adid,
+              },
+            ]),
+        };
+
+        if (subscription.cloud === "Azure") {
+          subscriptionData.type = subscription.type;
+        }
+
+        return subscriptionData;
+      }),
+    };
+
+    console.log(formData);
+
+    console.log(" edited payload", formData);
+  };
+
   const getFilteredSubscriptions = (cloudType: any) => {
     return selectedRowData.subscriptions.filter(
       (subscription: any) => subscription.cloud === cloudType
     );
   };
-  data && console.log("data", data[0].subscriptions);
+  // selectedRowData && console.log("row data", selectedRowData.subscriptions);
   function getContactNames(subsContactADIDs: any, users: any) {
     return subsContactADIDs.map((contactADID: any) => {
       const user = users.find((user: any) => user.adId === contactADID);
@@ -284,45 +494,46 @@ const UserManagement = () => {
                     const uniqueContactADIDs = new Set<string>();
                     d.subscriptions &&
                       d.subscriptions.forEach((sub: any) => {
-                        sub.subsContactADIDs.forEach((contact: string) => {
-                          uniqueContactADIDs.add(contact);
-                        });
+                        sub.subsContactADIDs[0] &&
+                          sub.subsContactADIDs[0].forEach((contact: any) => {
+                            uniqueContactADIDs.add(JSON.stringify(contact));
+                          });
                       });
+                    // console.log("-----------", uniqueContactADIDs);
                     return (
                       <tr key={i} className="bg-white border-b text-center">
                         <td className="px-auto py-3">{count++}</td>
                         <td className="px-auto py-3">{d.businessName}</td>
                         <td className="px-auto py-3">{d.userName}</td>
                         <td className="px-auto py-3">{d.adId}</td>{" "}
-                        <td className="px-auto py-3"></td>{" "}
-                        <td className="px-auto py-3"></td>
-                        {/* {d.subscriptions &&
-                          d.subscriptions.map((sub: any, subIndex: any) =>
-                            sub.subsContactADIDs.map(
-                              (contact: any, contactIndex: any) => (
-                                <div key={contactIndex}>
-                                  <td className="px-auto py-3">
-                                    {contact.name}
-                                  </td>
-                                  <td className="px-auto py-3">
-                                    {contact.adid}
-                                  </td>
-                                </div>
-                              )
-                            )
-                          )} */}
+                        <td className="px-auto py-3">
+                          {Array.from(uniqueContactADIDs).map(
+                            (contactString: any, index: any) => {
+                              const contact = JSON.parse(contactString);
+                              return <div>{contact.name}</div>;
+                            }
+                          )}
+                        </td>
+                        {/* Displaying unique adIDs in separate <td> elements */}
+                        <td className="px-auto py-3">
+                          {Array.from(uniqueContactADIDs).map(
+                            (contactString, index) => {
+                              const contact = JSON.parse(contactString);
+                              return <div>{contact.adid}</div>;
+                            }
+                          )}
+                        </td>
                         <td className="px-auto py-3 space-x-4">
                           <button onClick={() => handleViewDetailsClick(d)}>
                             <VisibilityIcon />
                           </button>
-                          {/* <button onClick={() => handleEditDetailsClick(d)}>
+                          <button onClick={() => handleEditDetailsClick(d)}>
                             <EditIcon />
-                          </button> */}
+                          </button>
                         </td>
                       </tr>
                     );
                   } else {
-                    // If userType is not "Owner", don't render the row
                     return null;
                   }
                 })
@@ -340,6 +551,7 @@ const UserManagement = () => {
       {/* --------------------Add user Modal Start----------------------*/}
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          {/* Modal content */}
           <div className="w-full max-w-3xl mx-auto my-12 bg-white rounded-lg shadow-lg overflow-y-auto max-h-screen">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
               <div className="bg-red-800 px-4 py-2 flex items-center justify-between">
@@ -352,6 +564,7 @@ const UserManagement = () => {
                 </button>
               </div>
               <div className="p-6">
+                {/* Business Name Field */}
                 <div className="mb-6">
                   <label className="block text-lg font-semibold mb-2">
                     Business Name :
@@ -366,6 +579,8 @@ const UserManagement = () => {
                     required
                   />
                 </div>
+
+                {/* Owner Name and Email Fields */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                   <div>
                     <label className="block text-lg font-semibold mb-2">
@@ -396,129 +611,170 @@ const UserManagement = () => {
                     />
                   </div>
                 </div>
-                <div className="mb-6">
-                  <label className="block text-lg font-semibold mb-2">
-                    Contact Details :
-                  </label>
-                  {contactDetails &&
-                    contactDetails.map((contact: any, index: any) => (
-                      <div className="grid grid-cols-2 gap-4 mb-2" key={index}>
+                {/* Subscription Details */}
+                {subscriptionDetail.map(
+                  (subscription: any, subscriptionIndex: any) => (
+                    <div key={subscriptionIndex}>
+                      <label className="block text-lg font-semibold mb-2">
+                        Subscription Details :
+                      </label>
+
+                      {/* Cloud and Account Name/ID Fields */}
+                      <div className="grid grid-cols-2 gap-4 mb-2">
+                        <select
+                          name="cloud"
+                          value={subscription.cloud}
+                          onChange={(event) =>
+                            handleSubscriptionChange(subscriptionIndex, event)
+                          }
+                          className="w-full px-4 py-2 border border-gray-300 rounded shadow"
+                          required
+                        >
+                          <option value="" disabled>
+                            Select Cloud
+                          </option>
+                          <option value="Azure">Azure</option>
+                          <option value="AWS">AWS</option>
+                        </select>
                         <input
                           type="text"
-                          name="contactName"
-                          value={contact.contactName}
+                          name="subsAccName"
+                          value={subscription.subsAccName}
                           onChange={(event) =>
-                            handleContactChange(index, event)
+                            handleSubscriptionChange(subscriptionIndex, event)
                           }
-                          placeholder="Contact Name"
+                          placeholder="Subscription Account Name"
                           className="w-full px-4 py-2 border border-gray-300 rounded shadow"
                           required
                         />
                         <input
-                          type="email"
-                          name="contactEmail"
-                          value={contact.contactEmail}
+                          type="text"
+                          name="subsAccId"
+                          value={subscription.subsAccId}
                           onChange={(event) =>
-                            handleContactChange(index, event)
+                            handleSubscriptionChange(subscriptionIndex, event)
                           }
-                          placeholder="Contact Email"
+                          placeholder="Subscription Account ID"
                           className="w-full px-4 py-2 border border-gray-300 rounded shadow"
                           required
                         />
+                        {subscription.cloud &&
+                          subscription.cloud == "Azure" && (
+                            <input
+                              type="text"
+                              name="type"
+                              value={subscription.type}
+                              onChange={(event) =>
+                                handleSubscriptionChange(
+                                  subscriptionIndex,
+                                  event
+                                )
+                              }
+                              placeholder="Subscription Type"
+                              className="w-full px-4 py-2 border border-gray-300 rounded shadow"
+                              required
+                            />
+                          )}
                       </div>
-                    ))}
-                  <div className="mb-6 flex items-center justify-end">
-                    {contactDetails.length > 1 && (
-                      <button
-                        onClick={() =>
-                          handleRemoveContact(contactDetails.length - 1)
-                        }
-                        className="text-red-500 hover:text-red-700 ml-2"
-                      >
-                        <RemoveCircleOutlineIcon />
-                      </button>
-                    )}
-                    <button
-                      onClick={handleAddContact}
-                      className="text-blue-500 px-1 py-1 hover:text-blue-700"
-                    >
-                      <AddCircleOutlineIcon />
-                    </button>
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-lg font-semibold mb-2">
-                    Subscription Details :
-                  </label>
-                  {subscriptionDetail.map((subscription: any, index: any) => (
-                    <div className="grid grid-cols-3 gap-4 mb-2" key={index}>
-                      <select
-                        name="cloud"
-                        value={subscription.cloud}
-                        onChange={(event) =>
-                          handleSubscriptionChange(index, event)
-                        }
-                        className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                        required
-                      >
-                        <option value="" disabled>
-                          Select Cloud
-                        </option>
 
-                        <option value="Azure">Azure</option>
-                        <option value="AWS">AWS</option>
-                      </select>
+                      {/* Contact Details for each Subscription */}
+                      {subscription.contactDetails.map(
+                        (contact: any, contactIndex: any) => (
+                          <div
+                            className="grid grid-cols-2 gap-4 mb-2 mt-4"
+                            key={contactIndex}
+                          >
+                            {/* Contact Name */}
+                            <input
+                              type="text"
+                              name="contactName"
+                              value={contact.contactName}
+                              onChange={(event) =>
+                                handleContactChange(
+                                  subscriptionIndex,
+                                  contactIndex,
+                                  event
+                                )
+                              }
+                              placeholder="Contact Name"
+                              className="w-full px-4 py-2 border border-gray-300 rounded shadow"
+                              required
+                            />
 
-                      <input
-                        type="text"
-                        name="subsAccName"
-                        value={subscription.subsAccName}
-                        onChange={(event) =>
-                          handleSubscriptionChange(index, event)
-                        }
-                        placeholder="Subscription Account Name"
-                        className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                        required
-                      />
-                      <input
-                        type="text"
-                        name="subsAccId"
-                        value={subscription.subsAccId}
-                        onChange={(event) =>
-                          handleSubscriptionChange(index, event)
-                        }
-                        placeholder="Subscription Account ID"
-                        className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                        required
-                      />
+                            {/* Contact Email */}
+                            <input
+                              type="email"
+                              name="contactEmail"
+                              value={contact.contactEmail}
+                              onChange={(event) =>
+                                handleContactChange(
+                                  subscriptionIndex,
+                                  contactIndex,
+                                  event
+                                )
+                              }
+                              placeholder="Contact Email"
+                              className="w-full px-4 py-2 border border-gray-300 rounded shadow"
+                              required
+                            />
+                          </div>
+                        )
+                      )}
+
+                      {/* Add and Remove Contact Buttons */}
+                      <div className="mb-6 flex items-center justify-end">
+                        {subscription.contactDetails.length > 1 && (
+                          <button
+                            onClick={() =>
+                              handleRemoveContact(
+                                subscriptionIndex,
+                                subscription.contactDetails.length - 1
+                              )
+                            }
+                            className="text-red-500 text-xl px-2  hover:text-red-700 ml-2"
+                          >
+                            -{/* <RemoveCircleOutlineIcon /> */}
+                          </button>
+                        )}
+                        <button
+                          onClick={() => handleAddContact(subscriptionIndex)}
+                          className="text-blue-500 py-1 px-2 text-xl hover:text-blue-700"
+                        >
+                          +{/* <AddCircleOutlineIcon /> */}
+                        </button>
+                      </div>
                     </div>
-                  ))}
-                  <div className="mb-6 flex items-center justify-end">
-                    {subscriptionDetail.length > 1 && (
-                      <button
-                        onClick={() =>
-                          handleRemoveSubscription(
-                            subscriptionDetail.length - 1
-                          )
-                        }
-                        className="text-red-500 hover:text-red-700 ml-2"
-                      >
-                        <RemoveCircleOutlineIcon />
-                      </button>
-                    )}
+                  )
+                )}
+
+                {/* Add and Remove Subscription Buttons */}
+                <div className="mb-6 flex items-center justify-end">
+                  {subscriptionDetail.length > 1 && (
                     <button
-                      onClick={handleAddSubscription}
-                      className="text-blue-500 px-1 py-1 hover:text-blue-700"
+                      onClick={() =>
+                        handleRemoveSubscription(subscriptionDetail.length - 1)
+                      }
+                      className="text-white px-2 py-1 bg-red-800 rounded hover:bg-red-900 mr-2"
                     >
-                      <AddCircleOutlineIcon />
+                      Remove
+                      {/* <RemoveCircleOutlineIcon /> */}
                     </button>
-                  </div>
+                  )}
+                  <button
+                    onClick={handleAddSubscription}
+                    className="text-white px-2 py-1 bg-blue-700 rounded hover:bg-blue-800"
+                  >
+                    Add Subscription
+                    {/* <AddCircleOutlineIcon /> */}
+                  </button>
                 </div>
               </div>
+
+              {/* Submit Button */}
               <div className="bg-gray-200 px-4 py-3 flex justify-end">
                 <button
                   onClick={handleUpload}
-                  className={` text-white px-6 py-2 rounded ${
+                  className={`text-white px-6 py-2 rounded ${
                     isFormValid()
                       ? "bg-red-800 hover:bg-red-900"
                       : "bg-gray-400 cursor-not-allowed"
@@ -538,115 +794,254 @@ const UserManagement = () => {
           <div className="w-full max-w-3xl mx-auto my-12 bg-white rounded-lg shadow-lg overflow-y-auto max-h-screen">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
               <div className="bg-red-800 px-4 py-2 flex items-center justify-between">
-                <h3 className="text-xl text-white font-bold">Edit User</h3>
+                <h3 className="text-xl text-white font-bold">Add New User</h3>
                 <button
                   className="p-2 text-2xl text-white"
                   onClick={() => setEditModalOpen(false)}
                 >
-                  Close
+                  <CloseIcon />
                 </button>
               </div>
               <div className="p-6">
-                {/* User details input fields */}
-                <input
-                  name="businessName"
-                  type="text"
-                  placeholder="Business Name"
-                  value={editedUserData.businessName}
-                  className="w-full px-4 py-2 border border-gray-300 rounded shadow mb-4"
-                  onChange={handleEditUserDataChange}
-                  required
-                />
-                <input
-                  name="ownerName"
-                  type="text"
-                  placeholder="Owner Name"
-                  value={editedUserData.ownerName}
-                  className="w-full px-4 py-2 border border-gray-300 rounded shadow mb-4"
-                  onChange={handleEditUserDataChange}
-                  required
-                />
-                <input
-                  name="ownerEmail"
-                  type="email"
-                  placeholder="Owner Email"
-                  value={editedUserData.ownerEmail}
-                  className="w-full px-4 py-2 border border-gray-300 rounded shadow mb-6"
-                  onChange={handleEditUserDataChange}
-                  required
-                />
+                {/* Business Name Field */}
+                <div className="mb-6">
+                  <label className="block text-lg font-semibold mb-2">
+                    Business Name :
+                  </label>
+                  <input
+                    name="businessName"
+                    type="text"
+                    placeholder="Type here"
+                    value={editedUserData.businessName}
+                    className="w-full px-4 py-2 border border-gray-300 rounded shadow"
+                    onChange={handleEditUserDataChange}
+                    required
+                  />
+                </div>
 
-                {/* Subscription details input fields */}
+                {/* Owner Name and Email Fields */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  <div>
+                    <label className="block text-lg font-semibold mb-2">
+                      Owner Name :
+                    </label>
+                    <input
+                      name="ownerName"
+                      type="text"
+                      placeholder="Type here"
+                      value={editedUserData.ownerName}
+                      className="w-full px-4 py-2 border border-gray-300 rounded shadow"
+                      onChange={handleEditUserDataChange}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-lg font-semibold mb-2">
+                      Owner Email :
+                    </label>
+                    <input
+                      name="ownerEmail"
+                      type="email"
+                      placeholder="Type here"
+                      value={editedUserData.ownerEmail}
+                      className="w-full px-4 py-2 border border-gray-300 rounded shadow"
+                      onChange={handleEditUserDataChange}
+                      required
+                    />
+                  </div>
+                </div>
+                {/* Subscription Details */}
                 {editedSubscriptionDetail &&
                   editedSubscriptionDetail.map(
-                    (subscription: any, index: any) => (
-                      <div className="grid grid-cols-3 gap-4 mb-2" key={index}>
-                        <select
-                          name="cloud"
-                          value={editedSubscriptionDetail.cloud}
-                          onChange={(e) =>
-                            handleEditSubscriptionChange(index, e)
-                          }
-                          className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                          required
-                        >
-                          <option value="" disabled>
-                            Select Cloud
-                          </option>
-                          <option value="Azure">Azure</option>
-                          <option value="AWS">AWS</option>
-                        </select>
-                        <input
-                          type="text"
-                          name="subsAccName"
-                          value={editedSubscriptionDetail.subsAccName}
-                          onChange={(e) =>
-                            handleEditSubscriptionChange(index, e)
-                          }
-                          placeholder="Subscription Account Name"
-                          className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                          required
-                        />
-                        <input
-                          type="text"
-                          name="subsAccId"
-                          value={editedSubscriptionDetail.subsAccId}
-                          onChange={(e) =>
-                            handleEditSubscriptionChange(index, e)
-                          }
-                          placeholder="Subscription Account ID"
-                          className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                          required
-                        />
+                    (subscription: any, subscriptionIndex: any) => (
+                      <div key={subscriptionIndex}>
+                        {/* <span></span> */}
+                        <label className="block text-lg font-semibold mb-2">
+                          {subscriptionIndex + 1}
+                          {")"} Subscription Details :
+                        </label>
+
+                        {/* Cloud and Account Name/ID Fields */}
+                        <div className="grid grid-cols-2 gap-4 mb-2">
+                          <select
+                            name="cloud"
+                            value={subscription.cloud}
+                            onChange={(event) =>
+                              handleEditSubscriptionChange(
+                                subscriptionIndex,
+                                event
+                              )
+                            }
+                            className="w-full px-4 py-2 border border-gray-300 rounded shadow"
+                            required
+                          >
+                            <option value="" disabled>
+                              Select Cloud
+                            </option>
+                            <option value="Azure">Azure</option>
+                            <option value="AWS">AWS</option>
+                          </select>
+                          <input
+                            type="text"
+                            name="subsAccName"
+                            value={subscription.subsAccName}
+                            onChange={(event) =>
+                              handleEditSubscriptionChange(
+                                subscriptionIndex,
+                                event
+                              )
+                            }
+                            placeholder="Subscription Account Name"
+                            className="w-full px-4 py-2 border border-gray-300 rounded shadow"
+                            required
+                          />
+                          <input
+                            type="text"
+                            name="subsAccId"
+                            value={subscription.subsAccId}
+                            onChange={(event) =>
+                              handleEditSubscriptionChange(
+                                subscriptionIndex,
+                                event
+                              )
+                            }
+                            placeholder="Subscription Account ID"
+                            className="w-full px-4 py-2 border border-gray-300 rounded shadow"
+                            required
+                          />
+                          {subscription.cloud &&
+                            subscription.cloud == "Azure" && (
+                              <input
+                                type="text"
+                                name="type"
+                                value={subscription.type}
+                                onChange={(event) =>
+                                  handleEditSubscriptionChange(
+                                    subscriptionIndex,
+                                    event
+                                  )
+                                }
+                                placeholder="Subscription Type"
+                                className="w-full px-4 py-2 border border-gray-300 rounded shadow"
+                                required
+                              />
+                            )}
+                        </div>
+
+                        {/* Contact Details for each Subscription */}
+                        {subscription.subsContactADIDs &&
+                          subscription.subsContactADIDs[0] &&
+                          subscription.subsContactADIDs[0].map(
+                            (contact: any, contactIndex: any) => (
+                              <div
+                                className="grid grid-cols-2 gap-4 mb-2 mt-4"
+                                key={contactIndex}
+                              >
+                                {/* Contact Details: */}
+                                <input
+                                  type="text"
+                                  name="name"
+                                  value={contact.name}
+                                  onChange={(event) =>
+                                    handleEditContactChange(
+                                      subscriptionIndex,
+                                      contactIndex,
+                                      event
+                                    )
+                                  }
+                                  placeholder="Contact Name"
+                                  className="w-full px-4 py-2 border border-gray-300 rounded shadow"
+                                  required
+                                />
+
+                                {/* Contact Email */}
+                                <input
+                                  type="email"
+                                  name="adid"
+                                  value={contact.adid}
+                                  onChange={(event) =>
+                                    handleEditContactChange(
+                                      subscriptionIndex,
+                                      contactIndex,
+                                      event
+                                    )
+                                  }
+                                  placeholder="Contact Email"
+                                  className="w-full px-4 py-2 border border-gray-300 rounded shadow"
+                                  required
+                                />
+                              </div>
+                            )
+                          )}
+
+                        {/* Add and Remove Contact Buttons */}
+                        <div className="mb-6 flex items-center justify-end">
+                          {subscription.subsContactADIDs &&
+                            subscription.subsContactADIDs[0] &&
+                            subscription.subsContactADIDs[0].length > 1 && (
+                              <button
+                                onClick={() =>
+                                  handleEditRemoveContact(
+                                    subscriptionIndex,
+                                    subscription.subsContactADIDs[0].length - 1
+                                  )
+                                }
+                                className="text-red-500 text-xl px-2  hover:text-red-700 ml-2"
+                              >
+                                -{/* <RemoveCircleOutlineIcon /> */}
+                              </button>
+                            )}
+                          <button
+                            onClick={() =>
+                              handleEditAddContact(subscriptionIndex)
+                            }
+                            className="text-blue-500 py-1 px-2 text-xl hover:text-blue-700"
+                          >
+                            +{/* <AddCircleOutlineIcon /> */}
+                          </button>
+                        </div>
                       </div>
                     )
                   )}
+
+                {/* Add and Remove Subscription Buttons */}
                 <div className="mb-6 flex items-center justify-end">
+                  {subscriptionDetail.length > 1 && (
+                    <button
+                      onClick={() =>
+                        handleEditRemoveSubscription(
+                          subscriptionDetail.length - 1
+                        )
+                      }
+                      className="text-white px-2 py-1 bg-red-800 rounded hover:bg-red-900 mr-2"
+                    >
+                      Remove
+                      {/* <RemoveCircleOutlineIcon /> */}
+                    </button>
+                  )}
                   <button
                     onClick={handleEditAddSubscription}
-                    className="text-blue-500 px-1 py-1 hover:text-blue-700"
+                    className="text-white px-2 py-1 bg-blue-700 rounded hover:bg-blue-800"
                   >
-                    <AddCircleOutlineIcon />
+                    Add Subscription
+                    {/* <AddCircleOutlineIcon /> */}
                   </button>
                 </div>
+              </div>
 
-                {/* Submit button */}
-                <div className="bg-gray-200 px-4 py-3 flex justify-end">
-                  <button
-                    onClick={() => {
-                      // Handle form submission logic
-                      setIsOpen(false);
-                    }}
-                    className={`text-white px-6 py-2 rounded ${
-                      isFormValid()
-                        ? "bg-red-800 hover:bg-red-900"
-                        : "bg-gray-400 cursor-not-allowed"
-                    }`}
-                    disabled={!isFormValid()}
-                  >
-                    Save Changes
-                  </button>
-                </div>
+              {/* Submit Button */}
+              <div className="bg-gray-200 px-4 py-3 flex justify-end">
+                <button
+                  onClick={handleEditUpload}
+                  className={`text-white px-6 py-2 rounded ${
+                    isEditFormValid()
+                      ? "bg-red-800 hover:bg-red-900"
+                      : "bg-gray-400 cursor-not-allowed"
+                  }`}
+                  disabled={!isEditFormValid()}
+                >
+                  Submit
+                </button>
               </div>
             </div>
           </div>
@@ -703,7 +1098,14 @@ const UserManagement = () => {
                                     {subscription.subsAccName}
                                   </td>
                                   <td className="border px-4 py-2 text-center">
-                                    {subscription.subsContactADIDs.join(", ")}
+                                    {subscription.subsContactADIDs[0].map(
+                                      (d: any, i: any) => (
+                                        <span key={i}>
+                                          {d.adid}
+                                          <br />
+                                        </span>
+                                      )
+                                    )}
                                   </td>
                                 </tr>
                               )
@@ -741,7 +1143,15 @@ const UserManagement = () => {
                                     {subscription.subsAccName}
                                   </td>
                                   <td className="border px-4 py-2 text-center">
-                                    {subscription.subsContactADIDs.join(", ")}
+                                    {subscription.subsContactADIDs[0] &&
+                                      subscription.subsContactADIDs[0].map(
+                                        (d: any, i: any) => (
+                                          <span key={i}>
+                                            {d.adid}
+                                            <br />
+                                          </span>
+                                        )
+                                      )}
                                   </td>
                                 </tr>
                               )

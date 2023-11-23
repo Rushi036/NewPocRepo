@@ -1,55 +1,92 @@
-{
-  "Graph": [
-    {
-      "LineChart": {
-        "data": [
-          {
-            "name": "Azure",
-            "data": [
-              ["1 Oct", 10.0],
-              ["2 Oct", 95.0],
-              ["3 Oct", 2.0],
-              ["4 Oct", 11.0]
-            ],
-            "yAxis": 0
-          },
-          {
-            "name": "AWS",
-            "data": [
-              ["1 Oct", 80.0],
-              ["2 Oct", 40.0],
-              ["3 Oct", 70.0],
-              ["4 Oct", 50.0]
-            ],
-            "yAxis": 1
-          }
-        ],
-        "title": "Consumption Trend",
-        "xAxis": "Date",
-        "firstYAxis": "Azure(Rupees)",
-        "secondYAxis": "AWS(Dollar)"
-      }
-    }
-  ],
-
-  "Metric": [
-    {
-      "title": "Total Consumption Monthly",
-      "value": {
-        "AWS": 12000,
-        "Azure": 240000
-      }
+[
+  {
+    "_id": {
+      "$oid": "655b48f882b60ef769388266"
     },
-    {
-      "title": "Total Consumption weekly",
-      "value": {
-        "AWS": 12000,
-        "Azure": 240000
-      }
+    "catName": "PaaS",
+    "unitMeasure": 1,
+    "status": "Enabled",
+    "serviceName": [
+      "Amazon Relational Database Service",
+      "Amazon EC2 Container Registry (ECR)",
+      "Amazon Lightsail",
+      "Amazon DynamoDB",
+      "Amazon Redshift",
+      "Amazon SageMaker",
+      "Amazon Elastic Container Service",
+      "Amazon Elastic Container Service for Kubernetes",
+      "Amazon Managed Streaming for Apache Kafka",
+      "Amazon SimpleDB"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "655b48f882b60ef769388267"
     },
-    {
-      "title": "Total Asset ",
-      "value": 1400
-    }
-  ]
-}
+    "catName": "VM",
+    "unitMeasure": 0.5,
+    "status": "Enabled",
+    "serviceName": ["Amazon Elastic Compute Cloud"]
+  },
+  {
+    "_id": {
+      "$oid": "655b48f882b60ef769388268"
+    },
+    "catName": "Disk",
+    "unitMeasure": 0.25,
+    "status": "Enabled",
+    "serviceName": ["Amazon Simple Storage Service", "Amazon Glacier"]
+  },
+  {
+    "_id": {
+      "$oid": "655b48f882b60ef769388269"
+    },
+    "catName": "Others",
+    "unitMeasure": 0,
+    "status": "Enabled",
+    "serviceName": [
+      "AWS CloudTrail",
+      "Amazon Route 53",
+      "AmazonCloudWatch",
+      "Elastic Load Balancing",
+      "Amazon Virtual Private Cloud",
+      "AWS Key Management Service",
+      "Amazon CloudFront",
+      "Amazon Simple Notification Service",
+      "Amazon GuardDuty",
+      "AWS Lambda",
+      "Amazon Simple Queue Service",
+      "AWS Secrets Manager",
+      "AWS Glue",
+      "Amazon Elastic File System",
+      "Savings Plans for AWS Compute usage",
+      "Amazon OpenSearch Service",
+      "AWS WAF",
+      "AWS Config",
+      "Amazon ElastiCache",
+      "Amazon QuickSight",
+      "AWS Security Hub",
+      "AWS Step Functions",
+      "AWS Backup",
+      "AWS Direct Connect",
+      "CloudWatch Events",
+      "AWS Transfer Family",
+      "Amazon Simple Email Service",
+      "Amazon API Gateway",
+      "Amazon Athena",
+      "AWS CodeCommit",
+      "AWS Cost Explorer",
+      "AWS Support (Business)",
+      "AWS CloudShell",
+      "AWS Service Catalog",
+      "AWS Amplify",
+      "Amazon Inspector",
+      "Amazon Textract",
+      "AWS Systems Manager",
+      "AWS CodeArtifact",
+      "CodeBuild",
+      "Amazon Cognito",
+      "Amazon Registrar"
+    ]
+  }
+]

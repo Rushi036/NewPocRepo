@@ -46,6 +46,9 @@ const LineChartComponent = (props: any) => {
         });
 
       const options: any = {
+        credits: {
+          enabled: false,
+        },
         title: {
           text: props.data.title,
           align: "left",

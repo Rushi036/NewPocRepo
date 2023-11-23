@@ -8,6 +8,9 @@ const BarGraph = (props: any) => {
   useEffect(() => {
     if (chartContainer.current) {
       const options: any = {
+        credits: {
+          enabled: false,
+        },
         chart: {
           // height: (9 / 16 * 100) + '%',
           height: 500,
@@ -37,7 +40,6 @@ const BarGraph = (props: any) => {
           min: 0,
           title: {
             text: props?.data?.yAxis || "",
-
           },
           stackLabels: {
             enabled: false,
@@ -48,7 +50,7 @@ const BarGraph = (props: any) => {
           align: "center",
           verticalAlign: "bottom",
           itemStyle: {
-            fontSize: "10px", 
+            fontSize: "10px",
           },
           itemWidth: 150,
           itemDistance: 5,
@@ -59,7 +61,10 @@ const BarGraph = (props: any) => {
         },
         plotOptions: {
           column: {
-            stacking: props?.data?.stacking == "true" || props?.data?.stacking == true ? "normal" : false,
+            stacking:
+              props?.data?.stacking == "true" || props?.data?.stacking == true
+                ? "normal"
+                : false,
             dataLabels: {
               enabled: true,
             },
