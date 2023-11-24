@@ -30,6 +30,9 @@ const BarGraph = (props: any) => {
         lang: {
           noData: "No Data to Display",
         },
+        credits: {
+          enabled: false,
+        },
         noData: {
           style: {
             fontWeight: "bold",

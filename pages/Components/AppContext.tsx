@@ -35,11 +35,11 @@ export const AppContextProvider: React.FC<any> = ({ children }: any) => {
   };
 
   const [time, setTime] = useState(
-    moment().subtract(1, "hour").format("YYYY-MM-DDTHH:mm:ss")
+    moment().subtract(90, "day").format("YYYY-MM-DD")
   );
 
   const [timeEnd, setTimeEnd] = useState(
-    moment().format("YYYY-MM-DDTHH:mm:ss")
+    moment().format("YYYY-MM-DD")
   );
 
   const toggleTime = (time: any) => {

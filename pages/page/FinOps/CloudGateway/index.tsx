@@ -1,144 +1,491 @@
 import Table from "@/pages/Components/Charts/Table";
 import CloseIcon from "@mui/icons-material/Close";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function CloudGateway() {
-  const tableDummyData = {
-    title: "",
-    headers: [
-      "S No",
-      "Business User",
-      "Number of Services",
-      "Total gateway charges",
-      "Action",
-    ],
-    data: [
-      [
-        ["S no", "1"],
-        ["Business User", "Birla Carbon"],
-        ["Number of Services", 2],
-        ["Total gateway charges", 2500],
-        ["actionButtonViewTable", null],
-      ],
-    ],
-  };
-  const serviceTypeCostTableDummyData = {
-    title: "Service Type Cost",
-    headers: ["", "Category", "Aligned Services", "Unit Measure", "Status"],
-    data: [
-      [
-        ["Category", "PaaS"],
-        ["Aligned Services", "3"],
-        ["Unit Measure", "1"],
-        ["Status", "Enabled"],
-        [
-          "NestedTableData",
-          [
-            "Amazon DevOps Guru",
-            "Amazon DynamoDB",
-            "Amazon EC2 Container Registry (ECR)",
-          ],
-        ],
-      ],
-      [
-        ["Category", "VM"],
-        ["Aligned Services", "2"],
-        ["Unit Measure", "0.5"],
-        ["Status", "Enabled"],
-        [
-          "NestedTableData",
-          [
-            "Amazon Elastic Compute Cloud - Compute",
-            "CentOS 7 with support by ProComputers",
-          ],
-        ],
-      ],
-      [
-        ["Category", "Disk"],
-        ["Aligned Services", "2"],
-        ["Unit Measure", "0.25"],
-        ["Status", "Enabled"],
-        [
-          "NestedTableData",
-          ["Amazon Glacier", "Amazon Simple Storage Service"],
-        ],
-      ],
-      [
-        ["Category", "Others"],
-        ["Aligned Services", "2"],
-        ["Unit Measure", "0"],
-        ["Status", "Enabled"],
-        ["NestedTableData", ["AWS Amplify", "AWS Backup"]],
-      ],
-    ],
-  };
+  // const cloudGatewayData = {
+  //   title: "Cloud Gateway",
+  //   headers: [
+  //     "S No",
+  //     "Business User",
+  //     "Number of Services",
+  //     "Total gateway charges",
+  //   ],
+  //   data: [
+  //     [
+  //       ["S no", "1"],
+  //       ["Business User", "Birla Carbon"],
+  //       ["Number of Services", 2],
+  //       ["Total gateway charges", 5000],
+  //       [
+  //         "NestedTableData",
+  //         {
+  //           title: "Gateway Charges",
+  //           headers: [
+  //             "Service Name",
+  //             "Unit Price",
+  //             "Type of Service",
+  //             "Total Cost",
+  //           ],
+  //           data: [
+  //             [
+  //               ["Service Name", "Cat1"],
+  //               ["Unit Price", "1"],
+  //               ["Type of Service", "internal"],
+  //               ["Total Cost", "2500"],
+  //             ],
+  //             [
+  //               ["Service Name", "Cat2"],
+  //               ["Unit Price", "1"],
+  //               ["Type of Service", "internal"],
+  //               ["Total Cost", "2500"],
+  //             ],
+  //           ],
+  //         },
+  //       ],
+  //     ],
+  //     [
+  //       ["S no", "2"],
+  //       ["Business User", "UTCL"],
+  //       ["Number of Services", 1],
+  //       ["Total gateway charges", 2500],
+  //       [
+  //         "NestedTableData",
+  //         {
+  //           title: "Gateway Charges",
+  //           headers: [
+  //             "Service Name",
+  //             "Unit Price",
+  //             "Type of Service",
+  //             "Total Cost",
+  //           ],
+  //           data: [
+  //             [
+  //               ["Service Name", "Cat1"],
+  //               ["Unit Price", "1"],
+  //               ["Type of Service", "internal"],
+  //               ["Total Cost", "2500"],
+  //             ],
+  //           ],
+  //         },
+  //         ,
+  //       ],
+  //     ],
+  //   ],
+  // };
+  // const serviceTypeCostData = {
+  //   title: "Service Type Cost",
+  //   headers: ["category", "aligned services", "unit measure", "status"],
+  //   data: [
+  //     [
+  //       ["category ", "PaaS"],
+  //       ["aligned services", 117580],
+  //       ["unit measure", 1],
+  //       ["status", "Enabled"],
+  //     ],
+  //     [
+  //       ["category ", "VM"],
+  //       ["aligned services", 4694],
+  //       ["unit measure", 1],
+  //       ["status", "Enabled"],
+  //     ],
+  //     [
+  //       ["category ", "Disk"],
+  //       ["aligned services", 574],
+  //       ["unit measure", 0],
+  //       ["status", "Enabled"],
+  //     ],
+  //     [
+  //       ["category ", "Others"],
+  //       ["aligned services", 7917],
+  //       ["unit measure", 0],
+  //       ["status", "Enabled"],
+  //     ],
+  //   ],
+  // };
+  // const zoneMappingData = {
+  //   title: "Zone Mapping",
+  //   headers: ["Zones", "Cost", "Type", "Status"],
+  //   data: [
+  //     [
+  //       ["Zones ", "Cloud G/W Service DC"],
+  //       ["Cost", 2500],
+  //       ["Type", "Internal"],
+  //       ["Status", "Enabled"],
+  //     ],
+  //     [
+  //       ["Zones ", "Cloud G/W Service DB"],
+  //       ["Cost", 2500],
+  //       ["Type", "Internal"],
+  //       ["Status", "Enabled"],
+  //     ],
+  //     [
+  //       ["Zones ", "Cloud G/W Service App"],
+  //       ["Cost", 2500],
+  //       ["Type", "Internal"],
+  //       ["Status", "Enabled"],
+  //     ],
+  //     [
+  //       ["Zones ", "Cloud G/W Service User"],
+  //       ["Cost", 2500],
+  //       ["Type", "Internal"],
+  //       ["Status", "Enabled"],
+  //     ],
+  //     [
+  //       ["Zones ", "Cloud G/W Service DMZ"],
+  //       ["Cost", 6000],
+  //       ["Type", "External"],
+  //       ["Status", "Enabled"],
+  //     ],
+  //   ],
+  // };
+
   const [serviceTypeCostIsOpen, setServiceTypeCostIsOpen] =
     useState<any>(false);
   const [serviceTypeCostTableView, setServiceTypeCostTableView] =
     useState<any>(true);
 
-  const zoneMappingTableDummyData = {
-    title: "Zone Mapping",
-    headers: ["Zones", "Cost", "Type", "Status"],
-    data: [
-      [
-        ["Zones", "DC"],
-        ["Cost", "2500"],
-        ["Type", "Internal"],
-        ["Status", "Enabled"],
-      ],
-      [
-        ["Zones", "DB"],
-        ["Cost", "2500"],
-        ["Type", "Internal"],
-        ["Status", "Enabled"],
-      ],
-      [
-        ["Zones", "App"],
-        ["Cost", "2500"],
-        ["Type", "Internal"],
-        ["Status", "Enabled"],
-      ],
-      [
-        ["Zones", "User"],
-        ["Cost", "2500"],
-        ["Type", "Internal"],
-        ["Status", "Enabled"],
-      ],
-      [
-        ["Zones", "DMZ"],
-        ["Cost", "6000"],
-        ["Type", "External"],
-        ["Status", "Enabled"],
-      ],
-    ],
-  };
+  const [cloudGatewayData, setCloudGatewayData] = useState<any>();
+  const [serviceTypeCostData, setServiceTypeCostData] = useState<any>();
+  const [zoneMappingData, setZoneMappingData] = useState<any>();
+
   const [zoneMappingIsOpen, setZoneMappingIsOpen] = useState<any>(false);
-  const [nestedRowOpen, setNestedRowOpen] = useState<any>(-1);
+  const [serviceTypeCostNestedRowOpen, setServiceTypeCostNestedRowOpen] =
+    useState<any>(-1);
+  const [gatewayChargesNestedRowOpen, setGatewayChargesNestedRowOpen] =
+    useState<any>(-1);
   const [zoneMappingTableView, setZoneMappingTableView] = useState<any>(true);
+  const [userRole, setUserRole] = useState<any>(null); //this will populate from the session storage
+  const [loader, setLoader] = useState<any>(false);
+
+  useEffect(() => {
+    setUserRole(sessionStorage.getItem("userRole"));
+  }, []);
+
+  useEffect(() => {
+    setLoader(true);
+    async function getData() {
+      fetchGatewayChargeData().then((res) => setCloudGatewayData(res));
+      fetchServiceCategoryData().then((res) => setServiceTypeCostData(res));
+      fetchZoneMappingData().then((res) => setZoneMappingData(res));
+    }
+
+    getData().then(() => setLoader(false));
+  }, []);
+
+  async function fetchGatewayChargeData() {
+    let resData: any;
+    try {
+      resData = await fetch(
+        `http://10.47.98.164:9201/AWSAndAzureDashBordChartsAPIGatewayCharge?role=ADMIN`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      resData = await resData.json();
+    } catch {
+      resData = "";
+    }
+    return resData;
+  }
+
+  async function fetchServiceCategoryData() {
+    let resData: any;
+    try {
+      resData = await fetch(`http://10.47.98.164:9201/getServiceCategory`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      resData = await resData.json();
+    } catch {
+      resData = "";
+    }
+    return resData;
+  }
+
+  async function fetchZoneMappingData() {
+    let resData: any;
+    try {
+      resData = await fetch(`http://10.47.98.164:9201/getZoneData`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      resData = await resData.json();
+    } catch {
+      resData = "";
+    }
+    return resData;
+  }
   return (
     <>
-      <div className="finops-container h-auto flex flex-col gap-4">
-        <div className="text-xl border-b-2 px-4 border-slate-400 pb-2">
-          CloudGateway
+      {/* <div className="text-xl border-b-2 px-4 border-slate-400 pb-2">
+        Cloud Gateway
+      </div> */}
+      {loader && <div className="circle-loader"></div>}
+      <div className="mt-2 finops-container h-auto flex  gap-4">
+        <div className="flex flex-col gap-4 h-fit">
+          {serviceTypeCostData && (
+            <div className="card h-fit">
+              <label className="text-sm font-semibold">
+                {serviceTypeCostData?.title ?? ""}
+              </label>
+              <table className="w-full text-sm text-center mt-2 text-gray-800">
+                <thead className="text-[9px] text-white uppercase bg-red-800">
+                  {serviceTypeCostData?.headers?.map(
+                    (header: any, index: any) => (
+                      <th className="px-auto py-1" key={index} scope="col">
+                        {header}
+                      </th>
+                    )
+                  )}
+                </thead>
+                <tbody>
+                  {serviceTypeCostData?.data?.map(
+                    (rowData: any, rowIndex: any) => (
+                      <>
+                        <tr
+                          key={rowIndex}
+                          className={
+                            serviceTypeCostNestedRowOpen == rowIndex
+                              ? "bg-slate-100 "
+                              : ""
+                          }
+                          onClick={() =>
+                            setServiceTypeCostNestedRowOpen(
+                              serviceTypeCostNestedRowOpen == rowIndex
+                                ? "-1"
+                                : rowIndex
+                            )
+                          }
+                        >
+                          {rowData.map((item: any, index: any) =>
+                            item[0] != "NestedTableData" ? (
+                              <td
+                                className={
+                                  item[0] == "Status" || item[0] == "status"
+                                    ? item[1] == "Enabled"
+                                      ? "text-green-500"
+                                      : "text-red-500"
+                                    : "px-auto py-1"
+                                }
+                                key={index}
+                              >
+                                {item[1]}
+                              </td>
+                            ) : (
+                              ""
+                            )
+                          )}
+                        </tr>
+                        <tr key={rowIndex + 1000}>
+                          {rowData.map((item: any, trindex: any) =>
+                            item[0] == "NestedTableData" ? (
+                              <td
+                                key={trindex + 1000}
+                                colSpan={100}
+                                className={
+                                  serviceTypeCostNestedRowOpen != rowIndex
+                                    ? "hidden"
+                                    : ""
+                                }
+                              >
+                                <table className="w-full">
+                                  <thead className="bg-slate-300">
+                                    <tr>
+                                      {item[1]?.headers?.map(
+                                        (data: any, thindex: any) => {
+                                          return <th key={thindex}>{data}</th>;
+                                        }
+                                      )}
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {item[1]?.data?.map(
+                                      (data: any, thindex: any) => {
+                                        return (
+                                          <tr key={thindex}>
+                                            {data?.map(
+                                              (row: any, index: any) => {
+                                                return (
+                                                  <td key={index}>{row[1]}</td>
+                                                );
+                                              }
+                                            )}
+                                          </tr>
+                                        );
+                                      }
+                                    )}
+                                  </tbody>
+                                </table>
+                              </td>
+                            ) : (
+                              ""
+                            )
+                          )}
+                        </tr>
+                      </>
+                    )
+                  )}
+                  {serviceTypeCostData?.data?.length == 0 ? (
+                    <tr>
+                      <td colSpan={100}>No data</td>
+                    </tr>
+                  ) : (
+                    ""
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          {zoneMappingData && (
+            <div className="card !h-fit">
+              <label className="text-sm font-semibold">
+                {zoneMappingData?.title ?? ""}
+              </label>
+              <table className="w-full text-sm text-center mt-2 text-gray-800">
+                <thead className="text-[9px] uppercase bg-red-800 text-white">
+                  {zoneMappingData?.headers?.map((header: any, index: any) => (
+                    <th className="px-auto py-1" key={index} scope="col">
+                      {header}
+                    </th>
+                  ))}
+                </thead>
+                <tbody>
+                  {zoneMappingData?.data?.map((rowData: any, rowIndex: any) => (
+                    <tr key={rowIndex}>
+                      {rowData.map((item: any, index: any) => (
+                        <td
+                          className={
+                            item[0] == "Status"
+                              ? item[1] == "Enabled"
+                                ? "text-green-500"
+                                : "text-red-500"
+                              : "px-auto py-1"
+                          }
+                          key={index}
+                        >
+                          {item[1]}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                  {zoneMappingData?.data?.length == 0 ? (
+                    <tr>
+                      <td colSpan={100}>No data</td>
+                    </tr>
+                  ) : (
+                    ""
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
-        <div className="card !w-full">
-          <button
-            onClick={() => setServiceTypeCostIsOpen(true)}
-            className="btn mb-2 mr-3 bg-blue-400 px-2 py-1 rounded-sm text-white font-medium"
-          >
-            service type cost
-          </button>
-          <button
-            onClick={() => {
-              setZoneMappingIsOpen(true);
-            }}
-            className="btn mb-2 bg-blue-400 px-2 py-1 rounded-sm text-white font-medium"
-          >
-            zone mapping
-          </button>
-          <Table data={tableDummyData} />
-        </div>
+
+        {cloudGatewayData && (
+          <div className="card !h-fit !w-full">
+            <label className="text-sm font-semibold">
+              {cloudGatewayData?.title ?? ""}
+            </label>
+            <table className="w-full text-sm text-center mt-2 text-gray-800">
+              <thead className="text-[9px] text-white uppercase bg-red-800">
+                {cloudGatewayData?.headers?.map((header: any, index: any) => (
+                  <th className="px-auto py-1" key={index} scope="col">
+                    {header}
+                  </th>
+                ))}
+              </thead>
+              <tbody>
+                {cloudGatewayData?.data?.map((rowData: any, rowIndex: any) => (
+                  <>
+                    <tr
+                      key={rowIndex}
+                      className={
+                        gatewayChargesNestedRowOpen == rowIndex
+                          ? "bg-slate-100 cursor-pointer"
+                          : "cursor-pointer"
+                      }
+                      onClick={() =>
+                        setGatewayChargesNestedRowOpen(
+                          gatewayChargesNestedRowOpen == rowIndex
+                            ? "-1"
+                            : rowIndex
+                        )
+                      }
+                    >
+                      {rowData.map((item: any, index: any) =>
+                        item[0] != "NestedTableData" ? (
+                          <td className="px-auto py-1" key={index}>
+                            {item[1]}
+                          </td>
+                        ) : (
+                          ""
+                        )
+                      )}
+                    </tr>
+                    <tr key={rowIndex + 1000}>
+                      {rowData.map((item: any, trindex: any) =>
+                        item[0] == "NestedTableData" ? (
+                          <td
+                            key={trindex + 1000}
+                            colSpan={100}
+                            className={
+                              gatewayChargesNestedRowOpen != rowIndex
+                                ? "hidden"
+                                : ""
+                            }
+                          >
+                            <table className="w-full">
+                              <thead className="bg-slate-300">
+                                <tr>
+                                  {item[1]?.headers?.map(
+                                    (data: any, thindex: any) => {
+                                      return <th key={thindex}>{data}</th>;
+                                    }
+                                  )}
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {item[1]?.data?.map(
+                                  (data: any, thindex: any) => {
+                                    return (
+                                      <tr key={thindex}>
+                                        {data?.map((row: any, index: any) => {
+                                          return <td key={index}>{row[1]}</td>;
+                                        })}
+                                      </tr>
+                                    );
+                                  }
+                                )}
+                              </tbody>
+                            </table>
+                          </td>
+                        ) : (
+                          ""
+                        )
+                      )}
+                    </tr>
+                  </>
+                ))}
+                {cloudGatewayData?.data?.length == 0 ? (
+                  <tr>
+                    <td colSpan={100}>No data</td>
+                  </tr>
+                ) : (
+                  ""
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
 
         {serviceTypeCostIsOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -146,14 +493,14 @@ function CloudGateway() {
               <div className="bg-white rounded-lg shadow-lg overflow-hidden">
                 <div className="bg-red-800 px-4 py-2 flex items-center justify-between">
                   <h3 className="text-xl text-white">
-                    {serviceTypeCostTableDummyData.title}
+                    {serviceTypeCostData.title}
                   </h3>
                   <button
                     className="p-2 text-xl text-white"
                     onClick={() => {
                       setServiceTypeCostIsOpen(false);
                       setServiceTypeCostTableView(true);
-                      setNestedRowOpen("-1")
+                      setServiceTypeCostNestedRowOpen("-1");
                     }}
                   >
                     <CloseIcon />
@@ -171,10 +518,10 @@ function CloudGateway() {
                         </button>
                         <table className="w-full text-sm text-center text-gray-800">
                           <thead className="text-xs uppercase bg-gray-200">
-                            {serviceTypeCostTableDummyData?.headers?.map(
+                            {serviceTypeCostData?.headers?.map(
                               (header: any, index: any) => (
                                 <th
-                                  className="px-auto py-3"
+                                  className="px-auto py-1"
                                   key={index}
                                   scope="col"
                                 >
@@ -184,19 +531,31 @@ function CloudGateway() {
                             )}
                           </thead>
                           <tbody>
-                            {serviceTypeCostTableDummyData?.data.map(
+                            {serviceTypeCostData?.data.map(
                               (rowData: any, rowIndex: any) => (
                                 <>
                                   <tr key={rowIndex}>
                                     <td>
-                                      <button onClick={() => setNestedRowOpen(nestedRowOpen == rowIndex?"-1":rowIndex)}>
-                                        {nestedRowOpen == rowIndex?"-":"+"}
+                                      <button
+                                        onClick={() =>
+                                          setServiceTypeCostNestedRowOpen(
+                                            serviceTypeCostNestedRowOpen ==
+                                              rowIndex
+                                              ? "-1"
+                                              : rowIndex
+                                          )
+                                        }
+                                      >
+                                        {serviceTypeCostNestedRowOpen ==
+                                        rowIndex
+                                          ? "-"
+                                          : "+"}
                                       </button>
                                     </td>
                                     {rowData.map((item: any, index: any) =>
                                       item[0] != "NestedTableData" ? (
                                         <td
-                                          className="px-auto py-3"
+                                          className="px-auto py-1"
                                           key={index}
                                         >
                                           {item[1]}
@@ -212,7 +571,12 @@ function CloudGateway() {
                                         <td
                                           key={index}
                                           colSpan={100}
-                                          className={nestedRowOpen!=rowIndex?"hidden":""}
+                                          className={
+                                            serviceTypeCostNestedRowOpen !=
+                                            rowIndex
+                                              ? "hidden"
+                                              : ""
+                                          }
                                         >
                                           <table className="w-full">
                                             <thead>
@@ -241,7 +605,7 @@ function CloudGateway() {
                                 </>
                               )
                             )}
-                            {serviceTypeCostTableDummyData.data.length == 0 ? (
+                            {serviceTypeCostData.data.length == 0 ? (
                               <tr>
                                 <td colSpan={100}>No data</td>
                               </tr>
@@ -300,7 +664,7 @@ function CloudGateway() {
               <div className="bg-white rounded-lg shadow-lg overflow-hidden">
                 <div className="bg-red-800 px-4 py-2 flex items-center justify-between">
                   <h3 className="text-xl text-white">
-                    {zoneMappingTableDummyData.title}
+                    {zoneMappingData.title}
                   </h3>
                   <button
                     className="p-2 text-xl text-white"
@@ -324,10 +688,10 @@ function CloudGateway() {
                         </button>
                         <table className="w-full text-sm text-center text-gray-800">
                           <thead className="text-xs uppercase bg-gray-200">
-                            {zoneMappingTableDummyData?.headers?.map(
+                            {zoneMappingData?.headers?.map(
                               (header: any, index: any) => (
                                 <th
-                                  className="px-auto py-3"
+                                  className="px-auto py-1"
                                   key={index}
                                   scope="col"
                                 >
@@ -337,18 +701,18 @@ function CloudGateway() {
                             )}
                           </thead>
                           <tbody>
-                            {zoneMappingTableDummyData?.data.map(
+                            {zoneMappingData?.data.map(
                               (rowData: any, rowIndex: any) => (
                                 <tr key={rowIndex}>
                                   {rowData.map((item: any, index: any) => (
-                                    <td className="px-auto py-3" key={index}>
+                                    <td className="px-auto py-1" key={index}>
                                       {item[1]}
                                     </td>
                                   ))}
                                 </tr>
                               )
                             )}
-                            {zoneMappingTableDummyData.data.length == 0 ? (
+                            {zoneMappingData.data.length == 0 ? (
                               <tr>
                                 <td colSpan={100}>No data</td>
                               </tr>

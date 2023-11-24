@@ -12,6 +12,7 @@ import CostDrillDown from "./CostDrillDown";
 import { IoIosArrowBack } from "react-icons/io";
 import Link from "next/link";
 import { red } from "@mui/material/colors";
+import { useRouter } from "next/router";
 const CostSummary = dynamic(() => import("./CostSummary"));
 // const CostDrillDown = dynamic(() => import('./CostDrillDown'))
 const TagCompliance = dynamic(() => import("./TagCompliance"));
@@ -24,9 +25,10 @@ function FinOps() {
   //   ssr: false, // Set this to false to disable server-side rendering for the component
   // });
   //   CostDrillDown
-  // const { report }:any = router.query;
-  const [value1, setValue1] = useState<any>("CostDrillDown");
-  // const [value1, setValue1] = useState<any>(report || "CostSummary");
+  const router = useRouter();
+  const { report }:any = router.query;
+  // const [value1, setValue1] = useState<any>("CostDrillDown");
+  const [value1, setValue1] = useState<any>(report || "CostSummary");
   // console.log("report - ",value1)
   const handleChange = (event: React.SyntheticEvent, newValue: any) => {
     setValue1(newValue);

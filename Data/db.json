@@ -43,7 +43,11 @@
       "name": "Rajit Bhat",
       "email": "rajit.bhat@adityabirla.com",
       "password": "abg@123",
-      "role": "ADMIN"
+      "role": "ADMIN",
+      "chartOrder": {
+        "Azure": {},
+        "AWS": {}
+      }
     },
     {
       "id": 3,

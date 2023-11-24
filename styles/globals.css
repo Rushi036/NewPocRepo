@@ -9,6 +9,11 @@
   --background-end-rgb: 255, 255, 255;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 0px;
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
@@ -337,7 +342,7 @@ button.MuiButtonBase-root.MuiTab-root.MuiTab-textColorPrimary.css-1h9z7r5-MuiBut
   overflow: hidden;
   z-index: 1;
   /* padding:0; */
-  padding: 0px 15px; 
+  padding: 0px 15px;
   min-height: 10px;
   max-height: 36px;
 }
@@ -346,60 +351,59 @@ button.MuiButtonBase-root.MuiTab-root.MuiTab-textColorPrimary.css-1h9z7r5-MuiBut
   width: fit-content;
   border-radius: 50vw;
   overflow: hidden;
-  border: 1px solid #D5C5EE;
+  border: 1px solid #d5c5ee;
   height: max-content;
   z-index: 1;
-  
 }
 
-.MuiTabs-scroller.MuiTabs-fixed.css-jpln7h-MuiTabs-scroller{
+.MuiTabs-scroller.MuiTabs-fixed.css-jpln7h-MuiTabs-scroller {
   display: flex;
   justify-content: center;
   height: max-content;
-
 }
 
-.css-1ujnqem-MuiTabs-root{
-  min-height:0;
+.css-1ujnqem-MuiTabs-root {
+  min-height: 0;
 }
 
-.css-13xfq8m-MuiTabPanel-root{
+.css-13xfq8m-MuiTabPanel-root {
   padding: 0;
 }
 
-.cloud-tabs button{
-  transition: opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, background-color 0ms cubic-bezier(0.4, 0, 0.2, 1) 0s;
+.cloud-tabs button {
+  transition: opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    background-color 0ms cubic-bezier(0.4, 0, 0.2, 1) 0s;
 }
-.cloud-tabs button.Mui-selected{
+.cloud-tabs button.Mui-selected {
   background-color: white !important;
   opacity: 1;
-  transition: opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0s;
+  transition: opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0s;
 }
 
-.cloud-tabs button:not(.Mui-selected){
+.cloud-tabs button:not(.Mui-selected) {
   background-color: rgb(247, 247, 247) !important;
   opacity: 0.8;
 }
 
-.cloud-tabs button:not(.Mui-selected):hover{
+.cloud-tabs button:not(.Mui-selected):hover {
   background-color: rgb(249, 249, 249) !important;
   opacity: 1;
 }
 
-span.MuiTabs-indicator.css-10d9dml-MuiTabs-indicator{
+span.MuiTabs-indicator.css-10d9dml-MuiTabs-indicator {
   opacity: 0;
-height: 100%;
-width: 100% !important;
-background-color: white;
-border-radius: 0.75rem;
-  
+  height: 100%;
+  width: 100% !important;
+  background-color: white;
+  border-radius: 0.75rem;
 }
 
-.css-13xfq8m-MuiTabPanel-root{
+.css-13xfq8m-MuiTabPanel-root {
   padding: 0 !important;
 }
 
-.circle-loader{
+.circle-loader {
   position: fixed;
   display: flex;
   justify-content: center;
@@ -414,14 +418,13 @@ border-radius: 0.75rem;
   backdrop-filter: blur(2px);
   z-index: 10000;
 }
-.circle-loader::after{
+.circle-loader::after {
   content: "Loading";
   color: white;
   font-size: 18px;
 }
 
-
-.circle-loader::before{
+.circle-loader::before {
   content: "";
   width: 40px;
   height: 40px;
@@ -431,9 +434,10 @@ border-radius: 0.75rem;
   animation: loader 1s infinite;
 }
 @keyframes loader {
-  0%{
+  0% {
     transform: rotateZ(0deg);
-  }100%{
+  }
+  100% {
     transform: rotateZ(360deg);
   }
 }

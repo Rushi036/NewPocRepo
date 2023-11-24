@@ -23,7 +23,9 @@ const Reports = () => {
   }, []);
   const [status, setStatus] = useState<any>();
   const [res, setRes] = useState<any>();
+  const [userRole, setUserRole] = useState<any>(null); //this will populate from the session storage
   useEffect(() => {
+    setUserRole(sessionStorage.getItem("userRole"));
     getReportsDashboard().then((data: any) => {
       setRes(data.data);
       if (data && data?.status != 200) {
@@ -144,9 +146,28 @@ const Reports = () => {
             <div className="w-[4px] h-full bg-blue-400 absolute left-0 top-0"></div>
             <p className="text-blue-500 font-bold text-lg">Cost Governance</p>
 
-            <div className="flex flex-col">
-              <span>Coming Soon...</span>
-            </div>
+            {res && (
+              <div className="flex justify-between w-full pr-2">
+                <div className="flex flex-col">
+                  <span>Allocated</span>
+                  <span>
+                    AWS - ${res?.Metric ? res?.Metric[3]?.value?.aws : ""}
+                  </span>
+                  <span>
+                    Azure - ₹{res?.Metric ? res?.Metric[3]?.value?.azure : ""}
+                  </span>
+                </div>
+                <div className="flex flex-col">
+                  <span>Unllocated</span>
+                  <span>
+                    AWS - ${res?.Metric ? res?.Metric[4]?.value?.aws : ""}
+                  </span>
+                  <span>
+                    Azure - ₹{res?.Metric ? res?.Metric[4]?.value?.azure : ""}
+                  </span>
+                </div>
+              </div>
+            )}
           </div>
           {/* </Link> */}
         </div>
@@ -175,7 +196,11 @@ const Reports = () => {
           <div className="w-full md:w-1/2 h-[130px] flex justify-center items-center mb-4">
             <Link
               className="w-full flex justify-center items-center h-full"
-              href={"/page/FinOps/CloudGateway"}
+              href={
+                userRole == "ADMIN"
+                  ? "/page/FinOps/CloudGateway"
+                  : "/page/FinOps?report=CostSummary"
+              }
             >
               <div className="hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
                 <div className="w-[4px] h-full bg-purple-400 absolute left-0 top-0"></div>
@@ -184,7 +209,10 @@ const Reports = () => {
                 </p>
 
                 <div className="flex flex-col  w-full mt-4">
-                  <span>Coming Soon...</span>
+                  {/* <span>Coming Soon...</span> */}
+                  <span>
+                    {res?.Metric ? "₹" + res?.Metric[5]?.value : "No Data"}
+                  </span>
                 </div>
               </div>
             </Link>
@@ -224,9 +252,16 @@ const Reports = () => {
                 Managed Services Cost
               </p>
 
-              <div className="flex flex-col  w-full mt-4">
-                <span>Coming Soon...</span>
-              </div>
+              {res && (
+                <div className="flex flex-col">
+                  <span>
+                    AWS - ${res?.Metric ? res?.Metric[6]?.value?.AWS : ""}
+                  </span>
+                  <span>
+                    Azure - ₹{res?.Metric ? res?.Metric[6]?.value?.Azure : ""}
+                  </span>
+                </div>
+              )}
             </div>
             {/* </Link> */}
           </div>

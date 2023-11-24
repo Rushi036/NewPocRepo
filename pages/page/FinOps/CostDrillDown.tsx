@@ -62,7 +62,7 @@ function CostDrillDown() {
   useEffect(() => {
     // setUserADID("akash.purohit@adityabirla.com");
     setUserADID(sessionStorage.getItem("userEmail"));
-    
+
     // setUserRole("ADMIN");
     setUserRole(sessionStorage.getItem("userRole"));
     getGraphFormat();
@@ -223,13 +223,16 @@ function CostDrillDown() {
   }
 
   useEffect(() => {
+    setLoader(true);
     const body: any = {
       gte: timePeriod[0],
       lte: timePeriod[1],
       // adid: "akash.purohit@adityabirla.com",
       adid: userADID,
     };
-    fetchDataAcross(body).then((res: any) => setCrossPlatformData(res));
+    fetchDataAcross(body)
+      .then((res: any) => setCrossPlatformData(res))
+      .then(() => setLoader(false));
   }, [timePeriod, userADID]);
 
   async function getGraphFormat() {
@@ -421,24 +424,6 @@ function FinopsFilters({
 }: any) {
   const predefinedRanges: any = [
     {
-      label: "Last 1 hour",
-      value: [
-        new Date(moment().subtract(1, "hour").format("YYYY-MM-DDTHH:mm:ss")),
-        new Date(moment().format("YYYY-MM-DDTHH:mm:ss")),
-      ],
-      placement: "left",
-    },
-    {
-      label: "Last 7 hour",
-      value: [
-        new Date(moment().subtract(7, "hour").format("YYYY-MM-DDTHH:mm:ss")),
-        new Date(moment().format("YYYY-MM-DDTHH:mm:ss")),
-      ],
-
-      placement: "left",
-    },
-
-    {
       label: "Last day",
 
       value: [
@@ -502,6 +487,16 @@ function FinopsFilters({
 
       placement: "left",
     },
+    {
+      label: "Last 180 days",
+
+      value: [
+        new Date(moment().subtract(180, "day").format("YYYY-MM-DDTHH:mm:ss")),
+        new Date(moment().format("YYYY-MM-DDTHH:mm:ss")),
+      ],
+
+      placement: "left",
+    },
   ];
   const { afterToday }: any = DateRangePicker;
   const titles: any = {
@@ -519,16 +514,19 @@ function FinopsFilters({
         " Cost Trend Over Time",
         "Top Cost Drivers by Application ",
         "Data Usage By Application",
-        "Data Usage By Subscription ",
-        "Top Cost Drivers By Subscription ",
         "Cost Distribution By Service ",
         "Monthly VM Consumption",
         "Monthly Disk Consumption",
         "Monthly Others Services Consumption",
         "Monthly PAAS Consumption",
         "Data Allocation Tags",
+        "Data Cost by Application",
       ],
-      table: ["Cost Allocation Tags"],
+      table: [
+        "Cost Allocation Tags",
+        "Data Show Back By Application",
+        "Data Trends Over Time",
+      ],
     },
     AWS: {
       graph: [
@@ -536,11 +534,10 @@ function FinopsFilters({
         "Most Cost Consummed Service",
         "Data Usage By Application",
         "Data Cost By Application",
-        "Top Cost Drivers by Account",
+        "Top Cost Drivers by Application",
         "Total Unblended Cost Per Day",
         "Daily Average Unblended Cost Per Usage Type",
         "Cost Trend Over Time",
-        "Data Usage By Account",
         "Devices With Lowest CPU Utilization",
         "Devices with Highest Network In Bytes",
         "Devices with Highest Network Out Bytes",
@@ -692,7 +689,7 @@ function FinopsFilters({
           style={{ width: "100%" }}
           shouldDisableDate={afterToday()}
           placeholder="Select Date Range"
-          format="yyyy-MM-dd HH:mm:ss"
+          format="yyyy-MM-dd"
           className="hover:bg-gray-50 focus:bg-gray-50"
         />
       </div>
@@ -782,6 +779,12 @@ function ReportsCard({
           ) {
             return (
               <div key={i} className="card w-1/2">
+                <span
+                  className="flex justify-end cursor-pointer"
+                  onClick={() => unpinGraph(e.PieChart.title)}
+                >
+                  <BsPinAngleFill />
+                </span>
                 <PieChartComponent id={i} data={e.PieChart} />
               </div>
             );
@@ -848,7 +851,7 @@ function ReportsCard({
                 <div key={i} className="card">
                   <span
                     className="flex justify-end cursor-pointer"
-                    onClick={() => pinGraph(e.title)}
+                    onClick={() => unpinGraph(e.title)}
                   >
                     <BsPinAngleFill />
                   </span>
@@ -972,7 +975,12 @@ function CrossPlatformReports({ res, timePeriod, singleReport }: any) {
           ) {
             return (
               <div key={i} className="card w-1/2 max-h-[280px]">
-                <PieChartComponent id={i} data={e.PieChart} height={280} legendEnabled={false} />
+                <PieChartComponent
+                  id={i}
+                  data={e.PieChart}
+                  height={280}
+                  legendEnabled={false}
+                />
               </div>
             );
           } else if (
@@ -990,7 +998,12 @@ function CrossPlatformReports({ res, timePeriod, singleReport }: any) {
                     : "card max-h-[280px]"
                 }
               >
-                <LineChartComponent id={i} data={e.LineChart} height={250} legendEnabled={false}/>
+                <LineChartComponent
+                  id={i}
+                  data={e.LineChart}
+                  height={250}
+                  legendEnabled={false}
+                />
               </div>
             );
           } else if (
@@ -1001,7 +1014,12 @@ function CrossPlatformReports({ res, timePeriod, singleReport }: any) {
           ) {
             return (
               <div key={i} className="max-h-[280px] ">
-                <BarGraph id={i} date={timePeriod} data={e.BarGraph} height={250}/>
+                <BarGraph
+                  id={i}
+                  date={timePeriod}
+                  data={e.BarGraph}
+                  height={250}
+                />
               </div>
             );
           }
@@ -1011,7 +1029,7 @@ function CrossPlatformReports({ res, timePeriod, singleReport }: any) {
         res.Table?.map((e: any, i: any) => {
           return (
             <>
-              <div key={i} className="card">
+              <div key={i} className="card !min-w-full">
                 <Table data={e} />
               </div>
             </>

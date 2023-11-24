@@ -56,6 +56,9 @@ const LineChartComponent = (props: any) => {
             fontSize:"12px"
           },
         },
+        credits: {
+          enabled: false,
+        },
         tooltip: {
           crosshairs: true,
           animation: true,

@@ -46,7 +46,7 @@ const ChartComponent = (props: any) => {
               (this as any).update({
                 plotOptions: {
                   pie: {
-                    size: props.height/3 || "200px",
+                    size: props.height / 3 || "200px",
                     allowPointSelect: true,
                     cursor: "pointer",
                     dataLabels: {
@@ -60,17 +60,20 @@ const ChartComponent = (props: any) => {
             },
           },
         },
+        credits: {
+          enabled: false,
+        },
         title: {
           text: props?.data?.title || "",
           align: "left",
           style: {
             fontWeight: "bold",
-            fontSize:"12px"
+            fontSize: "12px",
           },
         },
         plotOptions: {
           pie: {
-            size: props.height/3 || "200px",
+            size: props.height / 3 || "200px",
             allowPointSelect: true,
             cursor: "pointer",
             dataLabels: {
@@ -85,7 +88,9 @@ const ChartComponent = (props: any) => {
           headerFormat: "",
           pointFormat:
             '<span style="color:{point.color}">\u25CF</span> <b> {point.name}</b><br/>' +
-            `Total: <b>{point.y} ({point.percentage:.1f}%) </b> ${props?.data?.xAxis || ""}<br/>`,
+            `Total: <b>{point.y} ({point.percentage:.1f}%) </b> ${
+              props?.data?.xAxis || ""
+            }<br/>`,
         },
         lang: {
           noData: "No Data to Display",

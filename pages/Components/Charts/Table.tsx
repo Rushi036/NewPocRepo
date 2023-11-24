@@ -8,18 +8,6 @@ const Table = ({ data }: any) => {
   const [page, setPage] = useState<any>(1);
   const [isOpen, setIsOpen] = useState<any>(false);
   const [tableView, settableView] = useState<any>(true);
-  const serviceTypeCostTableDummyData = {
-    title: "Gateway Charges",
-    headers: ["Service Name", "Unit Price", "Type of Service", "Total Cost"],
-    data: [
-      [
-        ["Service Name", "Cat1"],
-        ["Unit Price", "1"],
-        ["Type of Service", "internal"],
-        ["Total Cost", "2500"],
-      ],
-    ],
-  };
 
   const currentData = data?.data?.slice(
     rowPerPage * page - rowPerPage,
@@ -95,69 +83,6 @@ const Table = ({ data }: any) => {
           </div>
         </div>
       </div>
-      {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="w-full max-w-3xl mx-auto my-12 bg-white rounded-lg shadow-lg overflow-y-auto max-h-screen">
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className="bg-red-800 px-4 py-2 flex items-center justify-between">
-                <h3 className="text-xl text-white">
-                  {serviceTypeCostTableDummyData.title}
-                </h3>
-                <button
-                  className="p-2 text-xl text-white"
-                  onClick={() => {
-                    setIsOpen(false);
-                    settableView(true);
-                  }}
-                >
-                  <CloseIcon />
-                </button>
-              </div>
-              <div className="p-4">
-                <div className="relative overflow-x-auto">
-                  <table className="w-full text-sm text-center text-gray-800">
-                    <thead className="text-xs uppercase bg-gray-200">
-                      <tr>
-                        {serviceTypeCostTableDummyData?.headers?.map(
-                          (header: any, index: any) => (
-                            <th
-                              className="px-auto py-3"
-                              key={index}
-                              scope="col"
-                            >
-                              {header}
-                            </th>
-                          )
-                        )}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {serviceTypeCostTableDummyData?.data.map(
-                        (rowData: any, rowIndex: any) => (
-                          <tr key={rowIndex}>
-                            {rowData.map((item: any, index: any) => (
-                              <td className="px-auto py-3" key={index}>
-                                {item[1]}
-                              </td>
-                            ))}
-                          </tr>
-                        )
-                      )}
-                      {serviceTypeCostTableDummyData.data.length == 0 ? (
-                        <tr>
-                          <td colSpan={100}>No data</td>
-                        </tr>
-                      ) : (
-                        ""
-                      )}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 };
