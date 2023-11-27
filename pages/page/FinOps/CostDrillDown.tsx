@@ -336,7 +336,7 @@ function MetricCards({ cloud, subscId, res, isOpen, setIsOpen }: any) {
                   </span>
                 </div>
 
-                <span className="ml-auto">
+                {/* <span className="ml-auto">
                   {cloud === "Azure" ? (
                     <button className="" onClick={() => setIsOpen(true)}>
                       <ViewCompactIcon />
@@ -344,13 +344,13 @@ function MetricCards({ cloud, subscId, res, isOpen, setIsOpen }: any) {
                   ) : (
                     ""
                   )}
-                </span>
+                </span> */}
               </div>
             );
           }
         })}
 
-      {isOpen && (
+      {/* {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="w-full max-w-3xl mx-auto my-12 bg-white rounded-lg shadow-lg overflow-y-auto max-h-screen">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
@@ -402,7 +402,7 @@ function MetricCards({ cloud, subscId, res, isOpen, setIsOpen }: any) {
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 }

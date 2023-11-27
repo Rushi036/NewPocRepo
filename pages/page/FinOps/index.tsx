@@ -26,12 +26,14 @@ function FinOps() {
   // });
   //   CostDrillDown
   const router = useRouter();
-  const { report }:any = router.query;
+  const { report }: any = router.query;
   // const [value1, setValue1] = useState<any>("CostDrillDown");
   const [value1, setValue1] = useState<any>(report || "CostSummary");
+  const [redBg, setRedBg] = useState(false);
   // console.log("report - ",value1)
   const handleChange = (event: React.SyntheticEvent, newValue: any) => {
     setValue1(newValue);
+    
   };
 
   return (

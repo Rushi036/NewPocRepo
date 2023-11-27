@@ -18,9 +18,11 @@ const Sidebar = () => {
   };
   const [activeLink, setActiveLink] = useState(null);
   const [uRole, setUrole] = useState<any>(false);
+  const [bLogo, setBlogo] = useState<any>(false);
 
   useEffect(() => {
     setUrole(sessionStorage.getItem("userRole"));
+    setBlogo(sessionStorage.getItem("businessLogo"));
   }, []);
   // Function to handle link clicks and set the active link
   const handleLinkClick = (index: any) => {
@@ -35,7 +37,7 @@ const Sidebar = () => {
         } bottom-0 z-30 top-0 hidden relative shadow-2xl sm:block transition-all duration-300 bg-white border-r`}
       >
         <img
-          src="/abgLogo.jpg"
+          src={bLogo ? `/${bLogo}` : "/Common.jpg"}
           className={`${
             !state && "hidden"
           } mx-auto p-2 w-auto max-h-[120px] aspect-[16/9]`}
@@ -150,10 +152,10 @@ const Sidebar = () => {
                 FinOps
               </span>
             </Link>
-          </li> */}
-          {/* <li className="hs-accordion" id="account-accordion">
+          </li>
+          <li className="hs-accordion" id="account-accordion">
             <Link
-              href="/page/FinOps"
+              href="/page/FinOps/newFinops"
               className={`flex items-center gap-x-3.5 py-2 px-2.5 text-base
               text-slate-700 rounded-md hover:bg-gray-100
               ${activeLink === 4 ? "bg-gray-100" : ""}`}

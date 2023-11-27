@@ -157,7 +157,18 @@ function CloudGateway() {
   const [zoneMappingTableView, setZoneMappingTableView] = useState<any>(true);
   const [userRole, setUserRole] = useState<any>(null); //this will populate from the session storage
   const [loader, setLoader] = useState<any>(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
+  const filteredData = cloudGatewayData?.data?.filter((rowData: any) =>
+    rowData.some(
+      (item: any) =>
+        item[0] === "BusinessName" &&
+        typeof item[1] === "string" &&
+        item[1].toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  );
+
+  // console.log("filtered data", filteredData);
   useEffect(() => {
     setUserRole(sessionStorage.getItem("userRole"));
   }, []);
@@ -238,13 +249,16 @@ function CloudGateway() {
               </label>
               <table className="w-full text-sm text-center mt-2 text-gray-800">
                 <thead className="text-[9px] text-white uppercase bg-red-800">
-                  {serviceTypeCostData?.headers?.map(
-                    (header: any, index: any) => (
-                      <th className="px-auto py-1" key={index} scope="col">
-                        {header}
-                      </th>
-                    )
-                  )}
+                  <tr>
+                    <th>SrNo</th>
+                    {serviceTypeCostData?.headers?.map(
+                      (header: any, index: any) => (
+                        <th className="px-auto py-1" key={index} scope="col">
+                          {header}
+                        </th>
+                      )
+                    )}
+                  </tr>
                 </thead>
                 <tbody>
                   {serviceTypeCostData?.data?.map(
@@ -265,6 +279,7 @@ function CloudGateway() {
                             )
                           }
                         >
+                          <td>{rowIndex + 1}</td>
                           {rowData.map((item: any, index: any) =>
                             item[0] != "NestedTableData" ? (
                               <td
@@ -352,6 +367,7 @@ function CloudGateway() {
               </label>
               <table className="w-full text-sm text-center mt-2 text-gray-800">
                 <thead className="text-[9px] uppercase bg-red-800 text-white">
+                  <th>SrNo</th>
                   {zoneMappingData?.headers?.map((header: any, index: any) => (
                     <th className="px-auto py-1" key={index} scope="col">
                       {header}
@@ -361,6 +377,7 @@ function CloudGateway() {
                 <tbody>
                   {zoneMappingData?.data?.map((rowData: any, rowIndex: any) => (
                     <tr key={rowIndex}>
+                      <td>{rowIndex + 1}</td>
                       {rowData.map((item: any, index: any) => (
                         <td
                           className={
@@ -395,8 +412,19 @@ function CloudGateway() {
             <label className="text-sm font-semibold">
               {cloudGatewayData?.title ?? ""}
             </label>
+
+            {/* Search input */}
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="mt-2 ml-2 px-3 py-1 border border-gray-300 rounded-md"
+            />
+
             <table className="w-full text-sm text-center mt-2 text-gray-800">
               <thead className="text-[9px] text-white uppercase bg-red-800">
+                <th>SrNo</th>
                 {cloudGatewayData?.headers?.map((header: any, index: any) => (
                   <th className="px-auto py-1" key={index} scope="col">
                     {header}
@@ -404,83 +432,86 @@ function CloudGateway() {
                 ))}
               </thead>
               <tbody>
-                {cloudGatewayData?.data?.map((rowData: any, rowIndex: any) => (
-                  <>
-                    <tr
-                      key={rowIndex}
-                      className={
-                        gatewayChargesNestedRowOpen == rowIndex
-                          ? "bg-slate-100 cursor-pointer"
-                          : "cursor-pointer"
-                      }
-                      onClick={() =>
-                        setGatewayChargesNestedRowOpen(
+                {filteredData &&
+                  filteredData?.map((rowData: any, rowIndex: any) => (
+                    <>
+                      {/* Existing row mapping logic */}
+                      <tr
+                        key={rowIndex}
+                        className={
                           gatewayChargesNestedRowOpen == rowIndex
-                            ? "-1"
-                            : rowIndex
-                        )
-                      }
-                    >
-                      {rowData.map((item: any, index: any) =>
-                        item[0] != "NestedTableData" ? (
-                          <td className="px-auto py-1" key={index}>
-                            {item[1]}
-                          </td>
-                        ) : (
-                          ""
-                        )
-                      )}
-                    </tr>
-                    <tr key={rowIndex + 1000}>
-                      {rowData.map((item: any, trindex: any) =>
-                        item[0] == "NestedTableData" ? (
-                          <td
-                            key={trindex + 1000}
-                            colSpan={100}
-                            className={
-                              gatewayChargesNestedRowOpen != rowIndex
-                                ? "hidden"
-                                : ""
-                            }
-                          >
-                            <table className="w-full">
-                              <thead className="bg-slate-300">
-                                <tr>
-                                  {item[1]?.headers?.map(
-                                    (data: any, thindex: any) => {
-                                      return <th key={thindex}>{data}</th>;
-                                    }
-                                  )}
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {item[1]?.data?.map(
-                                  (data: any, thindex: any) => {
-                                    return (
+                            ? "bg-slate-100 "
+                            : ""
+                        }
+                        onClick={() =>
+                          setGatewayChargesNestedRowOpen(
+                            gatewayChargesNestedRowOpen == rowIndex
+                              ? "-1"
+                              : rowIndex
+                          )
+                        }
+                      >
+                        <td>{rowIndex + 1}</td>
+                        {rowData.map((item: any, index: any) =>
+                          item[0] !== "NestedTableData" ? (
+                            <td className="px-auto py-1" key={index}>
+                              {item[1]}
+                            </td>
+                          ) : (
+                            ""
+                          )
+                        )}
+                      </tr>
+
+                      {/* Nested table logic */}
+                      <tr key={rowIndex + 1000}>
+                        {rowData.map((item: any, trindex: any) =>
+                          item[0] === "NestedTableData" ? (
+                            <td
+                              key={trindex + 1000}
+                              colSpan={100}
+                              className={
+                                gatewayChargesNestedRowOpen !== rowIndex
+                                  ? "hidden"
+                                  : ""
+                              }
+                            >
+                              <table className="w-full">
+                                <thead className="bg-slate-300">
+                                  <tr>
+                                    {item[1]?.headers?.map(
+                                      (data: any, thindex: any) => (
+                                        <th key={thindex}>{data}</th>
+                                      )
+                                    )}
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {item[1]?.data?.map(
+                                    (data: any, thindex: any) => (
                                       <tr key={thindex}>
-                                        {data?.map((row: any, index: any) => {
-                                          return <td key={index}>{row[1]}</td>;
-                                        })}
+                                        {data?.map((row: any, index: any) => (
+                                          <td key={index}>{row[1]}</td>
+                                        ))}
                                       </tr>
-                                    );
-                                  }
-                                )}
-                              </tbody>
-                            </table>
-                          </td>
-                        ) : (
-                          ""
-                        )
-                      )}
-                    </tr>
-                  </>
-                ))}
-                {cloudGatewayData?.data?.length == 0 ? (
+                                    )
+                                  )}
+                                </tbody>
+                              </table>
+                            </td>
+                          ) : (
+                            ""
+                          )
+                        )}
+                      </tr>
+                    </>
+                  ))}
+                {filteredData?.length === 0 && (
                   <tr>
-                    <td colSpan={100}>No data</td>
+                    <td colSpan={100} className="py-2">
+                      No matching data
+                    </td>
                   </tr>
-                ) : (
-                  ""
                 )}
               </tbody>
             </table>

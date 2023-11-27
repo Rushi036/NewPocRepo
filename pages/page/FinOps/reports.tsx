@@ -149,7 +149,7 @@ const Reports = () => {
             {res && (
               <div className="flex justify-between w-full pr-2">
                 <div className="flex flex-col">
-                  <span>Allocated</span>
+                  <span className="font-bold  border-b-2">Allocated</span>
                   <span>
                     AWS - ${res?.Metric ? res?.Metric[3]?.value?.aws : ""}
                   </span>
@@ -158,7 +158,7 @@ const Reports = () => {
                   </span>
                 </div>
                 <div className="flex flex-col">
-                  <span>Unllocated</span>
+                  <span className="font-bold border-b-2">Unallocated</span>
                   <span>
                     AWS - ${res?.Metric ? res?.Metric[4]?.value?.aws : ""}
                   </span>

@@ -71,6 +71,9 @@ const SmallLineChartComponent = (props: any) => {
           },
           type: "category",
         },
+        credits: {
+          enabled: false,
+        },
         legend: {
           layout: "horizontal",
           align: "center",
