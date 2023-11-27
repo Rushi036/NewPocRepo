@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export const getUserRole = async (email: any) => {
   let retData: any;
-  console.log("details in  api", email);
+  // console.log("details in  api", email);
 
   const res = await fetch(
     `${finopsServerBaseUrl}/getUserroleByEmail?adId=${email}`,

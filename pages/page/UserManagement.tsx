@@ -22,7 +22,7 @@ const UserManagement = () => {
     setIsViewModalOpen(true);
   };
 
-  console.log("selected row data", selectedRowData);
+  // console.log("selected row data", selectedRowData);
 
   const handleEditDetailsClick = (rowData: any) => {
     // console.log("----------------", rowData);
@@ -107,8 +107,8 @@ const UserManagement = () => {
     }
   }, [selectedRowData]);
 
-  editedSubscriptionDetail &&
-    console.log("edited data", editedSubscriptionDetail);
+  // editedSubscriptionDetail &&
+    // console.log("edited data", editedSubscriptionDetail);
   const handleEditUserDataChange = (e: any) => {
     const { name, value } = e.target;
     setEditedUserData((prevUserData) => ({
@@ -389,9 +389,9 @@ const UserManagement = () => {
       }),
     };
 
-    console.log(formData);
+    // console.log(formData);
 
-    console.log("payload", formData);
+    // console.log("payload", formData);
   };
 
   const handleEditUpload = () => {
@@ -427,9 +427,9 @@ const UserManagement = () => {
       }),
     };
 
-    console.log(formData);
+    // console.log(formData);
 
-    console.log(" edited payload", formData);
+    // console.log(" edited payload", formData);
   };
 
   const getFilteredSubscriptions = (cloudType: any) => {

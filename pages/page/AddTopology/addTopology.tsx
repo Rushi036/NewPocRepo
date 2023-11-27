@@ -206,7 +206,7 @@ const addTopology = () => {
 
   useEffect(() => {
     setRole(sessionStorage.getItem("userRole"));
-  });
+  },[]);
 
   function setData(e: any) {
     e.preventDefault();
