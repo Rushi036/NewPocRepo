@@ -149,7 +149,7 @@ const Reports = () => {
             {res && (
               <div className="flex justify-between w-full pr-2">
                 <div className="flex flex-col">
-                  <span className="font-bold  border-b-2">Allocated</span>
+                  <span className="font-bold  border-b-2 pb-1">Allocated Spent</span>
                   <span>
                     AWS - ${res?.Metric ? res?.Metric[3]?.value?.aws : ""}
                   </span>
@@ -158,7 +158,7 @@ const Reports = () => {
                   </span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-bold border-b-2">Unallocated</span>
+                  <span className="font-bold border-b-2 pb-1">Unallocated Spent</span>
                   <span>
                     AWS - ${res?.Metric ? res?.Metric[4]?.value?.aws : ""}
                   </span>
@@ -242,28 +242,28 @@ const Reports = () => {
           </div>
 
           <div className="w-full md:w-1/2 h-[130px] flex justify-center items-center mb-4">
-            {/* <Link
-                            className="w-full flex justify-center items-center h-full"
-                            href={"/page/FinOps"}
-                        > */}
-            <div className="hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
-              <div className="w-[4px] h-full bg-yellow-300 absolute left-0 top-0"></div>
-              <p className="text-yellow-400 font-bold text-lg">
-                Managed Services Cost
-              </p>
+            <Link
+              className="w-full flex justify-center items-center h-full"
+              href={"/page/FinOps?report=CostSummary"}
+            >
+              <div className="hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
+                <div className="w-[4px] h-full bg-yellow-300 absolute left-0 top-0"></div>
+                <p className="text-yellow-400 font-bold text-lg">
+                  Managed Services Cost
+                </p>
 
-              {res && (
-                <div className="flex flex-col">
-                  <span>
-                    AWS - ${res?.Metric ? res?.Metric[6]?.value?.AWS : ""}
-                  </span>
-                  <span>
-                    Azure - ₹{res?.Metric ? res?.Metric[6]?.value?.Azure : ""}
-                  </span>
-                </div>
-              )}
-            </div>
-            {/* </Link> */}
+                {res && (
+                  <div className="flex flex-col">
+                    <span>
+                      AWS - ${res?.Metric ? res?.Metric[6]?.value?.AWS : ""}
+                    </span>
+                    <span>
+                      Azure - ₹{res?.Metric ? res?.Metric[6]?.value?.Azure : ""}
+                    </span>
+                  </div>
+                )}
+              </div>
+            </Link>
           </div>
         </div>
         <div
