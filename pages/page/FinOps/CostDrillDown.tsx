@@ -531,7 +531,7 @@ function FinopsFilters({
     AWS: {
       graph: [
         "State Of Unique Instances",
-        "Most Cost Consummed Service",
+        "Most Cost Consumed Service",
         "Data Usage By Application",
         "Data Cost By Application",
         "Top Cost Drivers by Application",
