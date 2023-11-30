@@ -1,0 +1,42 @@
+ {
+  "businessName": "test1",
+  "ownerName": "test",
+  "ownerEmail": "test@gmail.com",
+  "role": "BE",
+  "subscriptions": [
+    {
+      "subsAccName": "test",
+      "subsAccId": "test",
+      "cloud": "Azure",
+      "subsContactADIDs": [
+        [
+          {
+            "name": "test1",
+            "adid": "test1@gmail.com"
+          }
+        ],
+        [
+          {
+            "name": "test2",
+            "adid": "test2@gmail.com"
+          }
+        ]
+      ],
+      "type": "CSP"
+    },
+    {
+      "subsAccName": "test2",
+      "subsAccId": "test",
+      "cloud": "AWS",
+      "subsContactADIDs": [
+        [
+          {
+            "name": "test1",
+            "adid": "test1@gmail.com"
+          }
+        ]
+      ]
+    }
+  ]
+}
+

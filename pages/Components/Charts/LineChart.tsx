@@ -131,7 +131,7 @@ const LineChartComponent = (props: any) => {
     }
   }, [props.data, props.reports]);
 
-  return <div ref={chartContainer} style={{ height: "500px" }} />;
+  return <div ref={chartContainer}  />;
 };
 
 export default LineChartComponent;

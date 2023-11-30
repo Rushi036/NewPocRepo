@@ -1,3 +1,4 @@
+import NTable from "@/pages/Components/Charts/NestedTable";
 import Table from "@/pages/Components/Charts/Table";
 import CloseIcon from "@mui/icons-material/Close";
 import Link from "next/link";
@@ -153,13 +154,15 @@ function CloudGateway() {
 
   const [zoneMappingIsOpen, setZoneMappingIsOpen] = useState<any>(false);
   const [serviceTypeCostNestedRowOpen, setServiceTypeCostNestedRowOpen] =
-    useState<any>(-1);
+    useState<any>();
   const [gatewayChargesNestedRowOpen, setGatewayChargesNestedRowOpen] =
     useState<any>(-1);
   const [zoneMappingTableView, setZoneMappingTableView] = useState<any>(true);
   const [userRole, setUserRole] = useState<any>(null); //this will populate from the session storage
   const [loader, setLoader] = useState<any>(false);
-
+  useEffect(() => {
+    setServiceTypeCostNestedRowOpen(-1);
+  }, []);
   // console.log("filtered data", filteredData);
   useEffect(() => {
     setUserRole(sessionStorage.getItem("userRole"));
@@ -229,19 +232,19 @@ function CloudGateway() {
   return (
     <>
       <div className="text-xl border-b-2 border-slate-400 pb-2">
-      <Link
-        className=" h-fit w-fit cursor-pointer "
-        href={"/page/FinOps/reports"}
-      >
-        <IoIosArrowBack size={25} />
-      </Link>
-      </div> 
+        <Link
+          className=" h-fit w-fit cursor-pointer "
+          href={"/page/FinOps/reports"}
+        >
+          <IoIosArrowBack size={25} />
+        </Link>
+      </div>
       {loader && <div className="circle-loader"></div>}
       <div className="mt-4 finops-container h-auto flex  gap-4">
         <div className="flex flex-col gap-4 h-fit">
           {serviceTypeCostData && (
             <div className="card h-fit">
-              <label className="text-xs font-semibold">
+              <label className="text-sm font-semibold">
                 {serviceTypeCostData?.title ?? ""}
               </label>
               <table className="w-full text-sm text-center mt-2 text-gray-800">
@@ -359,7 +362,7 @@ function CloudGateway() {
 
           {zoneMappingData && (
             <div className="card !h-fit">
-              <label className="text-xs font-semibold">
+              <label className="text-sm font-semibold">
                 {zoneMappingData?.title ?? ""}
               </label>
               <table className="w-full text-sm text-center mt-2 text-gray-800">
@@ -405,7 +408,7 @@ function CloudGateway() {
         </div>
 
         <div className="card">
-          {cloudGatewayData && <Table data={cloudGatewayData} />}{" "}
+          {cloudGatewayData && <NTable data={cloudGatewayData} />}{" "}
         </div>
 
         {serviceTypeCostIsOpen && (

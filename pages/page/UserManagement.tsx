@@ -15,14 +15,51 @@ const UserManagement = () => {
   const [isViewModalOpen, setIsViewModalOpen] = useState<any>(false);
   const [selectedRowData, setSelectedRowData] = useState<any>(null);
   const [editModalOpen, setEditModalOpen] = useState<any>(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [count, setCount] = useState(1);
+  const [itemsPerPage] = useState(5); // Adjust the number of items per page as needed
 
+  // Assuming `data` is your original data array
+  const filteredData =
+    data &&
+    data.filter(
+      (d: any) =>
+        d.businessName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        d.userName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        d.adId.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        // Add more fields as needed
+        (d.subscriptions &&
+          d.subscriptions.some((sub: any) =>
+            sub.subsContactADIDs[0]?.some(
+              (contact: any) =>
+                contact.name
+                  .toLowerCase()
+                  .includes(searchQuery.toLowerCase()) ||
+                contact.adid.toLowerCase().includes(searchQuery.toLowerCase())
+            )
+          ))
+    );
+
+  const totalItems = filteredData && filteredData.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentData = filteredData && filteredData.slice(startIndex, endIndex);
   const handleViewDetailsClick = (rowData: any) => {
     // console.log("----------------", rowData);
     setSelectedRowData(rowData);
     setIsViewModalOpen(true);
   };
-
-  // console.log("selected row data", selectedRowData);
+  // useEffect(() => {
+  //   data && setCount(data.length);
+  //   increaseCount();
+  // }, [data]);
+  // const increaseCount = () => {
+  //   count && setCount(count + 1 - count);
+  // };
+  // console.log("countdata", count);
 
   const handleEditDetailsClick = (rowData: any) => {
     // console.log("----------------", rowData);
@@ -30,7 +67,7 @@ const UserManagement = () => {
     setEditModalOpen(true);
   };
 
-  let count = 1;
+  // let count = 1;
   const [userData, setUserData] = useState({
     businessName: "",
     ownerName: "",
@@ -108,7 +145,7 @@ const UserManagement = () => {
   }, [selectedRowData]);
 
   // editedSubscriptionDetail &&
-    // console.log("edited data", editedSubscriptionDetail);
+  // console.log("edited data", editedSubscriptionDetail);
   const handleEditUserDataChange = (e: any) => {
     const { name, value } = e.target;
     setEditedUserData((prevUserData) => ({
@@ -318,7 +355,7 @@ const UserManagement = () => {
     });
     setSubscriptionDetail(newSubscriptionDetail);
   };
-
+  console.log("subscription detail", subscriptionDetail);
   const handleRemoveContact = (subscriptionIndex: any, contactIndex: any) => {
     const newSubscriptionDetail = [...subscriptionDetail];
     newSubscriptionDetail[subscriptionIndex].contactDetails.splice(
@@ -365,20 +402,30 @@ const UserManagement = () => {
 
     const formData = {
       businessName: userData.businessName,
-      ownerName: userData.ownerName,
-      ownerEmail: userData.ownerEmail,
+      userName: userData.ownerName,
+      adid: userData.ownerEmail,
       role: userData.role,
+      type: "",
+      status: "active",
+      businessLogo: "",
       subscriptions: subscriptionDetail.map((subscription: any) => {
         const subscriptionData: any = {
           subsAccName: subscription.subsAccName,
           subsAccId: subscription.subsAccId,
           cloud: subscription.cloud,
-          subsContactADIDs: subscription.contactDetails.map((contact: any) => [
+          access: [
             {
-              name: contact.contactName,
-              adid: contact.contactEmail,
+              ownerADID: userData.ownerEmail,
             },
-          ]),
+            {
+              contactADID: [].concat(
+                ...subscription.contactDetails.map((contact: any) => ({
+                  name: contact.contactName,
+                  adid: contact.contactEmail,
+                }))
+              ),
+            },
+          ],
         };
 
         if (subscription.cloud === "Azure") {
@@ -391,7 +438,7 @@ const UserManagement = () => {
 
     // console.log(formData);
 
-    // console.log("payload", formData);
+    console.log("payload", formData);
   };
 
   const handleEditUpload = () => {
@@ -401,22 +448,32 @@ const UserManagement = () => {
 
     const formData = {
       businessName: editedUserData.businessName,
-      ownerName: editedUserData.ownerName,
-      ownerEmail: editedUserData.ownerEmail,
+      userName: editedUserData.ownerName,
+      adid: editedUserData.ownerEmail,
       role: editedUserData.role,
+      type: "",
+      status: "",
+      businessLogo: "",
       subscriptions: editedSubscriptionDetail.map((subscription: any) => {
         const subscriptionData: any = {
           subsAccName: subscription.subsAccName,
           subsAccId: subscription.subsAccId,
           cloud: subscription.cloud,
-          subsContactADIDs:
-            subscription.subsContactADIDs[0] &&
-            subscription.subsContactADIDs[0].map((contact: any) => [
-              {
-                name: contact.name,
-                adid: contact.adid,
-              },
-            ]),
+          access: [
+            {
+              ownerADID: editedUserData.ownerEmail,
+            },
+            {
+              contactADID:
+                subscription.subsContactADIDs[0] &&
+                subscription.subsContactADIDs[0].map((contact: any) => ({
+                  name: contact.name,
+                  adid: contact.adid,
+                })),
+            },
+          ],
+          status: "active",
+          // type: subscription.type,
         };
 
         if (subscription.cloud === "Azure") {
@@ -429,7 +486,7 @@ const UserManagement = () => {
 
     // console.log(formData);
 
-    // console.log(" edited payload", formData);
+    console.log(" edited payload", formData);
   };
 
   const getFilteredSubscriptions = (cloudType: any) => {
@@ -452,22 +509,35 @@ const UserManagement = () => {
         <span>User Management</span>
       </div>
       <div className="flex justify-between px-4">
-        <div></div>
-        <button
-          onClick={() => setIsOpen(true)}
-          className="btn bg-red-700 rounded-sm  px-4 py-1 mt-6 text-white font-semibold hover:bg-red-800"
-        >
-          Add User
-        </button>
+        <div className="mt-6">
+          <input
+            type="text"
+            placeholder="Search..."
+            className="border px-2 py-1 rounded-sm"
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setCurrentPage(1); // Reset page to 1 when searching
+            }}
+          />
+        </div>
+        <div className=" mt-6">
+          <button
+            onClick={() => setIsOpen(true)}
+            className="btn bg-red-700 rounded-sm  px-4 py-1 text-white font-semibold hover:bg-red-800"
+          >
+            Add User
+          </button>
+        </div>
       </div>
       <div className="items-center pb-4 px-4 ">
         <div className="relative overflow-x-auto mt-6">
           <table className="w-full text-sm text-center text-gray-800">
             <thead className="text-xs text-white uppercase bg-red-800">
               <tr>
-                <th scope="col" className="px-2 py-3">
+                {/* <th scope="col" className="px-2 py-3">
                   Sr.No.
-                </th>
+                </th> */}
                 <th scope="col" className="px-auto py-3">
                   Business Name
                 </th>
@@ -489,8 +559,8 @@ const UserManagement = () => {
               </tr>
             </thead>
             <tbody>
-              {data && data.length != 0 ? (
-                data.map((d: any, i: any) => {
+              {currentData && currentData.length != 0 ? (
+                currentData.map((d: any, i: any) => {
                   if (d.userType === "Owner") {
                     const uniqueContactADIDs = new Set<string>();
                     d.subscriptions &&
@@ -503,7 +573,7 @@ const UserManagement = () => {
                     // console.log("-----------", uniqueContactADIDs);
                     return (
                       <tr key={i} className="bg-white border-b text-center">
-                        <td className="px-auto py-3">{count++}</td>
+                        {/* <td className="px-auto py-3">{}</td> */}
                         <td className="px-auto py-3">{d.businessName}</td>
                         <td className="px-auto py-3">{d.userName}</td>
                         <td className="px-auto py-3">{d.adId}</td>{" "}
@@ -547,6 +617,28 @@ const UserManagement = () => {
               )}
             </tbody>
           </table>
+
+          <div className="mt-2 table-pagination w-full flex items-center justify-end gap-2">
+            <button
+              className="py-1 px-2 rounded border disabled:text-slate-400"
+              onClick={() =>
+                setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))
+              }
+              disabled={currentPage === 1}
+            >
+              Prev
+            </button>
+            <span>{`Page ${currentPage} of ${totalPages}`}</span>
+            <button
+              className="py-1 px-2 rounded border disabled:text-slate-400"
+              onClick={() =>
+                setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages))
+              }
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
       {/* --------------------Add user Modal Start----------------------*/}

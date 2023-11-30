@@ -10,7 +10,7 @@ const BarGraph = (props: any) => {
       const options: any = {
         chart: {
           // height: (9 / 16 * 100) + '%',
-          height: 500,
+          height: props.height || 500,
           type: props?.data?.type || "column",
         },
         title: {
@@ -50,6 +50,7 @@ const BarGraph = (props: any) => {
           },
         },
         legend: {
+          enabled: props.legendEnabled ?? true,
           layout: "horizontal",
           align: "center",
           verticalAlign: "bottom",

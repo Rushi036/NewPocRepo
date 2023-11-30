@@ -3,6 +3,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import React, { useEffect, useState } from "react";
 
 const Table = ({ data }: any) => {
+  // console.log("datain tble", data);
   const rowPerPage = 6;
   const totalRows = data?.data?.length;
   const totalPages = Math.ceil(totalRows / rowPerPage);
