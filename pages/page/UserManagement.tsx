@@ -18,9 +18,8 @@ const UserManagement = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [count, setCount] = useState(1);
-  const [itemsPerPage] = useState(5); // Adjust the number of items per page as needed
+  const [itemsPerPage] = useState(5);
 
-  // Assuming `data` is your original data array
   const filteredData =
     data &&
     data.filter(
@@ -43,8 +42,8 @@ const UserManagement = () => {
 
   const totalItems = filteredData && filteredData.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
-
   const startIndex = (currentPage - 1) * itemsPerPage;
+
   const endIndex = startIndex + itemsPerPage;
   const currentData = filteredData && filteredData.slice(startIndex, endIndex);
   const handleViewDetailsClick = (rowData: any) => {
@@ -488,7 +487,6 @@ const UserManagement = () => {
 
     console.log(" edited payload", formData);
   };
-
   const getFilteredSubscriptions = (cloudType: any) => {
     return selectedRowData.subscriptions.filter(
       (subscription: any) => subscription.cloud === cloudType
@@ -517,7 +515,7 @@ const UserManagement = () => {
             value={searchQuery}
             onChange={(e) => {
               setSearchQuery(e.target.value);
-              setCurrentPage(1); // Reset page to 1 when searching
+              setCurrentPage(1);
             }}
           />
         </div>
@@ -535,9 +533,9 @@ const UserManagement = () => {
           <table className="w-full text-sm text-center text-gray-800">
             <thead className="text-xs text-white uppercase bg-red-800">
               <tr>
-                {/* <th scope="col" className="px-2 py-3">
+                <th scope="col" className="px-2 py-3">
                   Sr.No.
-                </th> */}
+                </th>
                 <th scope="col" className="px-auto py-3">
                   Business Name
                 </th>
@@ -570,10 +568,11 @@ const UserManagement = () => {
                             uniqueContactADIDs.add(JSON.stringify(contact));
                           });
                       });
+                    const index = startIndex + i + 1;
                     // console.log("-----------", uniqueContactADIDs);
                     return (
                       <tr key={i} className="bg-white border-b text-center">
-                        {/* <td className="px-auto py-3">{}</td> */}
+                        <td className="px-auto py-3">{index}</td>
                         <td className="px-auto py-3">{d.businessName}</td>
                         <td className="px-auto py-3">{d.userName}</td>
                         <td className="px-auto py-3">{d.adId}</td>{" "}

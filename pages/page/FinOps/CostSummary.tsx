@@ -276,18 +276,56 @@ const CostSummary = () => {
               >
                 <Tab
                   value={"aws"}
-                  label="AWS"
-                  className="bg-white border border-[#D5C5EE] border-solid !text-black !rounded-lg !mb-4 !max-h-[7rem] !h-[8rem] !w-[8rem]"
+                  label={
+                    <div className="flex flex-col items-center">
+                      <img
+                        src="/aws.png"
+                        alt="AWS Logo"
+                        style={{ width: "60px", height: "40px" }}
+                        className=""
+                      />
+                      {/* AWS */}
+                    </div>
+                  }
+                  className={`${
+                    cloudValue === "aws" ? "shadow-xl border-gray-500" : ""
+                  } bg-white border border-gray-300 border-solid !text-black !rounded-lg !mb-4 !max-h-[7rem] !h-[8rem] !w-[8rem]`}
                 />
                 <Tab
                   value={"azure"}
-                  label="Azure"
-                  className="border border-[#D5C5EE] bg-white border-solid !text-black !rounded-lg !mb-4 !max-h-[7rem] !h-[8rem] !w-[8rem]"
+                  label={
+                    <div className="flex flex-col items-center">
+                      <img
+                        src="/azure.png"
+                        alt="Azure Logo"
+                        style={{ width: "50px", height: "40px" }}
+                        className=""
+                      />
+                      {/* Azure */}
+                    </div>
+                  }
+                  className={`${
+                    cloudValue === "azure" ? "shadow-xl border-gray-500" : ""
+                  } bg-white border border-gray-300 border-solid !text-black !rounded-lg !mb-4 !max-h-[7rem] !h-[8rem] !w-[8rem]`}
                 />
                 <Tab
                   value={"CloudGateway"}
-                  label="Service cloud gateway and manage services"
-                  className="border border-[#D5C5EE] bg-white border-solid !text-black !rounded-lg !mb-4 !max-h-[7rem] !h-[8rem] !w-[8rem]"
+                  label={
+                    <div className="flex flex-col items-center">
+                      <img
+                        src="/cloud.png"
+                        alt="Cloud Gateway Logo"
+                        style={{ width: "60px", height: "50px" }}
+                        className=""
+                      />
+                      {/* Cloud gateway & Managed services */}
+                    </div>
+                  }
+                  className={`${
+                    cloudValue === "CloudGateway"
+                      ? "shadow-xl border-gray-500"
+                      : ""
+                  } bg-white border border-gray-300 border-solid !text-black !rounded-lg !mb-4 !max-h-[7rem] !h-[8rem] !w-[8rem]`}
                 />
               </Tabs>
             </div>
@@ -316,7 +354,10 @@ const CostSummary = () => {
                   className="w-full flex flex-wrap overflow-hidden"
                   style={{ height: "max-content" }}
                 >
-                  <div className="w-[50%] flex flex-wrap" style={{ height: "max-content" }}>
+                  <div
+                    className="w-[50%] flex flex-wrap"
+                    style={{ height: "max-content" }}
+                  >
                     <div className="flex flex-wrap min-h-[10rem] w-[100%] pl-4 pb-4 justify-between">
                       {res &&
                         res.Metric?.map((e: any, i: any) => (
