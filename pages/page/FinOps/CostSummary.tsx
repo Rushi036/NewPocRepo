@@ -407,7 +407,7 @@ const CostSummary = () => {
                           Array.isArray(e.BarGraph.data)
                         ) {
                           return (
-                            <div className="pl-4 w-full">
+                            <div key={i} className="pl-4 w-full">
                               <div className="bg-white p-4 rounded-lg">
                                 <BarGraph
                                   // id={"new2"}
@@ -433,7 +433,7 @@ const CostSummary = () => {
                           Array.isArray(e.LineChart.data)
                         ) {
                           return (
-                            <div className="pl-4 w-full">
+                            <div  key={i} className="pl-4 w-full">
                               <div className="bg-white p-4 rounded-lg">
                                 <LineChartComponent
                                   // id={i}
