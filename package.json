@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "json-server-dev": "json-server -p 8000 -w Data/db.json",
+    "json-server-local": "json-server -p 8000 -w Data/db.json",
+    "json-server-dev": "json-server --host 10.47.98.164 -p 9250 -w Data/db.json",
     "json-server": "json-server --host 10.47.98.164 -p 9250 -w Data/db.json"
   },
   "dependencies": {
