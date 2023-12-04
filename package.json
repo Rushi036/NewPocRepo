@@ -5,11 +5,11 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 5612",
     "lint": "next lint",
     "json-server-local": "json-server -p 8000 -w Data/db.json",
     "json-server-dev": "json-server --host 10.47.98.164 -p 9250 -w Data/db.json",
-    "json-server": "json-server --host 10.47.98.164 -p 9250 -w Data/db.json"
+    "json-server": "json-server --host 10.47.128.23 -p 5611 -w Data/db.json"
   },
   "dependencies": {
     "@azure/msal-browser": "^2.37.0",

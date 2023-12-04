@@ -45,7 +45,7 @@ import { getIcons } from "@/pages/api/getIcons";
 //   },
 // ];
 
-let selectedNode = 3;
+let selectedNode: any = null;
 
 const proOptions = { hideAttribution: true };
 let id = 1;
@@ -91,7 +91,10 @@ const AddNodeOnEdgeDrop = (props: any) => {
             x: event.clientX - left - 75,
             y: event.clientY - top,
           }),
-          data: { label: `Node ${id}`, Path: props.network_icons[selectedNode] },
+          data: {
+            label: `Node ${id}`,
+            Path: props.network_icons[selectedNode],
+          },
         };
 
         setNodes((nds: any) => nds.concat(newNode));
@@ -124,15 +127,33 @@ const AddNodeOnEdgeDrop = (props: any) => {
     restoreFlow();
   }, [props.topology, setEdges, setNodes, setViewport]);
 
+  const onReset = useCallback(() => {
+    const resetFlow = async () => {
+      const x = 0,
+        y = 0,
+        zoom = 1;
+      setNodes([]);
+      setEdges([]);
+      setViewport({ x, y, zoom });
+      selectedNode = null;
+      props.setInitialNodes(null)
+    };
+
+    resetFlow();
+  }, [setEdges, setNodes, setViewport]);
+
   // console.log(props.topology)
   useEffect(() => {
-    props.topology && onRestore()
-  }, [props.topology])
+    props.topology && onRestore();
+  }, [props.topology]);
 
   return (
-    <div className="wrapper" ref={reactFlowWrapper}>
-      {/* <button onClick={onSave}>save</button>
-      <button onClick={onRestore}>restore</button> */}
+    <div className="wrapper relative" ref={reactFlowWrapper}>
+      {/* <button onClick={onSave}>save</button> */}
+      {/* <button className="z-30 absolute top-0 left-10" onClick={onRestore}>
+        Restore
+      </button> */}
+      <button className="absolute top-1 z-20 left-1 px-2 py-1 bg-slate-300 border border-slate-400 rounded-lg" onClick={onReset}>Reset</button>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -152,6 +173,7 @@ const AddNodeOnEdgeDrop = (props: any) => {
 };
 
 function Topology(props: any) {
+  // const [selectedNode, setSelectedNode] = useState<any>(3);
   const [network_icons, setNetworkIcons] = useState<any>(null);
   const [initialNodes, setInitialNodes] = useState<any>(null);
 
@@ -159,32 +181,45 @@ function Topology(props: any) {
     async function dataFetch() {
       await getIcons().then((res) => {
         setNetworkIcons(res.data);
-        setInitialNodes([
-          {
-            id: "0",
-            type: "selectorNode",
-            data: { label: "Node", Path: res.data[3] },
-            position: { x: 0, y: 50 },
-          },
-        ]);
       });
     }
     dataFetch();
   }, []);
-  const [Node, setNode] = useState(3);
+
+  useEffect(() => {
+    if (network_icons && selectedNode != null && !initialNodes) {
+      setInitialNodes([
+        {
+          id: "0",
+          type: "selectorNode",
+          data: { label: "Node", Path: network_icons[selectedNode] },
+          position: { x: 0, y: 50 },
+        },
+      ]);
+    }
+  }, [initialNodes, network_icons, selectedNode]);
+  const [Node, setNode] = useState(selectedNode);
 
   return (
     <>
-      <div className="topology-editor">
-        <div className="creator">
-          {network_icons ?
-              <AddNodeOnEdgeDrop network_icons={network_icons} initialNodes={initialNodes} setRfInstance={props.setRfInstance} topology={props.topology} />
-            :
-            <>no data found</>
-          }
+      <div className="topology-editor relative">
+        <div className="creator z-10">
+          {network_icons && initialNodes ? (
+            <>
+              <AddNodeOnEdgeDrop
+                network_icons={network_icons}
+                initialNodes={initialNodes}
+                setRfInstance={props.setRfInstance}
+                topology={props.topology}
+                setInitialNodes={setInitialNodes}
+              />
+            </>
+          ) : (
+            <></>
+          )}
         </div>
         <div className="editor-options min-h-[50vh]">
-          {props.editable &&
+          {props.editable && (
             <div className="modal" style={{ display: "contents" }}>
               <ul>
                 {network_icons &&
@@ -204,7 +239,7 @@ function Topology(props: any) {
                   })}
               </ul>
             </div>
-          }
+          )}
         </div>
       </div>
     </>
