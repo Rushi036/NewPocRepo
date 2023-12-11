@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import { DateRangePicker } from "rsuite";
 import moment from "moment";
 import { useAppContext } from "@/pages/Components/AppContext";
-import { getAWSNavigationDashboard } from "@/pages/api/FinopsApi/getAWSNavibationDashboard";
+import { allInOneAwsAzureCloud } from "@/pages/api/FinopsApi/getAWSNavibationDashboard";
 import Table from "@/pages/Components/Charts/Table";
 import { useRouter } from "next/router";
 const CostSummary = () => {
@@ -238,19 +238,34 @@ const CostSummary = () => {
 
       placement: "left",
     },
+    {
+      label: "Current FY",
+      value: [
+        new Date(
+          moment()
+            .startOf("year")
+            .month(3)
+            .date(1)
+            .format("YYYY-MM-DDTHH:mm:ss")
+        ),
+        new Date(moment().format("YYYY-MM-DDTHH:mm:ss")),
+      ],
+      placement: "left",
+    },
   ];
   const { afterToday }: any = DateRangePicker;
   const CloudChange = (event: React.SyntheticEvent, newValue: any) => {
     setCloudValue(newValue);
   };
-  const [res, setRes] = useState<any>(null);
+  const [resp, setRes] = useState<any>(null);
+
   const [status, setStatus] = useState<any>(null);
   useEffect(() => {
-    getAWSNavigationDashboard(
+    allInOneAwsAzureCloud(
       timePeriod[0].toISOString(),
       timePeriod[1].toISOString()
     ).then((data: any) => {
-      setRes(data.data);
+      setRes(data);
       if (data && data?.status != 200) {
         //   console.log(Object.keys(data.data).length, data.status)
         setStatus(data.status);
@@ -260,7 +275,7 @@ const CostSummary = () => {
     });
   }, [timePeriod[0], timePeriod[1]]);
 
-  res && console.log("response", res.Metric);
+  // resp && console.log("response", resp);
   return (
     <>
       {true && (
@@ -331,7 +346,7 @@ const CostSummary = () => {
             </div>
             <div className="w-full">
               <TabPanel value="aws">
-                <div className="flex h-11 max-w-[25rem] min-w-[25rem] bg-white mb-4 rounded-xl ml-auto justify-center  pl-4 pb-4">
+                {/* <div className="flex h-11 max-w-[25rem] min-w-[25rem] bg-white mb-4 rounded-xl ml-auto justify-center  pl-4 pb-4">
                   <div className="justify-center py-3 px-2 text-md text-gray-600">
                     Select Date Range :
                   </div>
@@ -349,7 +364,7 @@ const CostSummary = () => {
                       className="hover:bg-gray-50 focus:bg-gray-50"
                     />
                   </div>{" "}
-                </div>
+                </div> */}
                 <div
                   className="w-full flex flex-wrap overflow-hidden"
                   style={{ height: "max-content" }}
@@ -359,8 +374,10 @@ const CostSummary = () => {
                     style={{ height: "max-content" }}
                   >
                     <div className="flex flex-wrap min-h-[10rem] w-[100%] pl-4 pb-4 justify-between">
-                      {res &&
-                        res.Metric?.map((e: any, i: any) => (
+                      {resp &&
+                        resp.AWS &&
+                        resp.AWS.Metric &&
+                        resp.AWS.Metric?.map((e: any, i: any) => (
                           <div
                             key={i}
                             className="pl-4 bg-white rounded-lg mb-4 w-[48%] h-full"
@@ -377,8 +394,10 @@ const CostSummary = () => {
                           </div>
                         ))}
                     </div>
-                    {res &&
-                      res.Table?.map((e: any, i: any) => {
+                    {resp &&
+                      resp.AWS &&
+                      resp.AWS.Table &&
+                      resp.AWS.Table?.map((e: any, i: any) => {
                         return (
                           <>
                             <div key={i} className="pl-4 w-full">
@@ -398,8 +417,155 @@ const CostSummary = () => {
                     className="w-[50%] flex flex-wrap gap-4"
                     style={{ height: "max-content" }}
                   >
-                    {res &&
-                      res.Graph?.map((e: any, i: any) => {
+                    <div className="flex h-11 max-w-[40rem] min-w-[25rem] bg-white mb-4 rounded-xl ml-auto justify-center  pl-4 pb-4">
+                      <div className="justify-center py-3 px-2 text-md text-gray-600">
+                        Select Date Range :
+                      </div>
+                      <div className="px-2 py-1">
+                        <DateRangePicker
+                          placement="auto"
+                          value={timePeriod}
+                          onChange={setTimePeriod}
+                          ranges={predefinedRanges}
+                          // showOneCalendar
+                          style={{ width: "100%" }}
+                          shouldDisableDate={afterToday()}
+                          placeholder="Select Date Range"
+                          format="yyyy-MM-dd"
+                          className="hover:bg-gray-50 focus:bg-gray-50"
+                        />
+                      </div>{" "}
+                    </div>
+                    {resp &&
+                      resp.AWS &&
+                      resp.AWS.Graph &&
+                      resp.AWS.Graph?.map((e: any, i: any) => {
+                        if (
+                          e &&
+                          e.BarGraph &&
+                          e.BarGraph.data &&
+                          Array.isArray(e.BarGraph.data)
+                        ) {
+                          return (
+                            <div key={i} className="pl-4 w-full">
+                              <div className="bg-white p-4 rounded-lg">
+                                <BarGraph
+                                  // id={"new2"}
+                                  // date={""}
+                                  height={260}
+                                  data={e.BarGraph}
+                                  legendEnabled={false}
+                                />
+                              </div>
+                            </div>
+                          );
+                        }
+                      })}
+
+                    {resp &&
+                      resp.AWS &&
+                      resp.AWS.Graph &&
+                      resp.AWS.Graph?.map((e: any, i: any) => {
+                        if (
+                          e &&
+                          e.LineChart &&
+                          e.LineChart.data &&
+                          Array.isArray(e.LineChart.data)
+                        ) {
+                          return (
+                            <div key={i} className="pl-4 w-full">
+                              <div className="bg-white p-4 rounded-lg">
+                                <LineChartComponent
+                                  // id={i}
+                                  data={e.LineChart}
+                                  height={260}
+                                  legendEnabled={false}
+                                />
+                              </div>
+                            </div>
+                          );
+                        }
+                      })}
+                  </div>
+                </div>
+              </TabPanel>
+
+              <TabPanel value="azure">
+                <div
+                  className="w-full flex flex-wrap overflow-hidden"
+                  style={{ height: "max-content" }}
+                >
+                  <div
+                    className="w-[50%] flex flex-wrap"
+                    style={{ height: "max-content" }}
+                  >
+                    <div className="flex flex-wrap min-h-[10rem] w-[100%] pl-4 pb-4 justify-between">
+                      {resp &&
+                        resp.AZURE &&
+                        resp.AZURE.Metric &&
+                        resp.AZURE.Metric?.map((e: any, i: any) => (
+                          <div
+                            key={i}
+                            className="pl-4 bg-white rounded-lg mb-4 w-[48%] h-full"
+                          >
+                            <div className="flex flex-col items-center justify-center h-full">
+                              <div className="text-4xl py-1 font-bold text-slate-500">
+                                {e.value.azure}
+                              </div>
+                              <div className="text-lg text-slate-500">
+                                {e.title}
+                                {" (₹)"}
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                    {resp &&
+                      resp.AZURE &&
+                      resp.AZURE.Table &&
+                      resp.AZURE.Table?.map((e: any, i: any) => {
+                        return (
+                          <>
+                            <div key={i} className="pl-4 w-full">
+                              <div className="bg-white p-4 rounded-lg">
+                                {/* Third Chart */}
+                                <Table data={e} />
+                              </div>
+                            </div>
+                            ;
+                          </>
+                        );
+                      })}
+                  </div>
+
+                  {/* Second Column */}
+                  <div
+                    className="w-[50%] flex flex-wrap gap-4"
+                    style={{ height: "max-content" }}
+                  >
+                    <div className="flex h-11 max-w-[40rem] min-w-[25rem] bg-white mb-4 rounded-xl ml-auto justify-center  pl-4 pb-4">
+                      <div className="justify-center py-3 px-2 text-md text-gray-600">
+                        Select Date Range :
+                      </div>
+                      <div className="px-2 py-1">
+                        <DateRangePicker
+                          placement="auto"
+                          value={timePeriod}
+                          onChange={setTimePeriod}
+                          ranges={predefinedRanges}
+                          // showOneCalendar
+                          style={{ width: "100%" }}
+                          shouldDisableDate={afterToday()}
+                          placeholder="Select Date Range"
+                          format="yyyy-MM-dd"
+                          className="hover:bg-gray-50 focus:bg-gray-50"
+                        />
+                      </div>{" "}
+                    </div>
+                    {resp &&
+                      resp.AZURE &&
+                      resp.AZURE.Graph &&
+                      resp.AZURE.Graph?.map((e: any, i: any) => {
                         if (
                           e &&
                           e.BarGraph &&
@@ -424,8 +590,10 @@ const CostSummary = () => {
                     {/* First Chart */}
 
                     {/* Second Chart */}
-                    {res &&
-                      res.Graph?.map((e: any, i: any) => {
+                    {resp &&
+                      resp.AZURE &&
+                      resp.AZURE.Graph &&
+                      resp.AZURE.Graph?.map((e: any, i: any) => {
                         if (
                           e &&
                           e.LineChart &&
@@ -433,7 +601,7 @@ const CostSummary = () => {
                           Array.isArray(e.LineChart.data)
                         ) {
                           return (
-                            <div  key={i} className="pl-4 w-full">
+                            <div key={i} className="pl-4 w-full">
                               <div className="bg-white p-4 rounded-lg">
                                 <LineChartComponent
                                   // id={i}
@@ -448,11 +616,8 @@ const CostSummary = () => {
                       })}
                   </div>
                 </div>
-              </TabPanel>
-
-              <TabPanel value="azure">
-                <div className="w-full flex flex-wrap">
-                  <div className="pl-4 mb-4 w-[50%]">
+                {/* <div className="w-full flex flex-wrap"> */}
+                {/* <div className="pl-4 mb-4 w-[50%]">
                     <div className="bg-white p-4 rounded-lg h-full">
                       <LineChartComponent id={"new5"} data={dummyData5} />
                     </div>
@@ -471,8 +636,8 @@ const CostSummary = () => {
                     <div className="bg-white p-4 rounded-lg h-full">
                       <PieChartComponent id={"new8"} data={dummyData8} />
                     </div>
-                  </div>
-                </div>
+                  </div> */}
+                {/* </div> */}
               </TabPanel>
               <TabPanel value="CloudGateway">
                 <div className="w-full h-[52vh] flex justify-center items-center text-4xl font-sans ">

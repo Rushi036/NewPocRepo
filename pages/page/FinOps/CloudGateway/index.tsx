@@ -233,7 +233,7 @@ function CloudGateway() {
     <>
       <div className="text-xl border-b-2 border-slate-400 pb-2">
         <Link
-          className=" h-fit w-fit cursor-pointer "
+          className="cursor-pointer "
           href={"/page/FinOps/reports"}
         >
           <IoIosArrowBack size={25} />
@@ -245,13 +245,13 @@ function CloudGateway() {
           {serviceTypeCostData && (
             <div className="card h-fit">
               <label className="text-sm font-semibold">
-                {serviceTypeCostData?.title ?? ""}
+                {serviceTypeCostData.title ? serviceTypeCostData?.title : ""}
               </label>
               <table className="w-full text-sm text-center mt-2 text-gray-800">
                 <thead className="text-[9px] text-white uppercase bg-red-800">
                   <tr>
                     {/* <th>SrNo</th> */}
-                    {serviceTypeCostData?.headers?.map(
+                    {serviceTypeCostData.headers && serviceTypeCostData?.headers?.map(
                       (header: any, index: any) => (
                         <th className="px-auto py-1" key={index} scope="col">
                           {header}
@@ -261,7 +261,7 @@ function CloudGateway() {
                   </tr>
                 </thead>
                 <tbody>
-                  {serviceTypeCostData?.data?.map(
+                  {serviceTypeCostData.data && serviceTypeCostData?.data?.map(
                     (rowData: any, rowIndex: any) => (
                       <>
                         <tr
@@ -363,19 +363,19 @@ function CloudGateway() {
           {zoneMappingData && (
             <div className="card !h-fit">
               <label className="text-sm font-semibold">
-                {zoneMappingData?.title ?? ""}
+                {zoneMappingData.title ? zoneMappingData?.title : ""}
               </label>
               <table className="w-full text-sm text-center mt-2 text-gray-800">
                 <thead className="text-[9px] uppercase bg-red-800 text-white">
                   {/* <th>SrNo</th> */}
-                  {zoneMappingData?.headers?.map((header: any, index: any) => (
+                  {zoneMappingData.headers && zoneMappingData?.headers?.map((header: any, index: any) => (
                     <th className="px-auto py-1" key={index} scope="col">
                       {header}
                     </th>
                   ))}
                 </thead>
                 <tbody>
-                  {zoneMappingData?.data?.map((rowData: any, rowIndex: any) => (
+                  {zoneMappingData.data && zoneMappingData?.data?.map((rowData: any, rowIndex: any) => (
                     <tr key={rowIndex}>
                       {/* <td>{rowIndex + 1}</td> */}
                       {rowData.map((item: any, index: any) => (
@@ -394,7 +394,7 @@ function CloudGateway() {
                       ))}
                     </tr>
                   ))}
-                  {zoneMappingData?.data?.length == 0 ? (
+                  {zoneMappingData.data && zoneMappingData?.data?.length == 0 ? (
                     <tr>
                       <td colSpan={100}>No data</td>
                     </tr>
@@ -417,7 +417,7 @@ function CloudGateway() {
               <div className="bg-white rounded-lg shadow-lg overflow-hidden">
                 <div className="bg-red-800 px-4 py-2 flex items-center justify-between">
                   <h3 className="text-xl text-white">
-                    {serviceTypeCostData.title}
+                    {serviceTypeCostData.title ? serviceTypeCostData.title : ""}
                   </h3>
                   <button
                     className="p-2 text-xl text-white"
@@ -442,7 +442,7 @@ function CloudGateway() {
                         </button>
                         <table className="w-full text-sm text-center text-gray-800">
                           <thead className="text-xs uppercase bg-gray-200">
-                            {serviceTypeCostData?.headers?.map(
+                            {serviceTypeCostData.headers && serviceTypeCostData?.headers?.map(
                               (header: any, index: any) => (
                                 <th
                                   className="px-auto py-1"
@@ -455,7 +455,7 @@ function CloudGateway() {
                             )}
                           </thead>
                           <tbody>
-                            {serviceTypeCostData?.data.map(
+                            {serviceTypeCostData.data && serviceTypeCostData?.data.map(
                               (rowData: any, rowIndex: any) => (
                                 <>
                                   <tr key={rowIndex}>
@@ -529,7 +529,7 @@ function CloudGateway() {
                                 </>
                               )
                             )}
-                            {serviceTypeCostData.data.length == 0 ? (
+                            {serviceTypeCostData.data && serviceTypeCostData.data.length == 0 ? (
                               <tr>
                                 <td colSpan={100}>No data</td>
                               </tr>

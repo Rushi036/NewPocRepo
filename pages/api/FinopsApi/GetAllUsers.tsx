@@ -1,4 +1,4 @@
-import { finopsBaseUrl, finopsServerBaseUrl, localHostBaseUrl } from "@/const";
+import {finopsServerBaseUrl } from "@/const";
 import { useState } from "react";
 
 export const getAllUsers = async () => {

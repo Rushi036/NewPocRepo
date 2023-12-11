@@ -17,12 +17,12 @@ const Table = ({ data }: any) => {
     rowPerPage * page - rowPerPage,
     rowPerPage * page
   );
-
+data && console.log("table data length",data)
   useEffect(() => {
     setPage(1);
 
     // Filter data based on search input
-    const filtered = data?.data.filter((rowData: any) => {
+    const filtered = data && data.data && data?.data.filter((rowData: any) => {
       return rowData.some((item: any) =>
         item[1]
           ? item[1].toString().toLowerCase().includes(searchInput.toLowerCase())
@@ -82,7 +82,7 @@ const Table = ({ data }: any) => {
                   ))}
                 </tr>
               ))}
-              {currentData?.length === 0 ? (
+              {currentData?.length === 0 || filteredData === undefined ? (
                 <tr>
                   <td colSpan={100} className="py-2">
                     No data

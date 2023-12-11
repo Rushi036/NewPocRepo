@@ -97,10 +97,16 @@ const Reports = () => {
               {res && (
                 <div className="flex flex-col">
                   <span>
-                    AWS - ${res?.Metric ? res?.Metric[0]?.value?.AWS : ""}
+                    AWS - $
+                    {res.Metric && res.Metric[0] && res?.Metric[0]?.value
+                      ? res?.Metric[0]?.value?.AWS
+                      : ""}
                   </span>
                   <span>
-                    Azure - ₹{res?.Metric ? res?.Metric[0]?.value?.Azure : ""}
+                    Azure - ₹
+                    {res.Metric && res.Metric[0] && res?.Metric[0]?.value
+                      ? res?.Metric[0]?.value?.Azure
+                      : ""}
                   </span>
                 </div>
               )}
@@ -125,10 +131,16 @@ const Reports = () => {
               {res && (
                 <div className="flex flex-col">
                   <span>
-                    AWS - ${res?.Metric ? res?.Metric[1]?.value?.AWS : ""}
+                    AWS - $
+                    {res.Metric && res.Metric[1] && res.Metric[1].value
+                      ? res?.Metric[1]?.value?.AWS
+                      : ""}
                   </span>
                   <span>
-                    Azure - ₹{res?.Metric ? res?.Metric[1]?.value?.Azure : ""}
+                    Azure - ₹
+                    {res.Metric && res.Metric[1] && res.Metric[1].value
+                      ? res?.Metric[1]?.value?.Azure
+                      : ""}
                   </span>
                 </div>
               )}
@@ -153,10 +165,16 @@ const Reports = () => {
                     Allocated Spent
                   </span>
                   <span>
-                    AWS - ${res?.Metric ? res?.Metric[3]?.value?.aws : ""}
+                    AWS - $
+                    {res.Metric && res.Metric[3] && res.Metric[3].value
+                      ? res?.Metric[3]?.value?.aws
+                      : ""}
                   </span>
                   <span>
-                    Azure - ₹{res?.Metric ? res?.Metric[3]?.value?.azure : ""}
+                    Azure - ₹
+                    {res.Metric && res.Metric[3] && res.Metric[3].value
+                      ? res?.Metric[3]?.value?.azure
+                      : ""}
                   </span>
                 </div>
                 <div className="flex flex-col">
@@ -164,10 +182,16 @@ const Reports = () => {
                     Unallocated Spent
                   </span>
                   <span>
-                    AWS - ${res?.Metric ? res?.Metric[4]?.value?.aws : ""}
+                    AWS - $
+                    {res.Metric && res.Metric[4] && res.Metric[4].value
+                      ? res?.Metric[4]?.value?.aws
+                      : ""}
                   </span>
                   <span>
-                    Azure - ₹{res?.Metric ? res?.Metric[4]?.value?.azure : ""}
+                    Azure - ₹
+                    {res.Metric && res.Metric[4] && res.Metric[4].value
+                      ? res?.Metric[4]?.value?.azure
+                      : ""}
                   </span>
                 </div>
               </div>
@@ -189,7 +213,11 @@ const Reports = () => {
 
               {res && (
                 <div className="flex flex-row">
-                  <span>{res?.Metric ? res?.Metric[2]?.value : ""}</span>
+                  <span>
+                    {res.Metric && res.Metric[2] && res.Metric[2].value
+                      ? res?.Metric[2]?.value
+                      : ""}
+                  </span>
                   {/* <Loader percent={(1400 / 1500) * 100} color={"pink"} /> */}
                 </div>
               )}
@@ -215,7 +243,9 @@ const Reports = () => {
                 <div className="flex flex-col  w-full mt-4">
                   {/* <span>Coming Soon...</span> */}
                   <span>
-                    {res?.Metric ? "₹" + res?.Metric[5]?.value : "No Data"}
+                    {res && res.Metric && res.Metric[5] && res.Metric[5].value
+                      ? "₹" + res?.Metric[5]?.value
+                      : "No Data"}
                   </span>
                 </div>
               </div>
@@ -262,10 +292,16 @@ const Reports = () => {
                 {res && (
                   <div className="flex flex-col">
                     <span>
-                      AWS - ${res?.Metric ? res?.Metric[6]?.value?.AWS : ""}
+                      AWS - $
+                      {res.Metric && res.Metric[6] && res.Metric[6].value
+                        ? res?.Metric[6]?.value?.AWS
+                        : ""}
                     </span>
                     <span>
-                      Azure - ₹{res?.Metric ? res?.Metric[6]?.value?.Azure : ""}
+                      Azure - ₹
+                      {res.Metric && res.Metric[6] && res.Metric[6].value
+                        ? res?.Metric[6]?.value?.Azure
+                        : ""}
                     </span>
                   </div>
                 )}
@@ -284,7 +320,7 @@ const Reports = () => {
             }}
           >
             <div className="!w-[4px] h-full bg-orange-400 absolute left-0 top-0"></div>
-            {res && res?.Graph && (
+            {res && res.Graph && res.Graph[0] && res.Graph[0].LineChart && (
               <SmallLineChartComponent
                 id={121}
                 data={res.Graph[0].LineChart}

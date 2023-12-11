@@ -30,7 +30,7 @@ const ChartComponent = (props: any) => {
               (this as any).update({
                 plotOptions: {
                   pie: {
-                    size: "400px",
+                    size: "90%",
                     allowPointSelect: true,
                     cursor: "pointer",
                     dataLabels: {

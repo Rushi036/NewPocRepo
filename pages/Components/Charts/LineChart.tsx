@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { getUnBlendedCost } from "@/pages/api/FinopsApi/GetUnblendedCost";
+// import { getUnBlendedCost } from "@/pages/api/FinopsApi/GetUnblendedCost";
 
 const LineChartComponent = (props: any) => {
   const chartContainer = useRef(null);
-
+// const props : any = {}
   useEffect(() => {
     if (chartContainer.current) {
       const newData =
@@ -41,15 +41,15 @@ const LineChartComponent = (props: any) => {
           });
           return { name: e.name, data: changedData };
         });
-
+// console.log("newdata",newData)
       const options: any = {
         chart: {
           animation: false,
-          height: props.height || 500, // Adjust the height of the chart based on the reports prop
+          height: props?.height || 500, // Adjust the height of the chart based on the reports prop
           zoomType: "x",
         },
         title: {
-          text: props.data.title,
+          text: props?.data?.title,
           align: "left",
           style: {
             fontWeight: "bold",
@@ -67,18 +67,18 @@ const LineChartComponent = (props: any) => {
 
         yAxis: {
           title: {
-            text: props.data.yAxis || "",
+            text: props?.data?.yAxis || "",
           },
         },
 
         xAxis: {
           title: {
-            text: props.data.xAxis || "",
+            text: props?.data?.xAxis || "",
           },
           type: "category",
         },
         legend: {
-          enabled: props.legendEnabled ?? true,
+          enabled: props?.legendEnabled ?? true,
           layout: "horizontal",
           align: "center",
           verticalAlign: "bottom",
@@ -129,7 +129,7 @@ const LineChartComponent = (props: any) => {
 
       Highcharts.chart(chartContainer.current, options);
     }
-  }, [props.data, props.reports]);
+  }, [props?.data, props?.reports]);
 
   return <div ref={chartContainer}  />;
 };

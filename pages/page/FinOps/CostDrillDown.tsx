@@ -34,6 +34,7 @@ function CostDrillDown() {
   const { time, toggleTime } = useAppContext();
   const { timeEnd, toggleTimeEnd } = useAppContext();
   const [cloudDropdown, setCloudDropdown] = useState("Azure");
+  const [cloudTitle, setCloudTitle] = useState("Select Subscription Name");
   const [cloud, setCloud] = useState(cloudDropdown);
   const [subACCName, setSubACCName] = useState();
   // const res: any = cloud == "Azure" ? AzureData : AWSData;
@@ -117,12 +118,23 @@ function CostDrillDown() {
 
   const handleCloudChange = (e: any) => {
     setCloudDropdown(e.target.value);
+    if (e.target.value == "Azure") {
+      setCloudTitle("Select Subscription Name");
+    } else if (e.target.value == "AWS") {
+      setCloudTitle("Select Account Name");
+    }
   };
 
   const callApi = async () => {
     //For BE
     await getSubscriptionIds(cloudDropdown, userADID).then((res: any) => {
-      setSubData(res.data);
+      if (res.data) {
+        setSubData(res.data);
+        setSubACCName(res?.data[0]?.subsAccName);
+        setSubscIdDropdown(res?.data[0]?.subsAccId);
+        setSubsIndexName(res.data[0]?.subsIndexName);
+        setSubsType(res.data[0].subsType);
+      }
     });
   };
 
@@ -281,6 +293,7 @@ function CostDrillDown() {
         handleSubNameChange={handleSubNameChange}
         cloud={cloud}
         cloudDropdown={cloudDropdown}
+        cloudTitle={cloudTitle}
         subACCName={subACCName}
         subData={subData}
         timePeriod={timePeriod}
@@ -306,13 +319,21 @@ function MetricCards({ cloud, subscId, res, isOpen, setIsOpen }: any) {
             : "bg-white p-4 w-[calc(25%-0.75rem)] rounded-lg"
         }
       >
-        <b>
-          Subscription Id <br />
-        </b>
+        {cloud == "Azure" && (
+          <b>
+            Subscription Id <br />
+          </b>
+        )}
+        {cloud == "AWS" && (
+          <b>
+            Account Id <br />
+          </b>
+        )}
         <span>{subscId}</span>
       </div>
 
-      {res.Metric &&
+      {res &&
+        res.Metric &&
         res.Metric.map((data: any, i: any) => {
           if (!data.Table) {
             return (
@@ -412,6 +433,7 @@ function FinopsFilters({
   handleSubNameChange,
   cloud,
   cloudDropdown,
+  cloudTitle,
   subACCName,
   subData,
   timePeriod,
@@ -495,6 +517,20 @@ function FinopsFilters({
         new Date(moment().format("YYYY-MM-DDTHH:mm:ss")),
       ],
 
+      placement: "left",
+    },
+    {
+      label: "Current FY",
+      value: [
+        new Date(
+          moment()
+            .startOf("year")
+            .month(3)
+            .date(1)
+            .format("YYYY-MM-DDTHH:mm:ss")
+        ),
+        new Date(moment().format("YYYY-MM-DDTHH:mm:ss")),
+      ],
       placement: "left",
     },
   ];
@@ -634,10 +670,11 @@ function FinopsFilters({
       {singleReport && (
         <div className="w-full mx-2 mt-4">
           <label className="">
-            {cloud == "Azure"
+            {/* {cloud == "Azure"
               ? "Select Subscription Name"
               : "Select Account Name"}{" "}
-            :{" "}
+            :{" "} */}
+            {cloudTitle} :
           </label>
           <select
             className="block w-full py-2 px-4 border hover:bg-gray-50 focus:bg-gray-50 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
@@ -645,7 +682,7 @@ function FinopsFilters({
             value={subACCName}
           >
             {/* subscription id or account id */}
-            <option>Select Id</option>
+            <option disabled>Select Name</option>
             {subData &&
               subData.map((e: any, i: any) => (
                 <option key={i} value={e.subsAccName}>
@@ -657,7 +694,7 @@ function FinopsFilters({
       )}
 
       {singleReport && (
-        <div className="w-full mx-2 mt-4 z-10">
+        <div className="w-full mx-2 mt-4 z-10 relative">
           <div className="flex w-full justify-between items-center mb-2">
             <label className="">Select Reports : </label>
             <button
@@ -667,14 +704,16 @@ function FinopsFilters({
               select all
             </button>
           </div>
-          <Select
-            onChange={(val: any) => setSelectedReportsDropDown(val)}
-            closeMenuOnSelect={false}
-            value={selectedReportsDropDown}
-            defaultValue={selectedReportsDropDown}
-            isMulti
-            options={options}
-          />
+          <div className="max-h-60 overflow-y-auto">
+            <Select
+              onChange={(val: any) => setSelectedReportsDropDown(val)}
+              closeMenuOnSelect={false}
+              value={selectedReportsDropDown}
+              defaultValue={selectedReportsDropDown}
+              isMulti
+              options={options}
+            />
+          </div>
         </div>
       )}
 
@@ -720,12 +759,14 @@ function ReportsCard({
   async function unpinGraph(title: any) {
     let chartOrder;
     if (cloudDropdown == "AWS") {
-      let awsData = graphFormat?.chartOrder?.AWS;
+      let awsData =
+        graphFormat && graphFormat.chartOrder && graphFormat?.chartOrder?.AWS;
       delete awsData?.[title];
       chartOrder = { AWS: awsData, Azure: graphFormat?.chartOrder?.Azure };
     }
     if (cloudDropdown == "Azure") {
-      let azureData = graphFormat?.chartOrder?.Azure;
+      let azureData =
+        graphFormat && graphFormat.chartOrder && graphFormat?.chartOrder?.Azure;
       delete azureData?.[title];
       chartOrder = { Azure: azureData, AWS: graphFormat?.chartOrder?.AWS };
     }
@@ -766,6 +807,7 @@ function ReportsCard({
     <div className="mt-4 h-auto flex flex-wrap gap-4">
       {/* pinned graphs and table  */}
       {res &&
+        res.Graph &&
         res.Graph?.map((e: any, i: any) => {
           if (
             e &&
@@ -841,6 +883,7 @@ function ReportsCard({
         })}
 
       {res &&
+        res.Table &&
         res.Table?.map((e: any, i: any) => {
           if (
             graphFormat.chartOrder?.[cloud]?.[e.title] &&
@@ -863,6 +906,7 @@ function ReportsCard({
 
       {/* unpinned graphs and table  */}
       {res &&
+        res.Graph &&
         res.Graph?.map((e: any, i: any) => {
           i;
           if (
@@ -939,6 +983,7 @@ function ReportsCard({
         })}
 
       {res &&
+        res.Table &&
         res.Table?.map((e: any, i: any) => {
           if (
             !graphFormat.chartOrder?.[cloud]?.[e.title] &&
@@ -966,6 +1011,7 @@ function CrossPlatformReports({ res, timePeriod, singleReport }: any) {
   return (
     <div className=" h-auto flex flex-wrap gap-4">
       {res &&
+        res.Graph &&
         res.Graph?.map((e: any, i: any) => {
           if (
             e &&
@@ -1026,10 +1072,11 @@ function CrossPlatformReports({ res, timePeriod, singleReport }: any) {
         })}
 
       {res &&
+        res.Table &&
         res.Table?.map((e: any, i: any) => {
           return (
             <>
-              <div key={i} className="card !min-w-full">
+              <div key={i} className="card w-1/2" >
                 <Table data={e} />
               </div>
             </>

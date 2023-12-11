@@ -56,7 +56,7 @@ const Sidebar = () => {
         <ul className="space-y-1.5 pt-5">
           <li>
             <Link
-              href="/page/Dashboard/Dashboard"
+              href="/page/Dashboard"
               className={`flex items-center gap-x-3.5 py-2 px-2.5 text-base
              text-slate-700 rounded-md hover:bg-gray-100
              ${activeLink === 0 ? "bg-gray-100" : ""}`}
@@ -68,7 +68,7 @@ const Sidebar = () => {
               </span>
             </Link>
           </li>
-          {uRole == "ADMIN" ? (
+          {/* {uRole == "ADMIN" ? (
             <li className="hs-accordion" id="users-accordion">
               <Link
                 href="/page/AssetsForAdmin"
@@ -102,7 +102,7 @@ const Sidebar = () => {
                 </span>
               </Link>
             </li>
-          )}
+          )} */}
           {uRole == "ADMIN" && (
             <li>
               <Link
