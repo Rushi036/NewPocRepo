@@ -17,6 +17,7 @@ import Multiselect from "multiselect-react-dropdown";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import Switch from "react-switch";
+import { finopsServerBaseUrl } from "@/const";
 
 // dynamic imports
 const BarGraph = dynamic(() => import("@/pages/Components/Charts/BarChart"));
@@ -36,7 +37,7 @@ function CostDrillDown() {
   const [cloudDropdown, setCloudDropdown] = useState("Azure");
   const [cloudTitle, setCloudTitle] = useState("Select Subscription Name");
   const [cloud, setCloud] = useState(cloudDropdown);
-  const [subACCName, setSubACCName] = useState();
+  const [subACCName, setSubACCName] = useState<any>();
   // const res: any = cloud == "Azure" ? AzureData : AWSData;
   const [res, setRes] = useState<any>(null);
   const [subData, setSubData] = useState<any>();
@@ -134,6 +135,12 @@ function CostDrillDown() {
         setSubscIdDropdown(res?.data[0]?.subsAccId);
         setSubsIndexName(res.data[0]?.subsIndexName);
         setSubsType(res.data[0].subsType);
+      } else {
+        setSubData(null);
+        setSubACCName(null);
+        setSubscIdDropdown(null);
+        setSubsIndexName(null);
+        setSubsType(null);
       }
     });
   };
@@ -148,6 +155,12 @@ function CostDrillDown() {
         setSubscIdDropdown(res?.data[0]?.subsAccId);
         setSubsIndexName(res.data[0]?.subsIndexName);
         setSubsType(res.data[0].subsType);
+      } else {
+        setSubData(null);
+        setSubACCName(null);
+        setSubscIdDropdown(null);
+        setSubsIndexName(null);
+        setSubsType(null);
       }
     });
   };
@@ -183,16 +196,13 @@ function CostDrillDown() {
   async function fetchDataAzure(body: any) {
     let resData: any;
     try {
-      resData = await fetch(
-        "http://10.47.98.164:9201/AzureFinopsDashboardData",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(body),
-        }
-      );
+      resData = await fetch(`${finopsServerBaseUrl}/AzureFinopsDashboardData`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
       resData = await resData.json();
     } catch {
       resData = "";
@@ -203,7 +213,7 @@ function CostDrillDown() {
   async function fetchDataAWS(body: any) {
     let resData: any;
     try {
-      resData = await fetch("http://10.47.98.164:9201/awsFinopsDashboardData", {
+      resData = await fetch(`${finopsServerBaseUrl}/awsFinopsDashboardData`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -220,7 +230,7 @@ function CostDrillDown() {
   async function fetchDataAcross(body: any) {
     let resData: any;
     try {
-      resData = await fetch("http://10.47.98.164:9201/awsAllDataByAccount", {
+      resData = await fetch(`${finopsServerBaseUrl}/awsAllDataByAccount`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -624,7 +634,7 @@ function FinopsFilters({
       options: tableData,
     });
     setOptions(data);
-
+    // console.log("options", options);
     setSelectedReportsDropDown([
       data && data[0] && data[0]?.options[0] ? data[0].options[0] : {},
       data && data[0] && data[0]?.options[1] ? data[0].options[1] : {},
@@ -638,8 +648,8 @@ function FinopsFilters({
     setSelectedReportsDropDown(allData.flat(1));
   }
   return (
-    <div className="sticky top-[3.75rem] w-[25%] h-fit flex flex-col justify-between items-center ml-4 mb-4 p-3 bg-white rounded-lg ">
-      <div className="w-full mx-2 flex items-center gap-2 justify-between">
+    <div className="sticky top-[3.75rem] w-[25%] max-h-[80vh] h-fit flex flex-col justify-start items-center ml-4 mb-16 p-4 bg-white rounded-lg overflow-y-auto">
+      <div className="w-full mx-2 flex items-start gap-2 justify-start">
         <span>Across Account</span>
         <Switch
           onChange={(res) => setSingleReport(res)}
@@ -704,16 +714,16 @@ function FinopsFilters({
               select all
             </button>
           </div>
-          <div className="max-h-60 overflow-y-auto">
-            <Select
-              onChange={(val: any) => setSelectedReportsDropDown(val)}
-              closeMenuOnSelect={false}
-              value={selectedReportsDropDown}
-              defaultValue={selectedReportsDropDown}
-              isMulti
-              options={options}
-            />
-          </div>
+          {/* <div className="max-h-20 overflow-y-auto"> */}
+          <Select
+            onChange={(val: any) => setSelectedReportsDropDown(val)}
+            closeMenuOnSelect={false}
+            value={selectedReportsDropDown}
+            defaultValue={selectedReportsDropDown}
+            isMulti
+            options={options}
+          />
+          {/* </div> */}
         </div>
       )}
 
@@ -736,7 +746,8 @@ function FinopsFilters({
       {singleReport && (
         <div className="w-full mx-2 mt-4 flex justify-center">
           <button
-            className="bg-red-500 text-white py-1 px-2 rounded"
+            className="bg-red-500 text-white py-1 px-2 rounded disabled:bg-gray-500"
+            disabled={!subACCName}
             onClick={getReport}
           >
             Get Report
@@ -1017,6 +1028,7 @@ function CrossPlatformReports({ res, timePeriod, singleReport }: any) {
             e &&
             e.PieChart &&
             e.PieChart.data &&
+            e.PieChart.data.length > 0 &&
             Array.isArray(e.PieChart.data)
           ) {
             return (
@@ -1033,6 +1045,7 @@ function CrossPlatformReports({ res, timePeriod, singleReport }: any) {
             e &&
             e.LineChart &&
             e.LineChart.data &&
+            e.LineChart.data.length > 0 &&
             Array.isArray(e.LineChart.data)
           ) {
             return (
@@ -1056,6 +1069,7 @@ function CrossPlatformReports({ res, timePeriod, singleReport }: any) {
             e &&
             e.BarGraph &&
             e.BarGraph.data &&
+            e.BarGraph.data.length > 0 &&
             Array.isArray(e.BarGraph.data)
           ) {
             return (
@@ -1076,9 +1090,11 @@ function CrossPlatformReports({ res, timePeriod, singleReport }: any) {
         res.Table?.map((e: any, i: any) => {
           return (
             <>
-              <div key={i} className="card w-1/2" >
-                <Table data={e} />
-              </div>
+              {e && e.data && e.data.length > 0 && (
+                <div key={i} className="card w-1/2">
+                  <Table data={e} />
+                </div>
+              )}
             </>
           );
         })}

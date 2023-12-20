@@ -354,7 +354,7 @@ const UserManagement = () => {
     });
     setSubscriptionDetail(newSubscriptionDetail);
   };
-  console.log("subscription detail", subscriptionDetail);
+  // console.log("subscription detail", subscriptionDetail);
   const handleRemoveContact = (subscriptionIndex: any, contactIndex: any) => {
     const newSubscriptionDetail = [...subscriptionDetail];
     newSubscriptionDetail[subscriptionIndex].contactDetails.splice(
@@ -437,7 +437,7 @@ const UserManagement = () => {
 
     // console.log(formData);
 
-    console.log("payload", formData);
+    // console.log("payload", formData);
   };
 
   const handleEditUpload = () => {
@@ -485,7 +485,7 @@ const UserManagement = () => {
 
     // console.log(formData);
 
-    console.log(" edited payload", formData);
+    // console.log(" edited payload", formData);
   };
   const getFilteredSubscriptions = (cloudType: any) => {
     return selectedRowData.subscriptions.filter(

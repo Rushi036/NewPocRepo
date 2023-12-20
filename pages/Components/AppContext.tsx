@@ -9,6 +9,8 @@ const AppContext = createContext<{
   toggleTime: (time: any) => void;
   timeEnd: any;
   toggleTimeEnd: (timeEnd: any) => void;
+  authenticated: boolean;
+  toggleAuthenticated: () => void;
 }>({
   state: false,
   toggleState: () => {},
@@ -21,14 +23,20 @@ const AppContext = createContext<{
   timeEnd: moment().format("YYYY-MM-DDTHH:mm:ss"),
 
   toggleTimeEnd: (timeEnd) => {},
+  authenticated: false,
+  toggleAuthenticated: () => {},
 });
 
 export const AppContextProvider: React.FC<any> = ({ children }: any) => {
   const [state, setState] = useState(false);
+  const [authenticated, setAuthenticated] = useState(false);
   const [estimateCalc, setEstimateCalc] = useState(false);
 
   const toggleState = () => {
     setState(!state);
+  };
+  const toggleAuthenticated = () => {
+    setAuthenticated(!authenticated);
   };
   const toggleEstimateCalc = () => {
     setEstimateCalc((prevState) => !prevState);
@@ -38,9 +46,7 @@ export const AppContextProvider: React.FC<any> = ({ children }: any) => {
     moment().subtract(90, "day").format("YYYY-MM-DD")
   );
 
-  const [timeEnd, setTimeEnd] = useState(
-    moment().format("YYYY-MM-DD")
-  );
+  const [timeEnd, setTimeEnd] = useState(moment().format("YYYY-MM-DD"));
 
   const toggleTime = (time: any) => {
     setTime(time);
@@ -62,6 +68,8 @@ export const AppContextProvider: React.FC<any> = ({ children }: any) => {
         toggleTime,
         timeEnd,
         toggleTimeEnd,
+        authenticated,
+        toggleAuthenticated,
       }}
     >
       {children}

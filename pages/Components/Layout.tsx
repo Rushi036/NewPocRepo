@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 
 import Sidebar from "./Sidebar";
 
@@ -9,8 +9,9 @@ import { useAppContext } from "./AppContext";
 interface LayoutProps {
   children: ReactNode;
 }
-
+import { useRouter } from "next/router";
 import { memo } from "react";
+// import router from "next/router";
 
 const Footer = memo(() => (
   <footer
@@ -30,10 +31,22 @@ const Footer = memo(() => (
     </p>
   </footer>
 ));
-Footer.displayName = 'Footer';
+Footer.displayName = "Footer";
 const Layout: React.FC<LayoutProps> = ({ children }: any) => {
   const { state, toggleState } = useAppContext();
-
+  // const [uEmail, setEmail] = useState<any>(false);
+  const router = useRouter();
+  // const currentUrl = router.asPath;
+  // const isPageIncluded = currentUrl.includes('/page');
+  const { authenticated, toggleAuthenticated } = useAppContext();
+  // console.log(authenticated, isPageIncluded)
+  useEffect(() => {
+    const isPageIncluded = router.asPath.includes("/page");
+    const uEmail = sessionStorage.getItem("userEmail");
+    if (!authenticated && isPageIncluded && !uEmail) {
+      router.push("/");
+    }
+  }, [router.asPath]);
   return (
     <div id="appLayout" className="flex text-black h-screen bg-gray-100">
       <title>ABG-Automation</title>

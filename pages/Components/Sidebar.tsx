@@ -9,7 +9,7 @@ import { useAppContext } from "./AppContext";
 import HomeIcon from "@mui/icons-material/Home";
 import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
 import GroupIcon from "@mui/icons-material/Group";
-
+import SettingsIcon from '@mui/icons-material/Settings';
 const Sidebar = () => {
   const { state, toggleState } = useAppContext();
 
@@ -117,6 +117,24 @@ const Sidebar = () => {
                   className={`${!state && "hidden"} origin-left hover:block`}
                 >
                   User Management
+                </span>
+              </Link>
+            </li>
+          )}
+          {uRole == "ADMIN" && (
+            <li>
+              <Link
+                href="/page/FinOps/Settings"
+                className={`flex items-center gap-x-3.5 py-2 px-2.5 text-base
+              text-slate-700 rounded-md hover:bg-gray-100
+              ${activeLink === 3 ? "bg-gray-100" : ""}`}
+                onClick={() => handleLinkClick(3)}
+              >
+                <SettingsIcon className="h-7 w-7" />
+                <span
+                  className={`${!state && "hidden"} origin-left hover:block`}
+                >
+                  Settings
                 </span>
               </Link>
             </li>

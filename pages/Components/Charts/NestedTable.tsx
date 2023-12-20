@@ -174,7 +174,7 @@ const NTable = (cloudGatewayData: any) => {
   //   };
 
   const rowPerPage = 7;
-  const totalRows = cloudGatewayData?.data?.data?.length;
+  const totalRows =cloudGatewayData && cloudGatewayData.data && cloudGatewayData.data.data && cloudGatewayData?.data?.data?.length;
   const totalPages = Math.ceil(totalRows / rowPerPage);
   const [page, setPage] = useState<any>(1);
   const [isOpen, setIsOpen] = useState<any>(false);
@@ -208,7 +208,7 @@ const NTable = (cloudGatewayData: any) => {
   useEffect(() => {
     setPage(1);
     // Filter data based on search input
-    const filtered = cloudGatewayData?.data?.data.filter((rowData: any) => {
+    const filtered =cloudGatewayData && cloudGatewayData.data && cloudGatewayData.data.data && cloudGatewayData?.data?.data.filter((rowData: any) => {
       return rowData.some((item: any) =>
         item[1]
           ? item[1].toString().toLowerCase().includes(searchInput.toLowerCase())
@@ -227,7 +227,7 @@ const NTable = (cloudGatewayData: any) => {
       {cloudGatewayData && (
         <div className="card !h-fit !w-full">
           <label className="text-sm font-semibold">
-            {cloudGatewayData?.data?.title ?? ""}
+            {cloudGatewayData.data  && cloudGatewayData.data.title ? cloudGatewayData?.data?.title : ""}
           </label>
 
           {/* Search input */}
@@ -242,7 +242,7 @@ const NTable = (cloudGatewayData: any) => {
             <table className="w-full text-sm text-center text-gray-800">
               <thead className="text-[9px] text-white uppercase bg-red-800">
                 {/* <th>SrNo</th> */}
-                {cloudGatewayData?.data?.headers?.map(
+                {cloudGatewayData && cloudGatewayData.data && cloudGatewayData.data.headers && cloudGatewayData?.data?.headers?.map(
                   (header: any, index: any) => (
                     <th className="px-auto py-2" key={index} scope="col">
                       {header}
@@ -251,7 +251,7 @@ const NTable = (cloudGatewayData: any) => {
                 )}
               </thead>
               <tbody>
-                {currentData?.map((rowData: any, rowIndex: any) => (
+                {currentData && currentData?.map((rowData: any, rowIndex: any) => (
                   <>
                     {/* Existing row mapping logic */}
                     <tr
@@ -270,7 +270,7 @@ const NTable = (cloudGatewayData: any) => {
                       }
                     >
                       {/* <td>{rowIndex + 1}</td> */}
-                      {rowData.map((item: any, index: any) =>
+                      {rowData && rowData.map((item: any, index: any) =>
                         item[0] !== "NestedTableData" ? (
                           <td className="px-auto py-2" key={index}>
                             {item[1]}
@@ -283,7 +283,7 @@ const NTable = (cloudGatewayData: any) => {
 
                     {/* Nested table logic */}
                     <tr key={rowIndex + 1000}>
-                      {rowData.map((item: any, trindex: any) =>
+                      {rowData && rowData.map((item: any, trindex: any) =>
                         item[0] === "NestedTableData" ? (
                           <td
                             key={trindex + 1000}
@@ -324,7 +324,7 @@ const NTable = (cloudGatewayData: any) => {
                     </tr>
                   </>
                 ))}
-                {currentData?.length === 0 ? (
+                {currentData && currentData?.length === 0 || filteredData == undefined ? (
                   <tr>
                     <td colSpan={100} className="py-2">
                       No data

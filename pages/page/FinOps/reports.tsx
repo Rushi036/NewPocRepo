@@ -149,55 +149,58 @@ const Reports = () => {
         </div>
 
         <div className="w-[50%] h-[130px] flex justify-center items-center mb-4">
-          {/* <Link
+          <Link
             className="w-full flex justify-center items-center h-full"
-            href={"/page/FinOps"}
-          > */}
-          <div className="hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
-            <div className="w-[4px] h-full bg-yellow-400 absolute left-0 top-0"></div>
-            <div className="w-[4px] h-full bg-blue-400 absolute left-0 top-0"></div>
-            <p className="text-blue-500 font-bold text-lg">Cost Governance</p>
+            href={{
+              pathname: "/page/FinOps",
+              query: { report: "3", cloud: "aws" },
+            }}
+          >
+            <div className="hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
+              <div className="w-[4px] h-full bg-yellow-400 absolute left-0 top-0"></div>
+              <div className="w-[4px] h-full bg-blue-400 absolute left-0 top-0"></div>
+              <p className="text-blue-500 font-bold text-lg">Cost Governance</p>
 
-            {res && (
-              <div className="flex justify-between w-full pr-2">
-                <div className="flex flex-col">
-                  <span className="font-bold  border-b-2 pb-1">
-                    Allocated Spent
-                  </span>
-                  <span>
-                    AWS - $
-                    {res.Metric && res.Metric[3] && res.Metric[3].value
-                      ? res?.Metric[3]?.value?.aws
-                      : ""}
-                  </span>
-                  <span>
-                    Azure - ₹
-                    {res.Metric && res.Metric[3] && res.Metric[3].value
-                      ? res?.Metric[3]?.value?.azure
-                      : ""}
-                  </span>
+              {res && (
+                <div className="flex justify-between w-full pr-2">
+                  <div className="flex flex-col">
+                    <span className="font-bold  border-b-2 pb-1">
+                      Allocated Spent
+                    </span>
+                    <span>
+                      AWS - $
+                      {res.Metric && res.Metric[3] && res.Metric[3].value
+                        ? res?.Metric[3]?.value?.aws
+                        : ""}
+                    </span>
+                    <span>
+                      Azure - ₹
+                      {res.Metric && res.Metric[3] && res.Metric[3].value
+                        ? res?.Metric[3]?.value?.azure
+                        : ""}
+                    </span>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="font-bold border-b-2 pb-1">
+                      Unallocated Spent
+                    </span>
+                    <span>
+                      AWS - $
+                      {res.Metric && res.Metric[4] && res.Metric[4].value
+                        ? res?.Metric[4]?.value?.aws
+                        : ""}
+                    </span>
+                    <span>
+                      Azure - ₹
+                      {res.Metric && res.Metric[4] && res.Metric[4].value
+                        ? res?.Metric[4]?.value?.azure
+                        : ""}
+                    </span>
+                  </div>
                 </div>
-                <div className="flex flex-col">
-                  <span className="font-bold border-b-2 pb-1">
-                    Unallocated Spent
-                  </span>
-                  <span>
-                    AWS - $
-                    {res.Metric && res.Metric[4] && res.Metric[4].value
-                      ? res?.Metric[4]?.value?.aws
-                      : ""}
-                  </span>
-                  <span>
-                    Azure - ₹
-                    {res.Metric && res.Metric[4] && res.Metric[4].value
-                      ? res?.Metric[4]?.value?.azure
-                      : ""}
-                  </span>
-                </div>
-              </div>
-            )}
-          </div>
-          {/* </Link> */}
+              )}
+            </div>
+          </Link>
         </div>
       </div>
       <div className="flex flex-row gap-2">
@@ -228,11 +231,15 @@ const Reports = () => {
           <div className="w-full md:w-1/2 h-[130px] flex justify-center items-center mb-4">
             <Link
               className="w-full flex justify-center items-center h-full"
-              href={
-                userRole == "ADMIN"
-                  ? "/page/FinOps/CloudGateway"
-                  : "/page/FinOps?report=CostSummary"
-              }
+              // href={
+              //   userRole == "ADMIN"
+              //     ? "/page/FinOps/CloudGateway"
+              //     : "/page/FinOps?report=CostSummary"
+              // }
+              href={{
+                pathname: "/page/FinOps",
+                query: { report: "CostSummary", cloud: "CloudGateway" },
+              }}
             >
               <div className="hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
                 <div className="w-[4px] h-full bg-purple-400 absolute left-0 top-0"></div>

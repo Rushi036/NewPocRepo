@@ -1,10 +1,12 @@
+import { finopsServerBaseUrl } from "@/const";
 import NTable from "@/pages/Components/Charts/NestedTable";
 import Table from "@/pages/Components/Charts/Table";
 import CloseIcon from "@mui/icons-material/Close";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
-
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 function CloudGateway() {
   // const cloudGatewayData = {
   //   title: "Cloud Gateway",
@@ -171,37 +173,37 @@ function CloudGateway() {
   useEffect(() => {
     setLoader(true);
     async function getData() {
-      fetchGatewayChargeData().then((res) => setCloudGatewayData(res));
+      // fetchGatewayChargeData().then((res) => setCloudGatewayData(res));
       fetchServiceCategoryData().then((res) => setServiceTypeCostData(res));
       fetchZoneMappingData().then((res) => setZoneMappingData(res));
     }
 
     getData().then(() => setLoader(false));
   }, []);
-
-  async function fetchGatewayChargeData() {
-    let resData: any;
-    try {
-      resData = await fetch(
-        `http://10.47.98.164:9201/AWSAndAzureDashBordChartsAPIGatewayCharge?role=ADMIN`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      resData = await resData.json();
-    } catch {
-      resData = "";
-    }
-    return resData;
-  }
+  // console.log("cloud gatewya data",cloudGatewayData)
+  // async function fetchGatewayChargeData() {
+  //   let resData: any;
+  //   try {
+  //     resData = await fetch(
+  //       `${finopsServerBaseUrl}/AWSAndAzureDashBordChartsAPIGatewayCharge?role=ADMIN`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+  //     resData = await resData.json();
+  //   } catch {
+  //     resData = "";
+  //   }
+  //   return resData;
+  // }
 
   async function fetchServiceCategoryData() {
     let resData: any;
     try {
-      resData = await fetch(`http://10.47.98.164:9201/getServiceCategory`, {
+      resData = await fetch(`${finopsServerBaseUrl}/getServiceCategory`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -217,7 +219,7 @@ function CloudGateway() {
   async function fetchZoneMappingData() {
     let resData: any;
     try {
-      resData = await fetch(`http://10.47.98.164:9201/getZoneData`, {
+      resData = await fetch(`${finopsServerBaseUrl}/getZoneData`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -232,11 +234,8 @@ function CloudGateway() {
   return (
     <>
       <div className="text-xl border-b-2 border-slate-400 pb-2">
-        <Link
-          className="cursor-pointer "
-          href={"/page/FinOps/reports"}
-        >
-          <IoIosArrowBack size={25} />
+        <Link href="/page/FinOps/reports">
+          <ArrowBackIcon />
         </Link>
       </div>
       {loader && <div className="circle-loader"></div>}
@@ -251,103 +250,109 @@ function CloudGateway() {
                 <thead className="text-[9px] text-white uppercase bg-red-800">
                   <tr>
                     {/* <th>SrNo</th> */}
-                    {serviceTypeCostData.headers && serviceTypeCostData?.headers?.map(
-                      (header: any, index: any) => (
-                        <th className="px-auto py-1" key={index} scope="col">
-                          {header}
-                        </th>
-                      )
-                    )}
+                    {serviceTypeCostData.headers &&
+                      serviceTypeCostData?.headers?.map(
+                        (header: any, index: any) => (
+                          <th className="px-auto py-1" key={index} scope="col">
+                            {header}
+                          </th>
+                        )
+                      )}
                   </tr>
                 </thead>
                 <tbody>
-                  {serviceTypeCostData.data && serviceTypeCostData?.data?.map(
-                    (rowData: any, rowIndex: any) => (
-                      <>
-                        <tr
-                          key={rowIndex}
-                          className={
-                            serviceTypeCostNestedRowOpen == rowIndex
-                              ? "bg-slate-100 "
-                              : ""
-                          }
-                          onClick={() =>
-                            setServiceTypeCostNestedRowOpen(
+                  {serviceTypeCostData.data &&
+                    serviceTypeCostData?.data?.map(
+                      (rowData: any, rowIndex: any) => (
+                        <>
+                          <tr
+                            key={rowIndex}
+                            className={
                               serviceTypeCostNestedRowOpen == rowIndex
-                                ? "-1"
-                                : rowIndex
-                            )
-                          }
-                        >
-                          {/* <td>{rowIndex + 1}</td> */}
-                          {rowData.map((item: any, index: any) =>
-                            item[0] != "NestedTableData" ? (
-                              <td
-                                className={
-                                  item[0] == "Status" || item[0] == "status"
-                                    ? item[1] == "Enabled"
-                                      ? "text-green-500"
-                                      : "text-red-500"
-                                    : "px-auto py-1"
-                                }
-                                key={index}
-                              >
-                                {item[1]}
-                              </td>
-                            ) : (
-                              ""
-                            )
-                          )}
-                        </tr>
-                        <tr key={rowIndex + 1000}>
-                          {rowData.map((item: any, trindex: any) =>
-                            item[0] == "NestedTableData" ? (
-                              <td
-                                key={trindex + 1000}
-                                colSpan={100}
-                                className={
-                                  serviceTypeCostNestedRowOpen != rowIndex
-                                    ? "hidden"
-                                    : ""
-                                }
-                              >
-                                <table className="w-full">
-                                  <thead className="bg-slate-300">
-                                    <tr>
-                                      {item[1]?.headers?.map(
+                                ? "bg-slate-100 "
+                                : ""
+                            }
+                            onClick={() =>
+                              setServiceTypeCostNestedRowOpen(
+                                serviceTypeCostNestedRowOpen == rowIndex
+                                  ? "-1"
+                                  : rowIndex
+                              )
+                            }
+                          >
+                            {/* <td>{rowIndex + 1}</td> */}
+                            {rowData.map((item: any, index: any) =>
+                              item[0] != "NestedTableData" ? (
+                                <td
+                                  className={
+                                    item[0] == "Status" || item[0] == "status"
+                                      ? item[1] == "Enabled"
+                                        ? "text-green-500"
+                                        : "text-red-500"
+                                      : "px-auto py-1"
+                                  }
+                                  key={index}
+                                >
+                                  {item[1]}
+                                </td>
+                              ) : (
+                                ""
+                              )
+                            )}
+                          </tr>
+                          <tr key={rowIndex + 1000}>
+                            {rowData.map((item: any, trindex: any) =>
+                              item[0] == "NestedTableData" ? (
+                                <td
+                                  key={trindex + 1000}
+                                  colSpan={100}
+                                  className={
+                                    serviceTypeCostNestedRowOpen != rowIndex
+                                      ? "hidden"
+                                      : ""
+                                  }
+                                >
+                                  <table className="w-full">
+                                    <thead className="bg-slate-300">
+                                      <tr>
+                                        {item[1]?.headers?.map(
+                                          (data: any, thindex: any) => {
+                                            return (
+                                              <th key={thindex}>{data}</th>
+                                            );
+                                          }
+                                        )}
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      {item[1]?.data?.map(
                                         (data: any, thindex: any) => {
-                                          return <th key={thindex}>{data}</th>;
+                                          return (
+                                            <tr key={thindex}>
+                                              {data?.map(
+                                                (row: any, index: any) => {
+                                                  return (
+                                                    <td key={index}>
+                                                      {row[1]}
+                                                    </td>
+                                                  );
+                                                }
+                                              )}
+                                            </tr>
+                                          );
                                         }
                                       )}
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    {item[1]?.data?.map(
-                                      (data: any, thindex: any) => {
-                                        return (
-                                          <tr key={thindex}>
-                                            {data?.map(
-                                              (row: any, index: any) => {
-                                                return (
-                                                  <td key={index}>{row[1]}</td>
-                                                );
-                                              }
-                                            )}
-                                          </tr>
-                                        );
-                                      }
-                                    )}
-                                  </tbody>
-                                </table>
-                              </td>
-                            ) : (
-                              ""
-                            )
-                          )}
-                        </tr>
-                      </>
-                    )
-                  )}
+                                    </tbody>
+                                  </table>
+                                </td>
+                              ) : (
+                                ""
+                              )
+                            )}
+                          </tr>
+                        </>
+                      )
+                    )}
                   {serviceTypeCostData?.data?.length == 0 ? (
                     <tr>
                       <td colSpan={100}>No data</td>
@@ -368,33 +373,38 @@ function CloudGateway() {
               <table className="w-full text-sm text-center mt-2 text-gray-800">
                 <thead className="text-[9px] uppercase bg-red-800 text-white">
                   {/* <th>SrNo</th> */}
-                  {zoneMappingData.headers && zoneMappingData?.headers?.map((header: any, index: any) => (
-                    <th className="px-auto py-1" key={index} scope="col">
-                      {header}
-                    </th>
-                  ))}
+                  {zoneMappingData.headers &&
+                    zoneMappingData?.headers?.map((header: any, index: any) => (
+                      <th className="px-auto py-1" key={index} scope="col">
+                        {header}
+                      </th>
+                    ))}
                 </thead>
                 <tbody>
-                  {zoneMappingData.data && zoneMappingData?.data?.map((rowData: any, rowIndex: any) => (
-                    <tr key={rowIndex}>
-                      {/* <td>{rowIndex + 1}</td> */}
-                      {rowData.map((item: any, index: any) => (
-                        <td
-                          className={
-                            item[0] == "Status"
-                              ? item[1] == "Enabled"
-                                ? "text-green-500"
-                                : "text-red-500"
-                              : "px-auto py-1"
-                          }
-                          key={index}
-                        >
-                          {item[1]}
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                  {zoneMappingData.data && zoneMappingData?.data?.length == 0 ? (
+                  {zoneMappingData.data &&
+                    zoneMappingData?.data?.map(
+                      (rowData: any, rowIndex: any) => (
+                        <tr key={rowIndex}>
+                          {/* <td>{rowIndex + 1}</td> */}
+                          {rowData.map((item: any, index: any) => (
+                            <td
+                              className={
+                                item[0] == "Status"
+                                  ? item[1] == "Enabled"
+                                    ? "text-green-500"
+                                    : "text-red-500"
+                                  : "px-auto py-1"
+                              }
+                              key={index}
+                            >
+                              {item[1]}
+                            </td>
+                          ))}
+                        </tr>
+                      )
+                    )}
+                  {zoneMappingData.data &&
+                  zoneMappingData?.data?.length == 0 ? (
                     <tr>
                       <td colSpan={100}>No data</td>
                     </tr>
@@ -407,9 +417,9 @@ function CloudGateway() {
           )}
         </div>
 
-        <div className="card">
-          {cloudGatewayData && <NTable data={cloudGatewayData} />}{" "}
-        </div>
+        {/* <div className="card">
+          {cloudGatewayData  && <NTable data={cloudGatewayData} />}{" "}
+        </div> */}
 
         {serviceTypeCostIsOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -442,94 +452,97 @@ function CloudGateway() {
                         </button>
                         <table className="w-full text-sm text-center text-gray-800">
                           <thead className="text-xs uppercase bg-gray-200">
-                            {serviceTypeCostData.headers && serviceTypeCostData?.headers?.map(
-                              (header: any, index: any) => (
-                                <th
-                                  className="px-auto py-1"
-                                  key={index}
-                                  scope="col"
-                                >
-                                  {header}
-                                </th>
-                              )
-                            )}
+                            {serviceTypeCostData.headers &&
+                              serviceTypeCostData?.headers?.map(
+                                (header: any, index: any) => (
+                                  <th
+                                    className="px-auto py-1"
+                                    key={index}
+                                    scope="col"
+                                  >
+                                    {header}
+                                  </th>
+                                )
+                              )}
                           </thead>
                           <tbody>
-                            {serviceTypeCostData.data && serviceTypeCostData?.data.map(
-                              (rowData: any, rowIndex: any) => (
-                                <>
-                                  <tr key={rowIndex}>
-                                    <td>
-                                      <button
-                                        onClick={() =>
-                                          setServiceTypeCostNestedRowOpen(
-                                            serviceTypeCostNestedRowOpen ==
-                                              rowIndex
-                                              ? "-1"
-                                              : rowIndex
-                                          )
-                                        }
-                                      >
-                                        {serviceTypeCostNestedRowOpen ==
-                                        rowIndex
-                                          ? "-"
-                                          : "+"}
-                                      </button>
-                                    </td>
-                                    {rowData.map((item: any, index: any) =>
-                                      item[0] != "NestedTableData" ? (
-                                        <td
-                                          className="px-auto py-1"
-                                          key={index}
-                                        >
-                                          {item[1]}
-                                        </td>
-                                      ) : (
-                                        ""
-                                      )
-                                    )}
-                                  </tr>
-                                  <tr key={rowIndex}>
-                                    {rowData.map((item: any, index: any) =>
-                                      item[0] == "NestedTableData" ? (
-                                        <td
-                                          key={index}
-                                          colSpan={100}
-                                          className={
-                                            serviceTypeCostNestedRowOpen !=
-                                            rowIndex
-                                              ? "hidden"
-                                              : ""
+                            {serviceTypeCostData.data &&
+                              serviceTypeCostData?.data.map(
+                                (rowData: any, rowIndex: any) => (
+                                  <>
+                                    <tr key={rowIndex}>
+                                      <td>
+                                        <button
+                                          onClick={() =>
+                                            setServiceTypeCostNestedRowOpen(
+                                              serviceTypeCostNestedRowOpen ==
+                                                rowIndex
+                                                ? "-1"
+                                                : rowIndex
+                                            )
                                           }
                                         >
-                                          <table className="w-full">
-                                            <thead>
-                                              <th colSpan={100}>
-                                                <td>Service Type</td>
-                                              </th>
-                                            </thead>
-                                            <tbody>
-                                              {item[1].map(
-                                                (data: any, index: any) => (
-                                                  <tr key={index}>
-                                                    <td colSpan={100}>
-                                                      {data}
-                                                    </td>
-                                                  </tr>
-                                                )
-                                              )}
-                                            </tbody>
-                                          </table>
-                                        </td>
-                                      ) : (
-                                        ""
-                                      )
-                                    )}
-                                  </tr>
-                                </>
-                              )
-                            )}
-                            {serviceTypeCostData.data && serviceTypeCostData.data.length == 0 ? (
+                                          {serviceTypeCostNestedRowOpen ==
+                                          rowIndex
+                                            ? "-"
+                                            : "+"}
+                                        </button>
+                                      </td>
+                                      {rowData.map((item: any, index: any) =>
+                                        item[0] != "NestedTableData" ? (
+                                          <td
+                                            className="px-auto py-1"
+                                            key={index}
+                                          >
+                                            {item[1]}
+                                          </td>
+                                        ) : (
+                                          ""
+                                        )
+                                      )}
+                                    </tr>
+                                    <tr key={rowIndex}>
+                                      {rowData.map((item: any, index: any) =>
+                                        item[0] == "NestedTableData" ? (
+                                          <td
+                                            key={index}
+                                            colSpan={100}
+                                            className={
+                                              serviceTypeCostNestedRowOpen !=
+                                              rowIndex
+                                                ? "hidden"
+                                                : ""
+                                            }
+                                          >
+                                            <table className="w-full">
+                                              <thead>
+                                                <th colSpan={100}>
+                                                  <td>Service Type</td>
+                                                </th>
+                                              </thead>
+                                              <tbody>
+                                                {item[1].map(
+                                                  (data: any, index: any) => (
+                                                    <tr key={index}>
+                                                      <td colSpan={100}>
+                                                        {data}
+                                                      </td>
+                                                    </tr>
+                                                  )
+                                                )}
+                                              </tbody>
+                                            </table>
+                                          </td>
+                                        ) : (
+                                          ""
+                                        )
+                                      )}
+                                    </tr>
+                                  </>
+                                )
+                              )}
+                            {serviceTypeCostData.data &&
+                            serviceTypeCostData.data.length == 0 ? (
                               <tr>
                                 <td colSpan={100}>No data</td>
                               </tr>

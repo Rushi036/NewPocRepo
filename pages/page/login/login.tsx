@@ -6,6 +6,7 @@ import { login } from "@/pages/api/login";
 import { useRouter } from "next/router";
 import { useIsAuthenticated, useMsal } from "@azure/msal-react";
 import { getUserRole } from "@/pages/api/FinopsApi/GetUserRole";
+import { useAppContext } from "@/pages/Components/AppContext";
 // import { useIsAuthenticated, useMsal } from "@azure/msal-react";
 
 const Login = () => {
@@ -20,6 +21,7 @@ const Login = () => {
   // let [loginEmployee, { data: loginData }] = useLoginEmployeeMutation();
   const { accounts } = useMsal();
   const account: any = accounts[0];
+  const { authenticated, toggleAuthenticated } = useAppContext();
   const handleEmailChange = (e: any) => {
     setEmail(e.target.value);
   };
@@ -95,7 +97,8 @@ const Login = () => {
           const fetchedData = await getUserRole(email);
           // setUserData(fetchedData);
           // console.log("response data--------------", fetchedData.data);
-          if (fetchedData) {
+          if (fetchedData && fetchedData.data) {
+            toggleAuthenticated();
             sessionStorage.setItem("userRole", fetchedData.data.role);
             sessionStorage.setItem("userName", fetchedData.data.userName);
             sessionStorage.setItem("userEmail", fetchedData.data.adId);
@@ -103,7 +106,11 @@ const Login = () => {
               "businessLogo",
               fetchedData.data.businessLogo
             );
-            router.push("/page/Dashboard/Dashboard");
+            router.push("/page/Dashboard");
+          } else {
+            window.alert(
+              "User Not Found!!"
+            );
           }
         };
         getData();

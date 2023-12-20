@@ -13,3 +13,5 @@ export const finopsServerBaseUrl = "http://10.47.128.23:5613"           //For AP
 // export const localHostBaseUrl = "http://localhost:9201"                     //For API on Local
 
 
+ // "start": "next start -p 5612",                                           //For Prod
+ // "start": "next start"                                                   //For local and dev

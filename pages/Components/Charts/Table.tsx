@@ -17,7 +17,7 @@ const Table = ({ data }: any) => {
     rowPerPage * page - rowPerPage,
     rowPerPage * page
   );
-data && console.log("table data length",data)
+// data && console.log("table data length",data)
   useEffect(() => {
     setPage(1);
 
