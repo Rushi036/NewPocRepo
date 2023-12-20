@@ -168,12 +168,12 @@ const TableWithDropdown = (cloud: any, type: any) => {
               <select
                 value={firstDropdownValue}
                 onChange={(e) => setFirstDropdownValue(e.target.value)}
-                className="border px-2 py-[0.32rem] rounded-sm ml-2"
+                className="border px-2 py-[0.32rem] max-w-[14rem] rounded-sm ml-2"
               >
                 <option value="" disabled>
                   Select...
                 </option>
-                {firstdropDowndata.map((item: any, index: any) => (
+                {firstdropDowndata && Object.keys(firstdropDowndata).map((item: any, index: any) => (
                   <option key={index} value={item}>
                     {item}
                   </option>
