@@ -84,7 +84,6 @@ const Dashboard = () => {
             <p className="text-purple-400 font-bold text-lg">
               Active Service Request
             </p>
-
             <div className="flex flex-col">
               <span>Coming Soon...</span>
             </div>

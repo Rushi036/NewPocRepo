@@ -4,7 +4,7 @@ import HighchartsReact from "highcharts-react-official";
 
 const BarGraph = (props: any) => {
   const chartContainer = useRef(null);
-
+ 
   useEffect(() => {
     if (chartContainer.current) {
       const options: any = {

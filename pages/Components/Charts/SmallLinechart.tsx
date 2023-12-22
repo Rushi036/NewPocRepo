@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { getUnBlendedCost } from "@/pages/api/FinopsApi/GetUnblendedCost";
+// import { getUnBlendedCost } from "@/pages/api/FinopsApi/GetUnblendedCost";
 
 const SmallLineChartComponent = (props: any) => {
   const chartContainer = useRef(null);
-
+ 
   useEffect(() => {
     if (chartContainer.current) {
       const newData =
@@ -44,10 +44,10 @@ const SmallLineChartComponent = (props: any) => {
 
       const options: any = {
         title: {
-          text: props.data.title ?? "Consumption Trend",
+          text: props?.data?.title ?? "Consumption Trend",
           align: "left",
           style: {
-            color: props.titleColor ?? "#000",
+            color: props?.titleColor ?? "#000",
             fontWeight: 'bold'
           }
         },
@@ -55,19 +55,19 @@ const SmallLineChartComponent = (props: any) => {
         yAxis: [
           {
             title: {
-              text: props.data.firstYAxis || "Rupees",
+              text: props?.data?.firstYAxis || "Rupees",
             },
           },
           {
             title: {
-              text: props.data.secondYAxis || "Dollar",
+              text: props?.data?.secondYAxis || "Dollar",
             },
             opposite: true, // Place this y-axis on the opposite side
           },
         ],
         xAxis: {
           title: {
-            text: props.data.xAxis || "",
+            text: props?.data?.xAxis || "",
           },
           type: "category",
         },
@@ -129,7 +129,7 @@ const SmallLineChartComponent = (props: any) => {
 
       Highcharts.chart(chartContainer.current, options);
     }
-  }, [props.data, props.reports]);
+  }, [props?.data, props?.reports]);
 
   return <div ref={chartContainer} />;
 };

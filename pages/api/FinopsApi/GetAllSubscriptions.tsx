@@ -1,4 +1,4 @@
-import { finopsBaseUrl, finopsServerBaseUrl } from "@/const";
+import { finopsServerBaseUrl } from "@/const";
 import { useState } from "react";
 
 export const getAllSubscriptions = async (cloud: any) => {

@@ -4,6 +4,7 @@ interface LayoutProps {
   children: ReactNode;
 }
 const BLayout: React.FC<LayoutProps> = ({ children }: any) => {
+  
   return (
     
     <div

@@ -17,6 +17,7 @@ import Multiselect from "multiselect-react-dropdown";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import Switch from "react-switch";
+import { finopsServerBaseUrl } from "@/const";
 
 // dynamic imports
 const BarGraph = dynamic(() => import("@/pages/Components/Charts/BarChart"));
@@ -34,8 +35,9 @@ function CostDrillDown() {
   const { time, toggleTime } = useAppContext();
   const { timeEnd, toggleTimeEnd } = useAppContext();
   const [cloudDropdown, setCloudDropdown] = useState("Azure");
+  const [cloudTitle, setCloudTitle] = useState("Select Subscription Name");
   const [cloud, setCloud] = useState(cloudDropdown);
-  const [subACCName, setSubACCName] = useState();
+  const [subACCName, setSubACCName] = useState<any>();
   // const res: any = cloud == "Azure" ? AzureData : AWSData;
   const [res, setRes] = useState<any>(null);
   const [subData, setSubData] = useState<any>();
@@ -117,12 +119,29 @@ function CostDrillDown() {
 
   const handleCloudChange = (e: any) => {
     setCloudDropdown(e.target.value);
+    if (e.target.value == "Azure") {
+      setCloudTitle("Select Subscription Name");
+    } else if (e.target.value == "AWS") {
+      setCloudTitle("Select Account Name");
+    }
   };
 
   const callApi = async () => {
     //For BE
     await getSubscriptionIds(cloudDropdown, userADID).then((res: any) => {
-      setSubData(res.data);
+      if (res.data) {
+        setSubData(res.data);
+        setSubACCName(res?.data[0]?.subsAccName);
+        setSubscIdDropdown(res?.data[0]?.subsAccId);
+        setSubsIndexName(res.data[0]?.subsIndexName);
+        setSubsType(res.data[0].subsType);
+      } else {
+        setSubData(null);
+        setSubACCName(null);
+        setSubscIdDropdown(null);
+        setSubsIndexName(null);
+        setSubsType(null);
+      }
     });
   };
 
@@ -136,6 +155,12 @@ function CostDrillDown() {
         setSubscIdDropdown(res?.data[0]?.subsAccId);
         setSubsIndexName(res.data[0]?.subsIndexName);
         setSubsType(res.data[0].subsType);
+      } else {
+        setSubData(null);
+        setSubACCName(null);
+        setSubscIdDropdown(null);
+        setSubsIndexName(null);
+        setSubsType(null);
       }
     });
   };
@@ -171,16 +196,13 @@ function CostDrillDown() {
   async function fetchDataAzure(body: any) {
     let resData: any;
     try {
-      resData = await fetch(
-        "http://10.47.98.164:9201/AzureFinopsDashboardData",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(body),
-        }
-      );
+      resData = await fetch(`${finopsServerBaseUrl}/AzureFinopsDashboardData`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
       resData = await resData.json();
     } catch {
       resData = "";
@@ -191,7 +213,7 @@ function CostDrillDown() {
   async function fetchDataAWS(body: any) {
     let resData: any;
     try {
-      resData = await fetch("http://10.47.98.164:9201/awsFinopsDashboardData", {
+      resData = await fetch(`${finopsServerBaseUrl}/awsFinopsDashboardData`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -208,7 +230,7 @@ function CostDrillDown() {
   async function fetchDataAcross(body: any) {
     let resData: any;
     try {
-      resData = await fetch("http://10.47.98.164:9201/awsAllDataByAccount", {
+      resData = await fetch(`${finopsServerBaseUrl}/awsAllDataByAccount`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -281,6 +303,7 @@ function CostDrillDown() {
         handleSubNameChange={handleSubNameChange}
         cloud={cloud}
         cloudDropdown={cloudDropdown}
+        cloudTitle={cloudTitle}
         subACCName={subACCName}
         subData={subData}
         timePeriod={timePeriod}
@@ -306,13 +329,21 @@ function MetricCards({ cloud, subscId, res, isOpen, setIsOpen }: any) {
             : "bg-white p-4 w-[calc(25%-0.75rem)] rounded-lg"
         }
       >
-        <b>
-          Subscription Id <br />
-        </b>
+        {cloud == "Azure" && (
+          <b>
+            Subscription Id <br />
+          </b>
+        )}
+        {cloud == "AWS" && (
+          <b>
+            Account Id <br />
+          </b>
+        )}
         <span>{subscId}</span>
       </div>
 
-      {res.Metric &&
+      {res &&
+        res.Metric &&
         res.Metric.map((data: any, i: any) => {
           if (!data.Table) {
             return (
@@ -412,6 +443,7 @@ function FinopsFilters({
   handleSubNameChange,
   cloud,
   cloudDropdown,
+  cloudTitle,
   subACCName,
   subData,
   timePeriod,
@@ -495,6 +527,20 @@ function FinopsFilters({
         new Date(moment().format("YYYY-MM-DDTHH:mm:ss")),
       ],
 
+      placement: "left",
+    },
+    {
+      label: "Current FY",
+      value: [
+        new Date(
+          moment()
+            .startOf("year")
+            .month(3)
+            .date(1)
+            .format("YYYY-MM-DDTHH:mm:ss")
+        ),
+        new Date(moment().format("YYYY-MM-DDTHH:mm:ss")),
+      ],
       placement: "left",
     },
   ];
@@ -588,7 +634,7 @@ function FinopsFilters({
       options: tableData,
     });
     setOptions(data);
-
+    // console.log("options", options);
     setSelectedReportsDropDown([
       data && data[0] && data[0]?.options[0] ? data[0].options[0] : {},
       data && data[0] && data[0]?.options[1] ? data[0].options[1] : {},
@@ -602,8 +648,8 @@ function FinopsFilters({
     setSelectedReportsDropDown(allData.flat(1));
   }
   return (
-    <div className="sticky top-[3.75rem] w-[25%] h-fit flex flex-col justify-between items-center ml-4 mb-4 p-3 bg-white rounded-lg ">
-      <div className="w-full mx-2 flex items-center gap-2 justify-between">
+    <div className="sticky top-[3.75rem] w-[25%] max-h-[80vh] h-fit flex flex-col justify-start items-center ml-4 mb-16 p-4 bg-white rounded-lg overflow-y-auto">
+      <div className="w-full mx-2 flex items-start gap-2 justify-start">
         <span>Across Account</span>
         <Switch
           onChange={(res) => setSingleReport(res)}
@@ -634,10 +680,11 @@ function FinopsFilters({
       {singleReport && (
         <div className="w-full mx-2 mt-4">
           <label className="">
-            {cloud == "Azure"
+            {/* {cloud == "Azure"
               ? "Select Subscription Name"
               : "Select Account Name"}{" "}
-            :{" "}
+            :{" "} */}
+            {cloudTitle} :
           </label>
           <select
             className="block w-full py-2 px-4 border hover:bg-gray-50 focus:bg-gray-50 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
@@ -645,7 +692,7 @@ function FinopsFilters({
             value={subACCName}
           >
             {/* subscription id or account id */}
-            <option>Select Id</option>
+            <option disabled>Select Name</option>
             {subData &&
               subData.map((e: any, i: any) => (
                 <option key={i} value={e.subsAccName}>
@@ -657,7 +704,7 @@ function FinopsFilters({
       )}
 
       {singleReport && (
-        <div className="w-full mx-2 mt-4 z-10">
+        <div className="w-full mx-2 mt-4 z-10 relative">
           <div className="flex w-full justify-between items-center mb-2">
             <label className="">Select Reports : </label>
             <button
@@ -667,6 +714,7 @@ function FinopsFilters({
               select all
             </button>
           </div>
+          {/* <div className="max-h-20 overflow-y-auto"> */}
           <Select
             onChange={(val: any) => setSelectedReportsDropDown(val)}
             closeMenuOnSelect={false}
@@ -675,6 +723,7 @@ function FinopsFilters({
             isMulti
             options={options}
           />
+          {/* </div> */}
         </div>
       )}
 
@@ -697,7 +746,8 @@ function FinopsFilters({
       {singleReport && (
         <div className="w-full mx-2 mt-4 flex justify-center">
           <button
-            className="bg-red-500 text-white py-1 px-2 rounded"
+            className="bg-red-500 text-white py-1 px-2 rounded disabled:bg-gray-500"
+            disabled={!subACCName}
             onClick={getReport}
           >
             Get Report
@@ -720,12 +770,14 @@ function ReportsCard({
   async function unpinGraph(title: any) {
     let chartOrder;
     if (cloudDropdown == "AWS") {
-      let awsData = graphFormat?.chartOrder?.AWS;
+      let awsData =
+        graphFormat && graphFormat.chartOrder && graphFormat?.chartOrder?.AWS;
       delete awsData?.[title];
       chartOrder = { AWS: awsData, Azure: graphFormat?.chartOrder?.Azure };
     }
     if (cloudDropdown == "Azure") {
-      let azureData = graphFormat?.chartOrder?.Azure;
+      let azureData =
+        graphFormat && graphFormat.chartOrder && graphFormat?.chartOrder?.Azure;
       delete azureData?.[title];
       chartOrder = { Azure: azureData, AWS: graphFormat?.chartOrder?.AWS };
     }
@@ -766,6 +818,7 @@ function ReportsCard({
     <div className="mt-4 h-auto flex flex-wrap gap-4">
       {/* pinned graphs and table  */}
       {res &&
+        res.Graph &&
         res.Graph?.map((e: any, i: any) => {
           if (
             e &&
@@ -841,6 +894,7 @@ function ReportsCard({
         })}
 
       {res &&
+        res.Table &&
         res.Table?.map((e: any, i: any) => {
           if (
             graphFormat.chartOrder?.[cloud]?.[e.title] &&
@@ -863,6 +917,7 @@ function ReportsCard({
 
       {/* unpinned graphs and table  */}
       {res &&
+        res.Graph &&
         res.Graph?.map((e: any, i: any) => {
           i;
           if (
@@ -939,6 +994,7 @@ function ReportsCard({
         })}
 
       {res &&
+        res.Table &&
         res.Table?.map((e: any, i: any) => {
           if (
             !graphFormat.chartOrder?.[cloud]?.[e.title] &&
@@ -966,11 +1022,13 @@ function CrossPlatformReports({ res, timePeriod, singleReport }: any) {
   return (
     <div className=" h-auto flex flex-wrap gap-4">
       {res &&
+        res.Graph &&
         res.Graph?.map((e: any, i: any) => {
           if (
             e &&
             e.PieChart &&
             e.PieChart.data &&
+            e.PieChart.data.length > 0 &&
             Array.isArray(e.PieChart.data)
           ) {
             return (
@@ -987,6 +1045,7 @@ function CrossPlatformReports({ res, timePeriod, singleReport }: any) {
             e &&
             e.LineChart &&
             e.LineChart.data &&
+            e.LineChart.data.length > 0 &&
             Array.isArray(e.LineChart.data)
           ) {
             return (
@@ -1010,6 +1069,7 @@ function CrossPlatformReports({ res, timePeriod, singleReport }: any) {
             e &&
             e.BarGraph &&
             e.BarGraph.data &&
+            e.BarGraph.data.length > 0 &&
             Array.isArray(e.BarGraph.data)
           ) {
             return (
@@ -1026,12 +1086,15 @@ function CrossPlatformReports({ res, timePeriod, singleReport }: any) {
         })}
 
       {res &&
+        res.Table &&
         res.Table?.map((e: any, i: any) => {
           return (
             <>
-              <div key={i} className="card !min-w-full">
-                <Table data={e} />
-              </div>
+              {e && e.data && e.data.length > 0 && (
+                <div key={i} className="card w-1/2">
+                  <Table data={e} />
+                </div>
+              )}
             </>
           );
         })}
