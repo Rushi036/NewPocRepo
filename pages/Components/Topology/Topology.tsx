@@ -136,7 +136,7 @@ const AddNodeOnEdgeDrop = (props: any) => {
       setEdges([]);
       setViewport({ x, y, zoom });
       selectedNode = null;
-      props.setInitialNodes(null)
+      props.setInitialNodes(null);
     };
 
     resetFlow();
@@ -153,7 +153,12 @@ const AddNodeOnEdgeDrop = (props: any) => {
       {/* <button className="z-30 absolute top-0 left-10" onClick={onRestore}>
         Restore
       </button> */}
-      <button className="absolute top-1 z-20 left-1 px-2 py-1 bg-slate-300 border border-slate-400 rounded-lg" onClick={onReset}>Reset</button>
+      <button
+        className="absolute top-1 z-20 left-1 px-2 py-1 bg-slate-300 border border-slate-400 rounded-lg"
+        onClick={onReset}
+      >
+        Reset
+      </button>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -218,7 +223,7 @@ function Topology(props: any) {
             <></>
           )}
         </div>
-        <div className="editor-options min-h-[50vh]">
+        <div className="editor-options min-h-[50vh] max-h-[60vh] overflow-y-auto">
           {props.editable && (
             <div className="modal" style={{ display: "contents" }}>
               <ul>
@@ -231,9 +236,20 @@ function Topology(props: any) {
                           setNode(i);
                         }}
                         key={i}
-                        className={Node === i ? "selected-node" : ""}
+                        className={Node === i ? "selected-node flex !flex-col" : "flex !flex-col"}
                       >
-                        <img src={x.Path} /> <p>{x.Name}</p>
+                        <div className="flex gap-2">
+                          <img src={x.Path} /> <p>{x.Name}</p>
+                        </div>
+                        <div className="flex flex-col">
+                          {x?.SubCategory?.map((y: any, j: any) => {
+                            return (
+                              <div key={j} className="flex gap-2 ml-3">
+                                <img key={j} src={y.Path} /> <p>{y.Name}</p>
+                              </div>
+                            );
+                          })}
+                        </div>
                       </li>
                     );
                   })}
