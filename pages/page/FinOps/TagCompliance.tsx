@@ -21,6 +21,9 @@ const TagCompliance = () => {
     setLoader(true);
     GetTagedAndUnTagedCostResourceType().then((data: any) => {
       setRes(data.data);
+      if(data.data && data.data.AWS && Object.keys(data.data.AWS).length == 0){
+        setCloudValue('azure');
+      }
       setLoader(false);
       if (data && data?.status != 200) {
         //   console.log(Object.keys(data.data).length, data.status)

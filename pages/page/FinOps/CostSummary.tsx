@@ -20,148 +20,7 @@ const CostSummary = () => {
     new Date(time),
     new Date(timeEnd),
   ]);
-  const dummyData1: any = {
-    title: "Cost By Month",
-    data: [
-      {
-        name: "Unblended Cost",
-        data: [
-          ["Jun", 2687.2],
-          ["Jul", 2287.2],
-          ["Aug", 987.2],
-          ["Sep", 3083.57],
-          ["Oct", 1014.77],
-          ["Nov", 1287.2],
-        ],
-      },
-    ],
-    xAxis: "Month",
-    yAxis: "cost($)",
-  };
-  const dummyData2: any = {
-    title: "Cost By Service",
-    type: "column",
-    stacking: "false",
-    categories: [
-      "47239",
-      "749203",
-      "18209",
-      "89232",
-      "72893",
-      "12891",
-      "732901",
-      "74293",
-    ],
-    data: [
-      {
-        name: "",
-        data: [506, 132, 232, 234, 23, 42, 34, 323],
-      },
-    ],
-    xAxis: "Account ID",
-    yAxis: "Total Cost($)",
-  };
-  const dummyData3: any = {
-    title: "Cost By Region",
-    type: "column",
-    stacking: "false",
-    categories: [
-      "EastUS",
-      "CentralUS",
-      "WestUS",
-      "India",
-      "SouthUS",
-      "AllRegions",
-    ],
-    data: [
-      {
-        name: "",
-        data: [15, 21, 32, 42, 5, 23],
-      },
-    ],
-    xAxis: "Region",
-    yAxis: "Cost($)",
-  };
-  const dummyData4: any = {
-    title: "Cost Distribution",
-    data: [
-      ["running", 125],
-      ["terminated", 10],
-      ["stopped", 3],
-      ["shutting-down", 2],
-    ],
-  };
-  const dummyData5: any = {
-    title: "Cost By Month",
-    data: [
-      {
-        name: "Unblended Cost",
-        data: [
-          ["Jun", 687.2],
-          ["Jul", 287.2],
-          ["Aug", 87.2],
-          ["Sep", 83.57],
-          ["Oct", 14.77],
-          ["Nov", 287.2],
-        ],
-      },
-    ],
-    xAxis: "Month",
-    yAxis: "cost($)",
-  };
-  const dummyData6: any = {
-    title: "Cost By Service",
-    type: "column",
-    stacking: "false",
-    categories: [
-      "47239",
-      "749203",
-      "18209",
-      "89232",
-      "72893",
-      "12891",
-      "732901",
-      "74293",
-    ],
-    data: [
-      {
-        name: "",
-        data: [1506, 1132, 1232, 2134, 123, 412, 314, 1323],
-      },
-    ],
-    xAxis: "Account ID",
-    yAxis: "Total Cost($)",
-  };
-  const dummyData7: any = {
-    title: "Cost By Region",
-    type: "column",
-    stacking: "false",
-    categories: [
-      "EastUS",
-      "CentralUS",
-      "WestUS",
-      "India",
-      "SouthUS",
-      "AllRegions",
-    ],
-    data: [
-      {
-        name: "",
-        data: [215, 221, 232, 422, 52, 223],
-      },
-    ],
-    xAxis: "Region",
-    yAxis: "Cost($)",
-  };
-  const dummyData8: any = {
-    title: "Cost Distribution",
-    data: [
-      ["running", 1525],
-      ["terminated", 210],
-      ["stopped", 36],
-      ["shutting-down", 112],
-    ],
-  };
+
   const router = useRouter();
   const { report, cloud }: any = router.query;
   const [cloudValue, setCloudValue] = useState(cloud || "CloudGateway");
@@ -270,6 +129,9 @@ const CostSummary = () => {
       timePeriod[1].toISOString()
     ).then((data: any) => {
       setRes(data);
+      if(data && data.AWS && Object.keys(data.AWS).length == 0){
+        setCloudValue('azure') 
+      }
       setLoader(false);
       if (data && data?.status != 200) {
         //   console.log(Object.keys(data.data).length, data.status)

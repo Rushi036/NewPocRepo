@@ -6,7 +6,10 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import Switch from "react-switch";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
+import { getCurrencyData, updateCurrencyData } from "@/pages/api/getCurrency";
+import fun from "@/pages/Components/AppContext";
 function CloudGateway() {
   // const cloudGatewayData = {
   //   title: "Cloud Gateway",
@@ -160,7 +163,9 @@ function CloudGateway() {
   const [gatewayChargesNestedRowOpen, setGatewayChargesNestedRowOpen] =
     useState<any>(-1);
   const [zoneMappingTableView, setZoneMappingTableView] = useState<any>(true);
+  const [currencyData, setCurrencyData] = useState<any>(true);
   const [userRole, setUserRole] = useState<any>(null); //this will populate from the session storage
+  const [dataChanged, setDataChanged] = useState<any>(false);
   const [loader, setLoader] = useState<any>(false);
   useEffect(() => {
     setServiceTypeCostNestedRowOpen(-1);
@@ -176,6 +181,7 @@ function CloudGateway() {
       // fetchGatewayChargeData().then((res) => setCloudGatewayData(res));
       fetchServiceCategoryData().then((res) => setServiceTypeCostData(res));
       fetchZoneMappingData().then((res) => setZoneMappingData(res));
+      getCurrencyData().then((res: any) => setCurrencyData(res.data));
     }
 
     getData().then(() => setLoader(false));
@@ -230,6 +236,19 @@ function CloudGateway() {
       resData = "";
     }
     return resData;
+  }
+
+  function changeStatus(res: any) {
+    setCurrencyData({ ...currencyData, status: res ? "Active" : "InActive" });
+    setDataChanged(true)
+  }
+  function changeDollarValue(res: any) {
+    setCurrencyData({ ...currencyData, dollar_value: res });
+    setDataChanged(true)
+  }
+
+  function updateCurrencyValues(){
+    updateCurrencyData(currencyData).then(()=> setDataChanged(false))
   }
   return (
     <>
@@ -414,6 +433,46 @@ function CloudGateway() {
                 </tbody>
               </table>
             </div>
+          )}
+        </div>
+        <div className="!h-fit p-3 !w-fit bg-white rounded-lg">
+          <label className="text-sm font-semibold">Currency Converter</label>
+          <div className="flex mt-2 gap-4">
+            <div>
+              <label htmlFor="currencyValue">Dollar Rate :₹</label>
+              <input
+                className="border rounded p-1 pl-3 w-14"
+                value={
+                  currencyData?.dollar_value ? currencyData?.dollar_value : 0
+                }
+                onChange={(e: any) => {
+                  changeDollarValue(e.target.value);
+                }}
+                type="number"
+                name="currencyValue"
+                id="currencyValue"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <label htmlFor="currencyValue">Conversion :</label>
+              <Switch
+                onChange={(res: any) => {
+                  changeStatus(res);
+                }}
+                checked={currencyData.status == "InActive" ? false : true}
+                uncheckedIcon={false}
+                checkedIcon={false}
+                boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+                height={20}
+                width={40}
+              />
+              {currencyData.status}
+            </div>
+          </div>
+          {dataChanged && (
+            <button onClick={updateCurrencyValues} className="bg-blue-600 text-white px-3 py-1 mt-2 rounded">
+              Save
+            </button>
           )}
         </div>
 

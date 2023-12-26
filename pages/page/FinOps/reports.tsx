@@ -12,6 +12,7 @@ import SmallLineChartComponent from "@/pages/Components/Charts/SmallLinechart";
 import { getReportsDashboard } from "@/pages/api/FinopsApi/getReports";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getCurrencyData } from "@/pages/api/getCurrency";
 
 const Reports = () => {
   useEffect(() => {
@@ -23,10 +24,12 @@ const Reports = () => {
   }, []);
   const [status, setStatus] = useState<any>();
   const [res, setRes] = useState<any>();
+  const [currencyData, setCurrencyData] = useState<any>(true);
   const [userRole, setUserRole] = useState<any>(null); //this will populate from the session storage
   useEffect(() => {
     setUserRole(sessionStorage.getItem("userRole"));
     getReportsDashboard().then((data: any) => {
+      getCurrencyData().then((res: any) => setCurrencyData(res.data));
       setRes(data.data);
       if (data && data?.status != 200) {
         //   console.log(Object.keys(data.data).length, data.status)
@@ -81,7 +84,7 @@ const Reports = () => {
       </div>
 
       <div className="flex mt-4">
-        <div className="w-[50%] h-[130px] mb-4">
+        <div className="w-[50%] min-h-[120px] h-hit mb-4">
           <Link
             className="w-full flex justify-center items-center h-full"
             href={{
@@ -97,7 +100,7 @@ const Reports = () => {
               {res && (
                 <div className="flex flex-col">
                   <span>
-                    AWS - $
+                    AWS - {currencyData.status == "InActive" ? "$" : "₹"}
                     {res.Metric && res.Metric[0] && res?.Metric[0]?.value
                       ? res?.Metric[0]?.value?.AWS
                       : ""}
@@ -108,13 +111,21 @@ const Reports = () => {
                       ? res?.Metric[0]?.value?.Azure
                       : ""}
                   </span>
+                  {currencyData.status == "Active" && (
+                    <span>
+                      Total - ₹
+                      {res.Metric && res.Metric[0] && res?.Metric[0]?.value
+                        ? Math.round(res?.Metric[0]?.value?.Azure + res?.Metric[0]?.value?.AWS)
+                        : ""}
+                    </span>
+                  )}
                 </div>
               )}
             </div>
           </Link>
         </div>
 
-        <div className="w-[50%] h-[130px] flex justify-center items-center mb-4">
+        <div className="w-[50%] min-h-[120px] h-hit flex justify-center items-center mb-4">
           <Link
             className="w-full flex justify-center items-center h-full"
             href={{
@@ -131,7 +142,7 @@ const Reports = () => {
               {res && (
                 <div className="flex flex-col">
                   <span>
-                    AWS - $
+                    AWS - {currencyData.status == "InActive" ? "$" : "₹"}
                     {res.Metric && res.Metric[1] && res.Metric[1].value
                       ? res?.Metric[1]?.value?.AWS
                       : ""}
@@ -142,13 +153,21 @@ const Reports = () => {
                       ? res?.Metric[1]?.value?.Azure
                       : ""}
                   </span>
+                  {currencyData.status == "Active" && (
+                    <span>
+                      Total - ₹
+                      {res.Metric && res.Metric[1] && res?.Metric[1]?.value
+                        ? Math.round(res?.Metric[1]?.value?.Azure + res?.Metric[1]?.value?.AWS)
+                        : ""}
+                    </span>
+                  )}
                 </div>
               )}
             </div>
           </Link>
         </div>
 
-        <div className="w-[50%] h-[130px] flex justify-center items-center mb-4">
+        <div className="w-[50%] min-h-[120px] h-hit flex justify-center items-center mb-4">
           <Link
             className="w-full flex justify-center items-center h-full"
             href={{
@@ -168,7 +187,7 @@ const Reports = () => {
                       Allocated Spent
                     </span>
                     <span>
-                      AWS - $
+                      AWS - {currencyData.status == "InActive" ? "$" : "₹"}
                       {res.Metric && res.Metric[3] && res.Metric[3].value
                         ? res?.Metric[3]?.value?.aws
                         : ""}
@@ -179,13 +198,21 @@ const Reports = () => {
                         ? res?.Metric[3]?.value?.azure
                         : ""}
                     </span>
+                    {currencyData.status == "Active" && (
+                    <span>
+                      Total - ₹
+                      {res.Metric && res.Metric[3] && res?.Metric[3]?.value
+                        ? Math.round(res?.Metric[3]?.value?.azure + res?.Metric[3]?.value?.aws)
+                        : ""}
+                    </span>
+                  )}
                   </div>
                   <div className="flex flex-col">
                     <span className="font-bold border-b-2 pb-1">
                       Unallocated Spent
                     </span>
                     <span>
-                      AWS - $
+                      AWS - {currencyData.status == "InActive" ? "$" : "₹"}
                       {res.Metric && res.Metric[4] && res.Metric[4].value
                         ? res?.Metric[4]?.value?.aws
                         : ""}
@@ -196,6 +223,14 @@ const Reports = () => {
                         ? res?.Metric[4]?.value?.azure
                         : ""}
                     </span>
+                    {currencyData.status == "Active" && (
+                    <span>
+                      Total - ₹
+                      {res.Metric && res.Metric[4] && res?.Metric[4]?.value
+                        ? Math.round(res?.Metric[4]?.value?.azure + res?.Metric[4]?.value?.aws)
+                        : ""}
+                    </span>
+                  )}
                   </div>
                 </div>
               )}
@@ -221,6 +256,7 @@ const Reports = () => {
                       ? res?.Metric[2]?.value
                       : ""}
                   </span>
+               
                   {/* <Loader percent={(1400 / 1500) * 100} color={"pink"} /> */}
                 </div>
               )}
@@ -299,7 +335,7 @@ const Reports = () => {
                 {res && (
                   <div className="flex flex-col">
                     <span>
-                      AWS - $
+                      AWS - {currencyData.status == "InActive" ? "$" : "₹"}
                       {res.Metric && res.Metric[6] && res.Metric[6].value
                         ? res?.Metric[6]?.value?.AWS
                         : ""}
@@ -310,6 +346,14 @@ const Reports = () => {
                         ? res?.Metric[6]?.value?.Azure
                         : ""}
                     </span>
+                    {currencyData.status == "Active" && (
+                    <span>
+                      Total - ₹
+                      {res.Metric && res.Metric[6] && res?.Metric[6]?.value
+                        ? Math.round(res?.Metric[6]?.value?.Azure + res?.Metric[6]?.value?.AWS)
+                        : ""}
+                    </span>
+                  )}
                   </div>
                 )}
               </div>
@@ -332,6 +376,9 @@ const Reports = () => {
                 id={121}
                 data={res.Graph[0].LineChart}
                 reports={true}
+                currencyDataStatus={
+                  currencyData.status == "InActive" ? "$" : "₹"
+                }
                 titleColor={"rgb(251,146,60)"}
               />
             )}
