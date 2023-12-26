@@ -94,7 +94,9 @@ const TableWithDropdown = (cloud: any, type: any) => {
     // setLoader(true);
     if (cloud.type == "firstDropdown" && cloud.cloud) {
       GetAllResourceTypes(cloud.cloud).then((data: any) => {
-        setfirstDropDowndata(data.data);
+        console.log("first data", data.data);
+
+        data && data.data && setfirstDropDowndata(data.data);
         data &&
           data.data &&
           data.data[0] &&
@@ -117,6 +119,7 @@ const TableWithDropdown = (cloud: any, type: any) => {
       }
     }
   }, [cloud.cloud, cloud.type]);
+  console.log("firstdropdownndata", firstdropDowndata);
 
   useEffect(() => {
     if (firstDropdownValue) {
@@ -173,11 +176,14 @@ const TableWithDropdown = (cloud: any, type: any) => {
                 <option value="" disabled>
                   Select...
                 </option>
-                {firstdropDowndata && Object.keys(firstdropDowndata).map((item: any, index: any) => (
-                  <option key={index} value={item}>
-                    {item}
-                  </option>
-                ))}
+                {firstdropDowndata &&
+                  firstdropDowndata.map(
+                    (item: any, index: any) => (
+                      <option key={index} value={item}>
+                        {item}
+                      </option>
+                    )
+                  )}
               </select>
             )}
           </div>
@@ -191,7 +197,8 @@ const TableWithDropdown = (cloud: any, type: any) => {
                 {/* <th>SrNo</th> */}
                 {data &&
                   data.Table &&
-                  data.Table[0] && data.Table[0].headers &&
+                  data.Table[0] &&
+                  data.Table[0].headers &&
                   data?.Table[0].headers?.map((header: any, index: any) => (
                     <th className="px-auto py-3" key={index} scope="col">
                       {header}
@@ -200,25 +207,27 @@ const TableWithDropdown = (cloud: any, type: any) => {
               </tr>
             </thead>
             <tbody>
-              {currentData && currentData?.map((rowData: any, rowIndex: any) => (
-                <tr key={rowIndex}>
-                  {/* <td>{rowIndex + 1}</td> */}
-                  {rowData && rowData.map((item: any, index: any) => (
-                    <td className="px-auto py-3" key={index}>
-                      {item[0] === "actionButtonViewTable" ? (
-                        <button
-                          className="btn bg-blue-400 px-2 py-1 rounded-sm text-white font-medium"
-                          onClick={() => setIsOpen(true)}
-                        >
-                          View
-                        </button>
-                      ) : (
-                        item[1]
-                      )}
-                    </td>
-                  ))}
-                </tr>
-              ))}
+              {currentData &&
+                currentData?.map((rowData: any, rowIndex: any) => (
+                  <tr key={rowIndex}>
+                    {/* <td>{rowIndex + 1}</td> */}
+                    {rowData &&
+                      rowData.map((item: any, index: any) => (
+                        <td className="px-auto py-3" key={index}>
+                          {item[0] === "actionButtonViewTable" ? (
+                            <button
+                              className="btn bg-blue-400 px-2 py-1 rounded-sm text-white font-medium"
+                              onClick={() => setIsOpen(true)}
+                            >
+                              View
+                            </button>
+                          ) : (
+                            item[1]
+                          )}
+                        </td>
+                      ))}
+                  </tr>
+                ))}
               {currentData?.length === 0 || filteredData === undefined ? (
                 <tr>
                   <td colSpan={100} className="py-2">

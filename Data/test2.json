@@ -1,0 +1,39 @@
+{
+  "businessName": "UTCL",
+  "userName": "Bhuwan Phuloria",
+  "adid": "bhuwan.phuloria@adityabirla.com",
+  "role": "BE",
+  "type": "Owner",
+  "status": "",
+  "businessLogo": "",
+  "subscriptions": [
+    {
+      "subsAccName": "Microsoft Azure Enterprise",
+      "subsAccId": "6f148934-a78a-45aa-a089-a8f164fcaecb",
+      "cloud": "Azure",
+      "ownerADID": "bhuwan.phuloria@adityabirla.com",
+      "contactADID": [
+        {
+          "name": "Bhuwan Phuloria",
+          "adid": "bhuwan.phuloria@adityabirla.com"
+        }
+      ],
+      "status": "active",
+      "type": "csp"
+    },
+    {
+      "subsAccName": "Ultratech-Prod",
+      "subsAccId": "9afeb24a-8c64-44d3-ae87-4438dffa9ca4",
+      "cloud": "Azure",
+      "ownerADID": "bhuwan.phuloria@adityabirla.com",
+      "contactADID": [
+        {
+          "name": "Bhuwan Phuloria",
+          "adid": "bhuwan.phuloria@adityabirla.com"
+        }
+      ],
+      "status": "active",
+      "type": "csp"
+    }
+  ]
+}

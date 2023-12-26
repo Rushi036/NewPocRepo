@@ -1,0 +1,25 @@
+{
+  "businessName": "test",
+  "userName": "test",
+  "adid": "test@gmail.com",
+  "role": "BE",
+  "type": "Owner",
+  "status": "active",
+  "businessLogo": "",
+  "subscriptions": [
+    {
+      "subsAccName": "test",
+      "subsAccId": "test",
+      "cloud": "Azure",
+      "ownerADID": "test@gmail.com",
+      "contactADID": [
+        {
+          "name": "test",
+          "adid": "tw@gmail.com"
+        }
+      ],
+      "status": "active",
+      "type": "csp"
+    }
+  ]
+}

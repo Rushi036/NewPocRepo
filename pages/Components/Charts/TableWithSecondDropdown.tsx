@@ -35,16 +35,16 @@ const TableWithSecondDropdown = (cloud: any) => {
     "Department Name": "department",
     "Cost Center": "cost_centre_name",
     "Cost Center Code": "cost_centre_code",
-    L5: "L5",
-    Sponsor: "Sponsor",
+    "L5": "L5",
+    "Sponsor": "Sponsor",
     "Business Infra Owner": "Business Infra Owner",
     "App-Name": "application_name",
     "Application Owner": "application_owner",
-    Environment: "environment",
-    Requestor: "Requestor",
+    "Environment": "environment",
+    "Requestor": "Requestor",
     "Request ID": "Request ID",
     "Business criticality": "Business criticality",
-    Zone: "Zone",
+    "Zone": "Zone",
   };
   const secondDropdownDataAzure: any = {
     "Business Name": "Business Name",
@@ -53,16 +53,16 @@ const TableWithSecondDropdown = (cloud: any) => {
     "Department Name": "department_name",
     "Cost Center": "cost_centre",
     "Cost Center Code": "cost_centre_code",
-    L5: "L5",
-    Sponsor: "Sponsor",
+    "L5": "L5",
+    "Sponsor": "Sponsor",
     "Business Infra Owner": "Business Infra Owner",
     "App-Name": "Application_Name",
     "Application Owner": "Application Owner",
-    Environment: "Environment",
-    Requestor: "Requestor",
+    "Environment": "Environment",
+    "Requestor": "Requestor",
     "Request ID": "Request ID",
     "Business criticality": "Business criticality",
-    Zone: "Zone",
+    "Zone": "Zone",
   };
   useEffect(() => {
     setPage(1);
@@ -87,7 +87,7 @@ const TableWithSecondDropdown = (cloud: any) => {
       });
     setFilteredData(filtered);
   }, [data?.Table, searchInput, secondDropdownValue]);
-
+// console.log("filtered",filteredData)
   useEffect(() => {
     if (cloud.type == "secondDropdown" && cloud.cloud) {
       if (cloud.cloud == "AWS") {
@@ -208,7 +208,7 @@ const TableWithSecondDropdown = (cloud: any) => {
                       ))}
                   </tr>
                 ))}
-              {currentData?.length === 0 || filteredData === undefined ? (
+              {currentData?.length === 0 || filteredData === undefined || filteredData === null ? (
                 <tr>
                   <td colSpan={100} className="py-2">
                     No data

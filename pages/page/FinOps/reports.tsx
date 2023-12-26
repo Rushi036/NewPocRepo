@@ -100,7 +100,7 @@ const Reports = () => {
               {res && (
                 <div className="flex flex-col">
                   <span>
-                    AWS - {currencyData.status == "InActive" ? "$" : "₹"}
+                    AWS - {currencyData && currencyData.status && currencyData.status == "InActive" ? "$" : "₹"}
                     {res.Metric && res.Metric[0] && res?.Metric[0]?.value
                       ? res?.Metric[0]?.value?.AWS
                       : ""}
@@ -111,7 +111,7 @@ const Reports = () => {
                       ? res?.Metric[0]?.value?.Azure
                       : ""}
                   </span>
-                  {currencyData.status == "Active" && (
+                  {currencyData && currencyData.status && currencyData.status == "Active" && (
                     <span>
                       Total - ₹
                       {res.Metric && res.Metric[0] && res?.Metric[0]?.value
@@ -142,7 +142,7 @@ const Reports = () => {
               {res && (
                 <div className="flex flex-col">
                   <span>
-                    AWS - {currencyData.status == "InActive" ? "$" : "₹"}
+                    AWS - {currencyData && currencyData.status && currencyData.status == "InActive" ? "$" : "₹"}
                     {res.Metric && res.Metric[1] && res.Metric[1].value
                       ? res?.Metric[1]?.value?.AWS
                       : ""}
@@ -153,7 +153,7 @@ const Reports = () => {
                       ? res?.Metric[1]?.value?.Azure
                       : ""}
                   </span>
-                  {currencyData.status == "Active" && (
+                  {currencyData && currencyData.status && currencyData.status == "Active" && (
                     <span>
                       Total - ₹
                       {res.Metric && res.Metric[1] && res?.Metric[1]?.value
@@ -187,7 +187,7 @@ const Reports = () => {
                       Allocated Spent
                     </span>
                     <span>
-                      AWS - {currencyData.status == "InActive" ? "$" : "₹"}
+                      AWS - {currencyData && currencyData.status && currencyData.status == "InActive" ? "$" : "₹"}
                       {res.Metric && res.Metric[3] && res.Metric[3].value
                         ? res?.Metric[3]?.value?.aws
                         : ""}
@@ -198,7 +198,7 @@ const Reports = () => {
                         ? res?.Metric[3]?.value?.azure
                         : ""}
                     </span>
-                    {currencyData.status == "Active" && (
+                    {currencyData && currencyData.status && currencyData.status == "Active" && (
                     <span>
                       Total - ₹
                       {res.Metric && res.Metric[3] && res?.Metric[3]?.value
@@ -212,7 +212,7 @@ const Reports = () => {
                       Unallocated Spent
                     </span>
                     <span>
-                      AWS - {currencyData.status == "InActive" ? "$" : "₹"}
+                      AWS - {currencyData && currencyData.status && currencyData.status == "InActive" ? "$" : "₹"}
                       {res.Metric && res.Metric[4] && res.Metric[4].value
                         ? res?.Metric[4]?.value?.aws
                         : ""}
@@ -223,7 +223,7 @@ const Reports = () => {
                         ? res?.Metric[4]?.value?.azure
                         : ""}
                     </span>
-                    {currencyData.status == "Active" && (
+                    {currencyData && currencyData.status && currencyData.status == "Active" && (
                     <span>
                       Total - ₹
                       {res.Metric && res.Metric[4] && res?.Metric[4]?.value
@@ -335,7 +335,7 @@ const Reports = () => {
                 {res && (
                   <div className="flex flex-col">
                     <span>
-                      AWS - {currencyData.status == "InActive" ? "$" : "₹"}
+                      AWS - {currencyData && currencyData.status && currencyData.status == "InActive" ? "$" : "₹"}
                       {res.Metric && res.Metric[6] && res.Metric[6].value
                         ? res?.Metric[6]?.value?.AWS
                         : ""}
@@ -346,7 +346,7 @@ const Reports = () => {
                         ? res?.Metric[6]?.value?.Azure
                         : ""}
                     </span>
-                    {currencyData.status == "Active" && (
+                    {currencyData && currencyData.status && currencyData.status == "Active" && (
                     <span>
                       Total - ₹
                       {res.Metric && res.Metric[6] && res?.Metric[6]?.value
@@ -377,7 +377,7 @@ const Reports = () => {
                 data={res.Graph[0].LineChart}
                 reports={true}
                 currencyDataStatus={
-                  currencyData.status == "InActive" ? "$" : "₹"
+                  currencyData && currencyData.status && currencyData.status == "InActive" ? "$" : "₹"
                 }
                 titleColor={"rgb(251,146,60)"}
               />

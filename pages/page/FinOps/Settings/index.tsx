@@ -459,14 +459,14 @@ function CloudGateway() {
                 onChange={(res: any) => {
                   changeStatus(res);
                 }}
-                checked={currencyData.status == "InActive" ? false : true}
+                checked={currencyData && currencyData.status && currencyData.status == "InActive" ? false : true}
                 uncheckedIcon={false}
                 checkedIcon={false}
                 boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
                 height={20}
                 width={40}
               />
-              {currencyData.status}
+              {currencyData && currencyData.status && currencyData.status}
             </div>
           </div>
           {dataChanged && (

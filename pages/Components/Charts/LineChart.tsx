@@ -13,7 +13,7 @@ const LineChartComponent = (props: any) => {
         props.data &&
         props.data.data &&
         props?.data?.data.map((e: any) => {
-          let changedData = e.data?.map((x: any) => {
+          let changedData =e && e.data && e.data?.map((x: any) => {
             const monthNames = [
               "Jan",
               "Feb",
