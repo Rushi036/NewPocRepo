@@ -61,8 +61,7 @@ const memoTopo = (data: any) => {
 
   const closeDialog = () => {
     setDialogOpen(false);
-
-  }
+  };
   const customStyles = {
     content: {
       top: "50%",
@@ -77,20 +76,17 @@ const memoTopo = (data: any) => {
 
   return (
     <>
-      {data.id === "0" ? "" : <Handle type="target" position={Position.Top} />}
-      {data.id === "0" ? (
-        <div className="custom-node" onClick={openModal}>
-          {/* {data.id === "0" ? <button onClick={()=>setDialogOpen(true)}>+</button> : <button onClick={onDelete}>x</button>} */}
-          <img height={100} width={100} src={data.data?.Path?.Path} alt="" />
-          <p>{data.data?.Path?.Name}</p>
-        </div>
-      ) : (
-        <div className="custom-node">
-          {/* {data.id === "0" ? <button onClick={()=>setDialogOpen(true)}>+</button> : <button onClick={onDelete}>x</button>} */}
-          <img height={100} width={100}  src={data.data?.Path?.Path} alt="" />
-          <p>{data.data?.Path?.Name}</p>
-        </div>
-      )}
+      {/* {data.id === "0" ? "" : <Handle type="target" position={Position.Left} />} */}
+      <Handle type="target" position={Position.Left} />
+      <div className="custom-node">
+        {/* {data.id === "0" ? <button onClick={()=>setDialogOpen(true)}>+</button> : <button onClick={onDelete}>x</button>} */}
+        <img height={100} width={100} src={data.data?.Path?.Path} alt="" />
+        <p>{data.data?.Path?.Name}</p>
+      </div>
+      <Handle type="source" position={Position.Top} id="a" />
+      <Handle type="source" position={Position.Right} id="b" />
+      <Handle type="source" position={Position.Bottom} id="c" />
+      <Handle type="source" position={Position.Left} id="d" />
 
       {/* {dialogOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
@@ -141,7 +137,6 @@ const memoTopo = (data: any) => {
           </div>
         </div>
       )} */}
-      <Handle type="source" position={Position.Bottom} id="a" />
       {/* <Modal
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}

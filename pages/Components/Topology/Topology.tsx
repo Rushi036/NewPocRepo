@@ -5,10 +5,15 @@ import ReactFlow, {
   addEdge,
   useReactFlow,
   ReactFlowProvider,
+  Controls,
+  ControlButton,
+  MarkerType,
 } from "reactflow";
 import DynamicNode from "./DynamicNode/DynamicNode";
 import "reactflow/dist/style.css";
 import { getIcons } from "@/pages/api/getIcons";
+import SimpleFloatingEdge from "./SimpleFloatingEdge";
+import { MdFullscreen, MdFullscreenExit } from "react-icons/md";
 
 // import './Topology.css';
 
@@ -46,6 +51,7 @@ import { getIcons } from "@/pages/api/getIcons";
 // ];
 
 let selectedNode: any = null;
+let selectedSubNode: any = null;
 
 const proOptions = { hideAttribution: true };
 let id = 1;
@@ -70,6 +76,9 @@ const AddNodeOnEdgeDrop = (props: any) => {
 
   const flowKey = "example-flow";
   const [rfInstance, setRfInstance] = useState<any>(null);
+  const edgeTypes: any = {
+    floating: SimpleFloatingEdge,
+  };
 
   const onConnectStart = useCallback((_: any, { nodeId }: any) => {
     connectingNodeId.current = nodeId;
@@ -91,9 +100,10 @@ const AddNodeOnEdgeDrop = (props: any) => {
             x: event.clientX - left - 75,
             y: event.clientY - top,
           }),
+          connectable: true,
           data: {
             label: `Node ${id}`,
-            Path: props.network_icons[selectedNode],
+            Path: props.network_icons[selectedNode].SubCategory? props.network_icons[selectedNode].SubCategory[selectedSubNode] : props.network_icons[selectedNode],
           },
         };
 
@@ -103,7 +113,14 @@ const AddNodeOnEdgeDrop = (props: any) => {
             id,
             source: connectingNodeId.current,
             target: id,
-            animated: true,
+            // floating: FloatingEdge,
+            animated: false,
+            // type: "smoothstep",
+            type: "floating",
+            // markerEnd: {
+            //   type: MarkerType.Arrow,
+            // },
+            markerEnd: { type: MarkerType.ArrowClosed },
           })
         );
       }
@@ -153,12 +170,35 @@ const AddNodeOnEdgeDrop = (props: any) => {
       {/* <button className="z-30 absolute top-0 left-10" onClick={onRestore}>
         Restore
       </button> */}
-      <button
-        className="absolute top-1 z-20 left-1 px-2 py-1 bg-slate-300 border border-slate-400 rounded-lg"
-        onClick={onReset}
-      >
-        Reset
-      </button>
+      <div className="flex gap-2 absolute p-2 justify-between w-full">
+        <button
+          className=" z-20 left-1 px-2 py-1 bg-slate-300 border border-slate-400 rounded-lg"
+          onClick={onReset}
+        >
+          Reset
+        </button>
+        {!props.fullScreen && (
+          <button
+            className=" z-20 left-1 px-2 py-1 bg-slate-300 border border-slate-400 rounded-lg"
+            onClick={() => {
+              props.setFullScreen(true);
+            }}
+          >
+            <MdFullscreen />
+          </button>
+        )}
+        {props.fullScreen && (
+          <button
+            className=" z-20 left-1 px-2 py-1 bg-slate-300 border border-slate-400 rounded-lg"
+            onClick={() => {
+              props.setFullScreen(false);
+            }}
+          >
+            <MdFullscreenExit />
+          </button>
+        )}
+      </div>
+
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -170,17 +210,21 @@ const AddNodeOnEdgeDrop = (props: any) => {
         onConnectEnd={onConnectEnd}
         onInit={props.setRfInstance}
         proOptions={proOptions}
+        edgeTypes={edgeTypes}
         fitView
         fitViewOptions={fitViewOptions}
-      />
+      >
+        <Controls></Controls>
+      </ReactFlow>
     </div>
   );
 };
-
 function Topology(props: any) {
-  // const [selectedNode, setSelectedNode] = useState<any>(3);
+  const [fullScreen, setFullScreen] = useState<any>(false);
   const [network_icons, setNetworkIcons] = useState<any>(null);
   const [initialNodes, setInitialNodes] = useState<any>(null);
+  const [Node, setNode] = useState(selectedNode);
+  const [subNode, setSubNode] = useState(selectedSubNode);
 
   useEffect(() => {
     async function dataFetch() {
@@ -197,17 +241,22 @@ function Topology(props: any) {
         {
           id: "0",
           type: "selectorNode",
-          data: { label: "Node", Path: network_icons[selectedNode] },
+          data: { label: "Node", Path: network_icons[selectedNode].SubCategory? network_icons[selectedNode].SubCategory[selectedSubNode]:network_icons[selectedNode] },
           position: { x: 0, y: 50 },
         },
       ]);
     }
   }, [initialNodes, network_icons, selectedNode]);
-  const [Node, setNode] = useState(selectedNode);
 
   return (
     <>
-      <div className="topology-editor relative">
+      <div
+        className={
+          fullScreen
+            ? "topology-editor !fixed !top-0 !left-0 !w-[100vw] !h-[100vh] !z-[10000] !bg-white !m-0 p-4"
+            : "topology-editor relative"
+        }
+      >
         <div className="creator z-10">
           {network_icons && initialNodes ? (
             <>
@@ -217,13 +266,21 @@ function Topology(props: any) {
                 setRfInstance={props.setRfInstance}
                 topology={props.topology}
                 setInitialNodes={setInitialNodes}
+                setFullScreen={setFullScreen}
+                fullScreen={fullScreen}
               />
             </>
           ) : (
             <></>
           )}
         </div>
-        <div className="editor-options min-h-[50vh] max-h-[60vh] overflow-y-auto">
+        <div
+          className={
+            fullScreen
+              ? "editor-options min-h-[50vh] h-fit max-h-[90vh] overflow-y-auto"
+              : "editor-options min-h-[50vh] h-fit max-h-[60vh] overflow-y-auto"
+          }
+        >
           {props.editable && (
             <div className="modal" style={{ display: "contents" }}>
               <ul>
@@ -236,15 +293,30 @@ function Topology(props: any) {
                           setNode(i);
                         }}
                         key={i}
-                        className={Node === i ? "selected-node flex !flex-col" : "flex !flex-col"}
+                        className={
+                          Node === i &&  !x?.SubCategory
+                            ? "selected-node flex !flex-col"
+                            : "flex !flex-col"
+                        }
                       >
                         <div className="flex gap-2">
                           <img src={x.Path} /> <p>{x.Name}</p>
                         </div>
-                        <div className="flex flex-col">
+                        <div className={"flex flex-col"}>
                           {x?.SubCategory?.map((y: any, j: any) => {
                             return (
-                              <div key={j} className="flex gap-2 ml-3">
+                              <div
+                                key={j}
+                                onClick={() => {
+                                  selectedSubNode = j;
+                                  setSubNode(j);
+                                }}
+                                className={
+                                  Node === i && subNode === j
+                                    ? "selected-node flex gap-2 ml-3 my-1 p-1"
+                                    : "flex gap-2 ml-3 my-1 p-1"
+                                }
+                              >
                                 <img key={j} src={y.Path} /> <p>{y.Name}</p>
                               </div>
                             );

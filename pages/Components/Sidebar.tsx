@@ -9,7 +9,7 @@ import { useAppContext } from "./AppContext";
 import HomeIcon from "@mui/icons-material/Home";
 import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
 import GroupIcon from "@mui/icons-material/Group";
-import SettingsIcon from '@mui/icons-material/Settings';
+import SettingsIcon from "@mui/icons-material/Settings";
 const Sidebar = () => {
   const { state, toggleState } = useAppContext();
 
@@ -68,7 +68,7 @@ const Sidebar = () => {
               </span>
             </Link>
           </li>
-          {/* {uRole == "ADMIN" ? (
+          {uRole == "ADMIN" ? (
             <li className="hs-accordion" id="users-accordion">
               <Link
                 href="/page/AssetsForAdmin"
@@ -102,7 +102,7 @@ const Sidebar = () => {
                 </span>
               </Link>
             </li>
-          )} */}
+          )}
           {uRole == "ADMIN" && (
             <li>
               <Link
