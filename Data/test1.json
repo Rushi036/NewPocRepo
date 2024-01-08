@@ -1,25 +1,20 @@
 {
-  "businessName": "test",
-  "userName": "test",
-  "adid": "test@gmail.com",
-  "role": "BE",
-  "type": "Owner",
-  "status": "active",
-  "businessLogo": "",
-  "subscriptions": [
+  "Graph": [
     {
-      "subsAccName": "test",
-      "subsAccId": "test",
-      "cloud": "Azure",
-      "ownerADID": "test@gmail.com",
-      "contactADID": [
-        {
-          "name": "test",
-          "adid": "tw@gmail.com"
-        }
-      ],
-      "status": "active",
-      "type": "csp"
+      "BarGraph": {
+        "type": "column",
+        "stacking": true, //if stacking required
+        "categories": ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan"],
+        "data": [
+          {
+            "name": "ABMCPL - New Subscription",
+            "data": [1741.92, 2123.56, 2210.25, null, null, null, null]
+          }
+        ],
+        "xAxis": "",
+        "yAxis": "Cost(₹)",
+        "title": "Monthly Disk Consumption"
+      }
     }
   ]
 }

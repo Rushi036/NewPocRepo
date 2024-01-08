@@ -11,26 +11,28 @@ const AppContext = createContext<{
   toggleTimeEnd: (timeEnd: any) => void;
   authenticated: boolean;
   toggleAuthenticated: () => void;
+  cloud: any;
+  toggleCloud: (cloud: any) => void;
 }>({
   state: false,
   toggleState: () => {},
   estimateCalc: false,
   toggleEstimateCalc: () => {},
   time: moment().subtract(15, "day").format("YYYY-MM-DDTHH:mm:ss"),
-
   toggleTime: (time) => {},
-
   timeEnd: moment().format("YYYY-MM-DDTHH:mm:ss"),
-
   toggleTimeEnd: (timeEnd) => {},
   authenticated: false,
   toggleAuthenticated: () => {},
+  cloud: "AWS",
+  toggleCloud: (cloud: any) => {},
 });
 
 export const AppContextProvider: React.FC<any> = ({ children }: any) => {
   const [state, setState] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
   const [estimateCalc, setEstimateCalc] = useState(false);
+  const [cloud, setCloud] = useState("AWS");
 
   const toggleState = () => {
     setState(!state);
@@ -56,7 +58,9 @@ export const AppContextProvider: React.FC<any> = ({ children }: any) => {
     setTimeEnd(timeEnd);
   };
   // console.log("est in app",estimateCalc)
-
+  const toggleCloud = (cloud: any) => {
+    setCloud(cloud);
+  };
   return (
     <AppContext.Provider
       value={{
@@ -70,6 +74,8 @@ export const AppContextProvider: React.FC<any> = ({ children }: any) => {
         toggleTimeEnd,
         authenticated,
         toggleAuthenticated,
+        cloud,
+        toggleCloud,
       }}
     >
       {children}

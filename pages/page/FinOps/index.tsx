@@ -32,13 +32,25 @@ function FinOps() {
   const [redBg, setRedBg] = useState(false);
   // console.log("report - ",value1)
   const handleChange = (event: React.SyntheticEvent, newValue: any) => {
+    router.push(`/page/FinOps?report=${newValue}`, undefined, { shallow: true });
     setValue1(newValue);
-    
   };
-
+  const customTabsStyle = {
+    width: "fit-content",
+    borderRadius: "50vw",
+    overflow: "hidden",
+    border: "1px solid #d5c5ee",
+    height: "max-content",
+    zIndex: 1,
+    margin: "auto",
+  };
+  const tabIndicatorStyle = {
+    background: `transparent linear-gradient(273deg, #c52828 0%, #e95555 100%)`,
+    border: "4px solid white",
+  };
   return (
     <div className="Newfinops-container h-auto">
-      <div className=" h-auto">
+      <div className="h-auto">
         <TabContext value={value1}>
           <div className="relative mb-4 p-3 bg-white rounded-lg">
             <Link
@@ -47,10 +59,16 @@ function FinOps() {
             >
               <IoIosArrowBack size={25} />
             </Link>
-            <Tabs value={value1} onChange={handleChange} centered>
+            <Tabs
+              value={value1}
+              onChange={handleChange}
+              style={customTabsStyle}
+              centered
+              TabIndicatorProps={{ style: tabIndicatorStyle }}
+            >
               <Tab value={"CostSummary"} label="Multi-cloud Cost Summary" />
               <Tab value={"CostDrillDown"} label="Granular Cost Drill Down" />
-              <Tab value={"3"} label="Tag Compliance" />
+              <Tab value={"TagCompliance"} label="Tag Compliance" />
               <Tab value={"Forcast"} label="Forecast & Recommendations" />
             </Tabs>
           </div>
@@ -61,7 +79,7 @@ function FinOps() {
           <TabPanel value="CostDrillDown">
             <CostDrillDown />
           </TabPanel>
-          <TabPanel value="3">
+          <TabPanel value="TagCompliance">
             <TagCompliance />
           </TabPanel>
           <TabPanel value="Forcast">

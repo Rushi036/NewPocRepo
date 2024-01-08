@@ -172,7 +172,7 @@ const Reports = () => {
             className="w-full flex justify-center items-center h-full"
             href={{
               pathname: "/page/FinOps",
-              query: { report: "3", cloud: "aws" },
+              query: { report: "TagCompliance", cloud: "aws" },
             }}
           >
             <div className="hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">

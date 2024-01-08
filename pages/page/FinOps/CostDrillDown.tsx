@@ -13,7 +13,7 @@ import {
 import ViewCompactIcon from "@mui/icons-material/ViewCompact";
 import CloseIcon from "@mui/icons-material/Close";
 import dynamic from "next/dynamic";
-import Multiselect from "multiselect-react-dropdown";
+// import Multiselect from "multiselect-react-dropdown";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import Switch from "react-switch";
@@ -229,6 +229,7 @@ function CostDrillDown() {
 
   async function fetchDataAcross(body: any) {
     let resData: any;
+    console.log("body", JSON.stringify(body));
     try {
       resData = await fetch(`${finopsServerBaseUrl}/awsAllDataByAccount`, {
         method: "POST",
@@ -454,6 +455,30 @@ function FinopsFilters({
   setSingleReport,
   singleReport,
 }: any) {
+  const today = moment();
+  const financialYearStartMonth = 3;
+  let financialYearStart;
+  let financialYearEnd;
+  if (today.month() < financialYearStartMonth) {
+    financialYearStart = moment()
+      .subtract(1, "year")
+      .month(financialYearStartMonth)
+      .startOf("month")
+      .hour(15)
+      .minute(30)
+      .second(0)
+      .millisecond(0);
+    financialYearEnd = today.hour(15).minute(30).second(0).millisecond(0);
+  } else {
+    financialYearStart = moment()
+      .month(financialYearStartMonth)
+      .startOf("month")
+      .hour(15)
+      .minute(30)
+      .second(0)
+      .millisecond(0);
+    financialYearEnd = today.hour(15).minute(30).second(0).millisecond(0);
+  }
   const predefinedRanges: any = [
     {
       label: "Last day",
@@ -532,14 +557,8 @@ function FinopsFilters({
     {
       label: "Current FY",
       value: [
-        new Date(
-          moment()
-            .startOf("year")
-            .month(3)
-            .date(1)
-            .format("YYYY-MM-DDTHH:mm:ss")
-        ),
-        new Date(moment().format("YYYY-MM-DDTHH:mm:ss")),
+        new Date(financialYearStart.format("YYYY-MM-DDTHH:mm:ss")),
+        new Date(financialYearEnd.format("YYYY-MM-DDTHH:mm:ss")),
       ],
       placement: "left",
     },

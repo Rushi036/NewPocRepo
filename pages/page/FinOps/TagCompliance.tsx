@@ -14,11 +14,15 @@ const TagCompliance = () => {
   const { report, cloud }: any = router.query;
   const [cloudValue, setCloudValue] = useState("aws");
   const CloudChange = (event: React.SyntheticEvent, newValue: any) => {
+    router.push(`/page/FinOps?report=TagCompliance&cloud=${newValue}`, undefined, { shallow: true });
+
     setCloudValue(newValue);
   };
   const [status, setStatus] = useState<any>(null);
   useEffect(() => {
+
     setLoader(true);
+    router.push(`/page/FinOps?report=TagCompliance&cloud=aws`, undefined, { shallow: true });
     GetTagedAndUnTagedCostResourceType().then((data: any) => {
       setRes(data.data);
       if(data.data && data.data.AWS && Object.keys(data.data.AWS).length == 0){

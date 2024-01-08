@@ -24,6 +24,43 @@ const CostSummary = () => {
   const router = useRouter();
   const { report, cloud }: any = router.query;
   const [cloudValue, setCloudValue] = useState(cloud || "CloudGateway");
+  const today = moment();
+  const financialYearStartMonth = 3;
+  let financialYearStart;
+  let financialYearEnd;
+  useEffect(() => {
+    if (cloud) {
+      router.push(`/page/FinOps?report=CostSummary&cloud=${cloud}`, undefined, {
+        shallow: true,
+      });
+    } else {
+      router.push(
+        `/page/FinOps?report=CostSummary&cloud=CloudGateway`,
+        undefined,
+        { shallow: true }
+      );
+    }
+  }, []);
+  if (today.month() < financialYearStartMonth) {
+    financialYearStart = moment()
+      .subtract(1, "year")
+      .month(financialYearStartMonth)
+      .startOf("month")
+      .hour(15)
+      .minute(30)
+      .second(0)
+      .millisecond(0);
+    financialYearEnd = today.hour(15).minute(30).second(0).millisecond(0);
+  } else {
+    financialYearStart = moment()
+      .month(financialYearStartMonth)
+      .startOf("month")
+      .hour(15)
+      .minute(30)
+      .second(0)
+      .millisecond(0);
+    financialYearEnd = today.hour(15).minute(30).second(0).millisecond(0);
+  }
   const predefinedRanges: any = [
     {
       label: "Last day",
@@ -102,20 +139,19 @@ const CostSummary = () => {
     {
       label: "Current FY",
       value: [
-        new Date(
-          moment()
-            .startOf("year")
-            .month(3)
-            .date(1)
-            .format("YYYY-MM-DDTHH:mm:ss")
-        ),
-        new Date(moment().format("YYYY-MM-DDTHH:mm:ss")),
+        new Date(financialYearStart.format("YYYY-MM-DDTHH:mm:ss")),
+        new Date(financialYearEnd.format("YYYY-MM-DDTHH:mm:ss")),
       ],
       placement: "left",
     },
   ];
   const { afterToday }: any = DateRangePicker;
   const CloudChange = (event: React.SyntheticEvent, newValue: any) => {
+    router.push(
+      `/page/FinOps?report=CostSummary&cloud=${newValue}`,
+      undefined,
+      { shallow: true }
+    );
     setCloudValue(newValue);
   };
   const [resp, setRes] = useState<any>(null);
@@ -129,8 +165,8 @@ const CostSummary = () => {
       timePeriod[1].toISOString()
     ).then((data: any) => {
       setRes(data);
-      if(data && data.AWS && Object.keys(data.AWS).length == 0){
-        setCloudValue('azure') 
+      if (data && data.AWS && Object.keys(data.AWS).length == 0) {
+        setCloudValue("azure");
       }
       setLoader(false);
       if (data && data?.status != 200) {
@@ -303,7 +339,6 @@ const CostSummary = () => {
                                 <Table data={e} />
                               </div>
                             </div>
-                            
                           </>
                         );
                       })}
@@ -431,7 +466,6 @@ const CostSummary = () => {
                                 <Table data={e} />
                               </div>
                             </div>
-                            
                           </>
                         );
                       })}
