@@ -19,7 +19,8 @@ import makeAnimated from "react-select/animated";
 import Switch from "react-switch";
 import { finopsServerBaseUrl } from "@/const";
 import { TabPanel, TabContext } from "@mui/lab";
-import { Card, Tab, Tabs } from "@mui/material";
+import { Button, Card, Tab, Tabs } from "@mui/material";
+import { useRouter } from "next/router";
 
 // dynamic imports
 const BarGraph = dynamic(() => import("@/pages/Components/Charts/BarChart"));
@@ -50,168 +51,10 @@ function Forecast() {
   const [userADID, setUserADID] = useState<any>(null); //this will populate from the session storage
   const [subsIndexName, setSubsIndexName] = useState<any>();
   const [loader, setLoader] = useState<any>(false);
-  const [selectedReportsDropDown, setSelectedReportsDropDown] = useState<any>();
-  const [selectedReports, setSelectedReports] = useState<any>();
+  // const [selectedReportsDropDown, setSelectedReportsDropDown] = useState<any>();
+  // const [selectedReports, setSelectedReports] = useState<any>();
   const [subsType, setSubsType] = useState<any>();
-  const [crossPlatformData, setCrossPlatformData] = useState<any>({
-    AWS: {
-      Graph: [
-        {
-          LineChart: {
-            data: [
-              {
-                name: "AWS",
-                data: [
-                  ["May", null],
-                  ["Jun", null],
-                  ["Jul", null],
-                  ["Aug", null],
-                  ["Sep", null],
-                  ["Oct", null],
-                  ["Nov", null],
-                ],
-              },
-            ],
-            title: "Consumption Trend AWS",
-            xAxis: "Month",
-            yAxis: "AWS($)",
-          },
-        },
-
-        {
-          BarGraph: {
-            status: false,
-            msg: "No data found",
-          },
-        },
-      ],
-      Table: [
-        {
-          title: "Total Cost For Each Account - AWS",
-          headers: ["month", "account name", "cost($)"],
-          data: [],
-        },
-      ],
-      Metric: [
-        {
-          title: "Total Allocated",
-          value: {
-            aws: 0,
-          },
-        },
-        {
-          title: "Total UnAllocated",
-          value: {
-            aws: 0,
-          },
-        },
-      ],
-    },
-    AZURE: {
-      Graph: [
-        {
-          LineChart: {
-            data: [
-              {
-                name: "AWS",
-                data: [
-                  ["May", null],
-                  ["Jun", null],
-                  ["Jul", null],
-                  ["Aug", null],
-                  ["Sep", null],
-                  ["Oct", null],
-                  ["Nov", null],
-                ],
-              },
-            ],
-            title: "Consumption Trend AZURE",
-            xAxis: "Month",
-            yAxis: "AWS($)",
-          },
-        },
-        {
-          BarGraph: {
-            status: false,
-            msg: "No data found",
-          },
-        },
-      ],
-      Table: [
-        {
-          title: "Total Cost For Each Account - AWS",
-          headers: ["month", "account name", "cost($)"],
-          data: [],
-        },
-      ],
-      Metric: [
-        {
-          title: "Total Allocated",
-          value: {
-            aws: 0,
-          },
-        },
-        {
-          title: "Total UnAllocated",
-          value: {
-            aws: 0,
-          },
-        },
-      ],
-    },
-    CloudGateway: {
-      Graph: [
-        {
-          LineChart: {
-            data: [
-              {
-                name: "AWS",
-                data: [
-                  ["May", null],
-                  ["Jun", null],
-                  ["Jul", null],
-                  ["Aug", null],
-                  ["Sep", null],
-                  ["Oct", null],
-                  ["Nov", null],
-                ],
-              },
-            ],
-            title: "Consumption Trend",
-            xAxis: "Month",
-            yAxis: "AWS($)",
-          },
-        },
-        {
-          BarGraph: {
-            status: false,
-            msg: "No data found",
-          },
-        },
-      ],
-      Table: [
-        {
-          title: "Total Cost For Each Account - AWS",
-          headers: ["month", "account name", "cost($)"],
-          data: [],
-        },
-      ],
-      Metric: [
-        {
-          title: "Total Allocated",
-          value: {
-            aws: 0,
-          },
-        },
-        {
-          title: "Total UnAllocated",
-          value: {
-            aws: 0,
-          },
-        },
-      ],
-    },
-  });
+  const [crossPlatformData, setCrossPlatformData] = useState<any>();
   const [singleReport, setSingleReport] = useState<any>(false);
 
   const [userRole, setUserRole] = useState<any>(null); //this will populate from the session storage
@@ -329,13 +172,11 @@ function Forecast() {
     setLoader(true);
     setCloud(cloudDropdown);
     setSubscId(subscIdDropdown);
-    setSelectedReports(selectedReportsDropDown);
+    // setSelectedReports(selectedReportsDropDown);
     if (cloudDropdown == "Azure") {
       let body = {
-        gte: timePeriod[0],
-        lte: timePeriod[1],
-        subscription_name: [subACCName],
-        type: subsType,
+        cloud: "Azure",
+        account_name: subACCName,
       };
       fetchDataAzure(body)
         .then((data) => setRes(data))
@@ -347,16 +188,16 @@ function Forecast() {
         account_id: subscIdDropdown,
         account_name: subsIndexName,
       };
-      fetchDataAWS(body)
-        .then((data) => setRes(data))
-        .then(() => setLoader(false));
+      // fetchDataAWS(body)
+      //   .then((data) => setRes(data))
+      //   .then(() => setLoader(false));
     }
   }
 
   async function fetchDataAzure(body: any) {
     let resData: any;
     try {
-      resData = await fetch(`${finopsServerBaseUrl}/AzureFinopsDashboardData`, {
+      resData = await fetch(`${finopsServerBaseUrl}/allForcastedReportsAzure`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -390,13 +231,16 @@ function Forecast() {
   async function fetchDataAcross(body: any) {
     let resData: any;
     try {
-      resData = await fetch(`${finopsServerBaseUrl}/awsAllDataByAccount`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      });
+      resData = await fetch(
+        `${finopsServerBaseUrl}/allForcastedReportsAccross`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(body),
+        }
+      );
       resData = await resData.json();
     } catch {
       resData = "";
@@ -407,14 +251,11 @@ function Forecast() {
   useEffect(() => {
     // setLoader(true);
     const body: any = {
-      gte: timePeriod[0],
-      lte: timePeriod[1],
-      // adid: "akash.purohit@adityabirla.com",
       adid: userADID,
     };
-    // fetchDataAcross(body)
-    //   .then((res: any) => setCrossPlatformData(res))
-    //   .then(() => setLoader(false));
+    fetchDataAcross(body)
+      .then((res: any) => setCrossPlatformData(res))
+      .then(() => setLoader(false));
   }, [timePeriod, userADID]);
 
   async function getGraphFormat() {
@@ -438,13 +279,13 @@ function Forecast() {
               res={res}
               graphFormat={graphFormat}
               cloud={cloud}
-              selectedReportsDropDown={selectedReportsDropDown}
+              // selectedReportsDropDown={selectedReportsDropDown}
               cloudDropdown={cloudDropdown}
               getGraphFormat={getGraphFormat}
               isOpen={isOpen}
               setIsOpen={setIsOpen}
               timePeriod={timePeriod}
-              selectedReports={selectedReports}
+              // selectedReports={selectedReports}
             />
           </>
         )}
@@ -468,10 +309,10 @@ function Forecast() {
             subACCName={subACCName}
             subData={subData}
             timePeriod={timePeriod}
-            setSelectedReportsDropDown={setSelectedReportsDropDown}
+            // setSelectedReportsDropDown={setSelectedReportsDropDown}
             setTimePeriod={setTimePeriod}
             getReport={getReport}
-            selectedReportsDropDown={selectedReportsDropDown}
+            // selectedReportsDropDown={selectedReportsDropDown}
             setSingleReport={setSingleReport}
             singleReport={singleReport}
           />
@@ -618,8 +459,8 @@ function FinopsFilters({
   timePeriod,
   setTimePeriod,
   getReport,
-  setSelectedReportsDropDown,
-  selectedReportsDropDown,
+  // setSelectedReportsDropDown,
+  // selectedReportsDropDown,
   setSingleReport,
   singleReport,
 }: any) {
@@ -627,6 +468,18 @@ function FinopsFilters({
   const financialYearStartMonth = 3;
   let financialYearStart;
   let financialYearEnd;
+  const router = useRouter();
+  useEffect(() => {
+    if (singleReport) {
+      router.push(`/page/FinOps?report=Forecast-SingleAccount`, undefined, {
+        shallow: true,
+      });
+    } else {
+      router.push(`/page/FinOps?report=Forecast-AcrossAccount`, undefined, {
+        shallow: true,
+      });
+    }
+  }, [singleReport]);
   if (today.month() < financialYearStartMonth) {
     financialYearStart = moment()
       .subtract(1, "year")
@@ -800,45 +653,45 @@ function FinopsFilters({
   ];
   const [resp, setRes] = useState<any>(null);
   //titles and this useffect will be in use if there will be different scope names for both clouds
-  useEffect(() => {
-    //   let data: any = [];
-    //   let graphData: any = [];
-    //   let tableData: any = [];
+  // useEffect(() => {
+  //   let data: any = [];
+  //   let graphData: any = [];
+  //   let tableData: any = [];
 
-    //   titles[cloudDropdown].graph.map((val: any) => {
-    //     graphData.push({
-    //       value: val,
-    //       label: val,
-    //       meta: { selectAll: true },
-    //     });
-    //   });
-    //   data.push({
-    //     label: "Graph",
-    //     options: graphData,
-    //   });
+  //   titles[cloudDropdown].graph.map((val: any) => {
+  //     graphData.push({
+  //       value: val,
+  //       label: val,
+  //       meta: { selectAll: true },
+  //     });
+  //   });
+  //   data.push({
+  //     label: "Graph",
+  //     options: graphData,
+  //   });
 
-    //   titles[cloudDropdown].table.map((val: any) => {
-    //     tableData.push({
-    //       value: val,
-    //       label: val,
-    //       meta: { selectAll: true },
-    //     });
-    //   });
-    //   data.push({
-    //     label: "Table",
-    //     options: tableData,
-    //   });
-    //   setOptions(data);
-    //   // console.log("options", options);
-    // setSelectedReportsDropDown([
-    //   data && data[0] && data[0]?.options[0] ? data[0].options[0] : {},
-    //   // data && data[0] && data[0]?.options[1] ? data[0].options[1] : {},
-    // ]);
-    setSelectedReportsDropDown(
-      options && options[0]
-      // data && data[0] && data[0]?.options[1] ? data[0].options[1] : {},
-    );
-  }, [cloudDropdown]);
+  //   titles[cloudDropdown].table.map((val: any) => {
+  //     tableData.push({
+  //       value: val,
+  //       label: val,
+  //       meta: { selectAll: true },
+  //     });
+  //   });
+  //   data.push({
+  //     label: "Table",
+  //     options: tableData,
+  //   });
+  //   setOptions(data);
+  //   // console.log("options", options);
+  // setSelectedReportsDropDown([
+  //   data && data[0] && data[0]?.options[0] ? data[0].options[0] : {},
+  //   // data && data[0] && data[0]?.options[1] ? data[0].options[1] : {},
+  // ]);
+  // setSelectedReportsDropDown(
+  //   options && options[0]
+  // data && data[0] && data[0]?.options[1] ? data[0].options[1] : {},
+  // );
+  // }, [cloudDropdown]);
   const [cloudValue, setCloudValue] = useState("aws");
   const CloudChange = (event: React.SyntheticEvent, newValue: any) => {
     setCloudValue(newValue);
@@ -847,7 +700,7 @@ function FinopsFilters({
     let allData = options.map((x: any) => {
       return x.options;
     });
-    setSelectedReportsDropDown(allData.flat(1));
+    // setSelectedReportsDropDown(allData.flat(1));
   }
   return (
     <div
@@ -942,7 +795,7 @@ function FinopsFilters({
         <div className="w-full mx-2 mt-4 flex justify-center">
           <button
             className="bg-red-500 text-white py-1 px-2 rounded disabled:bg-gray-500"
-            disabled={!subACCName}
+            disabled={!subACCName || cloudDropdown == "AWS"}
             onClick={getReport}
           >
             Get Report
@@ -956,80 +809,48 @@ function FinopsFilters({
 function TabSwitch({ handleCloudChange, singleReport }: any) {
   // const [cloudValue, setCloudValue] = useState("AWS");
   const { cloud, toggleCloud } = useAppContext();
-  const CloudChange = (event: React.SyntheticEvent, newValue: any) => {
+  const CloudChange = (newValue: any) => {
     toggleCloud(newValue);
   };
-  const customTabsStyle = {
-    // width: "fit-content",
-    overflow: "hidden",
-    height: "max-content",
-    zIndex: 1,
-    margin: "0 8px",
-  };
-  const tabIndicatorStyle = {
-    background: `transparent`,
-  };
+
   return (
     <div>
       {!singleReport && (
-        <TabContext value={cloud}>
-          <div className="flex w-full h-full">
-            <div className="ml-2 w-full">
-              <Tabs
-                value={cloud}
-                onChange={CloudChange}
-                orientation="horizontal"
-                style={customTabsStyle}
-                centered
-                TabIndicatorProps={{ style: tabIndicatorStyle }}
-              >
-                {/* {resp && resp.AWS && Object.keys(resp.AWS).length > 0 && ( */}
-                <Tab
-                  value={"AWS"}
-                  label={
-                    <div className="flex flex-col items-center">
-                      <img
-                        src="/aws.png"
-                        alt="AWS Logo"
-                        style={{ width: "60px", height: "40px" }}
-                        className=""
-                      />
-                      {/* AWS */}
-                    </div>
-                  }
-                  className={`${
-                    cloud === "AWS" ? "shadow-xl border-gray-600" : ""
-                  } bg-white border border-gray-300 border-solid !text-black !rounded-lg !mb-4 !max-h-[5rem] !h-[8rem] !w-[9.9rem] sm:min-w-[4rem] md:min-w-[5rem] lg:min-w-[7rem] 2xl:min-w-[11.8rem]`}
-                />
-                {/* )} */}
-                {/* {resp && resp.AZURE && Object.keys(resp.AZURE).length > 0 && ( */}
-                <Tab
-                  value={"AZURE"}
-                  label={
-                    <div className="flex flex-col items-center">
-                      <img
-                        src="/azure.png"
-                        alt="Azure Logo"
-                        style={{ width: "50px", height: "40px" }}
-                        className=""
-                      />
-                      {/* Azure */}
-                    </div>
-                  }
-                  className={`${
-                    cloud === "AZURE" ? "shadow-xl border-gray-600" : ""
-                  } bg-white border border-gray-300 border-solid !text-black !rounded-lg !mb-4 !max-h-[5rem] !h-[8rem] !w-[9.9rem] sm:min-w-[4rem] md:min-w-[5rem] lg:min-w-[7rem] 2xl:min-w-[11.8rem]`}
-                />
-                {/* )} */}
-              </Tabs>
-            </div>
-            {/* <div className="w-full">
-              <TabPanel value="aws"></TabPanel>
-
-              <TabPanel value="azure"></TabPanel>
-            </div> */}
-          </div>
-        </TabContext>
+        <div className="pl-4 flex w-full h-full justify-between">
+          <button
+            color="primary"
+            onClick={() => CloudChange("AWS")}
+            // style={{backgroundColor:"white", borderRadius:"5px"}}
+            className={`${
+              cloud == "AWS"
+                ? "bg-white shadow-lg border border-gray-300"
+                : "bg-gray-200"
+            } px-10 py-4 rounded-lg w-[48%] items-center justify-center`}
+          >
+            <img
+              src="/aws.png"
+              alt="AWS Logo"
+              style={{ width: "60px", height: "40px" }}
+              className=""
+            />
+          </button>
+          <button
+            color="primary"
+            onClick={() => CloudChange("AZURE")}
+            className={`${
+              cloud == "AZURE"
+                ? "bg-white shadow-lg border border-gray-300"
+                : "bg-gray-200"
+            } px-10 py-4 rounded-lg w-[48%] flex items-center justify-center`}
+          >
+            <img
+              src="/azure.png"
+              alt="Azure Logo"
+              style={{ width: "50px", height: "40px" }}
+              className=""
+            />
+          </button>
+        </div>
       )}
     </div>
   );
@@ -1042,8 +863,8 @@ function ReportsCard({
   cloudDropdown,
   getGraphFormat,
   timePeriod,
-  selectedReports,
-}: any) {
+}: // selectedReports,
+any) {
   async function unpinGraph(title: any) {
     let chartOrder;
     if (cloudDropdown == "AWS") {
@@ -1102,10 +923,7 @@ function ReportsCard({
             e.PieChart &&
             e.PieChart.data &&
             Array.isArray(e.PieChart.data) &&
-            graphFormat?.chartOrder?.[cloud]?.[e.PieChart.title] &&
-            selectedReports
-              .map((item: any) => item.value)
-              ?.includes(e.PieChart.title)
+            graphFormat?.chartOrder?.[cloud]?.[e.PieChart.title]
           ) {
             return (
               <div key={i} className="card w-1/2">
@@ -1123,10 +941,7 @@ function ReportsCard({
             e.LineChart &&
             e.LineChart.data &&
             Array.isArray(e.LineChart.data) &&
-            graphFormat?.chartOrder?.[cloud]?.[e.LineChart.title] &&
-            selectedReports
-              .map((item: any) => item.value)
-              ?.includes(e.LineChart.title)
+            graphFormat?.chartOrder?.[cloud]?.[e.LineChart.title]
           ) {
             return (
               <div
@@ -1151,10 +966,7 @@ function ReportsCard({
             e.BarGraph &&
             e.BarGraph.data &&
             Array.isArray(e.BarGraph.data) &&
-            graphFormat?.chartOrder?.[cloud]?.[e.BarGraph.title] &&
-            selectedReports
-              .map((item: any) => item.value)
-              ?.includes(e.BarGraph.title)
+            graphFormat?.chartOrder?.[cloud]?.[e.BarGraph.title]
           ) {
             return (
               <div key={i} className="card">
@@ -1173,10 +985,7 @@ function ReportsCard({
       {res &&
         res.Table &&
         res.Table?.map((e: any, i: any) => {
-          if (
-            graphFormat.chartOrder?.[cloud]?.[e.title] &&
-            selectedReports.map((item: any) => item.value)?.includes(e.title)
-          )
+          if (graphFormat.chartOrder?.[cloud]?.[e.title])
             return (
               <>
                 <div key={i} className="card">
@@ -1202,10 +1011,7 @@ function ReportsCard({
             e.PieChart &&
             e.PieChart.data &&
             Array.isArray(e.PieChart.data) &&
-            !graphFormat.chartOrder?.[cloud]?.[e.PieChart.title] &&
-            selectedReports
-              .map((item: any) => item.value)
-              ?.includes(e.PieChart.title)
+            !graphFormat.chartOrder?.[cloud]?.[e.PieChart.title]
           ) {
             return (
               <div key={i} className="card w-1/2">
@@ -1223,10 +1029,7 @@ function ReportsCard({
             e.LineChart &&
             e.LineChart.data &&
             Array.isArray(e.LineChart.data) &&
-            !graphFormat.chartOrder?.[cloud]?.[e.LineChart.title] &&
-            selectedReports
-              .map((item: any) => item.value)
-              ?.includes(e.LineChart.title)
+            !graphFormat.chartOrder?.[cloud]?.[e.LineChart.title]
           ) {
             return (
               <div
@@ -1252,9 +1055,7 @@ function ReportsCard({
             e.BarGraph.data &&
             Array.isArray(e.BarGraph.data) &&
             !graphFormat.chartOrder?.[cloud]?.[e.BarGraph.title] &&
-            selectedReports
-              .map((item: any) => item.value)
-              ?.includes(e.BarGraph.title)
+            e.BarGraph.data.map((item: any) => item.value)
           ) {
             return (
               <div key={i} className="card">
@@ -1273,10 +1074,7 @@ function ReportsCard({
       {res &&
         res.Table &&
         res.Table?.map((e: any, i: any) => {
-          if (
-            !graphFormat.chartOrder?.[cloud]?.[e.title] &&
-            selectedReports.map((item: any) => item.value)?.includes(e.title)
-          )
+          if (!graphFormat.chartOrder?.[cloud]?.[e.title])
             return (
               <>
                 <div key={i} className="card">
@@ -1353,7 +1151,7 @@ function CrossPlatformReports({ res, timePeriod, singleReport }: any) {
               Array.isArray(e.BarGraph.data)
             ) {
               return (
-                <div key={i} className="max-h-[280px]">
+                <div key={i} className=" max-h-[280px]">
                   <BarGraph
                     id={i}
                     date={timePeriod}
@@ -1417,7 +1215,7 @@ function CrossPlatformReports({ res, timePeriod, singleReport }: any) {
               Array.isArray(e.BarGraph.data)
             ) {
               return (
-                <div key={i} className="max-h-[280px]">
+                <div key={i} className="card max-h-[280px]">
                   <BarGraph
                     id={i}
                     date={timePeriod}

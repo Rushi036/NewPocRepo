@@ -13,9 +13,12 @@ import { IoIosArrowBack } from "react-icons/io";
 import Link from "next/link";
 import { red } from "@mui/material/colors";
 import { useRouter } from "next/router";
+// import ForecastLatest from "./Forecast";
+// import Forecast from "./Forecast";
 const CostSummary = dynamic(() => import("./CostSummary"));
 // const CostDrillDown = dynamic(() => import('./CostDrillDown'))
 const TagCompliance = dynamic(() => import("./TagCompliance"));
+// const Forecast = dynamic(() => import("./ForecastLatest"));
 const Forecast = dynamic(() => import("./Forecast"));
 
 function FinOps() {
@@ -32,7 +35,9 @@ function FinOps() {
   const [redBg, setRedBg] = useState(false);
   // console.log("report - ",value1)
   const handleChange = (event: React.SyntheticEvent, newValue: any) => {
-    router.push(`/page/FinOps?report=${newValue}`, undefined, { shallow: true });
+    router.push(`/page/FinOps?report=${newValue}`, undefined, {
+      shallow: true,
+    });
     setValue1(newValue);
   };
   const customTabsStyle = {
@@ -43,11 +48,21 @@ function FinOps() {
     height: "max-content",
     zIndex: 1,
     margin: "auto",
+    minHeight: "10px",
+    maxHeight: "36px",
+    display: "flex", // Add display flex
+    alignItems: "center", // Center vertically
   };
+
   const tabIndicatorStyle = {
-    background: `transparent linear-gradient(273deg, #c52828 0%, #e95555 100%)`,
-    border: "4px solid white",
+    background: "transparent linear-gradient(273deg, #c52828 0%, #e95555 100%)",
+    boxShadow: "inset 0 0 0 3px white",
+    border: "7px solid white",
+    zIndex: 2,
+    height: "100%",
+    borderRadius: "50vw",
   };
+
   return (
     <div className="Newfinops-container h-auto">
       <div className="h-auto">
@@ -66,10 +81,38 @@ function FinOps() {
               centered
               TabIndicatorProps={{ style: tabIndicatorStyle }}
             >
-              <Tab value={"CostSummary"} label="Multi-cloud Cost Summary" />
-              <Tab value={"CostDrillDown"} label="Granular Cost Drill Down" />
-              <Tab value={"TagCompliance"} label="Tag Compliance" />
-              <Tab value={"Forcast"} label="Forecast & Recommendations" />
+              <Tab
+                value={"CostSummary"}
+                label="Multi-cloud Cost Summary"
+                style={{
+                  color: value1 === "CostSummary" ? "white" : "black",
+                  zIndex: value1 === "CostSummary" ? 3 : 0,
+                }}
+              />
+              <Tab
+                value={"CostDrillDown"}
+                label="Granular Cost Drill Down"
+                style={{
+                  color: value1 === "CostDrillDown" ? "white" : "black",
+                  zIndex: value1 === "CostDrillDown" ? 3 : 0,
+                }}
+              />
+              <Tab
+                value={"TagCompliance"}
+                label="Tag Compliance"
+                style={{
+                  color: value1 === "TagCompliance" ? "white" : "black",
+                  zIndex: value1 === "TagCompliance" ? 3 : 0,
+                }}
+              />
+              <Tab
+                value={"Forecast"}
+                label="Forecast & Recommendations"
+                style={{
+                  color: value1 === "Forecast" ? "white" : "black",
+                  zIndex: value1 === "Forecast" ? 3 : 0,
+                }}
+              />
             </Tabs>
           </div>
 
@@ -82,7 +125,8 @@ function FinOps() {
           <TabPanel value="TagCompliance">
             <TagCompliance />
           </TabPanel>
-          <TabPanel value="Forcast">
+          <TabPanel value="Forecast">
+            {/* <ForecastLatest /> */}
             <Forecast />
           </TabPanel>
         </TabContext>

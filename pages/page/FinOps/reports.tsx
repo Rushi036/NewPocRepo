@@ -300,7 +300,7 @@ const Reports = () => {
               className="w-full flex justify-center items-center h-full"
               href={{
                 pathname: "/page/FinOps",
-                query: { report: "Forcast" },
+                query: { report: "Forecast" },
               }}
             >
               <div className="cursor-pointer w-full flex justify-center items-center h-full">
@@ -310,9 +310,30 @@ const Reports = () => {
                     Forecast & Recommendation
                   </p>
 
-                  <div className="flex flex-col  w-full mt-4">
-                    <span>Coming Soon...</span>
-                  </div>
+                  {/* {res && ( */}
+                <div className="flex flex-col">
+                  {/* <span>
+                    AWS - {currencyData && currencyData.status && currencyData.status == "InActive" ? "$" : "₹"}
+                    {res.Metric && res.Metric[1] && res.Metric[1].value
+                      ? res?.Metric[1]?.value?.AWS
+                      : ""}
+                  </span> */}
+                  <span>
+                    Azure - ₹
+                    {/* {res.Metric && res.Metric[1] && res.Metric[1].value
+                      ? res?.Metric[1]?.value?.Azure
+                      : ""} */}
+                  </span>
+                  {/* {currencyData && currencyData.status && currencyData.status == "Active" && (
+                    <span>
+                      Total - ₹
+                      {res.Metric && res.Metric[1] && res?.Metric[1]?.value
+                        ? Math.round(res?.Metric[1]?.value?.Azure + res?.Metric[1]?.value?.AWS)
+                        : ""}
+                    </span>
+                  )} */}
+                </div>
+              {/* )} */}
                 </div>
               </div>
             </Link>

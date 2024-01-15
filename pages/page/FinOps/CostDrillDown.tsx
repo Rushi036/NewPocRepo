@@ -18,6 +18,7 @@ import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import Switch from "react-switch";
 import { finopsServerBaseUrl } from "@/const";
+import { useRouter } from "next/router";
 
 // dynamic imports
 const BarGraph = dynamic(() => import("@/pages/Components/Charts/BarChart"));
@@ -459,6 +460,26 @@ function FinopsFilters({
   const financialYearStartMonth = 3;
   let financialYearStart;
   let financialYearEnd;
+  const router = useRouter();
+  useEffect(() => {
+    if (singleReport) {
+      router.push(
+        `/page/FinOps?report=CostDrillDown-SingleAccount`,
+        undefined,
+        {
+          shallow: true,
+        }
+      );
+    } else {
+      router.push(
+        `/page/FinOps?report=CostDrillDown-AcrossAccount`,
+        undefined,
+        {
+          shallow: true,
+        }
+      );
+    }
+  }, [singleReport]);
   if (today.month() < financialYearStartMonth) {
     financialYearStart = moment()
       .subtract(1, "year")

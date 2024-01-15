@@ -20,7 +20,7 @@ const CostSummary = () => {
     new Date(time),
     new Date(timeEnd),
   ]);
-
+  const [resp, setRes] = useState<any>(null);
   const router = useRouter();
   const { report, cloud }: any = router.query;
   const [cloudValue, setCloudValue] = useState(cloud || "CloudGateway");
@@ -30,17 +30,50 @@ const CostSummary = () => {
   let financialYearEnd;
   useEffect(() => {
     if (cloud) {
+      setCloudValue(cloud);
       router.push(`/page/FinOps?report=CostSummary&cloud=${cloud}`, undefined, {
         shallow: true,
       });
-    } else {
+    } else if (resp && resp.ClOUD && Object.keys(resp.ClOUD).length > 0) {
+      setCloudValue("CloudGateway");
       router.push(
         `/page/FinOps?report=CostSummary&cloud=CloudGateway`,
         undefined,
         { shallow: true }
       );
+    } else if (
+      resp &&
+      resp.AWS &&
+      Object.keys(resp.AWS).length > 0 &&
+      Object.keys(resp.AZURE).length == 0
+    ) {
+      setCloudValue("aws");
+      router.push(`/page/FinOps?report=CostSummary&cloud=aws`, undefined, {
+        shallow: true,
+      });
+    } else if (
+      resp &&
+      resp.AZURE &&
+      Object.keys(resp.AZURE).length > 0 &&
+      Object.keys(resp.AWS).length == 0
+    ) {
+      setCloudValue("azure");
+      router.push(`/page/FinOps?report=CostSummary&cloud=azure`, undefined, {
+        shallow: true,
+      });
+    } else if (
+      resp &&
+      resp.AZURE &&
+      Object.keys(resp.AZURE).length > 0 &&
+      resp.AWS &&
+      Object.keys(resp.AWS).length > 0
+    ) {
+      setCloudValue("aws");
+      router.push(`/page/FinOps?report=CostSummary&cloud=aws`, undefined, {
+        shallow: true,
+      });
     }
-  }, []);
+  }, [cloud, resp]);
   if (today.month() < financialYearStartMonth) {
     financialYearStart = moment()
       .subtract(1, "year")
@@ -154,7 +187,6 @@ const CostSummary = () => {
     );
     setCloudValue(newValue);
   };
-  const [resp, setRes] = useState<any>(null);
   const [loader, setLoader] = useState<any>(false);
   const [cloudGatewayData, setCloudGatewayData] = useState<any>();
   const [status, setStatus] = useState<any>(null);
@@ -349,7 +381,7 @@ const CostSummary = () => {
                     className="w-[50%] flex flex-wrap gap-4"
                     style={{ height: "max-content" }}
                   >
-                    <div className="flex h-11  w-full min-w-[25rem] ml-4 bg-white pl-4 rounded-xl  justify-center  pl-4 pb-4">
+                    <div className="flex h-11  w-full min-w-[25rem] ml-4 bg-white rounded-xl  justify-center  pl-4 pb-4">
                       <div className="justify-center py-3 px-2 text-md text-gray-600">
                         Select Date Range :
                       </div>
@@ -476,7 +508,7 @@ const CostSummary = () => {
                     className="w-[50%] flex flex-wrap gap-4"
                     style={{ height: "max-content" }}
                   >
-                    <div className="flex h-11  w-full min-w-[25rem] ml-4 bg-white pl-4 rounded-xl  justify-center  pl-4 pb-4">
+                    <div className="flex h-11  w-full min-w-[25rem] ml-4 bg-white rounded-xl  justify-center  pl-4 pb-4">
                       <div className="justify-center py-3 px-2 text-md text-gray-600">
                         Select Date Range :
                       </div>

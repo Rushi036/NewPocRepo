@@ -14,19 +14,58 @@ const TagCompliance = () => {
   const { report, cloud }: any = router.query;
   const [cloudValue, setCloudValue] = useState("aws");
   const CloudChange = (event: React.SyntheticEvent, newValue: any) => {
-    router.push(`/page/FinOps?report=TagCompliance&cloud=${newValue}`, undefined, { shallow: true });
-
+    router.push(
+      `/page/FinOps?report=TagCompliance&cloud=${newValue}`,
+      undefined,
+      { shallow: true }
+    );
     setCloudValue(newValue);
   };
   const [status, setStatus] = useState<any>(null);
   useEffect(() => {
-
+    if (
+      resp &&
+      resp.AWS &&
+      Object.keys(resp.AWS).length > 0 &&
+      Object.keys(resp.AZURE).length == 0
+    ) {
+      // setCloudValue("aws");
+      router.push(`/page/FinOps?report=TagCompliance&cloud=aws`, undefined, {
+        shallow: true,
+      });
+    } else if (
+      resp &&
+      resp.AZURE &&
+      Object.keys(resp.AZURE).length > 0 &&
+      Object.keys(resp.AWS).length == 0
+    ) {
+      // setCloudValue("azure");
+      router.push(`/page/FinOps?report=TagCompliance&cloud=azure`, undefined, {
+        shallow: true,
+      });
+    } else if (
+      resp &&
+      resp.AZURE &&
+      Object.keys(resp.AZURE).length > 0 &&
+      resp.AWS &&
+      Object.keys(resp.AWS).length > 0
+    ) {
+      // setCloudValue("aws");
+      router.push(`/page/FinOps?report=TagCompliance&cloud=aws`, undefined, {
+        shallow: true,
+      });
+    }
+  }, [resp]);
+  useEffect(() => {
     setLoader(true);
-    router.push(`/page/FinOps?report=TagCompliance&cloud=aws`, undefined, { shallow: true });
     GetTagedAndUnTagedCostResourceType().then((data: any) => {
       setRes(data.data);
-      if(data.data && data.data.AWS && Object.keys(data.data.AWS).length == 0){
-        setCloudValue('azure');
+      if (
+        data.data &&
+        data.data.AWS &&
+        Object.keys(data.data.AWS).length == 0
+      ) {
+        setCloudValue("azure");
       }
       setLoader(false);
       if (data && data?.status != 200) {
