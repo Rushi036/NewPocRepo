@@ -55,7 +55,7 @@ function FinOps() {
   };
 
   const tabIndicatorStyle = {
-    background: "transparent linear-gradient(273deg, #c52828 0%, #e95555 100%)",
+    background: "transparent linear-gradient(90deg, #AF1E23 -43.96%, #F37032 112.99%)",
     boxShadow: "inset 0 0 0 3px white",
     border: "7px solid white",
     zIndex: 2,
@@ -67,7 +67,7 @@ function FinOps() {
     <div className="Newfinops-container h-auto">
       <div className="h-auto">
         <TabContext value={value1}>
-          <div className="relative mb-4 p-3 bg-white rounded-lg">
+          <div className="relative mb-4 p-3 rounded-lg" style={{ backgroundColor: "rgba(254, 241, 235, 0.40)" }}>
             <Link
               className="z-10 absolute left-2 h-fit w-fit cursor-pointer top-1/2 -translate-y-1/2 flex justify-center items-center"
               href={"/page/FinOps/reports"}

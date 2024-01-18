@@ -9,7 +9,7 @@ import { useAppContext } from "./AppContext";
 import HomeIcon from "@mui/icons-material/Home";
 import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
 import GroupIcon from "@mui/icons-material/Group";
-import SettingsIcon from '@mui/icons-material/Settings';
+import SettingsIcon from "@mui/icons-material/Settings";
 const Sidebar = () => {
   const { state, toggleState } = useAppContext();
 
@@ -35,6 +35,11 @@ const Sidebar = () => {
         className={`${
           state ? "w-1/5 min-w-[250px]" : "w-fit"
         } bottom-0 z-30 top-0 hidden relative shadow-2xl sm:block transition-all duration-300 bg-white border-r`}
+        style={{
+          background: state
+            ? " linear-gradient(180deg, #FFF 0%, rgba(254, 241, 235, 0.40) 100%)"
+            : "rgba(254, 241, 235, 0.24)",
+        }}
       >
         <img
           src={bLogo ? `/${bLogo}` : "/Common.jpg"}
@@ -47,7 +52,7 @@ const Sidebar = () => {
         <div
           className={`${
             !state && "rotate-180"
-          }  absolute mr-1.5 text-xl bg-white fill-slate-800 rounded-full cursor-pointer top-3 -right-10`}
+          }  absolute mr-1.5 text-xl text-white rounded-full cursor-pointer top-3 -right-10`}
           onClick={toggleStateHere}
         >
           <GiHamburgerMenu />
@@ -58,9 +63,17 @@ const Sidebar = () => {
             <Link
               href="/page/Dashboard"
               className={`flex items-center gap-x-3.5 py-2 px-2.5 text-base
-             text-slate-700 rounded-md hover:bg-gray-100
-             ${activeLink === 0 ? "bg-gray-100" : ""}`}
+             text-slate-700 rounded-md hover:bg-orange-100
+             `}
               onClick={() => handleLinkClick(0)}
+              style={
+                activeLink === 0
+                  ? {
+                      background:
+                        "radial-gradient(50% 75% at 50% 100%, rgba(243, 112, 50, 0.32) 0%, rgba(243, 112, 50, 0.00) 100%)",
+                    }
+                  : {}
+              }
             >
               <HomeIcon className="h-7 w-7" />
               <span className={`${!state && "hidden"} origin-left hover:block`}>
@@ -108,9 +121,17 @@ const Sidebar = () => {
               <Link
                 href="/page/UserManagement"
                 className={`flex items-center gap-x-3.5 py-2 px-2.5 text-base
-              text-slate-700 rounded-md hover:bg-gray-100
-              ${activeLink === 2 ? "bg-gray-100" : ""}`}
+              text-slate-700 rounded-md hover:bg-orange-100
+              `}
                 onClick={() => handleLinkClick(2)}
+                style={
+                  activeLink === 2
+                    ? {
+                        background:
+                          "radial-gradient(50% 75% at 50% 100%, rgba(243, 112, 50, 0.32) 0%, rgba(243, 112, 50, 0.00) 100%)",
+                      }
+                    : {}
+                }
               >
                 <GroupIcon className="h-7 w-7" />
                 <span
@@ -126,9 +147,17 @@ const Sidebar = () => {
               <Link
                 href="/page/FinOps/Settings"
                 className={`flex items-center gap-x-3.5 py-2 px-2.5 text-base
-              text-slate-700 rounded-md hover:bg-gray-100
-              ${activeLink === 3 ? "bg-gray-100" : ""}`}
+              text-slate-700 rounded-md hover:bg-orange-100
+`}
                 onClick={() => handleLinkClick(3)}
+                style={
+                  activeLink === 3
+                    ? {
+                        background:
+                          "radial-gradient(50% 75% at 50% 100%, rgba(243, 112, 50, 0.32) 0%, rgba(243, 112, 50, 0.00) 100%)",
+                      }
+                    : {}
+                }
               >
                 <SettingsIcon className="h-7 w-7" />
                 <span
@@ -144,9 +173,17 @@ const Sidebar = () => {
               <Link
                 href="/Components/Observability"
                 className={`flex items-center gap-x-3.5 py-2 px-2.5 text-base
-              text-slate-700 rounded-md hover:bg-gray-100
-              ${activeLink === 2 ? "bg-gray-100" : ""}`}
+              text-slate-700 rounded-md hover:bg-orange-100
+              `}
                 onClick={() => handleLinkClick(2)}
+                style={
+                  activeLink === 2
+                    ? {
+                        background:
+                          "radial-gradient(50% 75% at 50% 100%, rgba(243, 112, 50, 0.32) 0%, rgba(243, 112, 50, 0.00) 100%)",
+                      }
+                    : {}
+                }
               >
                 <PreviewIcon className="h-7 w-7" />
                 <span

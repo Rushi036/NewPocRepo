@@ -688,7 +688,15 @@ function FinopsFilters({
     setSelectedReportsDropDown(allData.flat(1));
   }
   return (
-    <div className="sticky top-[3.75rem] w-[25%] max-h-[80vh] h-fit flex flex-col justify-start items-center ml-4 mb-16 p-4 bg-white rounded-lg overflow-y-auto">
+    <div
+      className="sticky top-[3.75rem] w-[25%] max-h-[80vh] h-fit flex flex-col justify-start items-center ml-4 mb-16 p-4 bg-white rounded-lg overflow-y-auto"
+      style={{
+        borderRadius: "16px",
+        border: "0.5px solid rgba(0, 0, 0, 0.6)",
+        backgroundColor: "rgba(254, 241, 235, 0.40)",
+        fontFamily: `"Oxygen",sans-serif`,
+      }}
+    >
       <div className="w-full mx-2 flex items-start gap-2 justify-start">
         <span>Across Account</span>
         <Switch
@@ -996,8 +1004,8 @@ function ReportsCard({
                 key={i}
                 className={
                   e.LineChart.series?.data?.length >= 20
-                    ? "card !min-w-full"
-                    : "card"
+                    ? "card !min-w-full overflow-y-auto"
+                    : "card w-1/2 overflow-y-auto"
                 }
               >
                 <span
@@ -1072,7 +1080,15 @@ function CrossPlatformReports({ res, timePeriod, singleReport }: any) {
             Array.isArray(e.PieChart.data)
           ) {
             return (
-              <div key={i} className="card w-1/2 max-h-[280px]">
+              <div
+                key={i}
+                className="card w-1/2 max-h-[280px]"
+                style={{
+                  borderRadius: "16px",
+                  border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                  fontFamily: `"Oxygen",sans-serif`,
+                }}
+              >
                 <PieChartComponent
                   id={i}
                   data={e.PieChart}
@@ -1096,6 +1112,11 @@ function CrossPlatformReports({ res, timePeriod, singleReport }: any) {
                     ? "card !min-w-full max-h-[280px]"
                     : "card max-h-[280px]"
                 }
+                style={{
+                  borderRadius: "16px",
+                  border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                  fontFamily: `"Oxygen",sans-serif`,
+                }}
               >
                 <LineChartComponent
                   id={i}
@@ -1113,7 +1134,15 @@ function CrossPlatformReports({ res, timePeriod, singleReport }: any) {
             Array.isArray(e.BarGraph.data)
           ) {
             return (
-              <div key={i} className="max-h-[280px] ">
+              <div
+                key={i}
+                className="max-h-[280px] "
+                style={{
+                  borderRadius: "16px",
+                  border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                  fontFamily: `"Oxygen",sans-serif`,
+                }}
+              >
                 <BarGraph
                   id={i}
                   date={timePeriod}
@@ -1131,7 +1160,15 @@ function CrossPlatformReports({ res, timePeriod, singleReport }: any) {
           return (
             <>
               {e && e.data && e.data.length > 0 && (
-                <div key={i} className="card w-1/2">
+                <div
+                  key={i}
+                  className="card w-1/2"
+                  style={{
+                    borderRadius: "16px",
+                    border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                    fontFamily: `"Oxygen",sans-serif`,
+                  }}
+                >
                   <Table data={e} />
                 </div>
               )}

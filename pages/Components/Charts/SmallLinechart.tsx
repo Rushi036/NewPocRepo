@@ -44,12 +44,14 @@ const SmallLineChartComponent = (props: any) => {
 
       const options: any = {
         title: {
-          text: props?.data?.title ?? "Consumption Trend",
+          text: props?.data?.title ?? "Cloud Consumption Trend",
           align: "left",
           style: {
             color: props?.titleColor ?? "#000",
-            fontWeight: 'bold'
+            fontWeight: 'bold',
+            fontSize: "17px",
           }
+          
         },
 
         yAxis: [
@@ -83,6 +85,7 @@ const SmallLineChartComponent = (props: any) => {
           },
           itemWidth: 150, // Set the width of each legend item
           itemDistance: 5,
+          
         },
 
         noData: {
@@ -106,7 +109,7 @@ const SmallLineChartComponent = (props: any) => {
         series: newData,
 
         chart: {
-          height: 245, // Adjust the height of the chart based on the reports prop
+          height: 265, // Adjust the height of the chart based on the reports prop
         },
 
         responsive: {

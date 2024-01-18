@@ -13,7 +13,8 @@ import { getReportsDashboard } from "@/pages/api/FinopsApi/getReports";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getCurrencyData } from "@/pages/api/getCurrency";
-
+import Divider from "@mui/material/Divider";
+import TollIcon from "@mui/icons-material/Toll";
 const Reports = () => {
   useEffect(() => {
     // HighchartsExporting(Highcharts);
@@ -79,12 +80,12 @@ const Reports = () => {
         pauseOnHover
         theme="light"
       />
-      <div className="text-xl border-b-2  border-slate-400 pb-2 px-4">
+      {/* <div className="text-xl border-b-2  border-slate-400 pb-2 px-4">
         FinOps
-      </div>
+      </div> */}
 
-      <div className="flex mt-4">
-        <div className="w-[50%] min-h-[120px] h-hit mb-4">
+      <div className="flex mt-2">
+        <div className="w-[50%] min-h-[120px] h-hit mb-4 ">
           <Link
             className="w-full flex justify-center items-center h-full"
             href={{
@@ -92,34 +93,105 @@ const Reports = () => {
               query: { report: "CostDrillDown" },
             }}
           >
-            <div className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
-              <div className="w-[4px] h-full bg-red-400 absolute left-0 top-0"></div>
-              <p className="text-red-400 font-bold text-lg">
-                Total Consumption Monthly
-              </p>
-              {res && (
-                <div className="flex flex-col">
-                  <span>
-                    AWS - {currencyData && currencyData.status && currencyData.status == "InActive" ? "$" : "₹"}
-                    {res.Metric && res.Metric[0] && res?.Metric[0]?.value
-                      ? res?.Metric[0]?.value?.AWS
-                      : ""}
-                  </span>
-                  <span>
-                    Azure - ₹
-                    {res.Metric && res.Metric[0] && res?.Metric[0]?.value
-                      ? res?.Metric[0]?.value?.Azure
-                      : ""}
-                  </span>
-                  {currencyData && currencyData.status && currencyData.status == "Active" && (
-                    <span>
-                      Total - ₹
-                      {res.Metric && res.Metric[0] && res?.Metric[0]?.value
-                        ? Math.round(res?.Metric[0]?.value?.Azure + res?.Metric[0]?.value?.AWS)
-                        : ""}
-                    </span>
-                  )}
+            <div
+              className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md "
+              style={{
+                borderRadius: "16px",
+                border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                background:
+                  "linear-gradient(162deg, rgba(123, 98, 202, 0.11) 11.36%, rgba(123, 98, 202, 0.00) 36.6%), #ffffff",
+                fontFamily: `"Oxygen",sans-serif`,
+              }}
+            >
+              <div className="w-[4px] h-full absolute left-0 top-0"></div>
+              <div className="flex justify-between w-full items-center">
+                <div className="">
+                  <p
+                    className=""
+                    style={{
+                      color: "#000",
+                      fontSize: "17px",
+                      fontStyle: "normal",
+                      fontWeight: 700,
+                      lineHeight: "28px",
+                    }}
+                  >
+                    Previous Monthly consumption
+                  </p>
                 </div>
+                <div className="mr-4">
+                  <TollIcon style={{ fontSize: "40px", color: "#7B62CA" }} />
+                </div>
+              </div>
+
+              <div
+                className=""
+                style={{
+                  borderTop: "2px solid #7B62CA",
+                  width: "100%",
+                  background: "#7B62CA",
+                }}
+              ></div>
+              {res && (
+                <table>
+                  <tbody>
+                    <tr>
+                      <td className="bg-white" style={{ width: "10px" }}>
+                        AWS
+                      </td>
+                      <td className="bg-white mx-1" style={{ width: "1px" }}>
+                        -
+                      </td>
+                      <td className="bg-white">
+                        {currencyData &&
+                        currencyData.status &&
+                        currencyData.status === "InActive"
+                          ? "$"
+                          : "₹"}
+                        {res.Metric && res.Metric[0] && res?.Metric[0]?.value
+                          ? res?.Metric[0]?.value?.AWS
+                          : ""}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="bg-white" style={{ width: "10px" }}>
+                        Azure
+                      </td>
+                      <td className="bg-white" style={{ width: "1px" }}>
+                        -
+                      </td>
+                      <td className="bg-white">
+                        ₹
+                        {res.Metric && res.Metric[0] && res?.Metric[0]?.value
+                          ? res?.Metric[0]?.value?.Azure
+                          : ""}
+                      </td>
+                    </tr>
+                    {currencyData &&
+                      currencyData.status &&
+                      currencyData.status === "Active" && (
+                        <tr>
+                          <td className="bg-white" style={{ width: "10px" }}>
+                            Total
+                          </td>
+                          <td className="bg-white" style={{ width: "1px" }}>
+                            -
+                          </td>
+                          <td className="bg-white">
+                            ₹
+                            {res.Metric &&
+                            res.Metric[0] &&
+                            res?.Metric[0]?.value
+                              ? Math.round(
+                                  res?.Metric[0]?.value?.Azure +
+                                    res?.Metric[0]?.value?.AWS
+                                )
+                              : ""}
+                          </td>
+                        </tr>
+                      )}
+                  </tbody>
+                </table>
               )}
             </div>
           </Link>
@@ -133,35 +205,106 @@ const Reports = () => {
               query: { report: "CostDrillDown" },
             }}
           >
-            <div className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
-              <div className="w-[4px] h-full bg-green-400 absolute left-0 top-0"></div>
-              <p className="text-green-500 font-bold text-lg">
-                Total Consumption Weekly
-              </p>
+            <div
+              className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md "
+              style={{
+                borderRadius: "16px",
+                border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                background:
+                  "linear-gradient(162deg, rgba(123, 98, 202, 0.11) 11.36%, rgba(123, 98, 202, 0.00) 36.6%), #ffffff",
+                fontFamily: `"Oxygen",sans-serif`,
+              }}
+            >
+              <div className="w-[4px] h-full absolute left-0 top-0"></div>
+              <div className="flex justify-between w-full items-center">
+                <div className="">
+                  <p
+                    className=""
+                    style={{
+                      color: "#000",
+                      fontSize: "17px",
+                      fontStyle: "normal",
+                      fontWeight: 700,
+                      lineHeight: "28px",
+                    }}
+                  >
+                    Previous Week consumption
+                  </p>
+                </div>
+                <div className="mr-4">
+                  <TollIcon style={{ fontSize: "40px", color: "#7B62CA" }} />
+                </div>
+              </div>
+
+              <div
+                className=""
+                style={{
+                  borderTop: "2px solid #7B62CA",
+                  width: "100%",
+                  background: "#7B62CA",
+                }}
+              ></div>
 
               {res && (
-                <div className="flex flex-col">
-                  <span>
-                    AWS - {currencyData && currencyData.status && currencyData.status == "InActive" ? "$" : "₹"}
-                    {res.Metric && res.Metric[1] && res.Metric[1].value
-                      ? res?.Metric[1]?.value?.AWS
-                      : ""}
-                  </span>
-                  <span>
-                    Azure - ₹
-                    {res.Metric && res.Metric[1] && res.Metric[1].value
-                      ? res?.Metric[1]?.value?.Azure
-                      : ""}
-                  </span>
-                  {currencyData && currencyData.status && currencyData.status == "Active" && (
-                    <span>
-                      Total - ₹
-                      {res.Metric && res.Metric[1] && res?.Metric[1]?.value
-                        ? Math.round(res?.Metric[1]?.value?.Azure + res?.Metric[1]?.value?.AWS)
-                        : ""}
-                    </span>
-                  )}
-                </div>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td className="bg-white" style={{ width: "10px" }}>
+                        AWS
+                      </td>
+                      <td className="bg-white" style={{ width: "1px" }}>
+                        -
+                      </td>
+                      <td className="bg-white">
+                        {currencyData &&
+                        currencyData.status &&
+                        currencyData.status === "InActive"
+                          ? "$"
+                          : "₹"}
+                        {res.Metric && res.Metric[1] && res?.Metric[1]?.value
+                          ? res?.Metric[1]?.value?.AWS
+                          : ""}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="bg-white" style={{ width: "10px" }}>
+                        Azure
+                      </td>
+                      <td className="bg-white" style={{ width: "1px" }}>
+                        -
+                      </td>
+                      <td className="bg-white">
+                        ₹
+                        {res.Metric && res.Metric[1] && res?.Metric[1]?.value
+                          ? res?.Metric[1]?.value?.Azure
+                          : ""}
+                      </td>
+                    </tr>
+                    {currencyData &&
+                      currencyData.status &&
+                      currencyData.status === "Active" && (
+                        <tr>
+                          <td className="bg-white" style={{ width: "10px" }}>
+                            Total
+                          </td>
+                          <td className="bg-white" style={{ width: "1px" }}>
+                            -
+                          </td>
+                          <td className="bg-white">
+                            ₹
+                            {res.Metric &&
+                            res.Metric[1] &&
+                            res?.Metric[1]?.value
+                              ? Math.round(
+                                  res?.Metric[1]?.value?.Azure +
+                                    res?.Metric[1]?.value?.AWS
+                                )
+                              : ""}
+                          </td>
+                        </tr>
+                      )}
+                  </tbody>
+                </table>
               )}
             </div>
           </Link>
@@ -175,10 +318,45 @@ const Reports = () => {
               query: { report: "TagCompliance", cloud: "aws" },
             }}
           >
-            <div className="hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
-              <div className="w-[4px] h-full bg-yellow-400 absolute left-0 top-0"></div>
-              <div className="w-[4px] h-full bg-blue-400 absolute left-0 top-0"></div>
-              <p className="text-blue-500 font-bold text-lg">Cost Governance</p>
+            <div
+              className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md "
+              style={{
+                borderRadius: "16px",
+                border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                background:
+                  "linear-gradient(162deg, rgba(123, 98, 202, 0.11) 11.36%, rgba(123, 98, 202, 0.00) 36.6%), #ffffff",
+                fontFamily: `"Oxygen",sans-serif`,
+              }}
+            >
+              <div className="w-[4px] h-full absolute left-0 top-0"></div>
+              <div className="flex justify-between w-full items-center">
+                <div className="">
+                  <p
+                    className=""
+                    style={{
+                      color: "#000",
+                      fontSize: "17px",
+                      fontStyle: "normal",
+                      fontWeight: 700,
+                      lineHeight: "28px",
+                    }}
+                  >
+                    Cost Governance
+                  </p>
+                </div>
+                <div className="mr-4">
+                  <TollIcon style={{ fontSize: "40px", color: "#7B62CA" }} />
+                </div>
+              </div>
+
+              <div
+                className=""
+                style={{
+                  borderTop: "2px solid #7B62CA",
+                  width: "100%",
+                  background: "#7B62CA",
+                }}
+              ></div>
 
               {res && (
                 <div className="flex justify-between w-full pr-2">
@@ -186,51 +364,135 @@ const Reports = () => {
                     <span className="font-bold  border-b-2 pb-1">
                       Allocated Spent
                     </span>
-                    <span>
-                      AWS - {currencyData && currencyData.status && currencyData.status == "InActive" ? "$" : "₹"}
-                      {res.Metric && res.Metric[3] && res.Metric[3].value
-                        ? res?.Metric[3]?.value?.aws
-                        : ""}
-                    </span>
-                    <span>
-                      Azure - ₹
-                      {res.Metric && res.Metric[3] && res.Metric[3].value
-                        ? res?.Metric[3]?.value?.azure
-                        : ""}
-                    </span>
-                    {currencyData && currencyData.status && currencyData.status == "Active" && (
-                    <span>
-                      Total - ₹
-                      {res.Metric && res.Metric[3] && res?.Metric[3]?.value
-                        ? Math.round(res?.Metric[3]?.value?.azure + res?.Metric[3]?.value?.aws)
-                        : ""}
-                    </span>
-                  )}
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td className="bg-white" style={{ width: "10px" }}>
+                            AWS
+                          </td>
+                          <td className="bg-white" style={{ width: "1px" }}>
+                            -
+                          </td>
+                          <td className="bg-white">
+                            {currencyData &&
+                            currencyData.status &&
+                            currencyData.status == "InActive"
+                              ? "$"
+                              : "₹"}
+                            {res.Metric && res.Metric[3] && res.Metric[3].value
+                              ? res?.Metric[3]?.value?.aws
+                              : ""}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="bg-white" style={{ width: "10px" }}>
+                            Azure
+                          </td>
+                          <td className="bg-white" style={{ width: "1px" }}>
+                            -
+                          </td>
+                          <td className="bg-white">
+                            ₹
+                            {res.Metric && res.Metric[3] && res.Metric[3].value
+                              ? res?.Metric[3]?.value?.azure
+                              : ""}
+                          </td>
+                        </tr>
+                        {currencyData &&
+                          currencyData.status &&
+                          currencyData.status === "Active" && (
+                            <tr>
+                              <td
+                                className="bg-white"
+                                style={{ width: "10px" }}
+                              >
+                                Total
+                              </td>
+                              <td className="bg-white" style={{ width: "1px" }}>
+                                -
+                              </td>
+                              <td className="bg-white">
+                                ₹
+                                {res.Metric &&
+                                res.Metric[3] &&
+                                res?.Metric[3]?.value
+                                  ? Math.round(
+                                      res?.Metric[3]?.value?.azure +
+                                        res?.Metric[3]?.value?.aws
+                                    )
+                                  : ""}
+                              </td>
+                            </tr>
+                          )}
+                      </tbody>
+                    </table>
                   </div>
                   <div className="flex flex-col">
                     <span className="font-bold border-b-2 pb-1">
                       Unallocated Spent
                     </span>
-                    <span>
-                      AWS - {currencyData && currencyData.status && currencyData.status == "InActive" ? "$" : "₹"}
-                      {res.Metric && res.Metric[4] && res.Metric[4].value
-                        ? res?.Metric[4]?.value?.aws
-                        : ""}
-                    </span>
-                    <span>
-                      Azure - ₹
-                      {res.Metric && res.Metric[4] && res.Metric[4].value
-                        ? res?.Metric[4]?.value?.azure
-                        : ""}
-                    </span>
-                    {currencyData && currencyData.status && currencyData.status == "Active" && (
-                    <span>
-                      Total - ₹
-                      {res.Metric && res.Metric[4] && res?.Metric[4]?.value
-                        ? Math.round(res?.Metric[4]?.value?.azure + res?.Metric[4]?.value?.aws)
-                        : ""}
-                    </span>
-                  )}
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td className="bg-white" style={{ width: "10px" }}>
+                            AWS
+                          </td>
+                          <td className="bg-white" style={{ width: "1px" }}>
+                            -
+                          </td>
+                          <td className="bg-white">
+                            {currencyData &&
+                            currencyData.status &&
+                            currencyData.status == "InActive"
+                              ? "$"
+                              : "₹"}
+                            {res.Metric && res.Metric[4] && res.Metric[4].value
+                              ? res?.Metric[4]?.value?.aws
+                              : ""}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="bg-white" style={{ width: "10px" }}>
+                            Azure
+                          </td>
+                          <td className="bg-white" style={{ width: "1px" }}>
+                            -
+                          </td>
+                          <td className="bg-white">
+                            ₹
+                            {res.Metric && res.Metric[4] && res.Metric[4].value
+                              ? res?.Metric[4]?.value?.azure
+                              : ""}
+                          </td>
+                        </tr>
+                        {currencyData &&
+                          currencyData.status &&
+                          currencyData.status === "Active" && (
+                            <tr>
+                              <td
+                                className="bg-white"
+                                style={{ width: "10px" }}
+                              >
+                                Total
+                              </td>
+                              <td className="bg-white" style={{ width: "1px" }}>
+                                -
+                              </td>
+                              <td className="bg-white">
+                                ₹
+                                {res.Metric &&
+                                res.Metric[4] &&
+                                res?.Metric[4]?.value
+                                  ? Math.round(
+                                      res?.Metric[4]?.value?.azure +
+                                        res?.Metric[4]?.value?.aws
+                                    )
+                                  : ""}
+                              </td>
+                            </tr>
+                          )}
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               )}
@@ -239,15 +501,51 @@ const Reports = () => {
         </div>
       </div>
       <div className="flex flex-row gap-2">
-        <div className="w-[50%] flex flex-wrap justify-start items-start h-[fit-content]">
-          <div className="w-full md:w-1/2 h-[130px] flex justify-center items-center mb-4">
+        <div className="w-[55%] flex flex-wrap justify-start items-start h-[fit-content]">
+          <div className="w-full md:w-[45%] h-[130px] flex justify-center items-center mb-4">
             {/* <Link
               className="w-full flex justify-center items-center h-full"
               href={"/page/FinOps"}
             > */}
-            <div className="hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
-              <div className="w-[4px] h-full bg-pink-400 absolute left-0 top-0"></div>
-              <p className="text-pink-500 font-bold text-lg">Total Asset</p>
+            <div
+              className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md "
+              style={{
+                borderRadius: "16px",
+                border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                background:
+                  "linear-gradient(162deg, rgba(123, 98, 202, 0.11) 11.36%, rgba(123, 98, 202, 0.00) 36.6%), #ffffff",
+                fontFamily: `"Oxygen",sans-serif`,
+              }}
+            >
+              <div className="w-[4px] h-full absolute left-0 top-0"></div>
+              <div className="flex justify-between w-full items-center">
+                <div className="">
+                  <p
+                    className=""
+                    style={{
+                      color: "#000",
+                      fontSize: "17px",
+                      fontStyle: "normal",
+                      fontWeight: 700,
+                      lineHeight: "28px",
+                    }}
+                  >
+                    Cloud Assets
+                  </p>
+                </div>
+                <div className="mr-4">
+                  <TollIcon style={{ fontSize: "40px", color: "#7B62CA" }} />
+                </div>
+              </div>
+
+              <div
+                className=""
+                style={{
+                  borderTop: "2px solid #7B62CA",
+                  width: "100%",
+                  background: "#7B62CA",
+                }}
+              ></div>
 
               {res && (
                 <div className="flex flex-row">
@@ -256,7 +554,7 @@ const Reports = () => {
                       ? res?.Metric[2]?.value
                       : ""}
                   </span>
-               
+
                   {/* <Loader percent={(1400 / 1500) * 100} color={"pink"} /> */}
                 </div>
               )}
@@ -264,7 +562,7 @@ const Reports = () => {
             {/* </Link> */}
           </div>
 
-          <div className="w-full md:w-1/2 h-[130px] flex justify-center items-center mb-4">
+          <div className="w-full md:w-[55%] h-[130px] flex justify-center items-center mb-4">
             <Link
               className="w-full flex justify-center items-center h-full"
               // href={
@@ -277,25 +575,57 @@ const Reports = () => {
                 query: { report: "CostSummary", cloud: "CloudGateway" },
               }}
             >
-              <div className="hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
-                <div className="w-[4px] h-full bg-purple-400 absolute left-0 top-0"></div>
-                <p className="text-purple-500 font-bold text-lg">
-                  Cloud Gateway
-                </p>
-
-                <div className="flex flex-col  w-full mt-4">
-                  {/* <span>Coming Soon...</span> */}
-                  <span>
-                    {res && res.Metric && res.Metric[5] && res.Metric[5].value
-                      ? "₹" + res?.Metric[5]?.value
-                      : "No Data"}
-                  </span>
+              <div
+                className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md "
+                style={{
+                  borderRadius: "16px",
+                  border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                  background:
+                    "linear-gradient(162deg, rgba(123, 98, 202, 0.11) 11.36%, rgba(123, 98, 202, 0.00) 36.6%), #ffffff",
+                  fontFamily: `"Oxygen",sans-serif`,
+                }}
+              >
+                <div className="w-[4px] h-full absolute left-0 top-0"></div>
+                <div className="flex justify-between w-full items-center">
+                  <div className="">
+                    <p
+                      className=""
+                      style={{
+                        color: "#000",
+                        fontSize: "17px",
+                        fontStyle: "normal",
+                        fontWeight: 700,
+                        lineHeight: "28px",
+                      }}
+                    >
+                      ABG Secure Cloud Gateway Cost
+                    </p>
+                  </div>
+                  <div className="mr-4">
+                    <TollIcon style={{ fontSize: "40px", color: "#7B62CA" }} />
+                  </div>
                 </div>
+
+                <div
+                  className=""
+                  style={{
+                    borderTop: "2px solid #7B62CA",
+                    width: "100%",
+                    background: "#7B62CA",
+                  }}
+                ></div>
+
+                {/* <span>Coming Soon...</span> */}
+                <span>
+                  {res && res.Metric && res.Metric[5] && res.Metric[5].value
+                    ? "₹" + res?.Metric[5]?.value
+                    : "No Data"}
+                </span>
               </div>
             </Link>
           </div>
 
-          <div className="w-full md:w-1/2 h-[130px] flex justify-center items-center mb-4">
+          <div className="w-full md:w-[45%] h-[150px] flex justify-center items-center mb-4">
             <Link
               className="w-full flex justify-center items-center h-full"
               href={{
@@ -304,27 +634,63 @@ const Reports = () => {
               }}
             >
               <div className="cursor-pointer w-full flex justify-center items-center h-full">
-                <div className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
-                  <div className="w-[4px] h-full bg-rose-400 absolute left-0 top-0"></div>
-                  <p className="text-rose-500 font-bold text-lg">
-                    Forecast & Recommendation
-                  </p>
+                <div
+                  className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md "
+                  style={{
+                    borderRadius: "16px",
+                    border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                    background:
+                      "linear-gradient(162deg, rgba(123, 98, 202, 0.11) 11.36%, rgba(123, 98, 202, 0.00) 36.6%), #ffffff",
+                    fontFamily: `"Oxygen",sans-serif`,
+                  }}
+                >
+                  <div className="w-[4px] h-full absolute left-0 top-0"></div>
+                  <div className="flex justify-between w-full items-center">
+                    <div className="">
+                      <p
+                        className=""
+                        style={{
+                          color: "#000",
+                          fontSize: "17px",
+                          fontStyle: "normal",
+                          fontWeight: 700,
+                          lineHeight: "28px",
+                        }}
+                      >
+                        Forecast and Recommendation
+                      </p>
+                    </div>
+                    <div className="mr-4">
+                      <TollIcon
+                        style={{ fontSize: "40px", color: "#7B62CA" }}
+                      />
+                    </div>
+                  </div>
+
+                  <div
+                    className=""
+                    style={{
+                      borderTop: "2px solid #7B62CA",
+                      width: "100%",
+                      background: "#7B62CA",
+                    }}
+                  ></div>
 
                   {/* {res && ( */}
-                <div className="flex flex-col">
-                  {/* <span>
+                  <div className="flex flex-col">
+                    {/* <span>
                     AWS - {currencyData && currencyData.status && currencyData.status == "InActive" ? "$" : "₹"}
                     {res.Metric && res.Metric[1] && res.Metric[1].value
                       ? res?.Metric[1]?.value?.AWS
                       : ""}
                   </span> */}
-                  <span>
-                    Azure - ₹
-                    {/* {res.Metric && res.Metric[1] && res.Metric[1].value
+                    <span>
+                      Azure - ₹
+                      {/* {res.Metric && res.Metric[1] && res.Metric[1].value
                       ? res?.Metric[1]?.value?.Azure
                       : ""} */}
-                  </span>
-                  {/* {currencyData && currencyData.status && currencyData.status == "Active" && (
+                    </span>
+                    {/* {currencyData && currencyData.status && currencyData.status == "Active" && (
                     <span>
                       Total - ₹
                       {res.Metric && res.Metric[1] && res?.Metric[1]?.value
@@ -332,14 +698,14 @@ const Reports = () => {
                         : ""}
                     </span>
                   )} */}
-                </div>
-              {/* )} */}
+                  </div>
+                  {/* )} */}
                 </div>
               </div>
             </Link>
           </div>
 
-          <div className="w-full md:w-1/2 h-[130px] flex justify-center items-center mb-4">
+          <div className="w-full md:w-[55%] h-[150px] flex justify-center items-center mb-4">
             <Link
               className="w-full flex justify-center items-center h-full"
               href={{
@@ -347,43 +713,118 @@ const Reports = () => {
                 query: { report: "CostSummary", cloud: "CloudGateway" },
               }}
             >
-              <div className="hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
-                <div className="w-[4px] h-full bg-yellow-300 absolute left-0 top-0"></div>
-                <p className="text-yellow-400 font-bold text-lg">
-                  Managed Services Cost
-                </p>
-
-                {res && (
-                  <div className="flex flex-col">
-                    <span>
-                      AWS - {currencyData && currencyData.status && currencyData.status == "InActive" ? "$" : "₹"}
-                      {res.Metric && res.Metric[6] && res.Metric[6].value
-                        ? res?.Metric[6]?.value?.AWS
-                        : ""}
-                    </span>
-                    <span>
-                      Azure - ₹
-                      {res.Metric && res.Metric[6] && res.Metric[6].value
-                        ? res?.Metric[6]?.value?.Azure
-                        : ""}
-                    </span>
-                    {currencyData && currencyData.status && currencyData.status == "Active" && (
-                    <span>
-                      Total - ₹
-                      {res.Metric && res.Metric[6] && res?.Metric[6]?.value
-                        ? Math.round(res?.Metric[6]?.value?.Azure + res?.Metric[6]?.value?.AWS)
-                        : ""}
-                    </span>
-                  )}
+              <div
+                className="cursor-pointer hover:shadow-lg relative m-2 p-2 pl-4 w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md "
+                style={{
+                  borderRadius: "16px",
+                  border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                  background:
+                    "linear-gradient(162deg, rgba(123, 98, 202, 0.11) 11.36%, rgba(123, 98, 202, 0.00) 36.6%), #ffffff",
+                  fontFamily: `"Oxygen",sans-serif`,
+                }}
+              >
+                <div className="w-[4px] h-full absolute left-0 top-0"></div>
+                <div className="flex justify-between w-full items-center">
+                  <div className="">
+                    <p
+                      className=""
+                      style={{
+                        color: "#000",
+                        fontSize: "17px",
+                        fontStyle: "normal",
+                        fontWeight: 700,
+                        lineHeight: "28px",
+                      }}
+                    >
+                      Cloud Managed Services Cost
+                    </p>
                   </div>
-                )}
+                  <div className="mr-4">
+                    <TollIcon style={{ fontSize: "40px", color: "#7B62CA" }} />
+                  </div>
+                </div>
+
+                <div
+                  className=""
+                  style={{
+                    borderTop: "2px solid #7B62CA",
+                    width: "100%",
+                    background: "#7B62CA",
+                  }}
+                ></div>
+                 {res && (
+                <table>
+                  <tbody>
+                    <tr>
+                      <td className="bg-white" style={{ width: "10px" }}>
+                        AWS
+                      </td>
+                      <td className="bg-white" style={{ width: "1px" }}>
+                        -
+                      </td>
+                      <td className="bg-white">
+                        {currencyData &&
+                        currencyData.status &&
+                        currencyData.status === "InActive"
+                          ? "$"
+                          : "₹"}
+                        {res.Metric && res.Metric[6] && res?.Metric[6]?.value
+                          ? res?.Metric[6]?.value?.AWS
+                          : ""}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="bg-white" style={{ width: "10px" }}>
+                        Azure
+                      </td>
+                      <td className="bg-white" style={{ width: "1px" }}>
+                        -
+                      </td>
+                      <td className="bg-white">
+                        ₹
+                        {res.Metric && res.Metric[6] && res?.Metric[6]?.value
+                          ? res?.Metric[6]?.value?.Azure
+                          : ""}
+                      </td>
+                    </tr>
+                    {currencyData &&
+                      currencyData.status &&
+                      currencyData.status === "Active" && (
+                        <tr>
+                          <td className="bg-white" style={{ width: "10px" }}>
+                            Total
+                          </td>
+                          <td className="bg-white" style={{ width: "1px" }}>
+                            -
+                          </td>
+                          <td className="bg-white">
+                            ₹
+                            {res.Metric &&
+                            res.Metric[6] &&
+                            res?.Metric[6]?.value
+                              ? Math.round(
+                                  res?.Metric[6]?.value?.Azure +
+                                    res?.Metric[6]?.value?.AWS
+                                )
+                              : ""}
+                          </td>
+                        </tr>
+                      )}
+                  </tbody>
+                </table>
+              )}
               </div>
             </Link>
           </div>
         </div>
         <div
           key={121}
-          className="relative card h-[276px] shadow-md hover:shadow-lg"
+          className="relative card h-[296px] shadow-md hover:shadow-lg border border-gray-800 "
+          style={{
+            borderRadius: "16px",
+            border: "0.5px solid rgba(0, 0, 0, 0.6)",
+            fontFamily: `"Oxygen",sans-serif`,
+          }}
         >
           <Link
             href={{
@@ -391,21 +832,25 @@ const Reports = () => {
               query: { report: "CostSummary", cloud: "aws" },
             }}
           >
-            <div className="!w-[4px] h-full bg-orange-400 absolute left-0 top-0"></div>
+            {/* <div className="!w-[4px] h-full bg-orange-400 absolute left-0 top-0"></div> */}
             {res && res.Graph && res.Graph[0] && res.Graph[0].LineChart && (
               <SmallLineChartComponent
                 id={121}
                 data={res.Graph[0].LineChart}
                 reports={true}
                 currencyDataStatus={
-                  currencyData && currencyData.status && currencyData.status == "InActive" ? "$" : "₹"
+                  currencyData &&
+                  currencyData.status &&
+                  currencyData.status == "InActive"
+                    ? "$"
+                    : "₹"
                 }
-                titleColor={"rgb(251,146,60)"}
+                titleColor={"rgb(0, 0, 0)"}
               />
             )}
             {(!res || !res.Graph) && (
-              <p className="text-orange-400 font-bold text-lg">
-                Consumption Trend
+              <p className="text-black font-bold text-lg">
+                Cloud Consumption Trend
               </p>
             )}
           </Link>

@@ -1,8 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
-
+/* @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap"); */
+@import url("https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap");
+/* @import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap') */
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -22,9 +23,29 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-  font-family: "Poppins", sans-serif !important;
+  /* font-family: "Oxygen", sans-serif !important; */
+}
+body,
+* {
+  font-family: "Oxygen", sans-serif !important;
+}
+.oxygen-light {
+  font-family: "Oxygen", sans-serif;
+  font-weight: 300;
+  font-style: normal;
 }
 
+.oxygen-regular {
+  font-family: "Oxygen", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.oxygen-bold {
+  font-family: "Oxygen", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
 .topology-editor {
   display: flex;
   height: auto;
@@ -226,7 +247,7 @@ body {
   margin: 10px auto;
   text-align: center;
   width: 100%;
-  max-width: 500px;
+  max-width: 200px;
 }
 
 .highcharts-data-table caption {
@@ -332,9 +353,9 @@ button.MuiButtonBase-root.MuiTab-root.MuiTab-textColorPrimary.Mui-selected.css-1
 /* } */
 
 /* .css-1aquho2-MuiTabs-indicator { */
-  /* height: 100% !important; */
-  /* border-radius: 50vw; */
-  /* margin: 10px 0px; */
+/* height: 100% !important; */
+/* border-radius: 50vw; */
+/* margin: 10px 0px; */
 /* } */
 
 /* .MuiButtonBase-root.MuiTab-root.MuiTab-textColorPrimary.css-1h9z7r5-MuiButtonBase-root-MuiTab-root {
@@ -342,10 +363,10 @@ button.MuiButtonBase-root.MuiTab-root.MuiTab-textColorPrimary.Mui-selected.css-1
   overflow: hidden;
   z-index: 1;
   /* padding:0; */
-  /* padding: 0px 15px;
+/* padding: 0px 15px;
   min-height: 10px;
   max-height: 36px;
-} */ 
+} */
 
 /* .MuiTabs-flexContainer.MuiTabs-centered.css-1wf8b0h-MuiTabs-flexContainer {
   width: fit-content;

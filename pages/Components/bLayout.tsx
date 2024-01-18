@@ -13,7 +13,7 @@ const BLayout: React.FC<LayoutProps> = ({ children }: any) => {
         height: "100vh",
       }}
     >
-      <title>ABG-Automation</title>
+      <title>Finops</title>
 
       <div
         style={{

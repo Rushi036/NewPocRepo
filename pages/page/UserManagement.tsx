@@ -9,6 +9,10 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { getAllUsers } from "../api/FinopsApi/GetAllUsers";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
+import {
+  createUserAndSubscription,
+  updateUserAndSubscription,
+} from "../api/UserManagrementApis/apis";
 const UserManagement = () => {
   // const [data, setData] = useState<any>([
   //   {
@@ -1131,7 +1135,7 @@ const UserManagement = () => {
   //     userType: "Owner",
   //   },
   // ]);
-  const [data, setData] = useState<any>([])
+  const [data, setData] = useState<any>([]);
   const [isOpen, setIsOpen] = useState<any>(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState<any>(false);
   const [selectedRowData, setSelectedRowData] = useState<any>(null);
@@ -1163,7 +1167,7 @@ const UserManagement = () => {
     );
 
   const totalItems = filteredData && filteredData.length;
-  const totalPages = totalItems ? Math.ceil(totalItems / itemsPerPage): 1;
+  const totalPages = totalItems ? Math.ceil(totalItems / itemsPerPage) : 1;
   const startIndex = (currentPage - 1) * itemsPerPage;
 
   const endIndex = startIndex + itemsPerPage;
@@ -1508,8 +1512,8 @@ const UserManagement = () => {
   };
 
   useEffect(() => {
-    const blogo:any = sessionStorage.getItem("businessLogo");
-    setBusinessLogo(blogo)
+    const blogo: any = sessionStorage.getItem("businessLogo");
+    setBusinessLogo(blogo);
     dataFetch();
   }, []);
   async function dataFetch() {
@@ -1527,7 +1531,7 @@ const UserManagement = () => {
     const formData = {
       businessName: userData.businessName,
       userName: userData.ownerName,
-      adid: userData.ownerEmail,
+      adId: userData.ownerEmail,
       role: userData.role,
       type: "Owner",
       status: "active",
@@ -1550,6 +1554,8 @@ const UserManagement = () => {
 
         if (subscription.cloud === "Azure") {
           subscriptionData.type = subscription.type;
+        } else {
+          subscriptionData.type = "";
         }
 
         return subscriptionData;
@@ -1557,8 +1563,10 @@ const UserManagement = () => {
     };
 
     // console.log(formData);
-
-    console.log("payload", formData);
+    createUserAndSubscription(formData).then((data) =>
+      console.log("resp", data)
+    );
+    // console.log("payload", formData);
   };
 
   const handleEditUpload = () => {
@@ -1569,10 +1577,10 @@ const UserManagement = () => {
     const formData = {
       businessName: editedUserData.businessName,
       userName: editedUserData.ownerName,
-      adid: editedUserData.ownerEmail,
+      adId: editedUserData.ownerEmail,
       role: editedUserData.role,
       type: "Owner",
-      status: "",
+      status: "active",
       businessLogo: businessLogo,
       subscriptions: editedSubscriptionDetail.map((subscription: any) => {
         const subscriptionData: any = {
@@ -1592,6 +1600,8 @@ const UserManagement = () => {
 
         if (subscription.cloud === "Azure") {
           subscriptionData.type = subscription.type;
+        } else {
+          subscriptionData.type = "";
         }
 
         return subscriptionData;
@@ -1599,8 +1609,10 @@ const UserManagement = () => {
     };
 
     // console.log(formData);
-
-    console.log(" edited payload", formData);
+    updateUserAndSubscription(formData).then((data) =>
+      console.log("resp", data)
+    );
+    // console.log(" edited payload", formData);
   };
   const getFilteredSubscriptions = (cloudType: any) => {
     return selectedRowData.subscriptions.filter(
@@ -1762,7 +1774,9 @@ const UserManagement = () => {
           <div className="w-full max-w-3xl mx-auto my-12 bg-white rounded-lg shadow-lg overflow-y-auto max-h-screen">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
               <div className="bg-red-800 px-4 py-2 flex items-center justify-between">
-                <h3 className="text-xl text-white font-bold">Add New Business</h3>
+                <h3 className="text-xl text-white font-bold">
+                  Add New Business
+                </h3>
                 <button
                   className="p-2 text-2xl text-white"
                   onClick={() => setIsOpen(false)}
@@ -2001,7 +2015,9 @@ const UserManagement = () => {
           <div className="w-full max-w-3xl mx-auto my-12 bg-white rounded-lg shadow-lg overflow-y-auto max-h-screen">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
               <div className="bg-red-800 px-4 py-2 flex items-center justify-between">
-                <h3 className="text-xl text-white font-bold">Edit Business Details</h3>
+                <h3 className="text-xl text-white font-bold">
+                  Edit Business Details
+                </h3>
                 <button
                   className="p-2 text-2xl text-white"
                   onClick={() => setEditModalOpen(false)}

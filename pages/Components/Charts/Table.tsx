@@ -17,18 +17,27 @@ const Table = ({ data }: any) => {
     rowPerPage * page - rowPerPage,
     rowPerPage * page
   );
-// data && console.log("table data length",data)
+  // data && console.log("table data length",data)
   useEffect(() => {
     setPage(1);
 
     // Filter data based on search input
-    const filtered = data && data.data && data?.data.filter((rowData: any) => {
-      return rowData.some((item: any) =>
-        item[1]
-          ? item[1].toString().toLowerCase().includes(searchInput.toLowerCase())
-          : item[0].toString().toLowerCase().includes(searchInput.toLowerCase())
-      );
-    });
+    const filtered =
+      data &&
+      data.data &&
+      data?.data.filter((rowData: any) => {
+        return rowData.some((item: any) =>
+          item[1]
+            ? item[1]
+                .toString()
+                .toLowerCase()
+                .includes(searchInput.toLowerCase())
+            : item[0]
+                .toString()
+                .toLowerCase()
+                .includes(searchInput.toLowerCase())
+        );
+      });
 
     setFilteredData(filtered);
   }, [data?.data, searchInput]);
@@ -50,13 +59,29 @@ const Table = ({ data }: any) => {
         />
         {/* </div> */}
 
-        <div className="relative overflow-x-auto mt-6">
-          <table className="w-full text-sm text-center text-gray-800">
-            <thead className="text-xs text-white uppercase bg-red-800">
+        <div className="relative overflow-x-auto mt-6  rounded-md">
+          <table
+            className="w-full text-sm text-center text-black"
+       
+          >
+            <thead
+              className="text-xs text-white border border-gray-300"
+              style={{
+                // opacity: 0.5 ,
+                
+                background:
+                  "linear-gradient(90deg, #AF1E23 -43.96%, #F37032 112.99%)",
+              }}
+            >
               <tr>
                 {/* <th>SrNo</th> */}
                 {data?.headers?.map((header: any, index: any) => (
-                  <th className="px-auto py-3" key={index} scope="col">
+                  <th
+                    className="px-auto py-3"
+                    key={index}
+                    scope="col"
+                    style={{ textTransform: "uppercase" }}
+                  >
                     {header}
                   </th>
                 ))}
