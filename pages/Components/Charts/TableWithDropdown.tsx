@@ -119,7 +119,7 @@ const TableWithDropdown = (cloud: any, type: any) => {
       }
     }
   }, [cloud.cloud, cloud.type]);
-  console.log("firstdropdownndata", firstdropDowndata);
+  // console.log("firstdropdownndata", firstdropDowndata);
 
   useEffect(() => {
     if (firstDropdownValue) {

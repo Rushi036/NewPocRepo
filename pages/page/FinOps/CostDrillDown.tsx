@@ -315,6 +315,7 @@ function CostDrillDown() {
         selectedReportsDropDown={selectedReportsDropDown}
         setSingleReport={setSingleReport}
         singleReport={singleReport}
+        setCloudDropdown={setCloudDropdown}
       />
     </div>
   );
@@ -455,6 +456,7 @@ function FinopsFilters({
   selectedReportsDropDown,
   setSingleReport,
   singleReport,
+  setCloudDropdown
 }: any) {
   const today = moment();
   const financialYearStartMonth = 3;
@@ -692,7 +694,9 @@ function FinopsFilters({
       <div className="w-full mx-2 flex items-start gap-2 justify-start">
         <span>Across Account</span>
         <Switch
-          onChange={(res) => setSingleReport(res)}
+          onChange={(res) => {
+            setSingleReport(res), setCloudDropdown("Azure");
+          }}
           checked={singleReport}
           uncheckedIcon={false}
           checkedIcon={false}
@@ -996,8 +1000,8 @@ function ReportsCard({
                 key={i}
                 className={
                   e.LineChart.series?.data?.length >= 20
-                    ? "card !min-w-full"
-                    : "card"
+                    ? "card !min-w-full overflow-y-auto"
+                    : "card w-1/2 overflow-y-auto"
                 }
               >
                 <span

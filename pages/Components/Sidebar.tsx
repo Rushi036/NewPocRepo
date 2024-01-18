@@ -47,7 +47,7 @@ const Sidebar = () => {
         <div
           className={`${
             !state && "rotate-180"
-          }  absolute mr-1.5 text-xl bg-white fill-slate-800 rounded-full cursor-pointer top-3 -right-10`}
+          }  absolute mr-1.5 text-xl text-black rounded-full cursor-pointer top-3 -right-10`}
           onClick={toggleStateHere}
         >
           <GiHamburgerMenu />

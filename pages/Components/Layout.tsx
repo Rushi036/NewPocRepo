@@ -48,10 +48,17 @@ const Layout: React.FC<LayoutProps> = ({ children }: any) => {
     }
   }, [router.asPath]);
   return (
-    <div id="appLayout" className="flex text-black h-screen bg-gray-100">
+    <div
+      id="appLayout"
+      className="flex text-black bg-gray-100 h-screen"
+      // style={{ backgroundColor: "rgba(254, 241, 235, 0.40)" }}
+    >
       <title>ABG-Automation</title>
       <Sidebar />
-      <div className="flex-auto relative h-[100vh] bg-gray-100 overflow-auto">
+      <div
+        className="flex-auto relative h-[100vh] bg-gray-100   overflow-auto"
+        // style={{ backgroundColor: "rgba(254, 241, 235, 0.40)" }}
+      >
         <Navbar />
         <main className="mt-10 p-4  min-h-[calc(100vh-5.5rem)]">
           {children}

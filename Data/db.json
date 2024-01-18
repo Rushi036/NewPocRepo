@@ -3,43 +3,8 @@
     "Response": "JSON server running!"
   },
   "users": [
-    {
+   {
       "id": 1,
-      "name": "Grasim Chemical",
-      "email": "ABG1@gmail.com",
-      "password": "abg@123",
-      "role": "ADMIN",
-      "Azure_subcriptionId": "bbe9815b-b792-4f3d-a601-94380a26964d",
-      "Azure_vnet": "GRCD-AZ-SAP-PP-VNT-01",
-      "Azure_CIDR": "10.47.48.0/22",
-      "Azure_Subnet": [
-        {
-          "subnet1": "GRCD-AZ-SUB-PP-MGT-01"
-        },
-        {
-          "subnet2": "GRCD-AZ-SUB-PP-APP-02"
-        },
-        {
-          "subnet3": "GRCD-AZ-SUB-PP-APP-04"
-        },
-        {
-          "subnet4": "GRCD-AZ-SUB-PP-DBA-05"
-        },
-        {
-          "subnet5": "GRCD-AZ-SUB-PP-APP-03"
-        }
-      ],
-      "Azure_ResourceGRP": "NetworkWatcherRG",
-      "Azure_Region": "Asia-Center",
-      "AWS_subcriptionId": "347692176337",
-      "AWS_VPC": "GrasimChemical-VPC",
-      "AWS_CIDR": "10.17.61.0/24",
-      "AWS_Subnet": "",
-      "AWS_ResourceGRP": "",
-      "AWS_Region": "Asia-Center"
-    },
-    {
-      "id": 2,
       "name": "Rajit Bhat",
       "email": "rajit.bhat@adityabirla.com",
       "password": "abg@123",
@@ -50,190 +15,25 @@
       }
     },
     {
-      "id": 3,
-      "name": "Birla Carbon",
-      "email": "ABG3@gmail.com",
-      "password": "abg@123",
-      "role": "admin",
-      "Azure_subcriptionId": "3c3370e0-d5b7-4d7a-81bb-fe78a73dd72e",
-      "Azure_vnet": "Mirgationdemo-VNet",
-      "Azure_CIDR": "10.55.6.16/28",
-      "Azure_Subnet": [
-        {
-          "subnet1": "DMZ-VNET-SUBNET"
-        }
-      ],
-      "Azure_ResourceGRP": "Migrationdemo-RG",
-      "Azure_Region": "Asia-Center",
-      "AWS_subcriptionId": "",
-      "AWS_VPC": "",
-      "AWS_CIDR": "",
-      "AWS_Subnet": "",
-      "AWS_ResourceGRP": "",
-      "AWS_Region": "Asia-Center"
+      "id": 12,
+      "name": "Dice",
+      "email": "dice@adityabirla.com",
+      "password": "zsdMvULk",
+      "role": "ADMIN",
+      "chartOrder": {
+        "Azure": {},
+        "AWS": {}
+      }
     },
     {
-      "id": 4,
+      "id": 2,
       "name": "UTCL",
       "email": "bhuwan.phuloria@adityabirla.com",
       "password": "abg@123",
       "role": "BE"
     },
     {
-      "id": 5,
-      "name": "ABMCPL",
-      "email": "ABG5@gmail.com",
-      "password": "abg@123",
-      "role": "BU",
-      "Azure_subcriptionId": "4688b72b-c3b3-4eda-b632-e969386f8a1f",
-      "Azure_vnet": "abgvnet01",
-      "Azure_CIDR": "172.25.66.0/24",
-      "Azure_Subnet": [
-        {
-          "subnet1": "FrontEnd_Subnet"
-        },
-        {
-          "subnet2": "Internet_Subnet"
-        }
-      ],
-      "Azure_ResourceGRP": "NetworkWatcherRG",
-      "Azure_Region": "Asia-Center",
-      "AWS_subcriptionId": "718927010107",
-      "AWS_VPC": "ABMC-UAT-VPC",
-      "AWS_CIDR": "10.18.26.0/24",
-      "AWS_Subnet": "",
-      "AWS_ResourceGRP": "",
-      "AWS_Region": "Asia-Center"
-    },
-    {
-      "id": 6,
-      "name": "BMCSPL",
-      "email": "ABG6@gmail.com",
-      "password": "abg@123",
-      "role": "BU",
-      "Azure_subcriptionId": "92ce7eae-ad96-41e7-9e7e-2d8f1a5792f9",
-      "Azure_vnet": "GITS-AZ-PIM-P-VN-01",
-      "Azure_CIDR": "10.47.26.0/24",
-      "Azure_Subnet": [
-        {
-          "subnet1": "GITS-AZ-PIM-P-SN-01"
-        },
-        {
-          "subnet2": "GITS-AZ-PIM-P-LBSN-01"
-        }
-      ],
-      "Azure_ResourceGRP": "NetworkWatcherRG",
-      "Azure_Region": "Asia-Center",
-      "AWS_subcriptionId": "419872061991",
-      "AWS_VPC": "BMCSL-JUMP-VPC",
-      "AWS_CIDR": "10.17.48.192/26",
-      "AWS_Subnet": "",
-      "AWS_ResourceGRP": "",
-      "AWS_Region": "Asia-Center"
-    },
-    {
-      "id": 7,
-      "name": "Grasim PnF",
-      "email": "ABG7@gmail.com",
-      "password": "abg@123",
-      "role": "BU",
-      "Azure_subcriptionId": "d8171501-9b21-42d3-a0da-d6216bab0785",
-      "Azure_vnet": "GRASIM-PF-VNET-2",
-      "Azure_CIDR": "10.8.175.0/24",
-      "Azure_Subnet": [
-        {
-          "subnet1": "GRASIM-WI-DMS"
-        },
-        {
-          "subnet2": "GatewaySubnet"
-        },
-        {
-          "subnet3": "GRASIM-WI-MI-001"
-        }
-      ],
-      "Azure_ResourceGRP": "NetworkWatcherRG",
-      "Azure_Region": "Asia-Center",
-      "AWS_subcriptionId": "281897532807",
-      "AWS_VPC": "Grasim-MAXIMO-VPC",
-      "AWS_CIDR": "10.8.159.0/24",
-      "AWS_Subnet": "",
-      "AWS_ResourceGRP": "",
-      "AWS_Region": "Asia-Center"
-    },
-    {
-      "id": 8,
-      "name": "Rushikesh Shiledar",
-      "email": "rushikesh.s-v@adityabirla.com",
-      "password": "R#R#@12345",
-      "role": "BE",
-      "Azure_subcriptionId": "d8171501-9b21-42d3-a0da-d6216bab0785",
-      "Azure_vnet": "GRASIM-PF-VNET-2",
-      "Azure_CIDR": "10.8.175.0/24",
-      "Azure_Subnet": [
-        {
-          "subnet1": "GRASIM-WI-DMS"
-        },
-        {
-          "subnet2": "GatewaySubnet"
-        },
-        {
-          "subnet3": "GRASIM-WI-MI-001"
-        }
-      ],
-      "Azure_ResourceGRP": "NetworkWatcherRG",
-      "Azure_Region": "Asia-Center",
-      "AWS_subcriptionId": "281897532807",
-      "AWS_VPC": "Grasim-MAXIMO-VPC",
-      "AWS_CIDR": "10.8.159.0/24",
-      "AWS_Subnet": "",
-      "AWS_ResourceGRP": "",
-      "AWS_Region": "Asia-Center",
-      "chartOrder": {
-        "Azure": {
-          "Cost Distribution at application level": true
-        },
-        "AWS": {
-          "Most Cost Consuming Service Per Day": true
-        }
-      }
-    },
-    {
-      "id": 9,
-      "name": "Siddharth Nalwaya",
-      "email": "Siddharth.Nalwaya-v@adityabirla.com",
-      "password": "qOQ3O%S63kAo",
-      "role": "ADMIN",
-      "Azure_subcriptionId": "d8171501-9b21-42d3-a0da-d6216bab0785",
-      "Azure_vnet": "GRASIM-PF-VNET-2",
-      "Azure_CIDR": "10.8.175.0/24",
-      "Azure_Subnet": [
-        {
-          "subnet1": "GRASIM-WI-DMS"
-        },
-        {
-          "subnet2": "GatewaySubnet"
-        },
-        {
-          "subnet3": "GRASIM-WI-MI-001"
-        }
-      ],
-      "Azure_ResourceGRP": "NetworkWatcherRG",
-      "Azure_Region": "Asia-Center",
-      "AWS_subcriptionId": "281897532807",
-      "AWS_VPC": "Grasim-MAXIMO-VPC",
-      "AWS_CIDR": "10.8.159.0/24",
-      "AWS_Subnet": "",
-      "AWS_ResourceGRP": "",
-      "AWS_Region": "Asia-Center",
-      "chartOrder": {
-        "Azure": {
-          "Cost Allocation Tags": true
-        },
-        "AWS": {}
-      }
-    },
-    {
-      "id": 10,
+      "id": 3,
       "name": "Prashant Agarwal",
       "email": "prashant.a@adityabirla.com",
       "password": "abg@123",
@@ -268,7 +68,7 @@
       }
     },
     {
-      "id": 11,
+      "id": 4,
       "name": "Gaurav Sharma",
       "email": "sharma.gaurav@adityabirla.com",
       "password": "abg@123",
@@ -302,113 +102,9 @@
         "AWS": {}
       }
     },
+    
     {
-      "id": 12,
-      "name": "Sattya Pattnayak",
-      "email": "satya.pattanayak@adityabirla.com",
-      "password": "abg@123",
-      "role": "BE",
-      "Azure_subcriptionId": "d8171501-9b21-42d3-a0da-d6216bab0785",
-      "Azure_vnet": "GRASIM-PF-VNET-2",
-      "Azure_CIDR": "10.8.175.0/24",
-      "Azure_Subnet": [
-        {
-          "subnet1": "GRASIM-WI-DMS"
-        },
-        {
-          "subnet2": "GatewaySubnet"
-        },
-        {
-          "subnet3": "GRASIM-WI-MI-001"
-        }
-      ],
-      "Azure_ResourceGRP": "NetworkWatcherRG",
-      "Azure_Region": "Asia-Center",
-      "AWS_subcriptionId": "281897532807",
-      "AWS_VPC": "Grasim-MAXIMO-VPC",
-      "AWS_CIDR": "10.8.159.0/24",
-      "AWS_Subnet": "",
-      "AWS_ResourceGRP": "",
-      "AWS_Region": "Asia-Center",
-      "chartOrder": {
-        "Azure": {
-          "Cost Allocation Tags": true
-        },
-        "AWS": {}
-      }
-    },
-    {
-      "id": 13,
-      "name": "Gopi Arumugam",
-      "email": "gopi.arumugam-v@adityabirla.com",
-      "password": "abg@123",
-      "role": "BE",
-      "Azure_subcriptionId": "d8171501-9b21-42d3-a0da-d6216bab0785",
-      "Azure_vnet": "GRASIM-PF-VNET-2",
-      "Azure_CIDR": "10.8.175.0/24",
-      "Azure_Subnet": [
-        {
-          "subnet1": "GRASIM-WI-DMS"
-        },
-        {
-          "subnet2": "GatewaySubnet"
-        },
-        {
-          "subnet3": "GRASIM-WI-MI-001"
-        }
-      ],
-      "Azure_ResourceGRP": "NetworkWatcherRG",
-      "Azure_Region": "Asia-Center",
-      "AWS_subcriptionId": "281897532807",
-      "AWS_VPC": "Grasim-MAXIMO-VPC",
-      "AWS_CIDR": "10.8.159.0/24",
-      "AWS_Subnet": "",
-      "AWS_ResourceGRP": "",
-      "AWS_Region": "Asia-Center",
-      "chartOrder": {
-        "Azure": {
-          "Cost Allocation Tags": true
-        },
-        "AWS": {}
-      }
-    },
-    {
-      "id": 14,
-      "name": "Sarvanan SK",
-      "email": "saravanan.sk@adityabirla.com",
-      "password": "abg@123",
-      "role": "BE",
-      "Azure_subcriptionId": "d8171501-9b21-42d3-a0da-d6216bab0785",
-      "Azure_vnet": "GRASIM-PF-VNET-2",
-      "Azure_CIDR": "10.8.175.0/24",
-      "Azure_Subnet": [
-        {
-          "subnet1": "GRASIM-WI-DMS"
-        },
-        {
-          "subnet2": "GatewaySubnet"
-        },
-        {
-          "subnet3": "GRASIM-WI-MI-001"
-        }
-      ],
-      "Azure_ResourceGRP": "NetworkWatcherRG",
-      "Azure_Region": "Asia-Center",
-      "AWS_subcriptionId": "281897532807",
-      "AWS_VPC": "Grasim-MAXIMO-VPC",
-      "AWS_CIDR": "10.8.159.0/24",
-      "AWS_Subnet": "",
-      "AWS_ResourceGRP": "",
-      "AWS_Region": "Asia-Center",
-      "chartOrder": {
-        "Azure": {
-          "Cost Allocation Tags": true
-        },
-        "AWS": {}
-      }
-    },
-    {
-      "id": 15,
+      "id": 5,
       "name": "Test GDNA",
       "email": "testGDNA@adityabirla.com",
       "password": "abg@123",
@@ -441,16 +137,57 @@
         },
         "AWS": {}
       }
+    },
+    {
+      "id": 6,
+      "name": "Grasim Chemical",
+      "email": "Rahul.Chandak@adityabirla.com",
+      "password": "BTmyuE_v",
+      "role": "BE"
+    },
+    {
+      "id": 7,
+      "name": "Grasim Chemical",
+      "email": "ramesh.r@adityabirla.com",
+      "password": "URs@lwrd",
+      "role": "BE"
+    },
+    {
+      "id": 8,
+      "name": "ABMCPL",
+      "email": "sanket.doshi@adityabirla.com",
+      "password": "vq_ILEWR",
+      "role": "BE"
+    },
+    {
+      "id": 9,
+      "name": "GDNA",
+      "email": "satya.pattanayak@adityabirla.com",
+      "password": "heMxZJOO",
+      "role": "BE"
+    },
+    {
+      "id": 10,
+      "name": "GDNA",
+      "email": "saravanan.sk@adityabirla.com",
+      "password": "fUkmoHxM",
+      "role": "BE"
+    },
+    {
+      "id": 11,
+      "name": "GDNA",
+      "email": "gopi.arumugam-v@adityabirla.com",
+      "password": "jASGvxZa",
+      "role": "BE"
     }
+    
   ],
   "topology_table_data": [
     {
       "title": "topo1",
       "bu": "Grasim PnF",
       "bu_id": "7",
-      "cloud_server": [
-        "AWS"
-      ],
+      "cloud_server": ["AWS"],
       "status": "Approved By User",
       "created_date": "25/09/2023",
       "topology_id": 1,
@@ -469,9 +206,7 @@
       "title": "topo1",
       "bu": "Grasim Chemical",
       "bu_id": "1",
-      "cloud_server": [
-        "AWS"
-      ],
+      "cloud_server": ["AWS"],
       "status": "Approved By User",
       "created_date": "27/09/2023",
       "topology_id": 2,
@@ -490,9 +225,7 @@
       "title": "h",
       "bu": "Grasim PnF",
       "bu_id": "7",
-      "cloud_server": [
-        "Azure"
-      ],
+      "cloud_server": ["Azure"],
       "status": "Approved By User",
       "created_date": "25/09/2023",
       "topology_id": 6,
@@ -515,10 +248,7 @@
       "title": "j",
       "bu": "Grasim PnF",
       "bu_id": "7",
-      "cloud_server": [
-        "AWS",
-        "Azure"
-      ],
+      "cloud_server": ["AWS", "Azure"],
       "status": "Draft",
       "created_date": "25/09/2023",
       "topology_id": 7,
@@ -541,9 +271,7 @@
       "title": "q",
       "bu": "Grasim PnF",
       "bu_id": "7",
-      "cloud_server": [
-        "AWS"
-      ],
+      "cloud_server": ["AWS"],
       "status": "Draft",
       "created_date": "25/09/2023",
       "topology_id": 8,
@@ -558,9 +286,7 @@
       "title": "demo",
       "bu": "Siddharth Nalwaya",
       "bu_id": null,
-      "cloud_server": [
-        "AWS"
-      ],
+      "cloud_server": ["AWS"],
       "status": "Draft",
       "created_date": "23/10/2023",
       "topology_id": 9,
@@ -570,36 +296,15 @@
       "resource_owner": "demo",
       "selected_environment": "Production",
       "id": 9
-    },
-    {
-      "title": "a",
-      "bu": "Bhuwan Phuloria",
-      "bu_id": "4",
-      "cloud_server": [
-        "AWS"
-      ],
-      "status": "Draft",
-      "created_date": "04/12/2023",
-      "topology_id": 10,
-      "business_sponser": "a",
-      "server_owner": "a",
-      "application_owner": "a",
-      "resource_owner": "a",
-      "selected_environment": "Production",
-      "id": 10
     }
   ],
   "topology": [
     {
       "bu_id": "7",
       "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
-      "node_details": [
-        "Server"
-      ],
+      "node_details": ["Server"],
       "title": "topo1",
-      "cloud_server": [
-        "AWS"
-      ],
+      "cloud_server": ["AWS"],
       "business_sponser": "hvhv",
       "server_owner": "vhv",
       "application_owner": "hhv",
@@ -610,13 +315,9 @@
     {
       "bu_id": "1",
       "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
-      "node_details": [
-        "Server"
-      ],
+      "node_details": ["Server"],
       "title": "topo1",
-      "cloud_server": [
-        "AWS"
-      ],
+      "cloud_server": ["AWS"],
       "business_sponser": "g",
       "server_owner": "gvhg",
       "application_owner": "vu",
@@ -627,13 +328,9 @@
     {
       "bu_id": "1",
       "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
-      "node_details": [
-        "Server"
-      ],
+      "node_details": ["Server"],
       "title": "topoAwsAzure",
-      "cloud_server": [
-        "Azure"
-      ],
+      "cloud_server": ["Azure"],
       "business_sponser": "jvjnv",
       "server_owner": "vhjv",
       "application_owner": "jvhjv",
@@ -644,13 +341,9 @@
     {
       "bu_id": "7",
       "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
-      "node_details": [
-        "Server"
-      ],
+      "node_details": ["Server"],
       "title": "q",
-      "cloud_server": [
-        "AWS"
-      ],
+      "cloud_server": ["AWS"],
       "business_sponser": "q",
       "server_owner": "q",
       "application_owner": "q",
@@ -661,13 +354,9 @@
     {
       "bu_id": "7",
       "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
-      "node_details": [
-        "Server"
-      ],
+      "node_details": ["Server"],
       "title": "demo",
-      "cloud_server": [
-        "AWS"
-      ],
+      "cloud_server": ["AWS"],
       "business_sponser": "demo",
       "server_owner": "demo",
       "application_owner": "demo",
@@ -678,13 +367,9 @@
     {
       "bu_id": "7",
       "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
-      "node_details": [
-        "Server"
-      ],
+      "node_details": ["Server"],
       "title": "h",
-      "cloud_server": [
-        "Azure"
-      ],
+      "cloud_server": ["Azure"],
       "business_sponser": "q",
       "server_owner": "q",
       "application_owner": "q",
@@ -695,14 +380,9 @@
     {
       "bu_id": "7",
       "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
-      "node_details": [
-        "Server"
-      ],
+      "node_details": ["Server"],
       "title": "j",
-      "cloud_server": [
-        "AWS",
-        "Azure"
-      ],
+      "cloud_server": ["AWS", "Azure"],
       "business_sponser": "b",
       "server_owner": "jhb",
       "application_owner": "hb",
@@ -713,13 +393,9 @@
     {
       "bu_id": "7",
       "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
-      "node_details": [
-        "Server"
-      ],
+      "node_details": ["Server"],
       "title": "q",
-      "cloud_server": [
-        "AWS"
-      ],
+      "cloud_server": ["AWS"],
       "business_sponser": "q",
       "server_owner": "q",
       "application_owner": "q",
@@ -730,36 +406,15 @@
     {
       "bu_id": null,
       "flowChart": "{\"nodes\":[{\"width\":100,\"height\":120,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":299.75,\"y\":107.25,\"zoom\":0.825}}",
-      "node_details": [
-        "Server"
-      ],
+      "node_details": ["Server"],
       "title": "demo",
-      "cloud_server": [
-        "AWS"
-      ],
+      "cloud_server": ["AWS"],
       "business_sponser": "demo",
       "server_owner": "demo",
       "application_owner": "demo",
       "resource_owner": "demo",
       "selected_environment": "Production",
       "id": 9
-    },
-    {
-      "bu_id": "4",
-      "flowChart": "{\"nodes\":[{\"width\":100,\"height\":124,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":385.0887096774194,\"y\":105.83870967741936,\"zoom\":0.7782258064516129}}",
-      "node_details": [
-        "Server"
-      ],
-      "title": "a",
-      "cloud_server": [
-        "AWS"
-      ],
-      "business_sponser": "a",
-      "server_owner": "a",
-      "application_owner": "a",
-      "resource_owner": "a",
-      "selected_environment": "Production",
-      "id": 10
     }
   ],
   "finops": [
@@ -801,21 +456,7 @@
   "network_icons": [
     {
       "Name": "Database",
-      "Path": "/network_icons/database.png",
-      "SubCategory": [
-        {
-          "Name": "Database 1",
-          "Path": "/network_icons/database.png"
-        },
-        {
-          "Name": "Database 2",
-          "Path": "/network_icons/database.png"
-        },
-        {
-          "Name": "Database 3",
-          "Path": "/network_icons/database.png"
-        }
-      ]
+      "Path": "/network_icons/database.png"
     },
     {
       "Name": "App Load Balancer",
@@ -920,32 +561,6 @@
         "NATting": "yes"
       },
       "id": 3
-    },
-    {
-      "topology_id": 10,
-      "node_name": "Server",
-      "fields": {
-        "Description": "a",
-        "VM_type": "",
-        "Series": "a",
-        "vCPUs": "a",
-        "RAM": "a",
-        "OS": "Ubuntu",
-        "Version": "20.04",
-        "Publisher": "Canonical",
-        "License": "BYOL",
-        "OS_Disk_size": "a",
-        "OS_Disk_Name": "a",
-        "Disk_partition": "a",
-        "Storage_Disk_Size": "a",
-        "Storage_Disk": "yes",
-        "Storage_Disk_Value": "a",
-        "Compute_options": "yes",
-        "Compute": "a",
-        "Internet_facing": "yes",
-        "NATting": "yes"
-      },
-      "id": 4
     }
   ],
   "allVMsData": [

@@ -167,7 +167,7 @@ function Forecast() {
       }
     });
   };
-
+  console.log("clouddropdown", cloudDropdown);
   function getReport() {
     setLoader(true);
     setCloud(cloudDropdown);
@@ -183,14 +183,12 @@ function Forecast() {
         .then(() => setLoader(false));
     } else {
       let body = {
-        gte: timePeriod[0],
-        lte: timePeriod[1],
-        account_id: subscIdDropdown,
-        account_name: subsIndexName,
+        cloud: "AWS",
+        account_name: subACCName,
       };
-      // fetchDataAWS(body)
-      //   .then((data) => setRes(data))
-      //   .then(() => setLoader(false));
+      fetchDataAWS(body)
+        .then((data) => setRes(data))
+        .then(() => setLoader(false));
     }
   }
 
@@ -214,7 +212,7 @@ function Forecast() {
   async function fetchDataAWS(body: any) {
     let resData: any;
     try {
-      resData = await fetch(`${finopsServerBaseUrl}/awsFinopsDashboardData`, {
+      resData = await fetch(`${finopsServerBaseUrl}/allForcastedReportsAWS`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -281,8 +279,11 @@ function Forecast() {
               cloud={cloud}
               // selectedReportsDropDown={selectedReportsDropDown}
               cloudDropdown={cloudDropdown}
+              setCloudDropdown={setCloudDropdown}
+              handleCloudChange={handleCloudChange}
               getGraphFormat={getGraphFormat}
               isOpen={isOpen}
+              singleReport={singleReport}
               setIsOpen={setIsOpen}
               timePeriod={timePeriod}
               // selectedReports={selectedReports}
@@ -304,6 +305,7 @@ function Forecast() {
             handleCloudChange={handleCloudChange}
             handleSubNameChange={handleSubNameChange}
             cloud={cloud}
+            setCloudDropdown={setCloudDropdown}
             cloudDropdown={cloudDropdown}
             cloudTitle={cloudTitle}
             subACCName={subACCName}
@@ -459,6 +461,7 @@ function FinopsFilters({
   timePeriod,
   setTimePeriod,
   getReport,
+  setCloudDropdown,
   // setSelectedReportsDropDown,
   // selectedReportsDropDown,
   setSingleReport,
@@ -711,7 +714,9 @@ function FinopsFilters({
       <div className="w-full mx-2 flex items-start gap-2 justify-start">
         <span>Across Account</span>
         <Switch
-          onChange={(res) => setSingleReport(res)}
+          onChange={(res) => {
+            setSingleReport(res), setCloudDropdown("Azure");
+          }}
           checked={singleReport}
           uncheckedIcon={false}
           checkedIcon={false}
@@ -795,7 +800,7 @@ function FinopsFilters({
         <div className="w-full mx-2 mt-4 flex justify-center">
           <button
             className="bg-red-500 text-white py-1 px-2 rounded disabled:bg-gray-500"
-            disabled={!subACCName || cloudDropdown == "AWS"}
+            disabled={!subACCName}
             onClick={getReport}
           >
             Get Report
@@ -863,6 +868,9 @@ function ReportsCard({
   cloudDropdown,
   getGraphFormat,
   timePeriod,
+  handleCloudChange,
+  setCloudDropdown,
+  singleReport,
 }: // selectedReports,
 any) {
   async function unpinGraph(title: any) {
@@ -1151,7 +1159,7 @@ function CrossPlatformReports({ res, timePeriod, singleReport }: any) {
               Array.isArray(e.BarGraph.data)
             ) {
               return (
-                <div key={i} className=" max-h-[280px]">
+                <div key={i} className="card max-h-[280px]">
                   <BarGraph
                     id={i}
                     date={timePeriod}
@@ -1227,9 +1235,9 @@ function CrossPlatformReports({ res, timePeriod, singleReport }: any) {
             }
           })}
       {res &&
-        res[cloud] &&
-        res[cloud].Table &&
-        res[cloud].Table?.map((e: any, i: any) => (
+        res.ForecastBudget &&
+        res.ForecastBudget.Table &&
+        res.ForecastBudget.Table?.map((e: any, i: any) => (
           <div key={i} className="card w-1/2">
             {e && e.data && e.data.length > 0 && <Table data={e} />}
           </div>

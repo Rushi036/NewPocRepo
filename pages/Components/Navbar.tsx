@@ -78,13 +78,25 @@ const Navbar = () => {
 
   return (
     <div onClick={handleOutsideClick}>
-      <nav className="bg-white border-gray-700 shadow-lg w-full z-20 h-10 flex fixed top-0 right-0">
+      <nav
+        className="bg-white border-gray-700 shadow-lg w-full z-20 h-10 flex fixed top-0 right-0"
+        // style={{
+        //   background:
+        //     "linear-gradient(90deg, #AF1E23 -43.96%, #F37032 112.99%)",
+        // }}
+      >
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between p-4">
           <Link href="/" className="flex items-center"></Link>
         </div>
 
         <div className="flex ml-auto mr-5 items-center">
-          <AccountCircleIcon className="w-8 h-8 mr-2" />
+          <button
+            // style={{ color: "white" }}
+            className="flex items-center"
+          >
+            <AccountCircleIcon className="w-8 h-8 mr-2" />
+            {/* Additional button content */}
+          </button>
 
           <div className="relative">
             <span
