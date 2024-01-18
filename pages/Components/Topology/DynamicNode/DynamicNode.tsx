@@ -4,6 +4,7 @@ import { Handle, Position } from "reactflow";
 import Modal from "react-modal";
 import Link from "next/link";
 
+
 const handleStyle = { left: 10 };
 
 const memoTopo = (data: any) => {

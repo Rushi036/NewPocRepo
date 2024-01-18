@@ -14,6 +14,12 @@ import "reactflow/dist/style.css";
 import { getIcons } from "@/pages/api/getIcons";
 import SimpleFloatingEdge from "./SimpleFloatingEdge";
 import { MdFullscreen, MdFullscreenExit } from "react-icons/md";
+import { PiWaveSquareLight, PiWaveSine } from "react-icons/pi";
+import { AiOutlineDash } from "react-icons/ai";
+import { BsDashLg } from "react-icons/bs";
+import ResizableNode from './ResizableNode';
+
+
 
 // import './Topology.css';
 
@@ -61,7 +67,7 @@ const fitViewOptions = {
   padding: 3,
 };
 
-const nodeTypes = { selectorNode: DynamicNode };
+const nodeTypes = { selectorNode: DynamicNode, resizableNode: ResizableNode };
 
 const AddNodeOnEdgeDrop = (props: any) => {
   const reactFlowWrapper = useRef<any>(null);
@@ -76,8 +82,18 @@ const AddNodeOnEdgeDrop = (props: any) => {
 
   const flowKey = "example-flow";
   const [rfInstance, setRfInstance] = useState<any>(null);
+  const [curveLine, setCurveLine] = useState<any>(true);
+  const [dashedLine, setDashedLine] = useState<any>(true);
   const edgeTypes: any = {
-    floating: SimpleFloatingEdge,
+    floating: (props: any) => (
+      <SimpleFloatingEdge
+        {...props}
+        edges={edges}
+        setEdges={setEdges}
+        curveLine={curveLine}
+        dashedLine={dashedLine}
+      />
+    ),
   };
 
   const onConnectStart = useCallback((_: any, { nodeId }: any) => {
@@ -94,7 +110,7 @@ const AddNodeOnEdgeDrop = (props: any) => {
         const id = getId();
         const newNode = {
           id,
-          type: "selectorNode",
+          type: props.network_icons[selectedNode].Name == "Container"?"resizableNode":"selectorNode",
           // we are removing the half of the node width (75) to center the new node
           position: project({
             x: event.clientX - left - 75,
@@ -103,7 +119,9 @@ const AddNodeOnEdgeDrop = (props: any) => {
           connectable: true,
           data: {
             label: `Node ${id}`,
-            Path: props.network_icons[selectedNode].SubCategory? props.network_icons[selectedNode].SubCategory[selectedSubNode] : props.network_icons[selectedNode],
+            Path: props.network_icons[selectedNode].SubCategory
+              ? props.network_icons[selectedNode].SubCategory[selectedSubNode]
+              : props.network_icons[selectedNode],
           },
         };
 
@@ -120,6 +138,7 @@ const AddNodeOnEdgeDrop = (props: any) => {
             // markerEnd: {
             //   type: MarkerType.Arrow,
             // },
+            label: "",
             markerEnd: { type: MarkerType.ArrowClosed },
           })
         );
@@ -177,26 +196,45 @@ const AddNodeOnEdgeDrop = (props: any) => {
         >
           Reset
         </button>
-        {!props.fullScreen && (
-          <button
-            className=" z-20 left-1 px-2 py-1 bg-slate-300 border border-slate-400 rounded-lg"
+        <div className="flex gap-2">
+          <div
+            className="select-none cursor-pointer z-20 left-1 px-2 py-1 bg-slate-300 border border-slate-400 rounded-lg flex justify-center items-center"
             onClick={() => {
-              props.setFullScreen(true);
+              setCurveLine(!curveLine);
             }}
           >
-            <MdFullscreen />
-          </button>
-        )}
-        {props.fullScreen && (
-          <button
-            className=" z-20 left-1 px-2 py-1 bg-slate-300 border border-slate-400 rounded-lg"
+            {curveLine ? <PiWaveSine /> : <PiWaveSquareLight />}
+          </div>
+          <div
+            className="select-none cursor-pointer z-20 left-1 px-2 py-1 bg-slate-300 border border-slate-400 rounded-lg flex justify-center items-center"
             onClick={() => {
-              props.setFullScreen(false);
+              setDashedLine(!dashedLine);
             }}
           >
-            <MdFullscreenExit />
-          </button>
-        )}
+            {dashedLine ? <AiOutlineDash /> : <BsDashLg />
+}
+          </div>
+          {!props.fullScreen && (
+            <button
+              className=" z-20 left-1 px-2 py-1 bg-slate-300 border border-slate-400 rounded-lg"
+              onClick={() => {
+                props.setFullScreen(true);
+              }}
+            >
+              <MdFullscreen />
+            </button>
+          )}
+          {props.fullScreen && (
+            <button
+              className=" z-20 left-1 px-2 py-1 bg-slate-300 border border-slate-400 rounded-lg"
+              onClick={() => {
+                props.setFullScreen(false);
+              }}
+            >
+              <MdFullscreenExit />
+            </button>
+          )}
+        </div>
       </div>
 
       <ReactFlow
@@ -241,7 +279,12 @@ function Topology(props: any) {
         {
           id: "0",
           type: "selectorNode",
-          data: { label: "Node", Path: network_icons[selectedNode].SubCategory? network_icons[selectedNode].SubCategory[selectedSubNode]:network_icons[selectedNode] },
+          data: {
+            label: "Node",
+            Path: network_icons[selectedNode].SubCategory
+              ? network_icons[selectedNode].SubCategory[selectedSubNode]
+              : network_icons[selectedNode],
+          },
           position: { x: 0, y: 50 },
         },
       ]);
@@ -277,7 +320,7 @@ function Topology(props: any) {
         <div
           className={
             fullScreen
-              ? "editor-options min-h-[50vh] h-fit max-h-[90vh] overflow-y-auto"
+              ? "editor-options min-h-[50vh] h-[calc(100vh-2rem)] overflow-y-auto"
               : "editor-options min-h-[50vh] h-fit max-h-[60vh] overflow-y-auto"
           }
         >
@@ -294,7 +337,7 @@ function Topology(props: any) {
                         }}
                         key={i}
                         className={
-                          Node === i &&  !x?.SubCategory
+                          Node === i && !x?.SubCategory
                             ? "selected-node flex !flex-col"
                             : "flex !flex-col"
                         }
