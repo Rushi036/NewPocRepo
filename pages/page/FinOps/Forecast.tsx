@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { DateRangePicker } from "rsuite";
 import moment from "moment";
-import fun, { useAppContext } from "../../Components/AppContext";
+import fun, { useAppContext } from "@/pages/Components/AppContext";
 import "rsuite/dist/rsuite.min.css";
 import { BsPinAngleFill, BsPinAngle, BsTable } from "react-icons/bs";
 import { getSubscriptionIds } from "@/pages/api/FinopsApi/GetSubscriptionId";
@@ -890,7 +890,7 @@ any) {
     let data = { ...graphFormat, chartOrder: chartOrder };
     await unpinGraphAPI(graphFormat?.id, data).then(getGraphFormat);
   }
-
+res && res.Table && res.Table[0] && console.log("legth",res.Table[0].headers.length)
   async function pinGraph(title: any) {
     let chartOrder;
     if (cloudDropdown == "AWS") {
@@ -996,7 +996,14 @@ any) {
           if (graphFormat.chartOrder?.[cloud]?.[e.title])
             return (
               <>
-                <div key={i} className="card">
+                <div
+                  key={i}
+                  // className={
+                  //   e.Table && e.Table[0] &&
+                  //   e.Table[0].headers.length >= 5 ? "card !min-w-full" : "card"
+                  // }
+                  className = "card !min-w-full"
+                >
                   <span
                     className="flex justify-end cursor-pointer"
                     onClick={() => unpinGraph(e.title)}
@@ -1085,7 +1092,14 @@ any) {
           if (!graphFormat.chartOrder?.[cloud]?.[e.title])
             return (
               <>
-                <div key={i} className="card">
+                <div
+                  key={i}
+                  // className={
+                  //   e.Table && e.Table[0] &&
+                  //   e.Table[0].headers.length >= 5 ? "card !min-w-full" : "card"
+                  // }
+                  className = "card !min-w-full"
+                >
                   <span
                     className="flex justify-end cursor-pointer"
                     onClick={() => pinGraph(e.title)}

@@ -310,7 +310,7 @@ const CostSummary = () => {
                 )}
               </Tabs>
             </div>
-            <div className="w-full">
+            <div className="w-[100%] overflow-y-auto overflow-x-hidden">
               <TabPanel value="aws">
                 {/* <div className="flex h-11 max-w-[25rem] min-w-[25rem] bg-white mb-4 rounded-xl ml-auto justify-center  pl-4 pb-4">
                   <div className="justify-center py-3 px-2 text-md text-gray-600">
@@ -379,9 +379,9 @@ const CostSummary = () => {
                   {/* Second Column */}
                   <div
                     className="w-[50%] flex flex-wrap gap-4"
-                    style={{ height: "max-content" }}
+                    style={{ height: "max-content", maxWidth: "50%" }}
                   >
-                    <div className="flex h-11  w-full min-w-[25rem] ml-4 bg-white rounded-xl  justify-center  pl-4 pb-4">
+                    <div className="flex h-11 w-full overflow-x-auto ml-4 bg-white rounded-xl  justify-center  pl-4 pb-4">
                       <div className="justify-center py-3 px-2 text-md text-gray-600">
                         Select Date Range :
                       </div>
@@ -411,8 +411,12 @@ const CostSummary = () => {
                           Array.isArray(e.BarGraph.data)
                         ) {
                           return (
-                            <div key={i} className="pl-4 w-full">
-                              <div className="bg-white p-4 rounded-lg">
+                            <div
+                              key={i}
+                              className="pl-4 w-full overflow-auto"
+                              style={{ maxHeight: 300 }}
+                            >
+                              <div className="bg-white p-4 rounded-lg overflow-y-auto">
                                 <BarGraph
                                   // id={"new2"}
                                   // date={""}
@@ -437,8 +441,12 @@ const CostSummary = () => {
                           Array.isArray(e.LineChart.data)
                         ) {
                           return (
-                            <div key={i} className="pl-4 w-full">
-                              <div className="bg-white p-4 rounded-lg">
+                            <div
+                              key={i}
+                              className="pl-4 w-full overflow-auto"
+                              style={{ maxHeight: 300 }}
+                            >
+                              <div className="bg-white p-4 rounded-lg overflow-y-auto">
                                 <LineChartComponent
                                   // id={i}
                                   data={e.LineChart}
@@ -538,8 +546,12 @@ const CostSummary = () => {
                           Array.isArray(e.BarGraph.data)
                         ) {
                           return (
-                            <div key={i} className="pl-4 w-full">
-                              <div className="bg-white p-4 rounded-lg">
+                            <div
+                              key={i}
+                              className="pl-4 w-full overflow-auto"
+                              style={{ maxHeight: 300 }}
+                            >
+                              <div className="bg-white p-4 rounded-lg overflow-y-auto">
                                 <BarGraph
                                   // id={"new2"}
                                   // date={""}
@@ -566,8 +578,8 @@ const CostSummary = () => {
                           Array.isArray(e.LineChart.data)
                         ) {
                           return (
-                            <div key={i} className="pl-4 w-full">
-                              <div className="bg-white p-4 rounded-lg">
+                            <div key={i} className="pl-4 w-full overflow-auto" style={{maxHeight:300}}>
+                              <div className="bg-white p-4 rounded-lg overflow-y-auto">
                                 <LineChartComponent
                                   // id={i}
                                   data={e.LineChart}

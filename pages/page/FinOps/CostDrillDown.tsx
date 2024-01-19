@@ -975,7 +975,7 @@ function ReportsCard({
               ?.includes(e.PieChart.title)
           ) {
             return (
-              <div key={i} className="card w-1/2">
+              <div key={i} className="card w-1/2 max-h-[550px]">
                 <span
                   className="flex justify-end cursor-pointer"
                   onClick={() => pinGraph(e.PieChart.title)}
@@ -1000,8 +1000,8 @@ function ReportsCard({
                 key={i}
                 className={
                   e.LineChart.series?.data?.length >= 20
-                    ? "card !min-w-full overflow-y-auto"
-                    : "card w-1/2 overflow-y-auto"
+                    ? "card !min-w-full overflow-y-auto max-h-[550px]"
+                    : "card w-1/2 overflow-y-auto max-h-[550px]"
                 }
               >
                 <span
@@ -1024,7 +1024,7 @@ function ReportsCard({
               ?.includes(e.BarGraph.title)
           ) {
             return (
-              <div key={i} className="card">
+              <div key={i} className="card max-h-[550px]">
                 <span
                   className="flex justify-end cursor-pointer"
                   onClick={() => pinGraph(e.BarGraph.title)}
@@ -1080,7 +1080,7 @@ function CrossPlatformReports({ res, timePeriod, singleReport }: any) {
                 <PieChartComponent
                   id={i}
                   data={e.PieChart}
-                  height={280}
+                  height={245}
                   legendEnabled={false}
                 />
               </div>

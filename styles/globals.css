@@ -199,7 +199,8 @@ body {
   width: 50%;
   min-width: 400px;
   box-sizing: border-box;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   /* height: 500px; */
 }
 .card > div {

@@ -21,7 +21,7 @@ const Login = () => {
   // let [loginEmployee, { data: loginData }] = useLoginEmployeeMutation();
   const { accounts } = useMsal();
   const account: any = accounts[0];
-  const { authenticated, toggleAuthenticated } = useAppContext();
+  const { authenticated, toggleAuthenticated} = useAppContext();
   const handleEmailChange = (e: any) => {
     setEmail(e.target.value);
   };
@@ -32,104 +32,99 @@ const Login = () => {
 
   //----------------------SSO LOGIN CODE ------------------------------------------------
 
-  // const request = {
-  //   scopes: ["user.read", "user.readbasic.all"],
-  // };
+  const request = {
+    scopes: ["user.read", "user.readbasic.all"],
+  };
 
-  // const handleSignIn = () => {
-  //   instance
-  //     .loginPopup(request)
-  //     .then((response: any) => {
-  //       // getEmployeesImages(response.accessToken);
-  //       // //console.log(response.accessToken);
-  //       sessionStorage.setItem("accessTokenMSAL", response.accessToken);
-  //       // if (isAuthenticated) {
-  //       //   router.push("/page/Dashboard/Dashboard");
-  //       // }
-  //     })
-  //     .catch((error: any) => {
-  //       //console.log("Error:", error);
-  //     });
-  // };
-  // console.log(isAuthenticated)
-  // useEffect(() => {
-  //   if (isAuthenticated) {
-  //     router.push("/page/Dashboard/Dashboard");
-  //   }
-  // }, [isAuthenticated]);
-  // console.log("isauthenticated", isAuthenticated);
-  // useEffect(() => {
-  //   if (account?.idTokenClaims) {
-  //     let reshead: any;
-  //     const email: string = account.idTokenClaims.preferred_username;
-  //     const name: string = account.idTokenClaims.name;
-  //     // console.log("------------------",account.idTokenClaims);
-  //     sessionStorage.setItem("userEmail", email);
-  //     sessionStorage.setItem("userName", name);
-  //     const getData = async () => {
-  //       const fetchedData = await getUserRole(email);
-  //       // setUserData(fetchedData);
-  //       // console.log("response data--------------", fetchedData.data.role);
-  //       if (fetchedData) {
-  //         sessionStorage.setItem("userRole", fetchedData.data.role);
-  // sessionStorage.setItem("userName", fetchedData.data.userName);
-  // sessionStorage.setItem("userEmail", fetchedData.data.adId);
-  // sessionStorage.setItem(
-  //           "businessLogo",
-  //           fetchedData.data.businessLogo
-  //         );
-  //       }
-  //     };
-  //     getData();
-  //   }
-  // }, [account]);
+  const handleSignIn = () => {
+    instance
+      .loginPopup(request)
+      .then((response: any) => {
+        // getEmployeesImages(response.accessToken);
+        // //console.log(response.accessToken);
+        sessionStorage.setItem("accessTokenMSAL", response.accessToken);
+      })
+      .catch((error: any) => {
+        console.log("Error:", error);
+      });
+  };
+  useEffect(() => {
+    if (isAuthenticated && authenticated) {
+      router.push("/page/Dashboard");
+    }
+  }, [isAuthenticated, authenticated]);
+  console.log("isauthenticated", isAuthenticated, authenticated);
+  useEffect(() => {
+    if (account?.idTokenClaims) {
+      let reshead: any;
+      const email: string = account.idTokenClaims.preferred_username;
+      const name: string = account.idTokenClaims.name;
+      // console.log("------------------",account.idTokenClaims);
+      // sessionStorage.setItem("userEmail", email);
+      // sessionStorage.setItem("userName", name);
+      const getData = async () => {
+        const fetchedData = await getUserRole(email);
+        // setUserData(fetchedData);
+        // console.log("response data--------------", fetchedData.data.role);
+        if (fetchedData && fetchedData.data) {
+          toggleAuthenticated(true);
+          sessionStorage.setItem("userRole", fetchedData.data.role);
+          sessionStorage.setItem("userName", fetchedData.data.userName);
+          sessionStorage.setItem("userEmail", fetchedData.data.adId);
+          sessionStorage.setItem("businessLogo", fetchedData.data.businessLogo);
+          // router.push("/page/Dashboard");
+        } else {
+          window.alert("User Not Found!!");
+        }
+      };
+      getData();
+    }
+  }, [account]);
 
   //----------------------SSO LOGIN CODE ENDS------------------------------------------------
 
   // console.log("------------", email, password);
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    async function dataFetch() {
-      const data = await login(email, password);
-      // console.log("------------------", data);
-      if (data?.data[0]) {
-        const getData = async () => {
-          const fetchedData = await getUserRole(email);
-          // setUserData(fetchedData);
-          // console.log("response data--------------", fetchedData.data);
-          if (fetchedData && fetchedData.data) {
-            toggleAuthenticated();
-            sessionStorage.setItem("userRole", fetchedData.data.role);
-            sessionStorage.setItem("userName", fetchedData.data.userName);
-            sessionStorage.setItem("userEmail", fetchedData.data.adId);
-            sessionStorage.setItem(
-              "businessLogo",
-              fetchedData.data.businessLogo
-            );
-            router.push("/page/Dashboard");
-          } else {
-            window.alert(
-              "User Not Found!!"
-            );
-          }
-        };
-        getData();
-        // sessionStorage.setItem("userEmail", data.data[0].email);
-        // sessionStorage.setItem("userName", data.data[0].name);
-        // sessionStorage.setItem("userRole", data.data[0].role);
-        if (data.data[0].role != "ADMIN") {
-          sessionStorage.setItem("bu_id", data.data[0].id);
-        }
-        // }else {
-      } else {
-        window.alert(
-          "Login failed. Please check your email and password and try again."
-        );
-      }
-    }
+  // const handleSubmit = (e: any) => {
+  //   e.preventDefault();
+  //   async function dataFetch() {
+  //     const data = await login(email, password);
+  //     // console.log("------------------", data);
+  //     if (data?.data[0]) {
+  //       const getData = async () => {
+  //         const fetchedData = await getUserRole(email);
+  //         // setUserData(fetchedData);
+  //         // console.log("response data--------------", fetchedData.data);
+  //         if (fetchedData && fetchedData.data) {
+  //           toggleAuthenticated();
+  //           sessionStorage.setItem("userRole", fetchedData.data.role);
+  //           sessionStorage.setItem("userName", fetchedData.data.userName);
+  //           sessionStorage.setItem("userEmail", fetchedData.data.adId);
+  //           sessionStorage.setItem(
+  //             "businessLogo",
+  //             fetchedData.data.businessLogo
+  //           );
+  //           router.push("/page/Dashboard");
+  //         } else {
+  //           window.alert("User Not Found!!");
+  //         }
+  //       };
+  //       getData();
+  //       // sessionStorage.setItem("userEmail", data.data[0].email);
+  //       // sessionStorage.setItem("userName", data.data[0].name);
+  //       // sessionStorage.setItem("userRole", data.data[0].role);
+  //       if (data.data[0].role != "ADMIN") {
+  //         sessionStorage.setItem("bu_id", data.data[0].id);
+  //       }
+  //       // }else {
+  //     } else {
+  //       window.alert(
+  //         "Login failed. Please check your email and password and try again."
+  //       );
+  //     }
+  //   }
 
-    dataFetch();
-  };
+  //   dataFetch();
+  // };
 
   return (
     <div className="">
@@ -151,7 +146,7 @@ const Login = () => {
           <h1 className="text-xl font-bold pb-4 leading-tight tracking-tight text-gray-900 ">
             Sign in to your account
           </h1>
-          <form className="md:space-y-4 w-full" onSubmit={handleSubmit}>
+          {/* <form className="md:space-y-4 w-full" onSubmit={handleSubmit}>
             <div className="mb-4">
               <i className="fa fa-envelope icon"></i>
               <label htmlFor="email" className="block pb-2 text-gray-600">
@@ -190,14 +185,14 @@ const Login = () => {
             >
               Sign in
             </button>
-          </form>
-          {/* <button
+          </form> */}
+          <button
             className="flex flex-row-reverse items-center p-1 btn join-item rounded-none bg-white text-black border-2 "
             onClick={handleSignIn}
           >
             Sign In with Microsoft
             <img src="/microsoft_logo.png" alt="" width={30} height={30} />
-          </button> */}
+          </button>
           <br></br>
         </div>
       </div>
