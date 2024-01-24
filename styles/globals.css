@@ -59,6 +59,7 @@ body {
   height: 100%;
 }
 .topology-editor .editor-options {
+  padding: 5px !important;
   width: 25%;
   background: whitesmoke;
   border-radius: 10px;
@@ -83,7 +84,7 @@ body {
   width: 135px;
   text-align: center;
   cursor: pointer;
-  margin: 10px 0;
+  /* margin: 5px 0; */
 }
 .topology-editor .editor-options .modal .close-modal {
   position: absolute;
@@ -112,8 +113,33 @@ body {
   justify-content: flex-start;
   gap: 5px;
 }
+
+
 .editor-options ul li img {
   height: 25px;
+}
+
+.editor-options-container {
+  background: whitesmoke;
+  border: 1px solid #c5d3ef;
+}
+.editor-options-container ul {
+  /* 
+  display: flex;
+  flex-direction: column; */
+}
+.editor-options-container ul li {
+  /* gap: 5px; */
+  gap: 0px;
+  /* display: flex;
+  flex-direction: row;
+  /* align-items: center; */
+  /* justify-content: flex-start;  */
+  font-size: 8px;
+}
+
+.editor-options-container ul li img {
+  height: 15px;
 }
 
 .topology-editor .editor-options .modal ul li {

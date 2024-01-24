@@ -91,10 +91,12 @@ const Login = () => {
     e.preventDefault();
     async function dataFetch() {
       const data = await login(email, password);
+      // const data = await login(email, password);
       // console.log("------------------", data);
       if (data?.data[0]) {
         const getData = async () => {
-          const fetchedData = await getUserRole(email);
+          const fetchedData = {data:{role:"BE",userName:"Rajit", adId:email,businessLogo:""}};
+          // const fetchedData = await getUserRole(email);
           // setUserData(fetchedData);
           // console.log("response data--------------", fetchedData.data);
           if (fetchedData && fetchedData.data) {

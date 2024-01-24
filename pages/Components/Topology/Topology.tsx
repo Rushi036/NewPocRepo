@@ -1,4 +1,11 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import ReactFlow, {
   useNodesState,
   useEdgesState,
@@ -17,9 +24,7 @@ import { MdFullscreen, MdFullscreenExit } from "react-icons/md";
 import { PiWaveSquareLight, PiWaveSine } from "react-icons/pi";
 import { AiOutlineDash } from "react-icons/ai";
 import { BsDashLg } from "react-icons/bs";
-import ResizableNode from './ResizableNode';
-
-
+import ResizableNode from "./ResizableNode";
 
 // import './Topology.css';
 
@@ -67,38 +72,57 @@ const fitViewOptions = {
   padding: 3,
 };
 
-const nodeTypes = { selectorNode: DynamicNode, resizableNode: ResizableNode };
-
 const AddNodeOnEdgeDrop = (props: any) => {
+  const [nodes, setNodes, onNodesChange] = useNodesState(props?.initialNodes);
+  const [curveLine, setCurveLine] = useState<any>(true);
+  const { project, setViewport } = useReactFlow();
+  const nodeTypes: any = useMemo(
+    () => ({
+      selectorNode: DynamicNode,
+      resizableNode: (props: any) => (
+        <ResizableNode
+          {...props}
+          nodes={nodes}
+          setNodes={setNodes}
+          id={getId}
+          project={project}
+        />
+      ),
+    }),
+    []
+  );
   const reactFlowWrapper = useRef<any>(null);
   const connectingNodeId = useRef(null);
-  const [nodes, setNodes, onNodesChange] = useNodesState(props?.initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-  const { project, setViewport } = useReactFlow();
   const onConnect = useCallback(
     (params: any) => setEdges((eds: any) => addEdge(params, eds)),
     []
   );
-
+  const [dashedLine, setDashedLine] = useState<any>(true);
+  const edgeTypes: any = useMemo(
+    () => ({
+      floating: (props: any) => (
+        <SimpleFloatingEdge
+          {...props}
+          edges={edges}
+          setEdges={setEdges}
+          curveLine={curveLine}
+          dashedLine={dashedLine}
+        />
+      ),
+    }),
+    [curveLine, dashedLine]
+  );
   const flowKey = "example-flow";
   const [rfInstance, setRfInstance] = useState<any>(null);
-  const [curveLine, setCurveLine] = useState<any>(true);
-  const [dashedLine, setDashedLine] = useState<any>(true);
-  const edgeTypes: any = {
-    floating: (props: any) => (
-      <SimpleFloatingEdge
-        {...props}
-        edges={edges}
-        setEdges={setEdges}
-        curveLine={curveLine}
-        dashedLine={dashedLine}
-      />
-    ),
-  };
 
   const onConnectStart = useCallback((_: any, { nodeId }: any) => {
     connectingNodeId.current = nodeId;
   }, []);
+
+  useEffect(() => {
+    console.log("nodes", nodes);
+  }, [nodes]);
 
   const onConnectEnd = useCallback(
     (event: any) => {
@@ -108,9 +132,12 @@ const AddNodeOnEdgeDrop = (props: any) => {
         // we need to remove the wrapper bounds, in order to get the correct position
         const { top, left } = reactFlowWrapper.current.getBoundingClientRect();
         const id = getId();
-        const newNode = {
+        let newNode: any = {
           id,
-          type: props.network_icons[selectedNode].Name == "Container"?"resizableNode":"selectorNode",
+          type:
+            props.network_icons[selectedNode].Name == "Container"
+              ? "resizableNode"
+              : "selectorNode",
           // we are removing the half of the node width (75) to center the new node
           position: project({
             x: event.clientX - left - 75,
@@ -118,12 +145,23 @@ const AddNodeOnEdgeDrop = (props: any) => {
           }),
           connectable: true,
           data: {
-            label: `Node ${id}`,
+            id: id,
+            nodes: [],
+            label:
+              props.network_icons[selectedNode].Name == "Container"
+                ? `Container`
+                : `Node`,
             Path: props.network_icons[selectedNode].SubCategory
               ? props.network_icons[selectedNode].SubCategory[selectedSubNode]
               : props.network_icons[selectedNode],
           },
         };
+
+        // newNode.data.nodes = [...nodes, newNode];
+        newNode.data.nodes =
+          props.network_icons[selectedNode].Name == "Container"
+            ? [newNode]
+            : [];
 
         setNodes((nds: any) => nds.concat(newNode));
         setEdges((eds: any) =>
@@ -147,31 +185,34 @@ const AddNodeOnEdgeDrop = (props: any) => {
     [project]
   );
 
-  const onRestore = useCallback(() => {
-    const restoreFlow = async () => {
-      let flow: any;
-      flow = JSON.parse(props.topology || "{}");
+  // const onRestore = useCallback(() => {
+  //   const restoreFlow = async () => {
+  //     let flow: any;
+  //     flow = JSON.parse(props.topology || "{}");
 
-      if (flow) {
-        const { x = 0, y = 0, zoom = 1 } = flow.viewport;
-        setNodes(flow.nodes || []);
-        setEdges(flow.edges || []);
-        setViewport({ x, y, zoom });
-      }
-    };
+  //     if (flow) {
+  //       const { x = 0, y = 0, zoom = 1 } = flow.viewport;
+  //       setNodes(flow.nodes || []);
+  //       setEdges(flow.edges || []);
+  //       setViewport({ x, y, zoom });
+  //     }
+  //   };
 
-    restoreFlow();
-  }, [props.topology, setEdges, setNodes, setViewport]);
+  //   restoreFlow();
+  // }, [props.topology, setEdges, setNodes, setViewport]);
 
   const onReset = useCallback(() => {
     const resetFlow = async () => {
       const x = 0,
         y = 0,
         zoom = 1;
+      setViewport({ x, y, zoom });
       setNodes([]);
       setEdges([]);
-      setViewport({ x, y, zoom });
       selectedNode = null;
+      selectedSubNode = null;
+      props.setSubNode(null);
+      props.setNode(null);
       props.setInitialNodes(null);
     };
 
@@ -179,9 +220,9 @@ const AddNodeOnEdgeDrop = (props: any) => {
   }, [setEdges, setNodes, setViewport]);
 
   // console.log(props.topology)
-  useEffect(() => {
-    props.topology && onRestore();
-  }, [props.topology]);
+  // useEffect(() => {
+  //   props.topology && onRestore();
+  // }, [props.topology]);
 
   return (
     <div className="wrapper relative" ref={reactFlowWrapper}>
@@ -211,8 +252,7 @@ const AddNodeOnEdgeDrop = (props: any) => {
               setDashedLine(!dashedLine);
             }}
           >
-            {dashedLine ? <AiOutlineDash /> : <BsDashLg />
-}
+            {dashedLine ? <AiOutlineDash /> : <BsDashLg />}
           </div>
           {!props.fullScreen && (
             <button
@@ -275,19 +315,30 @@ function Topology(props: any) {
 
   useEffect(() => {
     if (network_icons && selectedNode != null && !initialNodes) {
-      setInitialNodes([
+      let firstNode: any = [
         {
           id: "0",
-          type: "selectorNode",
+          type:
+            network_icons[selectedNode].Name == "Container"
+              ? "resizableNode"
+              : "selectorNode",
           data: {
-            label: "Node",
+            id: "0",
+            nodes: [],
+            setNodes: setNode,
+            label:
+              network_icons[selectedNode].Name == "Container"
+                ? `Container`
+                : `Node`,
             Path: network_icons[selectedNode].SubCategory
               ? network_icons[selectedNode].SubCategory[selectedSubNode]
               : network_icons[selectedNode],
           },
           position: { x: 0, y: 50 },
         },
-      ]);
+      ];
+      firstNode[0].data.nodes = firstNode;
+      setInitialNodes(firstNode);
     }
   }, [initialNodes, network_icons, selectedNode]);
 
@@ -311,6 +362,8 @@ function Topology(props: any) {
                 setInitialNodes={setInitialNodes}
                 setFullScreen={setFullScreen}
                 fullScreen={fullScreen}
+                setNode={setNode}
+                setSubNode={setSubNode}
               />
             </>
           ) : (
@@ -332,14 +385,28 @@ function Topology(props: any) {
                     return (
                       <li
                         onClick={() => {
-                          selectedNode = i;
-                          setNode(i);
+                          if (
+                            x.Name == "Container" &&
+                            (selectedNode || selectedSubNode)
+                          ) {
+                            selectedNode = i;
+                            setNode(i);
+                          } else if (x.Name != "Container") {
+                            selectedNode = i;
+                            setNode(i);
+                          }
                         }}
                         key={i}
                         className={
-                          Node === i && !x?.SubCategory
+                          x.Name == "Container"
+                            ? selectedNode || selectedSubNode
+                              ? Node === i && !x?.SubCategory
+                                ? "selected-node flex !flex-col"
+                                : "flex !flex-col"
+                              : " bg-slate-300 rounded-xl border border-slate-400 grayscale flex !flex-col "
+                            : Node === i && !x?.SubCategory
                             ? "selected-node flex !flex-col"
-                            : "flex !flex-col"
+                            : "flex !flex-col "
                         }
                       >
                         <div className="flex gap-2">

@@ -89,7 +89,7 @@ function SimpleFloatingEdge({
         strokeWidth={5}
         markerEnd={markerEnd}
         style={style}
-        stroke-dasharray={dashedLine ? "4" : "0"}
+        strokeDasharray={dashedLine ? "4" : "0"}
       />
       {/* <BaseEdge path={edgePath} markerEnd={markerEnd} style={style} /> */}
       <EdgeLabelRenderer>
