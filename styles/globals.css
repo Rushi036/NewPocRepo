@@ -1,9 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap"); */
-@import url("https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap");
-/* @import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap') */
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -23,29 +22,9 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-  /* font-family: "Oxygen", sans-serif !important; */
-}
-body,
-* {
   font-family: "Oxygen", sans-serif !important;
 }
-.oxygen-light {
-  font-family: "Oxygen", sans-serif;
-  font-weight: 300;
-  font-style: normal;
-}
 
-.oxygen-regular {
-  font-family: "Oxygen", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.oxygen-bold {
-  font-family: "Oxygen", sans-serif;
-  font-weight: 700;
-  font-style: normal;
-}
 .topology-editor {
   display: flex;
   height: auto;
@@ -220,7 +199,8 @@ body,
   width: 50%;
   min-width: 400px;
   box-sizing: border-box;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   /* height: 500px; */
 }
 .card > div {
@@ -381,6 +361,7 @@ button.MuiButtonBase-root.MuiTab-root.MuiTab-textColorPrimary.Mui-selected.css-1
   display: flex;
   justify-content: center;
   height: max-content;
+  font-family: "Oxygen", sans-serif !important;
 }
 
 .css-1ujnqem-MuiTabs-root {

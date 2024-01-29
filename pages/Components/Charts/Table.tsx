@@ -45,30 +45,27 @@ const Table = ({ data }: any) => {
   return (
     <>
       <div className="items-center pb-4 px-4">
-        <label className="text-xs font-semibold">
-          {data?.title ? data?.title : ""}
-        </label>
+        <div className="flex justify-between">
+          <label className="text-sm font-semibold">
+            {data?.title ? data?.title : ""}
+          </label>
 
-        {/* <div className="mt-4 mb-2"> */}
-        <input
-          type="text"
-          placeholder="Search..."
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-          className="border px-2 py-1 rounded-sm ml-2"
-        />
+          {/* <div className="mt-4 mb-2"> */}
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            className="border px-2 py-1 max-h-7 rounded-sm ml-2"
+          />
+        </div>
         {/* </div> */}
 
-        <div className="relative overflow-x-auto mt-6  rounded-md">
-          <table
-            className="w-full text-sm text-center text-black"
-       
-          >
+        <div className="relative overflow-x-auto mt-6 rounded-md">
+          <table className="w-full text-sm text-center text-black">
             <thead
               className="text-xs text-white border border-gray-300"
               style={{
-                // opacity: 0.5 ,
-                
                 background:
                   "linear-gradient(90deg, #AF1E23 -43.96%, #F37032 112.99%)",
               }}

@@ -19,6 +19,8 @@ const ChartComponent = (props: any) => {
   useEffect(() => {
     // console.log(props.data.data);
     if (props?.data) {
+      const firstHead = props && props.data && props.data.firstHeader;
+      const secHead = props && props.data && props.data.secondHeader;
       const options: any = {
         chart: {
           plotBackgroundColor: null,
@@ -68,7 +70,8 @@ const ChartComponent = (props: any) => {
           align: "left",
           style: {
             fontWeight: "bold",
-            fontSize: "12px",
+            fontSize: "14px",
+            fontFamily: `"Oxygen",sans-serif`,
           },
         },
         plotOptions: {
@@ -82,16 +85,62 @@ const ChartComponent = (props: any) => {
             },
             showInLegend: true,
             center: ["50%", "50%"],
+            tooltip: {
+              pointFormatter: function (this: Highcharts.Point): string {
+                const chartTitle: any =
+                  this?.series?.chart?.options?.title?.text;
+
+                if (
+                  ["Cost", "cost"].some((substring) =>
+                    chartTitle.includes(substring)
+                  ) ||
+                  firstHead == "Cost(₹)" ||
+                  firstHead == "Cost($)" ||
+                  secHead == "Cost(₹)" ||
+                  secHead == "Cost($)"
+                ) {
+                  return (
+                    '<span style="color:' +
+                    this.color +
+                    '">\u25CF</span> ' +
+                    this.name +
+                    ": <b>" +
+                    this.y?.toLocaleString("en-IN") +
+                    "</b><br/>" +
+                    this.percentage?.toFixed(1) +
+                    "%" +
+                    "</b><br/>"
+                  );
+                } else {
+                  return (
+                    '<span style="color:' +
+                    this.color +
+                    '">\u25CF</span> ' +
+                    this.name +
+                    ": <b>" +
+                    this.y +
+                    "</b><br/>" +
+                    this.percentage?.toFixed(1) +
+                    "%" +
+                    "</b><br/>"
+                  );
+                }
+              },
+              headerFormat: "",
+              footerFormat: "",
+              shared: true,
+              useHTML: true,
+            },
           },
         },
-        tooltip: {
-          headerFormat: "",
-          pointFormat:
-            '<span style="color:{point.color}">\u25CF</span> <b> {point.name}</b><br/>' +
-            `Total: <b>{point.y} ({point.percentage:.1f}%) </b> ${
-              props?.data?.xAxis || ""
-            }<br/>`,
-        },
+        // tooltip: {
+        //   headerFormat: "",
+        //   pointFormat:
+        //     '<span style="color:{point.color}">\u25CF</span> <b> {point.name}</b><br/>' +
+        //     `Total: <b>{point.y} ({point.percentage:.1f}%) </b> ${
+        //       props?.data?.xAxis || ""
+        //     }<br/>`,
+        // },
         lang: {
           noData: "No Data to Display",
         },
@@ -119,12 +168,30 @@ const ChartComponent = (props: any) => {
             minPointSize: 100,
             innerSize: "40%",
             zMin: 0,
-            name: "networks",
+            name: secHead, //this will come from api
             borderRadius: 0,
             colorByPoint: true,
             data: props?.data?.data || [],
           },
         ],
+        exporting: {
+          showTable: false,
+          csv: {
+            columnHeaderFormatter: function (item: any, key: any) {
+              if (!item || item instanceof Highcharts.Axis) {
+                return firstHead ? firstHead : ""; //this will be the column heading
+              } else if (
+                props?.data &&
+                props?.data?.data &&
+                props?.data?.data.length == 1
+              ) {
+                return secHead ? secHead : "";
+              } else {
+                return item.name ? item.name : "";
+              }
+            },
+          },
+        },
       };
 
       Highcharts.chart("container-" + props.id, options);

@@ -55,11 +55,13 @@ function FinOps() {
   };
 
   const tabIndicatorStyle = {
-    background: "transparent linear-gradient(90deg, #AF1E23 -43.96%, #F37032 112.99%)",
-    boxShadow: "inset 0 0 0 3px white",
-    border: "7px solid white",
+    background:
+      "transparent linear-gradient(90deg, #AF1E23 -43.96%, #F37032 112.99%)",
+    position: "absolute" as "absolute", // Add type assertion for position
+    top: 0,
+    transform: "translateY(50%)",
     zIndex: 2,
-    height: "100%",
+    height: "50%",
     borderRadius: "50vw",
   };
 
@@ -67,7 +69,10 @@ function FinOps() {
     <div className="Newfinops-container h-auto">
       <div className="h-auto">
         <TabContext value={value1}>
-          <div className="relative mb-4 p-3 rounded-lg" style={{ backgroundColor: "rgba(254, 241, 235, 0.40)" }}>
+          <div
+            className="relative mb-4 p-3 rounded-lg"
+            style={{ backgroundColor: "rgba(254, 241, 235, 0.40)" }}
+          >
             <Link
               className="z-10 absolute left-2 h-fit w-fit cursor-pointer top-1/2 -translate-y-1/2 flex justify-center items-center"
               href={"/page/FinOps/reports"}
@@ -85,32 +90,40 @@ function FinOps() {
                 value={"CostSummary"}
                 label="Multi-cloud Cost Summary"
                 style={{
+                  margin: "0 5px",
                   color: value1 === "CostSummary" ? "white" : "black",
                   zIndex: value1 === "CostSummary" ? 3 : 0,
+                  fontFamily: `"Oxygen",sans-serif`,
                 }}
               />
               <Tab
                 value={"CostDrillDown"}
                 label="Granular Cost Drill Down"
                 style={{
+                  margin: "0 5px",
                   color: value1 === "CostDrillDown" ? "white" : "black",
                   zIndex: value1 === "CostDrillDown" ? 3 : 0,
+                  fontFamily: `"Oxygen",sans-serif`,
                 }}
               />
               <Tab
                 value={"TagCompliance"}
                 label="Tag Compliance"
                 style={{
+                  margin: "0 5px",
                   color: value1 === "TagCompliance" ? "white" : "black",
                   zIndex: value1 === "TagCompliance" ? 3 : 0,
+                  fontFamily: `"Oxygen",sans-serif`,
                 }}
               />
               <Tab
                 value={"Forecast"}
                 label="Forecast & Recommendations"
                 style={{
+                  margin: "0 5px",
                   color: value1 === "Forecast" ? "white" : "black",
                   zIndex: value1 === "Forecast" ? 3 : 0,
+                  fontFamily: `"Oxygen",sans-serif`,
                 }}
               />
             </Tabs>

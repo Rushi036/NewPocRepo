@@ -170,14 +170,47 @@ const TagCompliance = () => {
                         resp.AWS.Metric?.map((e: any, i: any) => (
                           <div
                             key={i}
-                            className="pl-4 bg-white rounded-lg mb-4 w-[48%] h-full"
+                            className="pl-4 pr-4 pt-2 bg-white rounded-lg mb-4 w-[48%] h-full"
+                            style={{
+                              borderRadius: "16px",
+                              border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                              background:
+                                "linear-gradient(162deg, rgba(123, 98, 202, 0.11) 11.36%, rgba(123, 98, 202, 0.00) 36.6%), #ffffff",
+                              fontFamily: `"Oxygen",sans-serif`,
+                            }}
                           >
-                            <div className="flex flex-col items-center justify-center h-full">
-                              <div className="text-4xl md:text-xl lg:text-4xl sm:text-lg xs:text-md py-1 font-bold text-slate-500">
-                                {e.value && e.value.aws && e.value.aws}
+                            <div className="flex flex-col items-center h-full space-y-6">
+                              <div className="w-full justify-between ">
+                                <div className="flex justify-between w-full items-center">
+                                  <div className="">
+                                    <p
+                                      className=""
+                                      style={{
+                                        color: "#000",
+                                        fontSize: "17px",
+                                        fontStyle: "normal",
+                                        fontWeight: 700,
+                                        lineHeight: "28px",
+                                      }}
+                                    >
+                                      {e.title} 
+                                    </p>
+                                  </div>
+                                </div>
+                                <div
+                                  className="mt-1"
+                                  style={{
+                                    borderTop: "2px solid #7B62CA",
+                                    width: "100%",
+                                    background: "#7B62CA",
+                                  }}
+                                ></div>
                               </div>
-                              <div className="text-base md:text-lg lg:text-base xl:text-lg 2xl:text-xl sm:text-md xs:text-sm text-slate-500">
-                                {e.title && e.title} ($)
+                              <div className="text-3xl md:text-xl lg:text-3xl sm:text-lg xs:text-md py-1 font-bold text-slate-500">
+                              {new Intl.NumberFormat("en-US", {
+                                  style: "currency",
+                                  currency: "USD",
+                                }).format(e.value.aws)}
                               </div>
                             </div>
                           </div>
@@ -186,7 +219,14 @@ const TagCompliance = () => {
                     {resp && resp.AWS && Object.keys(resp.AWS).length > 0 && (
                       <>
                         <div className="pl-4 w-full">
-                          <div className="bg-white p-4 mb-4 rounded-lg">
+                          <div
+                            className="bg-white p-4 mb-4 rounded-lg"
+                            style={{
+                              borderRadius: "16px",
+                              border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                              fontFamily: `"Oxygen",sans-serif`,
+                            }}
+                          >
                             <TableWithDropdown
                               cloud={"AWS"}
                               type={"firstDropdown"}
@@ -199,7 +239,14 @@ const TagCompliance = () => {
                     {resp && resp.AWS && Object.keys(resp.AWS).length > 0 && (
                       <>
                         <div className="pl-4 w-full">
-                          <div className="bg-white p-4 mb-4 rounded-lg">
+                          <div
+                            className="bg-white p-4 mb-4 rounded-lg"
+                            style={{
+                              borderRadius: "16px",
+                              border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                              fontFamily: `"Oxygen",sans-serif`,
+                            }}
+                          >
                             <TableWithSecondDropdown
                               cloud={"AWS"}
                               type={"secondDropdown"}
@@ -222,7 +269,14 @@ const TagCompliance = () => {
                         return (
                           <>
                             <div key={i} className="pl-4 mb-4 w-full">
-                              <div className="bg-white p-4 rounded-lg">
+                              <div
+                                className="bg-white p-4 rounded-lg"
+                                style={{
+                                  borderRadius: "16px",
+                                  border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                                  fontFamily: `"Oxygen",sans-serif`,
+                                }}
+                              >
                                 <Table data={e} />
                               </div>
                             </div>
@@ -249,17 +303,47 @@ const TagCompliance = () => {
                         resp.AZURE.Metric?.map((e: any, i: any) => (
                           <div
                             key={i}
-                            className="pl-4 bg-white rounded-lg mb-4 w-[48%] h-full"
+                            className="pl-4 pr-4 pt-2 bg-white rounded-lg mb-4 w-[48%] h-full"
+                            style={{
+                              borderRadius: "16px",
+                              border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                              background:
+                                "linear-gradient(162deg, rgba(123, 98, 202, 0.11) 11.36%, rgba(123, 98, 202, 0.00) 36.6%), #ffffff",
+                              fontFamily: `"Oxygen",sans-serif`,
+                            }}
                           >
-                            <div className="flex flex-col items-center justify-center h-full">
-                              <div className="text-4xl md:text-xl lg:text-4xl sm:text-lg xs:text-md py-1 font-bold text-slate-500">
-                                {/* <div className="text-4xl py-1 font-bold text-slate-500"> */}
-                                {e.value && e.value.azure && e.value.azure}
+                            <div className="flex flex-col items-center h-full space-y-6">
+                              <div className="w-full justify-between ">
+                                <div className="flex justify-between w-full items-center">
+                                  <div className="">
+                                    <p
+                                      className=""
+                                      style={{
+                                        color: "#000",
+                                        fontSize: "17px",
+                                        fontStyle: "normal",
+                                        fontWeight: 700,
+                                        lineHeight: "28px",
+                                      }}
+                                    >
+                                      {e.title} 
+                                    </p>
+                                  </div>
+                                </div>
+                                <div
+                                  className="mt-1"
+                                  style={{
+                                    borderTop: "2px solid #7B62CA",
+                                    width: "100%",
+                                    background: "#7B62CA",
+                                  }}
+                                ></div>
                               </div>
-                              <div className="text-base md:text-lg lg:text-base xl:text-lg 2xl:text-xl sm:text-md xs:text-sm text-slate-500">
-                                {/* <div className="text-lg text-slate-500"> */}
-                                {e.title && e.title}
-                                {" (₹)"}
+                              <div className="text-3xl md:text-xl lg:text-3xl sm:text-lg xs:text-md py-1 font-bold text-slate-500">
+                              {new Intl.NumberFormat("en-IN", {
+                                  style: "currency",
+                                  currency: "INR",
+                                }).format(e.value.azure)}
                               </div>
                             </div>
                           </div>
@@ -270,7 +354,14 @@ const TagCompliance = () => {
                       Object.keys(resp.AZURE).length > 0 && (
                         <>
                           <div className="pl-4 mb-4 w-full">
-                            <div className="bg-white p-4 rounded-lg">
+                            <div
+                              className="bg-white p-4 rounded-lg"
+                              style={{
+                                borderRadius: "16px",
+                                border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                                fontFamily: `"Oxygen",sans-serif`,
+                              }}
+                            >
                               <TableWithDropdown
                                 cloud={"Azure"}
                                 type={"firstDropdown"}
@@ -283,7 +374,14 @@ const TagCompliance = () => {
                       resp.AZURE &&
                       Object.keys(resp.AZURE).length > 0 && (
                         <div className="pl-4 mb-4 w-full">
-                          <div className="bg-white p-4 rounded-lg">
+                          <div
+                            className="bg-white p-4 rounded-lg"
+                            style={{
+                              borderRadius: "16px",
+                              border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                              fontFamily: `"Oxygen",sans-serif`,
+                            }}
+                          >
                             <TableWithSecondDropdown
                               cloud={"Azure"}
                               type={"secondDropdown"}
@@ -305,7 +403,14 @@ const TagCompliance = () => {
                         return (
                           <>
                             <div key={i} className="pl-4 mb-4 w-full">
-                              <div className="bg-white p-4 rounded-lg">
+                              <div
+                                className="bg-white p-4 rounded-lg"
+                                style={{
+                                  borderRadius: "16px",
+                                  border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                                  fontFamily: `"Oxygen",sans-serif`,
+                                }}
+                              >
                                 {/* Third Chart */}
                                 <Table data={e} />
                               </div>

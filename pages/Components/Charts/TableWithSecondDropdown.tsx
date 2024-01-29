@@ -35,16 +35,16 @@ const TableWithSecondDropdown = (cloud: any) => {
     "Department Name": "department",
     "Cost Center": "cost_centre_name",
     "Cost Center Code": "cost_centre_code",
-    "L5": "L5",
-    "Sponsor": "Sponsor",
+    L5: "L5",
+    Sponsor: "Sponsor",
     "Business Infra Owner": "Business Infra Owner",
     "App-Name": "application_name",
     "Application Owner": "application_owner",
-    "Environment": "environment",
-    "Requestor": "Requestor",
+    Environment: "environment",
+    Requestor: "Requestor",
     "Request ID": "Request ID",
     "Business criticality": "Business criticality",
-    "Zone": "Zone",
+    Zone: "Zone",
   };
   const secondDropdownDataAzure: any = {
     "Business Name": "Business Name",
@@ -53,16 +53,16 @@ const TableWithSecondDropdown = (cloud: any) => {
     "Department Name": "department_name",
     "Cost Center": "cost_centre",
     "Cost Center Code": "cost_centre_code",
-    "L5": "L5",
-    "Sponsor": "Sponsor",
+    L5: "L5",
+    Sponsor: "Sponsor",
     "Business Infra Owner": "Business Infra Owner",
     "App-Name": "Application_Name",
     "Application Owner": "Application Owner",
-    "Environment": "Environment",
-    "Requestor": "Requestor",
+    Environment: "Environment",
+    Requestor: "Requestor",
     "Request ID": "Request ID",
     "Business criticality": "Business criticality",
-    "Zone": "Zone",
+    Zone: "Zone",
   };
   useEffect(() => {
     setPage(1);
@@ -87,7 +87,7 @@ const TableWithSecondDropdown = (cloud: any) => {
       });
     setFilteredData(filtered);
   }, [data?.Table, searchInput, secondDropdownValue]);
-// console.log("filtered",filteredData)
+  // console.log("filtered",filteredData)
   useEffect(() => {
     if (cloud.type == "secondDropdown" && cloud.cloud) {
       if (cloud.cloud == "AWS") {
@@ -132,7 +132,7 @@ const TableWithSecondDropdown = (cloud: any) => {
   return (
     <>
       <div className="items-center pb-4 px-4">
-        <label className="text-xs font-semibold">
+        <label className="text-sm font-semibold">
           {data?.Table && data?.Table[0] && data?.Table[0].title
             ? data?.Table[0].title
             : ""}
@@ -145,7 +145,7 @@ const TableWithSecondDropdown = (cloud: any) => {
               placeholder="Search..."
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
-              className="border px-2 py-1 rounded-sm"
+              className="border max-h-7 px-2 py-1 rounded-sm"
             />
           </div>
           <div>
@@ -153,7 +153,7 @@ const TableWithSecondDropdown = (cloud: any) => {
               <select
                 value={secondDropdownValue}
                 onChange={(e) => setSecondDropdownValue(e.target.value)}
-                className="border px-2 py-[0.32rem] rounded-sm ml-2"
+                className="border text-xs max-h-7 px-2 py-[0.32rem] rounded-sm ml-2"
               >
                 <option value="" disabled>
                   Select...
@@ -170,9 +170,15 @@ const TableWithSecondDropdown = (cloud: any) => {
 
         {/* </div> */}
 
-        <div className="relative overflow-x-auto mt-6">
+        <div className="relative overflow-x-auto mt-6 rounded-md">
           <table className="w-full text-sm text-center text-gray-800">
-            <thead className="text-xs text-white uppercase bg-red-800">
+            <thead
+              className="text-xs text-white uppercase "
+              style={{
+                background:
+                  "linear-gradient(90deg, #AF1E23 -43.96%, #F37032 112.99%)",
+              }}
+            >
               <tr>
                 {/* <th>SrNo</th> */}
                 {data &&
@@ -208,7 +214,9 @@ const TableWithSecondDropdown = (cloud: any) => {
                       ))}
                   </tr>
                 ))}
-              {currentData?.length === 0 || filteredData === undefined || filteredData === null ? (
+              {currentData?.length === 0 ||
+              filteredData === undefined ||
+              filteredData === null ? (
                 <tr>
                   <td colSpan={100} className="py-2">
                     No data

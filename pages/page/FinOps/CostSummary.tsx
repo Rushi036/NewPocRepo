@@ -310,7 +310,7 @@ const CostSummary = () => {
                 )}
               </Tabs>
             </div>
-            <div className="w-full">
+            <div className="w-[100%] overflow-y-auto overflow-x-hidden">
               <TabPanel value="aws">
                 {/* <div className="flex h-11 max-w-[25rem] min-w-[25rem] bg-white mb-4 rounded-xl ml-auto justify-center  pl-4 pb-4">
                   <div className="justify-center py-3 px-2 text-md text-gray-600">
@@ -346,14 +346,56 @@ const CostSummary = () => {
                         resp.AWS.Metric?.map((e: any, i: any) => (
                           <div
                             key={i}
-                            className="pl-4 bg-white rounded-lg mb-4 w-[48%] h-full"
+                            className="pl-4 pr-4 pt-2 bg-white rounded-lg mb-4 w-[48%] h-full"
+                            style={{
+                              borderRadius: "16px",
+                              border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                              background:
+                                "linear-gradient(162deg, rgba(123, 98, 202, 0.11) 11.36%, rgba(123, 98, 202, 0.00) 36.6%), #ffffff",
+                              fontFamily: `"Oxygen",sans-serif`,
+                            }}
                           >
-                            <div className="flex flex-col items-center justify-center h-full">
-                              <div className="text-4xl md:text-xl lg:text-4xl sm:text-lg xs:text-md py-1 font-bold text-slate-500">
-                                {e.value.aws}
+                            <div className="flex flex-col items-center h-full space-y-6">
+                              <div className="w-full justify-between ">
+                                <div className="flex justify-between w-full items-center">
+                                  <div className="">
+                                    <p
+                                      className=""
+                                      style={{
+                                        color: "#000",
+                                        fontSize: "17px",
+                                        fontStyle: "normal",
+                                        fontWeight: 700,
+                                        lineHeight: "28px",
+                                      }}
+                                    >
+                                      {e.title} 
+                                    </p>
+                                  </div>
+                                  {/* <div className="mr-4">
+                                    <TollIcon
+                                      style={{
+                                        fontSize: "40px",
+                                        color: "#7B62CA",
+                                      }}
+                                    />
+                                  </div> */}
+                                </div>
+                                <div
+                                  className="mt-1"
+                                  style={{
+                                    borderTop: "2px solid #7B62CA",
+                                    width: "100%",
+                                    background: "#7B62CA",
+                                  }}
+                                ></div>
                               </div>
-                              <div className="text-base md:text-lg lg:text-base xl:text-lg 2xl:text-xl sm:text-md xs:text-sm text-slate-500">
-                                {e.title} ($)
+                              <div className="text-3xl md:text-xl lg:text-3xl sm:text-lg xs:text-md py-1 font-bold text-slate-500">
+                                {/* {e.value.aws.toLocaleString("en-IN")} */}
+                                {new Intl.NumberFormat("en-US", {
+                                  style: "currency",
+                                  currency: "USD",
+                                }).format(e.value.aws)}
                               </div>
                             </div>
                           </div>
@@ -366,7 +408,14 @@ const CostSummary = () => {
                         return (
                           <>
                             <div key={i} className="pl-4 w-full">
-                              <div className="bg-white p-4 rounded-lg">
+                              <div
+                                className="bg-white p-4 rounded-lg"
+                                style={{
+                                  borderRadius: "16px",
+                                  border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                                  fontFamily: `"Oxygen",sans-serif`,
+                                }}
+                              >
                                 {/* Third Chart */}
                                 <Table data={e} />
                               </div>
@@ -379,9 +428,16 @@ const CostSummary = () => {
                   {/* Second Column */}
                   <div
                     className="w-[50%] flex flex-wrap gap-4"
-                    style={{ height: "max-content" }}
+                    style={{ height: "max-content", maxWidth: "50%" }}
                   >
-                    <div className="flex h-11  w-full min-w-[25rem] ml-4 bg-white rounded-xl  justify-center  pl-4 pb-4">
+                    <div
+                      className="flex h-11 w-full overflow-x-auto ml-4 bg-white rounded-xl  justify-center  pl-4 pb-4"
+                      style={{
+                        borderRadius: "16px",
+                        border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                        fontFamily: `"Oxygen",sans-serif`,
+                      }}
+                    >
                       <div className="justify-center py-3 px-2 text-md text-gray-600">
                         Select Date Range :
                       </div>
@@ -411,8 +467,19 @@ const CostSummary = () => {
                           Array.isArray(e.BarGraph.data)
                         ) {
                           return (
-                            <div key={i} className="pl-4 w-full">
-                              <div className="bg-white p-4 rounded-lg">
+                            <div
+                              key={i}
+                              className="pl-4 w-full overflow-auto"
+                              style={{ maxHeight: 300 }}
+                            >
+                              <div
+                                className="bg-white p-4 rounded-lg overflow-y-auto"
+                                style={{
+                                  borderRadius: "16px",
+                                  border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                                  fontFamily: `"Oxygen",sans-serif`,
+                                }}
+                              >
                                 <BarGraph
                                   // id={"new2"}
                                   // date={""}
@@ -437,8 +504,19 @@ const CostSummary = () => {
                           Array.isArray(e.LineChart.data)
                         ) {
                           return (
-                            <div key={i} className="pl-4 w-full">
-                              <div className="bg-white p-4 rounded-lg">
+                            <div
+                              key={i}
+                              className="pl-4 w-full overflow-auto"
+                              style={{ maxHeight: 300 }}
+                            >
+                              <div
+                                className="bg-white p-4 rounded-lg overflow-y-auto"
+                                style={{
+                                  borderRadius: "16px",
+                                  border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                                  fontFamily: `"Oxygen",sans-serif`,
+                                }}
+                              >
                                 <LineChartComponent
                                   // id={i}
                                   data={e.LineChart}
@@ -470,17 +548,48 @@ const CostSummary = () => {
                         resp.AZURE.Metric?.map((e: any, i: any) => (
                           <div
                             key={i}
-                            className="pl-4 bg-white rounded-lg mb-4 w-[48%] h-full"
+                            className="pl-4 pr-4 pt-2 bg-white rounded-lg mb-4 w-[48%] h-full"
+                            style={{
+                              borderRadius: "16px",
+                              border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                              background:
+                                "linear-gradient(162deg, rgba(123, 98, 202, 0.11) 11.36%, rgba(123, 98, 202, 0.00) 36.6%), #ffffff",
+                              fontFamily: `"Oxygen",sans-serif`,
+                            }}
                           >
-                            <div className="flex flex-col items-center justify-center h-full">
-                              <div className="text-4xl md:text-xl lg:text-4xl sm:text-lg xs:text-md py-1 font-bold text-slate-500">
-                                {/* <div className="text-4xl py-1 font-bold text-slate-500"> */}
-                                {e.value.azure}
+                            <div className="flex flex-col items-center h-full space-y-6">
+                              <div className="w-full justify-between ">
+                                <div className="flex justify-between w-full items-center">
+                                  <div className="">
+                                    <p
+                                      className=""
+                                      style={{
+                                        color: "#000",
+                                        fontSize: "17px",
+                                        fontStyle: "normal",
+                                        fontWeight: 700,
+                                        lineHeight: "28px",
+                                      }}
+                                    >
+                                      {e.title}
+                                    </p>
+                                  </div>
+                                </div>
+                                <div
+                                  className="mt-1"
+                                  style={{
+                                    borderTop: "2px solid #7B62CA",
+                                    width: "100%",
+                                    background: "#7B62CA",
+                                  }}
+                                ></div>
                               </div>
-                              <div className="text-base md:text-lg lg:text-base xl:text-lg 2xl:text-xl sm:text-md xs:text-sm text-slate-500">
-                                {/* <div className="text-lg text-slate-500"> */}
-                                {e.title}
-                                {" (₹)"}
+                              <div className="text-3xl md:text-xl lg:text-3xl sm:text-lg xs:text-md py-1 font-bold text-slate-500">
+                                {/* {e.value.azure.toLocaleString("en-IN")} */}
+                                {new Intl.NumberFormat("en-IN", {
+                                  style: "currency",
+                                  currency: "INR",
+                                }).format(e.value.azure)}
                               </div>
                             </div>
                           </div>
@@ -493,7 +602,14 @@ const CostSummary = () => {
                         return (
                           <>
                             <div key={i} className="pl-4 w-full">
-                              <div className="bg-white p-4 rounded-lg">
+                              <div
+                                className="bg-white p-4 rounded-lg"
+                                style={{
+                                  borderRadius: "16px",
+                                  border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                                  fontFamily: `"Oxygen",sans-serif`,
+                                }}
+                              >
                                 {/* Third Chart */}
                                 <Table data={e} />
                               </div>
@@ -508,7 +624,14 @@ const CostSummary = () => {
                     className="w-[50%] flex flex-wrap gap-4"
                     style={{ height: "max-content" }}
                   >
-                    <div className="flex h-11  w-full min-w-[25rem] ml-4 bg-white rounded-xl  justify-center  pl-4 pb-4">
+                    <div
+                      className="flex h-11  w-full min-w-[25rem] ml-4 bg-white rounded-xl  justify-center  pl-4 pb-4"
+                      style={{
+                        borderRadius: "16px",
+                        border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                        fontFamily: `"Oxygen",sans-serif`,
+                      }}
+                    >
                       <div className="justify-center py-3 px-2 text-md text-gray-600">
                         Select Date Range :
                       </div>
@@ -538,8 +661,19 @@ const CostSummary = () => {
                           Array.isArray(e.BarGraph.data)
                         ) {
                           return (
-                            <div key={i} className="pl-4 w-full">
-                              <div className="bg-white p-4 rounded-lg">
+                            <div
+                              key={i}
+                              className="pl-4 w-full overflow-auto"
+                              style={{ maxHeight: 300 }}
+                            >
+                              <div
+                                className="bg-white p-4 rounded-lg overflow-y-auto"
+                                style={{
+                                  borderRadius: "16px",
+                                  border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                                  fontFamily: `"Oxygen",sans-serif`,
+                                }}
+                              >
                                 <BarGraph
                                   // id={"new2"}
                                   // date={""}
@@ -566,8 +700,19 @@ const CostSummary = () => {
                           Array.isArray(e.LineChart.data)
                         ) {
                           return (
-                            <div key={i} className="pl-4 w-full">
-                              <div className="bg-white p-4 rounded-lg">
+                            <div
+                              key={i}
+                              className="pl-4 w-full overflow-auto"
+                              style={{ maxHeight: 300 }}
+                            >
+                              <div
+                                className="bg-white p-4 rounded-lg overflow-y-auto"
+                                style={{
+                                  borderRadius: "16px",
+                                  border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                                  fontFamily: `"Oxygen",sans-serif`,
+                                }}
+                              >
                                 <LineChartComponent
                                   // id={i}
                                   data={e.LineChart}
@@ -618,6 +763,13 @@ const CostSummary = () => {
                         <div
                           key={i}
                           className="pl-4 bg-white rounded-lg mb-4 w-full h-full"
+                          style={{
+                            borderRadius: "16px",
+                            border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                            background:
+                              "linear-gradient(162deg, rgba(123, 98, 202, 0.11) 11.36%, rgba(123, 98, 202, 0.00) 36.6%), #ffffff",
+                            fontFamily: `"Oxygen",sans-serif`,
+                          }}
                         >
                           <div className="flex flex-col items-center justify-center h-full">
                             <div className="text-4xl md:text-3xl lg:text-4xl sm:text-xl xs:text-md py-1 font-bold text-slate-500">
@@ -639,7 +791,14 @@ const CostSummary = () => {
                       return (
                         <>
                           <div key={i} className="pl-4 pb-4 w-full">
-                            <div className="bg-white p-4 rounded-lg">
+                            <div
+                              className="bg-white p-4 rounded-lg"
+                              style={{
+                                borderRadius: "16px",
+                                border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                                fontFamily: `"Oxygen",sans-serif`,
+                              }}
+                            >
                               {/* Third Chart */}
                               <NTable data={e} />
                             </div>

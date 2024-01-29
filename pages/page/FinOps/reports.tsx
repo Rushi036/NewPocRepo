@@ -103,7 +103,6 @@ const Reports = () => {
                 fontFamily: `"Oxygen",sans-serif`,
               }}
             >
-              <div className="w-[4px] h-full absolute left-0 top-0"></div>
               <div className="flex justify-between w-full items-center">
                 <div className="">
                   <p
@@ -136,34 +135,63 @@ const Reports = () => {
                 <table>
                   <tbody>
                     <tr>
-                      <td className="bg-white" style={{ width: "10px" }}>
+                      <td
+                        className="bg-white"
+                        style={{ width: "50px", textAlign: "left" }}
+                      >
                         AWS
                       </td>
-                      <td className="bg-white mx-1" style={{ width: "1px" }}>
+                      <td
+                        className="bg-white mx-1"
+                        style={{ width: "10px", textAlign: "center" }}
+                      >
                         -
                       </td>
-                      <td className="bg-white">
+                      <td
+                        className="bg-white"
+                        style={{ width: "100px", textAlign: "right" }}
+                      >
                         {currencyData &&
                         currencyData.status &&
-                        currencyData.status === "InActive"
-                          ? "$"
-                          : "₹"}
-                        {res.Metric && res.Metric[0] && res?.Metric[0]?.value
-                          ? res?.Metric[0]?.value?.AWS
-                          : ""}
+                        currencyData.status === "InActive" &&
+                        res.Metric &&
+                        res.Metric[0] &&
+                        res?.Metric[0]?.value
+                          ? new Intl.NumberFormat("en-US", {
+                              style: "currency",
+                              currency: "USD",
+                            }).format(res?.Metric[0]?.value?.AWS)
+                          : new Intl.NumberFormat("en-IN", {
+                              style: "currency",
+                              currency: "INR",
+                            }).format(res?.Metric[0]?.value?.AWS)}
+                        {/* {res.Metric && res.Metric[0] && res?.Metric[0]?.value
+                          ? res?.Metric[0]?.value?.AWS.toLocaleString("en-IN")
+                          : ""} */}
                       </td>
                     </tr>
                     <tr>
-                      <td className="bg-white" style={{ width: "10px" }}>
+                      <td
+                        className="bg-white"
+                        style={{ width: "50px", textAlign: "left" }}
+                      >
                         Azure
                       </td>
-                      <td className="bg-white" style={{ width: "1px" }}>
+                      <td
+                        className="bg-white"
+                        style={{ width: "10px", textAlign: "center" }}
+                      >
                         -
                       </td>
-                      <td className="bg-white">
-                        ₹
+                      <td
+                        className="bg-white"
+                        style={{ width: "100px", textAlign: "right" }}
+                      >
                         {res.Metric && res.Metric[0] && res?.Metric[0]?.value
-                          ? res?.Metric[0]?.value?.Azure
+                          ? new Intl.NumberFormat("en-IN", {
+                              style: "currency",
+                              currency: "INR",
+                            }).format(res?.Metric[0]?.value?.Azure)
                           : ""}
                       </td>
                     </tr>
@@ -171,18 +199,29 @@ const Reports = () => {
                       currencyData.status &&
                       currencyData.status === "Active" && (
                         <tr>
-                          <td className="bg-white" style={{ width: "10px" }}>
+                          <td
+                            className="bg-white"
+                            style={{ width: "50px", textAlign: "left" }}
+                          >
                             Total
                           </td>
-                          <td className="bg-white" style={{ width: "1px" }}>
+                          <td
+                            className="bg-white"
+                            style={{ width: "10px", textAlign: "center" }}
+                          >
                             -
                           </td>
-                          <td className="bg-white">
-                            ₹
+                          <td
+                            className="bg-white"
+                            style={{ width: "100px", textAlign: "right" }}
+                          >
                             {res.Metric &&
                             res.Metric[0] &&
                             res?.Metric[0]?.value
-                              ? Math.round(
+                              ? new Intl.NumberFormat("en-IN", {
+                                  style: "currency",
+                                  currency: "INR",
+                                }).format(
                                   res?.Metric[0]?.value?.Azure +
                                     res?.Metric[0]?.value?.AWS
                                 )
@@ -249,34 +288,60 @@ const Reports = () => {
                 <table>
                   <tbody>
                     <tr>
-                      <td className="bg-white" style={{ width: "10px" }}>
+                      <td
+                        className="bg-white"
+                        style={{ width: "50px", textAlign: "left" }}
+                      >
                         AWS
                       </td>
-                      <td className="bg-white" style={{ width: "1px" }}>
+                      <td
+                        className="bg-white"
+                        style={{ width: "10px", textAlign: "center" }}
+                      >
                         -
                       </td>
-                      <td className="bg-white">
+                      <td
+                        className="bg-white"
+                        style={{ width: "100px", textAlign: "right" }}
+                      >
                         {currencyData &&
                         currencyData.status &&
-                        currencyData.status === "InActive"
-                          ? "$"
-                          : "₹"}
-                        {res.Metric && res.Metric[1] && res?.Metric[1]?.value
-                          ? res?.Metric[1]?.value?.AWS
-                          : ""}
+                        currencyData.status === "InActive" &&
+                        res.Metric &&
+                        res.Metric[1] &&
+                        res?.Metric[1]?.value
+                          ? new Intl.NumberFormat("en-US", {
+                              style: "currency",
+                              currency: "USD",
+                            }).format(res?.Metric[1]?.value?.AWS)
+                          : new Intl.NumberFormat("en-IN", {
+                              style: "currency",
+                              currency: "INR",
+                            }).format(res?.Metric[1]?.value?.AWS)}
                       </td>
                     </tr>
                     <tr>
-                      <td className="bg-white" style={{ width: "10px" }}>
+                      <td
+                        className="bg-white"
+                        style={{ width: "50px", textAlign: "left" }}
+                      >
                         Azure
                       </td>
-                      <td className="bg-white" style={{ width: "1px" }}>
+                      <td
+                        className="bg-white"
+                        style={{ width: "10px", textAlign: "center" }}
+                      >
                         -
                       </td>
-                      <td className="bg-white">
-                        ₹
+                      <td
+                        className="bg-white"
+                        style={{ width: "100px", textAlign: "right" }}
+                      >
                         {res.Metric && res.Metric[1] && res?.Metric[1]?.value
-                          ? res?.Metric[1]?.value?.Azure
+                          ? new Intl.NumberFormat("en-IN", {
+                              style: "currency",
+                              currency: "INR",
+                            }).format(res?.Metric[1]?.value?.Azure)
                           : ""}
                       </td>
                     </tr>
@@ -284,18 +349,29 @@ const Reports = () => {
                       currencyData.status &&
                       currencyData.status === "Active" && (
                         <tr>
-                          <td className="bg-white" style={{ width: "10px" }}>
+                          <td
+                            className="bg-white"
+                            style={{ width: "50px", textAlign: "left" }}
+                          >
                             Total
                           </td>
-                          <td className="bg-white" style={{ width: "1px" }}>
+                          <td
+                            className="bg-white"
+                            style={{ width: "10px", textAlign: "center" }}
+                          >
                             -
                           </td>
-                          <td className="bg-white">
-                            ₹
+                          <td
+                            className="bg-white"
+                            style={{ width: "100px", textAlign: "right" }}
+                          >
                             {res.Metric &&
                             res.Metric[1] &&
                             res?.Metric[1]?.value
-                              ? Math.round(
+                              ? new Intl.NumberFormat("en-IN", {
+                                  style: "currency",
+                                  currency: "INR",
+                                }).format(
                                   res?.Metric[1]?.value?.Azure +
                                     res?.Metric[1]?.value?.AWS
                                 )
@@ -361,40 +437,68 @@ const Reports = () => {
               {res && (
                 <div className="flex justify-between w-full pr-2">
                   <div className="flex flex-col">
-                    <span className="font-bold  border-b-2 pb-1">
+                    <span className="font-bold text-center  border-b-2 pb-1">
                       Allocated Spent
                     </span>
                     <table>
                       <tbody>
                         <tr>
-                          <td className="bg-white" style={{ width: "10px" }}>
+                          <td
+                            className="bg-white"
+                            style={{ width: "50px", textAlign: "left" }}
+                          >
                             AWS
                           </td>
-                          <td className="bg-white" style={{ width: "1px" }}>
+                          <td
+                            className="bg-white"
+                            style={{ width: "10px", textAlign: "center" }}
+                          >
                             -
                           </td>
-                          <td className="bg-white">
+                          <td
+                            className="bg-white"
+                            style={{ width: "100px", textAlign: "right" }}
+                          >
                             {currencyData &&
                             currencyData.status &&
-                            currencyData.status == "InActive"
-                              ? "$"
-                              : "₹"}
-                            {res.Metric && res.Metric[3] && res.Metric[3].value
-                              ? res?.Metric[3]?.value?.aws
-                              : ""}
+                            currencyData.status === "InActive" &&
+                            res.Metric &&
+                            res.Metric[3] &&
+                            res?.Metric[3]?.value
+                              ? new Intl.NumberFormat("en-US", {
+                                  style: "currency",
+                                  currency: "USD",
+                                }).format(res?.Metric[3]?.value?.aws)
+                              : new Intl.NumberFormat("en-IN", {
+                                  style: "currency",
+                                  currency: "INR",
+                                }).format(res?.Metric[3]?.value?.aws)}
                           </td>
                         </tr>
                         <tr>
-                          <td className="bg-white" style={{ width: "10px" }}>
+                          <td
+                            className="bg-white"
+                            style={{ width: "50px", textAlign: "left" }}
+                          >
                             Azure
                           </td>
-                          <td className="bg-white" style={{ width: "1px" }}>
+                          <td
+                            className="bg-white"
+                            style={{ width: "10px", textAlign: "center" }}
+                          >
                             -
                           </td>
-                          <td className="bg-white">
-                            ₹
-                            {res.Metric && res.Metric[3] && res.Metric[3].value
-                              ? res?.Metric[3]?.value?.azure
+                          <td
+                            className="bg-white"
+                            style={{ width: "100px", textAlign: "right" }}
+                          >
+                            {res.Metric &&
+                            res.Metric[3] &&
+                            res?.Metric[3]?.value
+                              ? new Intl.NumberFormat("en-IN", {
+                                  style: "currency",
+                                  currency: "INR",
+                                }).format(res?.Metric[3]?.value?.azure)
                               : ""}
                           </td>
                         </tr>
@@ -404,19 +508,27 @@ const Reports = () => {
                             <tr>
                               <td
                                 className="bg-white"
-                                style={{ width: "10px" }}
+                                style={{ width: "50px", textAlign: "left" }}
                               >
                                 Total
                               </td>
-                              <td className="bg-white" style={{ width: "1px" }}>
+                              <td
+                                className="bg-white"
+                                style={{ width: "10px", textAlign: "center" }}
+                              >
                                 -
                               </td>
-                              <td className="bg-white">
-                                ₹
+                              <td
+                                className="bg-white"
+                                style={{ width: "100px", textAlign: "right" }}
+                              >
                                 {res.Metric &&
                                 res.Metric[3] &&
                                 res?.Metric[3]?.value
-                                  ? Math.round(
+                                  ? new Intl.NumberFormat("en-IN", {
+                                      style: "currency",
+                                      currency: "INR",
+                                    }).format(
                                       res?.Metric[3]?.value?.azure +
                                         res?.Metric[3]?.value?.aws
                                     )
@@ -428,40 +540,68 @@ const Reports = () => {
                     </table>
                   </div>
                   <div className="flex flex-col">
-                    <span className="font-bold border-b-2 pb-1">
+                    <span className="font-bold text-center border-b-2 pb-1">
                       Unallocated Spent
                     </span>
                     <table>
                       <tbody>
                         <tr>
-                          <td className="bg-white" style={{ width: "10px" }}>
+                          <td
+                            className="bg-white"
+                            style={{ width: "50px", textAlign: "left" }}
+                          >
                             AWS
                           </td>
-                          <td className="bg-white" style={{ width: "1px" }}>
+                          <td
+                            className="bg-white"
+                            style={{ width: "10px", textAlign: "center" }}
+                          >
                             -
                           </td>
-                          <td className="bg-white">
+                          <td
+                            className="bg-white"
+                            style={{ width: "100px", textAlign: "right" }}
+                          >
                             {currencyData &&
                             currencyData.status &&
-                            currencyData.status == "InActive"
-                              ? "$"
-                              : "₹"}
-                            {res.Metric && res.Metric[4] && res.Metric[4].value
-                              ? res?.Metric[4]?.value?.aws
-                              : ""}
+                            currencyData.status === "InActive" &&
+                            res.Metric &&
+                            res.Metric[4] &&
+                            res?.Metric[4]?.value
+                              ? new Intl.NumberFormat("en-US", {
+                                  style: "currency",
+                                  currency: "USD",
+                                }).format(res?.Metric[4]?.value?.aws)
+                              : new Intl.NumberFormat("en-IN", {
+                                  style: "currency",
+                                  currency: "INR",
+                                }).format(res?.Metric[4]?.value?.aws)}
                           </td>
                         </tr>
                         <tr>
-                          <td className="bg-white" style={{ width: "10px" }}>
+                          <td
+                            className="bg-white"
+                            style={{ width: "50px", textAlign: "left" }}
+                          >
                             Azure
                           </td>
-                          <td className="bg-white" style={{ width: "1px" }}>
+                          <td
+                            className="bg-white"
+                            style={{ width: "10px", textAlign: "center" }}
+                          >
                             -
                           </td>
-                          <td className="bg-white">
-                            ₹
-                            {res.Metric && res.Metric[4] && res.Metric[4].value
-                              ? res?.Metric[4]?.value?.azure
+                          <td
+                            className="bg-white"
+                            style={{ width: "100px", textAlign: "right" }}
+                          >
+                            {res.Metric &&
+                            res.Metric[4] &&
+                            res?.Metric[4]?.value
+                              ? new Intl.NumberFormat("en-IN", {
+                                  style: "currency",
+                                  currency: "INR",
+                                }).format(res?.Metric[4]?.value?.azure)
                               : ""}
                           </td>
                         </tr>
@@ -471,19 +611,27 @@ const Reports = () => {
                             <tr>
                               <td
                                 className="bg-white"
-                                style={{ width: "10px" }}
+                                style={{ width: "50px", textAlign: "left" }}
                               >
                                 Total
                               </td>
-                              <td className="bg-white" style={{ width: "1px" }}>
+                              <td
+                                className="bg-white"
+                                style={{ width: "10px", textAlign: "center" }}
+                              >
                                 -
                               </td>
-                              <td className="bg-white">
-                                ₹
+                              <td
+                                className="bg-white"
+                                style={{ width: "100px", textAlign: "right" }}
+                              >
                                 {res.Metric &&
                                 res.Metric[4] &&
                                 res?.Metric[4]?.value
-                                  ? Math.round(
+                                  ? new Intl.NumberFormat("en-IN", {
+                                      style: "currency",
+                                      currency: "INR",
+                                    }).format(
                                       res?.Metric[4]?.value?.azure +
                                         res?.Metric[4]?.value?.aws
                                     )
@@ -618,7 +766,7 @@ const Reports = () => {
                 {/* <span>Coming Soon...</span> */}
                 <span>
                   {res && res.Metric && res.Metric[5] && res.Metric[5].value
-                    ? "₹" + res?.Metric[5]?.value
+                    ? "₹" + res?.Metric[5]?.value.toLocaleString("en-IN")
                     : "No Data"}
                 </span>
               </div>
@@ -752,67 +900,104 @@ const Reports = () => {
                     background: "#7B62CA",
                   }}
                 ></div>
-                 {res && (
-                <table>
-                  <tbody>
-                    <tr>
-                      <td className="bg-white" style={{ width: "10px" }}>
-                        AWS
-                      </td>
-                      <td className="bg-white" style={{ width: "1px" }}>
-                        -
-                      </td>
-                      <td className="bg-white">
-                        {currencyData &&
+                {res && (
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td
+                          className="bg-white"
+                          style={{ width: "50px", textAlign: "left" }}
+                        >
+                          AWS
+                        </td>
+                        <td
+                          className="bg-white"
+                          style={{ width: "10px", textAlign: "center" }}
+                        >
+                          -
+                        </td>
+                        <td
+                          className="bg-white"
+                          style={{ width: "100px", textAlign: "right" }}
+                        >
+                          {currencyData &&
+                          currencyData.status &&
+                          currencyData.status === "InActive" &&
+                          res.Metric &&
+                          res.Metric[6] &&
+                          res?.Metric[6]?.value
+                            ? new Intl.NumberFormat("en-US", {
+                                style: "currency",
+                                currency: "USD",
+                              }).format(res?.Metric[6]?.value?.AWS)
+                            : new Intl.NumberFormat("en-IN", {
+                                style: "currency",
+                                currency: "INR",
+                              }).format(res?.Metric[6]?.value?.AWS)}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
+                          className="bg-white"
+                          style={{ width: "50px", textAlign: "left" }}
+                        >
+                          Azure
+                        </td>
+                        <td
+                          className="bg-white"
+                          style={{ width: "10px", textAlign: "center" }}
+                        >
+                          -
+                        </td>
+                        <td
+                          className="bg-white"
+                          style={{ width: "100px", textAlign: "right" }}
+                        >
+                          {res.Metric && res.Metric[6] && res?.Metric[6]?.value
+                            ? new Intl.NumberFormat("en-IN", {
+                                style: "currency",
+                                currency: "INR",
+                              }).format(res?.Metric[6]?.value?.Azure)
+                            : ""}
+                        </td>
+                      </tr>
+                      {currencyData &&
                         currencyData.status &&
-                        currencyData.status === "InActive"
-                          ? "$"
-                          : "₹"}
-                        {res.Metric && res.Metric[6] && res?.Metric[6]?.value
-                          ? res?.Metric[6]?.value?.AWS
-                          : ""}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="bg-white" style={{ width: "10px" }}>
-                        Azure
-                      </td>
-                      <td className="bg-white" style={{ width: "1px" }}>
-                        -
-                      </td>
-                      <td className="bg-white">
-                        ₹
-                        {res.Metric && res.Metric[6] && res?.Metric[6]?.value
-                          ? res?.Metric[6]?.value?.Azure
-                          : ""}
-                      </td>
-                    </tr>
-                    {currencyData &&
-                      currencyData.status &&
-                      currencyData.status === "Active" && (
-                        <tr>
-                          <td className="bg-white" style={{ width: "10px" }}>
-                            Total
-                          </td>
-                          <td className="bg-white" style={{ width: "1px" }}>
-                            -
-                          </td>
-                          <td className="bg-white">
-                            ₹
+                        currencyData.status === "Active" && (
+                          <tr>
+                            <td
+                              className="bg-white"
+                              style={{ width: "50px", textAlign: "left" }}
+                            >
+                              Total
+                            </td>
+                            <td
+                              className="bg-white"
+                              style={{ width: "10px", textAlign: "center" }}
+                            >
+                              -
+                            </td>
+                            <td
+                              className="bg-white"
+                              style={{ width: "100px", textAlign: "right" }}
+                            >
                             {res.Metric &&
-                            res.Metric[6] &&
-                            res?.Metric[6]?.value
-                              ? Math.round(
-                                  res?.Metric[6]?.value?.Azure +
-                                    res?.Metric[6]?.value?.AWS
-                                )
-                              : ""}
-                          </td>
-                        </tr>
-                      )}
-                  </tbody>
-                </table>
-              )}
+                                res.Metric[6] &&
+                                res?.Metric[6]?.value
+                                  ? new Intl.NumberFormat("en-IN", {
+                                      style: "currency",
+                                      currency: "INR",
+                                    }).format(
+                                      res?.Metric[6]?.value?.Azure +
+                                        res?.Metric[6]?.value?.AWS
+                                    )
+                                  : ""}
+                            </td>
+                          </tr>
+                        )}
+                    </tbody>
+                  </table>
+                )}
               </div>
             </Link>
           </div>

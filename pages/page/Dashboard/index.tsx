@@ -19,9 +19,18 @@ const Dashboard = () => {
             className="w-full flex justify-center items-center h-full"
             href={"/page/FinOps/reports"}
           >
-            <div className="cursor-pointer  hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
-              <div className="w-[4px] h-full bg-red-400 absolute left-0 top-0"></div>
-              <p className="text-red-400 font-bold text-lg">Cost Summary</p>
+            <div
+              className="cursor-pointer  hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md"
+              style={{
+                borderRadius: "16px",
+                border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                background:
+                  "linear-gradient(162deg, rgba(123, 98, 202, 0.11) 11.36%, rgba(123, 98, 202, 0.00) 36.6%), #ffffff",
+                fontFamily: `"Oxygen",sans-serif`,
+              }}
+            >
+              {/* <div className="w-[4px] h-full bg-red-400 absolute left-0 top-0"></div> */}
+              <p className="text-black font-bold text-lg">Cost Summary</p>
               <div className="flex flex-col">
                 <span>• Budgeted</span>
                 <span>• Projected</span>
@@ -32,9 +41,18 @@ const Dashboard = () => {
         </div>
 
         <div className="w-[25%] h-[130px] flex justify-center items-center mb-4">
-          <div className="cursor-pointer  hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
-            <div className="w-[4px] h-full bg-green-400 absolute left-0 top-0"></div>
-            <p className="text-green-500 font-bold text-lg">Security Score</p>
+          <div
+            className="cursor-pointer  hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md"
+            style={{
+              borderRadius: "16px",
+              border: "0.5px solid rgba(0, 0, 0, 0.6)",
+              background:
+                "linear-gradient(162deg, rgba(123, 98, 202, 0.11) 11.36%, rgba(123, 98, 202, 0.00) 36.6%), #ffffff",
+              fontFamily: `"Oxygen",sans-serif`,
+            }}
+          >
+            {/* <div className="w-[4px] h-full bg-green-400 absolute left-0 top-0"></div> */}
+            <p className="text-black font-bold text-lg">Security Score</p>
 
             <div className="flex flex-col">
               <span>Coming Soon...</span>
@@ -43,9 +61,18 @@ const Dashboard = () => {
         </div>
 
         <div className="w-[25%] h-[130px] flex justify-center items-center mb-4">
-          <div className="cursor-pointer  hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
-            <div className="w-[4px] h-full bg-blue-400 absolute left-0 top-0"></div>
-            <p className="text-blue-500 font-bold text-lg">Business Service</p>
+          <div
+            className="cursor-pointer  hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md"
+            style={{
+              borderRadius: "16px",
+              border: "0.5px solid rgba(0, 0, 0, 0.6)",
+              background:
+                "linear-gradient(162deg, rgba(123, 98, 202, 0.11) 11.36%, rgba(123, 98, 202, 0.00) 36.6%), #ffffff",
+              fontFamily: `"Oxygen",sans-serif`,
+            }}
+          >
+            {/* <div className="w-[4px] h-full bg-blue-400 absolute left-0 top-0"></div> */}
+            <p className="text-black font-bold text-lg">Business Service</p>
 
             <div className="flex flex-col">
               <span>Coming Soon...</span>
@@ -55,9 +82,18 @@ const Dashboard = () => {
         </div>
 
         <div className="w-[25%] h-[130px] flex justify-center items-center mb-4">
-          <div className="cursor-pointer  hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
-            <div className="w-[4px] h-full bg-pink-400 absolute left-0 top-0"></div>
-            <p className="text-pink-500 font-bold text-lg">Managed Asset</p>
+          <div
+            className="cursor-pointer  hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md"
+            style={{
+              borderRadius: "16px",
+              border: "0.5px solid rgba(0, 0, 0, 0.6)",
+              background:
+                "linear-gradient(162deg, rgba(123, 98, 202, 0.11) 11.36%, rgba(123, 98, 202, 0.00) 36.6%), #ffffff",
+              fontFamily: `"Oxygen",sans-serif`,
+            }}
+          >
+            {/* <div className="w-[4px] h-full bg-pink-400 absolute left-0 top-0"></div> */}
+            <p className="text-black font-bold text-lg">Managed Asset</p>
 
             <div className="flex flex-col">
               <span>Coming Soon...</span>
@@ -67,11 +103,18 @@ const Dashboard = () => {
         </div>
 
         <div className="w-[25%] h-[130px] flex justify-center items-center mb-4">
-          <div className="cursor-pointer  hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
-            <div className="w-[4px] h-full bg-orange-400 absolute left-0 top-0"></div>
-            <p className="text-orange-500 font-bold text-lg">
-              Active Incidents
-            </p>
+          <div
+            className="cursor-pointer  hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md"
+            style={{
+              borderRadius: "16px",
+              border: "0.5px solid rgba(0, 0, 0, 0.6)",
+              background:
+                "linear-gradient(162deg, rgba(123, 98, 202, 0.11) 11.36%, rgba(123, 98, 202, 0.00) 36.6%), #ffffff",
+              fontFamily: `"Oxygen",sans-serif`,
+            }}
+          >
+            {/* <div className="w-[4px] h-full bg-orange-400 absolute left-0 top-0"></div> */}
+            <p className="text-black font-bold text-lg">Active Incidents</p>
             <div className="flex flex-col">
               <span>Coming Soon...</span>
             </div>
@@ -79,9 +122,18 @@ const Dashboard = () => {
         </div>
 
         <div className="w-[25%] h-[130px] flex justify-center items-center mb-4">
-          <div className="cursor-pointer  hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md">
-            <div className="w-[4px] h-full bg-purple-400 absolute left-0 top-0"></div>
-            <p className="text-purple-400 font-bold text-lg">
+          <div
+            className="cursor-pointer  hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md"
+            style={{
+              borderRadius: "16px",
+              border: "0.5px solid rgba(0, 0, 0, 0.6)",
+              background:
+                "linear-gradient(162deg, rgba(123, 98, 202, 0.11) 11.36%, rgba(123, 98, 202, 0.00) 36.6%), #ffffff",
+              fontFamily: `"Oxygen",sans-serif`,
+            }}
+          >
+            {/* <div className="w-[4px] h-full bg-purple-400 absolute left-0 top-0"></div> */}
+            <p className="text-black font-bold text-lg">
               Active Service Request
             </p>
             <div className="flex flex-col">

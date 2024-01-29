@@ -240,15 +240,15 @@ function CloudGateway() {
 
   function changeStatus(res: any) {
     setCurrencyData({ ...currencyData, status: res ? "Active" : "InActive" });
-    setDataChanged(true)
+    setDataChanged(true);
   }
   function changeDollarValue(res: any) {
     setCurrencyData({ ...currencyData, dollar_value: res });
-    setDataChanged(true)
+    setDataChanged(true);
   }
 
-  function updateCurrencyValues(){
-    updateCurrencyData(currencyData).then(()=> setDataChanged(false))
+  function updateCurrencyValues() {
+    updateCurrencyData(currencyData).then(() => setDataChanged(false));
   }
   return (
     <>
@@ -261,181 +261,224 @@ function CloudGateway() {
       <div className="mt-4 finops-container h-auto flex  gap-4">
         <div className="flex flex-col gap-4 h-fit">
           {serviceTypeCostData && (
-            <div className="card h-fit">
+            <div
+              className="card h-fit"
+              style={{
+                borderRadius: "16px",
+                border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                fontFamily: `"Oxygen",sans-serif`,
+              }}
+            >
               <label className="text-sm font-semibold">
                 {serviceTypeCostData.title ? serviceTypeCostData?.title : ""}
               </label>
-              <table className="w-full text-sm text-center mt-2 text-gray-800">
-                <thead className="text-[9px] text-white uppercase bg-red-800">
-                  <tr>
+              <div className="rounded-md mt-2">
+                <table className="w-full text-sm text-center text-gray-800">
+                  <thead
+                    className="text-[9px] text-white uppercase"
+                    style={{
+                      background:
+                        "linear-gradient(90deg, #AF1E23 -43.96%, #F37032 112.99%)",
+                    }}
+                  >
+                    <tr>
+                      {/* <th>SrNo</th> */}
+                      {serviceTypeCostData.headers &&
+                        serviceTypeCostData?.headers?.map(
+                          (header: any, index: any) => (
+                            <th
+                              className="px-auto py-1"
+                              key={index}
+                              scope="col"
+                            >
+                              {header}
+                            </th>
+                          )
+                        )}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {serviceTypeCostData.data &&
+                      serviceTypeCostData?.data?.map(
+                        (rowData: any, rowIndex: any) => (
+                          <>
+                            <tr
+                              key={rowIndex}
+                              className={
+                                serviceTypeCostNestedRowOpen == rowIndex
+                                  ? "bg-slate-100 "
+                                  : ""
+                              }
+                              onClick={() =>
+                                setServiceTypeCostNestedRowOpen(
+                                  serviceTypeCostNestedRowOpen == rowIndex
+                                    ? "-1"
+                                    : rowIndex
+                                )
+                              }
+                            >
+                              {/* <td>{rowIndex + 1}</td> */}
+                              {rowData.map((item: any, index: any) =>
+                                item[0] != "NestedTableData" ? (
+                                  <td
+                                    className={
+                                      item[0] == "Status" || item[0] == "status"
+                                        ? item[1] == "Enabled"
+                                          ? "text-green-500"
+                                          : "text-red-500"
+                                        : "px-auto py-1"
+                                    }
+                                    key={index}
+                                  >
+                                    {item[1]}
+                                  </td>
+                                ) : (
+                                  ""
+                                )
+                              )}
+                            </tr>
+                            <tr key={rowIndex + 1000}>
+                              {rowData.map((item: any, trindex: any) =>
+                                item[0] == "NestedTableData" ? (
+                                  <td
+                                    key={trindex + 1000}
+                                    colSpan={100}
+                                    className={
+                                      serviceTypeCostNestedRowOpen != rowIndex
+                                        ? "hidden"
+                                        : ""
+                                    }
+                                  >
+                                    <table className="w-full">
+                                      <thead className="bg-slate-300">
+                                        <tr>
+                                          {item[1]?.headers?.map(
+                                            (data: any, thindex: any) => {
+                                              return (
+                                                <th key={thindex}>{data}</th>
+                                              );
+                                            }
+                                          )}
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        {item[1]?.data?.map(
+                                          (data: any, thindex: any) => {
+                                            return (
+                                              <tr key={thindex}>
+                                                {data?.map(
+                                                  (row: any, index: any) => {
+                                                    return (
+                                                      <td key={index}>
+                                                        {row[1]}
+                                                      </td>
+                                                    );
+                                                  }
+                                                )}
+                                              </tr>
+                                            );
+                                          }
+                                        )}
+                                      </tbody>
+                                    </table>
+                                  </td>
+                                ) : (
+                                  ""
+                                )
+                              )}
+                            </tr>
+                          </>
+                        )
+                      )}
+                    {serviceTypeCostData?.data?.length == 0 ? (
+                      <tr>
+                        <td colSpan={100}>No data</td>
+                      </tr>
+                    ) : (
+                      ""
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {zoneMappingData && (
+            <div
+              className="card !h-fit"
+              style={{
+                borderRadius: "16px",
+                border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                fontFamily: `"Oxygen",sans-serif`,
+              }}
+            >
+              <label className="text-sm font-semibold">
+                {zoneMappingData.title ? zoneMappingData?.title : ""}
+              </label>
+              <div className="rounded-md mt-2">
+                <table className="w-full text-sm text-center text-gray-800">
+                  <thead
+                    className="text-[9px] uppercase  text-white"
+                    style={{
+                      background:
+                        "linear-gradient(90deg, #AF1E23 -43.96%, #F37032 112.99%)",
+                    }}
+                  >
                     {/* <th>SrNo</th> */}
-                    {serviceTypeCostData.headers &&
-                      serviceTypeCostData?.headers?.map(
+                    {zoneMappingData.headers &&
+                      zoneMappingData?.headers?.map(
                         (header: any, index: any) => (
                           <th className="px-auto py-1" key={index} scope="col">
                             {header}
                           </th>
                         )
                       )}
-                  </tr>
-                </thead>
-                <tbody>
-                  {serviceTypeCostData.data &&
-                    serviceTypeCostData?.data?.map(
-                      (rowData: any, rowIndex: any) => (
-                        <>
-                          <tr
-                            key={rowIndex}
-                            className={
-                              serviceTypeCostNestedRowOpen == rowIndex
-                                ? "bg-slate-100 "
-                                : ""
-                            }
-                            onClick={() =>
-                              setServiceTypeCostNestedRowOpen(
-                                serviceTypeCostNestedRowOpen == rowIndex
-                                  ? "-1"
-                                  : rowIndex
-                              )
-                            }
-                          >
+                  </thead>
+                  <tbody>
+                    {zoneMappingData.data &&
+                      zoneMappingData?.data?.map(
+                        (rowData: any, rowIndex: any) => (
+                          <tr key={rowIndex}>
                             {/* <td>{rowIndex + 1}</td> */}
-                            {rowData.map((item: any, index: any) =>
-                              item[0] != "NestedTableData" ? (
-                                <td
-                                  className={
-                                    item[0] == "Status" || item[0] == "status"
-                                      ? item[1] == "Enabled"
-                                        ? "text-green-500"
-                                        : "text-red-500"
-                                      : "px-auto py-1"
-                                  }
-                                  key={index}
-                                >
-                                  {item[1]}
-                                </td>
-                              ) : (
-                                ""
-                              )
-                            )}
+                            {rowData.map((item: any, index: any) => (
+                              <td
+                                className={
+                                  item[0] == "Status"
+                                    ? item[1] == "Enabled"
+                                      ? "text-green-500"
+                                      : "text-red-500"
+                                    : "px-auto py-1"
+                                }
+                                key={index}
+                              >
+                                {item[1]}
+                              </td>
+                            ))}
                           </tr>
-                          <tr key={rowIndex + 1000}>
-                            {rowData.map((item: any, trindex: any) =>
-                              item[0] == "NestedTableData" ? (
-                                <td
-                                  key={trindex + 1000}
-                                  colSpan={100}
-                                  className={
-                                    serviceTypeCostNestedRowOpen != rowIndex
-                                      ? "hidden"
-                                      : ""
-                                  }
-                                >
-                                  <table className="w-full">
-                                    <thead className="bg-slate-300">
-                                      <tr>
-                                        {item[1]?.headers?.map(
-                                          (data: any, thindex: any) => {
-                                            return (
-                                              <th key={thindex}>{data}</th>
-                                            );
-                                          }
-                                        )}
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      {item[1]?.data?.map(
-                                        (data: any, thindex: any) => {
-                                          return (
-                                            <tr key={thindex}>
-                                              {data?.map(
-                                                (row: any, index: any) => {
-                                                  return (
-                                                    <td key={index}>
-                                                      {row[1]}
-                                                    </td>
-                                                  );
-                                                }
-                                              )}
-                                            </tr>
-                                          );
-                                        }
-                                      )}
-                                    </tbody>
-                                  </table>
-                                </td>
-                              ) : (
-                                ""
-                              )
-                            )}
-                          </tr>
-                        </>
-                      )
+                        )
+                      )}
+                    {zoneMappingData.data &&
+                    zoneMappingData?.data?.length == 0 ? (
+                      <tr>
+                        <td colSpan={100}>No data</td>
+                      </tr>
+                    ) : (
+                      ""
                     )}
-                  {serviceTypeCostData?.data?.length == 0 ? (
-                    <tr>
-                      <td colSpan={100}>No data</td>
-                    </tr>
-                  ) : (
-                    ""
-                  )}
-                </tbody>
-              </table>
-            </div>
-          )}
-
-          {zoneMappingData && (
-            <div className="card !h-fit">
-              <label className="text-sm font-semibold">
-                {zoneMappingData.title ? zoneMappingData?.title : ""}
-              </label>
-              <table className="w-full text-sm text-center mt-2 text-gray-800">
-                <thead className="text-[9px] uppercase bg-red-800 text-white">
-                  {/* <th>SrNo</th> */}
-                  {zoneMappingData.headers &&
-                    zoneMappingData?.headers?.map((header: any, index: any) => (
-                      <th className="px-auto py-1" key={index} scope="col">
-                        {header}
-                      </th>
-                    ))}
-                </thead>
-                <tbody>
-                  {zoneMappingData.data &&
-                    zoneMappingData?.data?.map(
-                      (rowData: any, rowIndex: any) => (
-                        <tr key={rowIndex}>
-                          {/* <td>{rowIndex + 1}</td> */}
-                          {rowData.map((item: any, index: any) => (
-                            <td
-                              className={
-                                item[0] == "Status"
-                                  ? item[1] == "Enabled"
-                                    ? "text-green-500"
-                                    : "text-red-500"
-                                  : "px-auto py-1"
-                              }
-                              key={index}
-                            >
-                              {item[1]}
-                            </td>
-                          ))}
-                        </tr>
-                      )
-                    )}
-                  {zoneMappingData.data &&
-                  zoneMappingData?.data?.length == 0 ? (
-                    <tr>
-                      <td colSpan={100}>No data</td>
-                    </tr>
-                  ) : (
-                    ""
-                  )}
-                </tbody>
-              </table>
+                  </tbody>
+                </table>
+              </div>
             </div>
           )}
         </div>
-        <div className="!h-fit p-3 !w-fit bg-white rounded-lg">
+        <div
+          className="!h-fit p-3 !w-fit bg-white rounded-lg"
+          style={{
+            borderRadius: "16px",
+            border: "0.5px solid rgba(0, 0, 0, 0.6)",
+            fontFamily: `"Oxygen",sans-serif`,
+          }}
+        >
           <label className="text-sm font-semibold">Currency Converter</label>
           <div className="flex mt-2 gap-4">
             <div>
@@ -459,7 +502,13 @@ function CloudGateway() {
                 onChange={(res: any) => {
                   changeStatus(res);
                 }}
-                checked={currencyData && currencyData.status && currencyData.status == "InActive" ? false : true}
+                checked={
+                  currencyData &&
+                  currencyData.status &&
+                  currencyData.status == "InActive"
+                    ? false
+                    : true
+                }
                 uncheckedIcon={false}
                 checkedIcon={false}
                 boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
@@ -470,7 +519,10 @@ function CloudGateway() {
             </div>
           </div>
           {dataChanged && (
-            <button onClick={updateCurrencyValues} className="bg-blue-600 text-white px-3 py-1 mt-2 rounded">
+            <button
+              onClick={updateCurrencyValues}
+              className="bg-blue-600 text-white px-3 py-1 mt-2 rounded"
+            >
               Save
             </button>
           )}
@@ -484,7 +536,13 @@ function CloudGateway() {
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
             <div className="w-full max-w-3xl mx-auto my-12 bg-white rounded-lg shadow-lg overflow-y-auto max-h-screen">
               <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                <div className="bg-red-800 px-4 py-2 flex items-center justify-between">
+                <div
+                  className=" px-4 py-2 flex items-center justify-between"
+                  style={{
+                    background:
+                      "linear-gradient(90deg, #AF1E23 -43.96%, #F37032 112.99%)",
+                  }}
+                >
                   <h3 className="text-xl text-white">
                     {serviceTypeCostData.title ? serviceTypeCostData.title : ""}
                   </h3>

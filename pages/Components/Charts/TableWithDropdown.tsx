@@ -150,7 +150,7 @@ const TableWithDropdown = (cloud: any, type: any) => {
   return (
     <>
       <div className="items-center pb-4 px-4">
-        <label className="text-xs font-semibold">
+        <label className="text-sm font-semibold">
           {data?.Table && data?.Table[0] && data?.Table[0].title
             ? data?.Table[0].title
             : ""}
@@ -163,7 +163,7 @@ const TableWithDropdown = (cloud: any, type: any) => {
               placeholder="Search..."
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
-              className="border px-2 py-1 rounded-sm"
+              className="border max-h-7 px-2 py-1 rounded-sm"
             />
           </div>
           <div>
@@ -171,28 +171,32 @@ const TableWithDropdown = (cloud: any, type: any) => {
               <select
                 value={firstDropdownValue}
                 onChange={(e) => setFirstDropdownValue(e.target.value)}
-                className="border px-2 py-[0.32rem] max-w-[14rem] rounded-sm ml-2"
+                className="border text-xs max-h-7 px-2 py-[0.32rem] max-w-[14rem] rounded-sm ml-2"
               >
                 <option value="" disabled>
                   Select...
                 </option>
                 {firstdropDowndata &&
-                  firstdropDowndata.map(
-                    (item: any, index: any) => (
-                      <option key={index} value={item}>
-                        {item}
-                      </option>
-                    )
-                  )}
+                  firstdropDowndata.map((item: any, index: any) => (
+                    <option key={index} value={item}>
+                      {item}
+                    </option>
+                  ))}
               </select>
             )}
           </div>
         </div>
         {/* </div> */}
 
-        <div className="relative overflow-x-auto mt-6">
+        <div className="relative overflow-x-auto mt-6  rounded-md">
           <table className="w-full text-sm text-center text-gray-800">
-            <thead className="text-xs text-white uppercase bg-red-800">
+            <thead
+              className="text-xs text-white uppercase "
+              style={{
+                background:
+                  "linear-gradient(90deg, #AF1E23 -43.96%, #F37032 112.99%)",
+              }}
+            >
               <tr>
                 {/* <th>SrNo</th> */}
                 {data &&

@@ -3,109 +3,109 @@ import CloseIcon from "@mui/icons-material/Close";
 import React, { useEffect, useState } from "react";
 
 const NTable = (cloudGatewayData: any) => {
-//   console.log("-----------------", cloudGatewayData.data);
-    // const cloudGatewayData = {
-    //   title: "Cloud Gateway",
-    //   headers: [
-    //     "S No",
-    //     "Business User",
-    //     "Number of Services",
-    //     "Total gateway charges",
-    //   ],
-    //   data: [
-    //     [
-    //       ["S no", "1"],
-    //       ["Business User", "Birla Carbon"],
-    //       ["Number of Services", 2],
-    //       ["Total gateway charges", 5000],
-    //       [
-    //         "NestedTableData",
-    //         {
-    //           title: "Gateway Charges",
-    //           headers: [
-    //             "Service Name",
-    //             "Unit Price",
-    //             "Type of Service",
-    //             "Total Cost",
-    //           ],
-    //           data: [
-    //             [
-    //               ["Service Name", "Cat1"],
-    //               ["Unit Price", "1"],
-    //               ["Type of Service", "internal"],
-    //               ["Total Cost", "2500"],
-    //             ],
-    //             [
-    //               ["Service Name", "Cat2"],
-    //               ["Unit Price", "1"],
-    //               ["Type of Service", "internal"],
-    //               ["Total Cost", "2500"],
-    //             ],
-    //           ],
-    //         },
-    //       ],
-    //     ],
-    //     [
-    //       ["S no", "2"],
-    //       ["Business User", "Birla Carbon"],
-    //       ["Number of Services", 2],
-    //       ["Total gateway charges", 5000],
-    //       [
-    //         "NestedTableData",
-    //         {
-    //           title: "Gateway Charges",
-    //           headers: [
-    //             "Service Name",
-    //             "Unit Price",
-    //             "Type of Service",
-    //             "Total Cost",
-    //           ],
-    //           data: [
-    //             [
-    //               ["Service Name", "Cat1"],
-    //               ["Unit Price", "1"],
-    //               ["Type of Service", "internal"],
-    //               ["Total Cost", "2500"],
-    //             ],
-    //             [
-    //               ["Service Name", "Cat2"],
-    //               ["Unit Price", "1"],
-    //               ["Type of Service", "internal"],
-    //               ["Total Cost", "2500"],
-    //             ],
-    //           ],
-    //         },
-    //       ],
-    //     ],
-    //     [
-    //       ["S no", "3"],
-    //       ["Business User", "UTCL"],
-    //       ["Number of Services", 1],
-    //       ["Total gateway charges", 2500],
-    //       [
-    //         "NestedTableData",
-    //         {
-    //           title: "Gateway Charges",
-    //           headers: [
-    //             "Service Name",
-    //             "Unit Price",
-    //             "Type of Service",
-    //             "Total Cost",
-    //           ],
-    //           data: [
-    //             [
-    //               ["Service Name", "Cat1"],
-    //               ["Unit Price", "1"],
-    //               ["Type of Service", "internal"],
-    //               ["Total Cost", "2500"],
-    //             ],
-    //           ],
-    //         },
-    //         ,
-    //       ],
-    //     ],
-    //   ],
-    // };
+  //   console.log("-----------------", cloudGatewayData.data);
+  // const cloudGatewayData = {
+  //   title: "Cloud Gateway",
+  //   headers: [
+  //     "S No",
+  //     "Business User",
+  //     "Number of Services",
+  //     "Total gateway charges",
+  //   ],
+  //   data: [
+  //     [
+  //       ["S no", "1"],
+  //       ["Business User", "Birla Carbon"],
+  //       ["Number of Services", 2],
+  //       ["Total gateway charges", 5000],
+  //       [
+  //         "NestedTableData",
+  //         {
+  //           title: "Gateway Charges",
+  //           headers: [
+  //             "Service Name",
+  //             "Unit Price",
+  //             "Type of Service",
+  //             "Total Cost",
+  //           ],
+  //           data: [
+  //             [
+  //               ["Service Name", "Cat1"],
+  //               ["Unit Price", "1"],
+  //               ["Type of Service", "internal"],
+  //               ["Total Cost", "2500"],
+  //             ],
+  //             [
+  //               ["Service Name", "Cat2"],
+  //               ["Unit Price", "1"],
+  //               ["Type of Service", "internal"],
+  //               ["Total Cost", "2500"],
+  //             ],
+  //           ],
+  //         },
+  //       ],
+  //     ],
+  //     [
+  //       ["S no", "2"],
+  //       ["Business User", "Birla Carbon"],
+  //       ["Number of Services", 2],
+  //       ["Total gateway charges", 5000],
+  //       [
+  //         "NestedTableData",
+  //         {
+  //           title: "Gateway Charges",
+  //           headers: [
+  //             "Service Name",
+  //             "Unit Price",
+  //             "Type of Service",
+  //             "Total Cost",
+  //           ],
+  //           data: [
+  //             [
+  //               ["Service Name", "Cat1"],
+  //               ["Unit Price", "1"],
+  //               ["Type of Service", "internal"],
+  //               ["Total Cost", "2500"],
+  //             ],
+  //             [
+  //               ["Service Name", "Cat2"],
+  //               ["Unit Price", "1"],
+  //               ["Type of Service", "internal"],
+  //               ["Total Cost", "2500"],
+  //             ],
+  //           ],
+  //         },
+  //       ],
+  //     ],
+  //     [
+  //       ["S no", "3"],
+  //       ["Business User", "UTCL"],
+  //       ["Number of Services", 1],
+  //       ["Total gateway charges", 2500],
+  //       [
+  //         "NestedTableData",
+  //         {
+  //           title: "Gateway Charges",
+  //           headers: [
+  //             "Service Name",
+  //             "Unit Price",
+  //             "Type of Service",
+  //             "Total Cost",
+  //           ],
+  //           data: [
+  //             [
+  //               ["Service Name", "Cat1"],
+  //               ["Unit Price", "1"],
+  //               ["Type of Service", "internal"],
+  //               ["Total Cost", "2500"],
+  //             ],
+  //           ],
+  //         },
+  //         ,
+  //       ],
+  //     ],
+  //   ],
+  // };
   //   const serviceTypeCostData = {
   //     title: "Service Type Cost",
   //     headers: ["category", "aligned services", "unit measure", "status"],
@@ -174,7 +174,11 @@ const NTable = (cloudGatewayData: any) => {
   //   };
 
   const rowPerPage = 7;
-  const totalRows =cloudGatewayData && cloudGatewayData.data && cloudGatewayData.data.data && cloudGatewayData?.data?.data?.length;
+  const totalRows =
+    cloudGatewayData &&
+    cloudGatewayData.data &&
+    cloudGatewayData.data.data &&
+    cloudGatewayData?.data?.data?.length;
   const totalPages = Math.ceil(totalRows / rowPerPage);
   const [page, setPage] = useState<any>(1);
   const [isOpen, setIsOpen] = useState<any>(false);
@@ -208,13 +212,23 @@ const NTable = (cloudGatewayData: any) => {
   useEffect(() => {
     setPage(1);
     // Filter data based on search input
-    const filtered =cloudGatewayData && cloudGatewayData.data && cloudGatewayData.data.data && cloudGatewayData?.data?.data.filter((rowData: any) => {
-      return rowData.some((item: any) =>
-        item[1]
-          ? item[1].toString().toLowerCase().includes(searchInput.toLowerCase())
-          : item[0].toString().toLowerCase().includes(searchInput.toLowerCase())
-      );
-    });
+    const filtered =
+      cloudGatewayData &&
+      cloudGatewayData.data &&
+      cloudGatewayData.data.data &&
+      cloudGatewayData?.data?.data.filter((rowData: any) => {
+        return rowData.some((item: any) =>
+          item[1]
+            ? item[1]
+                .toString()
+                .toLowerCase()
+                .includes(searchInput.toLowerCase())
+            : item[0]
+                .toString()
+                .toLowerCase()
+                .includes(searchInput.toLowerCase())
+        );
+      });
 
     setFilteredData(filtered);
   }, [searchInput]);
@@ -227,7 +241,9 @@ const NTable = (cloudGatewayData: any) => {
       {cloudGatewayData && (
         <div className="card !h-fit !w-full">
           <label className="text-sm font-semibold">
-            {cloudGatewayData.data  && cloudGatewayData.data.title ? cloudGatewayData?.data?.title : ""}
+            {cloudGatewayData.data && cloudGatewayData.data.title
+              ? cloudGatewayData?.data?.title
+              : ""}
           </label>
 
           {/* Search input */}
@@ -238,93 +254,106 @@ const NTable = (cloudGatewayData: any) => {
             onChange={handleSearchInputchange}
             className="border px-2 py-1 rounded-sm ml-2"
           />
-          <div className="relative overflow-x-auto mt-6">
+          <div className="relative overflow-x-auto mt-6 rounded-md">
             <table className="w-full text-sm text-center text-gray-800">
-              <thead className="text-[9px] text-white uppercase bg-red-800">
+              <thead
+                className="text-[9px] text-white uppercase"
+                style={{
+                  background:
+                    "linear-gradient(90deg, #AF1E23 -43.96%, #F37032 112.99%)",
+                }}
+              >
                 {/* <th>SrNo</th> */}
-                {cloudGatewayData && cloudGatewayData.data && cloudGatewayData.data.headers && cloudGatewayData?.data?.headers?.map(
-                  (header: any, index: any) => (
-                    <th className="px-auto py-2" key={index} scope="col">
-                      {header}
-                    </th>
-                  )
-                )}
+                {cloudGatewayData &&
+                  cloudGatewayData.data &&
+                  cloudGatewayData.data.headers &&
+                  cloudGatewayData?.data?.headers?.map(
+                    (header: any, index: any) => (
+                      <th className="px-auto py-2" key={index} scope="col">
+                        {header}
+                      </th>
+                    )
+                  )}
               </thead>
               <tbody>
-                {currentData && currentData?.map((rowData: any, rowIndex: any) => (
-                  <>
-                    {/* Existing row mapping logic */}
-                    <tr
-                      key={rowIndex}
-                      className={
-                        gatewayChargesNestedRowOpen == rowIndex
-                          ? "bg-slate-100 "
-                          : ""
-                      }
-                      onClick={() =>
-                        setGatewayChargesNestedRowOpen(
+                {currentData &&
+                  currentData?.map((rowData: any, rowIndex: any) => (
+                    <>
+                      {/* Existing row mapping logic */}
+                      <tr
+                        key={rowIndex}
+                        className={
                           gatewayChargesNestedRowOpen == rowIndex
-                            ? "-1"
-                            : rowIndex
-                        )
-                      }
-                    >
-                      {/* <td>{rowIndex + 1}</td> */}
-                      {rowData && rowData.map((item: any, index: any) =>
-                        item[0] !== "NestedTableData" ? (
-                          <td className="px-auto py-2" key={index}>
-                            {item[1]}
-                          </td>
-                        ) : (
-                          ""
-                        )
-                      )}
-                    </tr>
+                            ? "bg-slate-100 "
+                            : ""
+                        }
+                        onClick={() =>
+                          setGatewayChargesNestedRowOpen(
+                            gatewayChargesNestedRowOpen == rowIndex
+                              ? "-1"
+                              : rowIndex
+                          )
+                        }
+                      >
+                        {/* <td>{rowIndex + 1}</td> */}
+                        {rowData &&
+                          rowData.map((item: any, index: any) =>
+                            item[0] !== "NestedTableData" ? (
+                              <td className="px-auto py-2" key={index}>
+                                {item[1]}
+                              </td>
+                            ) : (
+                              ""
+                            )
+                          )}
+                      </tr>
 
-                    {/* Nested table logic */}
-                    <tr key={rowIndex + 1000}>
-                      {rowData && rowData.map((item: any, trindex: any) =>
-                        item[0] === "NestedTableData" ? (
-                          <td
-                            key={trindex + 1000}
-                            colSpan={100}
-                            className={
-                              gatewayChargesNestedRowOpen !== rowIndex
-                                ? "hidden"
-                                : ""
-                            }
-                          >
-                            <table className="w-full">
-                              <thead className="bg-slate-300">
-                                <tr>
-                                  {item[1]?.headers?.map(
-                                    (data: any, thindex: any) => (
-                                      <th key={thindex}>{data}</th>
-                                    )
-                                  )}
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {item[1]?.data?.map(
-                                  (data: any, thindex: any) => (
-                                    <tr key={thindex}>
-                                      {data?.map((row: any, index: any) => (
-                                        <td key={index}>{row[1]}</td>
-                                      ))}
+                      {/* Nested table logic */}
+                      <tr key={rowIndex + 1000}>
+                        {rowData &&
+                          rowData.map((item: any, trindex: any) =>
+                            item[0] === "NestedTableData" ? (
+                              <td
+                                key={trindex + 1000}
+                                colSpan={100}
+                                className={
+                                  gatewayChargesNestedRowOpen !== rowIndex
+                                    ? "hidden"
+                                    : ""
+                                }
+                              >
+                                <table className="w-full">
+                                  <thead className="bg-slate-300">
+                                    <tr>
+                                      {item[1]?.headers?.map(
+                                        (data: any, thindex: any) => (
+                                          <th key={thindex}>{data}</th>
+                                        )
+                                      )}
                                     </tr>
-                                  )
-                                )}
-                              </tbody>
-                            </table>
-                          </td>
-                        ) : (
-                          ""
-                        )
-                      )}
-                    </tr>
-                  </>
-                ))}
-                {currentData && currentData?.length === 0 || filteredData == undefined ? (
+                                  </thead>
+                                  <tbody>
+                                    {item[1]?.data?.map(
+                                      (data: any, thindex: any) => (
+                                        <tr key={thindex}>
+                                          {data?.map((row: any, index: any) => (
+                                            <td key={index}>{row[1]}</td>
+                                          ))}
+                                        </tr>
+                                      )
+                                    )}
+                                  </tbody>
+                                </table>
+                              </td>
+                            ) : (
+                              ""
+                            )
+                          )}
+                      </tr>
+                    </>
+                  ))}
+                {(currentData && currentData?.length === 0) ||
+                filteredData == undefined ? (
                   <tr>
                     <td colSpan={100} className="py-2">
                       No data

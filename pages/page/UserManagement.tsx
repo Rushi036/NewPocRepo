@@ -1633,12 +1633,12 @@ const UserManagement = () => {
       <div className="text-xl px-4 border-b-2 border-slate-400 pb-2 flex justify-between items-center">
         <span>User Management</span>
       </div>
-      <div className="flex justify-between px-4">
+      <div className="flex justify-between px-4 ">
         <div className="mt-6">
           <input
             type="text"
             placeholder="Search..."
-            className="border px-2 py-1 rounded-sm"
+            className="border px-2 py-1 rounded-md"
             value={searchQuery}
             onChange={(e) => {
               setSearchQuery(e.target.value);
@@ -1649,16 +1649,26 @@ const UserManagement = () => {
         <div className=" mt-6">
           <button
             onClick={() => setIsOpen(true)}
-            className="btn bg-red-700 rounded-sm  px-4 py-1 text-white font-semibold hover:bg-red-800"
+            className="btn  rounded-md  px-4 py-1 text-white font-semibold hover:bg-red-800"
+            style={{
+              background:
+                "linear-gradient(90deg, #AF1E23 -43.96%, #F37032 112.99%)",
+            }}
           >
             Add New Business
           </button>
         </div>
       </div>
       <div className="items-center pb-4 px-4 ">
-        <div className="relative overflow-x-auto mt-6">
+        <div className="relative overflow-x-auto mt-6 rounded-md">
           <table className="w-full text-sm text-center text-gray-800">
-            <thead className="text-xs text-white uppercase bg-red-800">
+            <thead
+              className="text-xs text-white uppercase "
+              style={{
+                background:
+                  "linear-gradient(90deg, #AF1E23 -43.96%, #F37032 112.99%)",
+              }}
+            >
               <tr>
                 <th scope="col" className="px-2 py-3">
                   Sr.No.
@@ -1773,7 +1783,13 @@ const UserManagement = () => {
           {/* Modal content */}
           <div className="w-full max-w-3xl mx-auto my-12 bg-white rounded-lg shadow-lg overflow-y-auto max-h-screen">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className="bg-red-800 px-4 py-2 flex items-center justify-between">
+              <div
+                className=" px-4 py-2 flex items-center justify-between"
+                style={{
+                  background:
+                    "linear-gradient(90deg, #AF1E23 -43.96%, #F37032 112.99%)",
+                }}
+              >
                 <h3 className="text-xl text-white font-bold">
                   Add New Business
                 </h3>
@@ -1995,12 +2011,14 @@ const UserManagement = () => {
               <div className="bg-gray-200 px-4 py-3 flex justify-end">
                 <button
                   onClick={handleUpload}
-                  className={`text-white px-6 py-2 rounded ${
-                    isFormValid()
-                      ? "bg-red-800 hover:bg-red-900"
-                      : "bg-gray-400 cursor-not-allowed"
-                  }`}
+                  className={`text-white px-6 py-2 rounded 
+               `}
                   disabled={!isFormValid()}
+                  style={{
+                    background: isFormValid()
+                      ? "linear-gradient(90deg, #AF1E23 -43.96%, #F37032 112.99%)"
+                      : "gray",
+                  }}
                 >
                   Submit
                 </button>
@@ -2014,7 +2032,13 @@ const UserManagement = () => {
           {/* Modal content */}
           <div className="w-full max-w-3xl mx-auto my-12 bg-white rounded-lg shadow-lg overflow-y-auto max-h-screen">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className="bg-red-800 px-4 py-2 flex items-center justify-between">
+              <div
+                className=" px-4 py-2 flex items-center justify-between"
+                style={{
+                  background:
+                    "linear-gradient(90deg, #AF1E23 -43.96%, #F37032 112.99%)",
+                }}
+              >
                 <h3 className="text-xl text-white font-bold">
                   Edit Business Details
                 </h3>
@@ -2256,12 +2280,14 @@ const UserManagement = () => {
               <div className="bg-gray-200 px-4 py-3 flex justify-end">
                 <button
                   onClick={handleEditUpload}
-                  className={`text-white px-6 py-2 rounded ${
-                    isEditFormValid()
-                      ? "bg-red-800 hover:bg-red-900"
-                      : "bg-gray-400 cursor-not-allowed"
-                  }`}
+                  className={`text-white px-6 py-2 rounded 
+               `}
                   disabled={!isEditFormValid()}
+                  style={{
+                    background: isEditFormValid()
+                      ? "linear-gradient(90deg, #AF1E23 -43.96%, #F37032 112.99%)"
+                      : "gray",
+                  }}
                 >
                   Submit
                 </button>
@@ -2275,7 +2301,13 @@ const UserManagement = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="w-full max-w-4xl mx-auto my-12 bg-white rounded-lg shadow-lg overflow-y-auto max-h-screen">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className="bg-red-800 px-4 py-2 flex items-center justify-between">
+              <div
+                className=" px-4 py-2 flex items-center justify-between"
+                style={{
+                  background:
+                    "linear-gradient(90deg, #AF1E23 -43.96%, #F37032 112.99%)",
+                }}
+              >
                 <h3 className="text-xl text-white font-bold">
                   Subscription Details
                 </h3>

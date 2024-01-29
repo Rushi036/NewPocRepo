@@ -1,12 +1,22 @@
 import React, { useEffect, useRef } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-
+import NoDataToDisplay from "highcharts/modules/no-data-to-display";
+import HighchartsExporting from "highcharts/modules/exporting";
+import HighchartsExportData from "highcharts/modules/export-data";
+import HighchartsAccessibility from "highcharts/modules/accessibility";
 const BarGraph = (props: any) => {
   const chartContainer = useRef(null);
- 
+  useEffect(() => {
+    HighchartsExporting(Highcharts);
+    HighchartsExportData(Highcharts);
+    HighchartsAccessibility(Highcharts);
+    NoDataToDisplay(Highcharts);
+  }, []);
   useEffect(() => {
     if (chartContainer.current) {
+      const firstHead = props && props.data && props.data.firstHeader;
+      const secHead = props && props.data && props.data.secondHeader;
       const options: any = {
         chart: {
           // height: (9 / 16 * 100) + '%',
@@ -18,7 +28,8 @@ const BarGraph = (props: any) => {
           align: "left",
           style: {
             fontWeight: "bold",
-            fontSize: "12px",
+            fontSize: "14px",
+            fontFamily: `"Oxygen",sans-serif`,
           },
         },
         xAxis: {
@@ -61,8 +72,43 @@ const BarGraph = (props: any) => {
           itemDistance: 5,
         },
         tooltip: {
-          headerFormat: "<b>{point.x}</b><br/>",
-          pointFormat: "{series.name}: {point.y}",
+          pointFormatter: function (this: Highcharts.Point): string {
+            const chartTitle: any = this?.series?.chart?.options?.title?.text;
+            const yAxisText = props?.data?.yAxis || "";
+
+            if (
+              ["Cost", "cost"].some((substring) =>
+                chartTitle.includes(substring)
+              ) ||
+              ["Cost(₹)", "Cost($)", "cost(₹)", "cost($)"].some((substring) =>
+                yAxisText.includes(substring)
+              )
+            ) {
+              return (
+                '<span style="color:' +
+                this.color +
+                '">\u25CF</span> ' +
+                this.series.name +
+                ": <b>" +
+                this.y?.toLocaleString("en-IN") +
+                "</b><br/>"
+              );
+            } else {
+              return (
+                '<span style="color:' +
+                this.color +
+                '">\u25CF</span> ' +
+                this.series.name +
+                ": <b>" +
+                this.y +
+                "</b><br/>"
+              );
+            }
+          },
+          headerFormat: "",
+          footerFormat: "",
+          shared: true,
+          useHTML: true,
         },
         plotOptions: {
           column: {
@@ -71,11 +117,30 @@ const BarGraph = (props: any) => {
                 ? "normal"
                 : false,
             dataLabels: {
-              enabled: true,
+              enabled: false,
             },
           },
         },
-        series: props?.data?.data || [],
+        series: props?.data?.data || [], //name should be sent here and it will come from the api
+        exporting: {
+          showTable: false,
+          csv: {
+            columnHeaderFormatter: function (item: any, key: any) {
+              if (!item || item instanceof Highcharts.Axis) {
+                return firstHead ? firstHead : ""; //this will be the column heading
+              } else if (
+                props &&
+                props.data &&
+                props.data.data &&
+                props?.data?.data.length == 1
+              ) {
+                return secHead ? secHead : "";
+              } else {
+                return item.name ? item.name : "";
+              }
+            },
+          },
+        },
       };
 
       // console.log(props.data)

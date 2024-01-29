@@ -304,10 +304,12 @@ function CostDrillDown() {
         handleCloudChange={handleCloudChange}
         handleSubNameChange={handleSubNameChange}
         cloud={cloud}
+        setRes={setRes}
         cloudDropdown={cloudDropdown}
         cloudTitle={cloudTitle}
         subACCName={subACCName}
         subData={subData}
+        setCloudDropdown={setCloudDropdown}
         timePeriod={timePeriod}
         setSelectedReportsDropDown={setSelectedReportsDropDown}
         setTimePeriod={setTimePeriod}
@@ -330,6 +332,13 @@ function MetricCards({ cloud, subscId, res, isOpen, setIsOpen }: any) {
             ? "bg-white p-4 w-[calc(50%-0.5rem)] rounded-lg"
             : "bg-white p-4 w-[calc(25%-0.75rem)] rounded-lg"
         }
+        style={{
+          borderRadius: "16px",
+          border: "0.5px solid rgba(0, 0, 0, 0.6)",
+          background:
+            "linear-gradient(162deg, rgba(123, 98, 202, 0.11) 11.36%, rgba(123, 98, 202, 0.00) 36.6%), #ffffff",
+          fontFamily: `"Oxygen",sans-serif`,
+        }}
       >
         {cloud == "Azure" && (
           <b>
@@ -358,14 +367,29 @@ function MetricCards({ cloud, subscId, res, isOpen, setIsOpen }: any) {
                       : "  w-[calc(25%-0.75rem)]"
                   }
                     bg-white p-4 rounded-lg`}
+                style={{
+                  borderRadius: "16px",
+                  border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                  background:
+                    "linear-gradient(162deg, rgba(123, 98, 202, 0.11) 11.36%, rgba(123, 98, 202, 0.00) 36.6%), #ffffff",
+                  fontFamily: `"Oxygen",sans-serif`,
+                }}
               >
                 <div>
                   <b>
                     {res.Metric && res.Metric[i] && res.Metric[i].title} <br />
                   </b>
                   <span>
-                    {cloud === "Azure" ? "₹" : ""}
-                    {res.Metric && res.Metric[i] && res.Metric[i].value}
+                    {/* {cloud === "Azure" ? "₹" : ""} */}
+                    {cloud === "Azure" && res.Metric[i] && res.Metric[i].value
+                      ? new Intl.NumberFormat("en-IN", {
+                          style: "currency",
+                          currency: "INR",
+                        }).format(res.Metric[i].value)
+                      : new Intl.NumberFormat("en-US", {
+                          style: "currency",
+                          currency: "USD",
+                        }).format(res.Metric[i].value)}
                   </span>
                 </div>
 
@@ -444,12 +468,14 @@ function FinopsFilters({
   handleCloudChange,
   handleSubNameChange,
   cloud,
+  setRes,
   cloudDropdown,
   cloudTitle,
   subACCName,
   subData,
   timePeriod,
   setTimePeriod,
+  setCloudDropdown,
   getReport,
   setSelectedReportsDropDown,
   selectedReportsDropDown,
@@ -700,7 +726,9 @@ function FinopsFilters({
       <div className="w-full mx-2 flex items-start gap-2 justify-start">
         <span>Across Account</span>
         <Switch
-          onChange={(res) => setSingleReport(res)}
+          onChange={(res) => {
+            setSingleReport(res), setCloudDropdown("Azure"), setRes(null);
+          }}
           checked={singleReport}
           uncheckedIcon={false}
           checkedIcon={false}
@@ -794,7 +822,11 @@ function FinopsFilters({
       {singleReport && (
         <div className="w-full mx-2 mt-4 flex justify-center">
           <button
-            className="bg-red-500 text-white py-1 px-2 rounded disabled:bg-gray-500"
+            className=" text-white py-1 px-2 rounded disabled:bg-gray-500"
+            style={{
+              background:
+                "linear-gradient(90deg, #AF1E23 -43.96%, #F37032 112.99%)",
+            }}
             disabled={!subACCName}
             onClick={getReport}
           >
@@ -815,57 +847,57 @@ function ReportsCard({
   timePeriod,
   selectedReports,
 }: any) {
-  async function unpinGraph(title: any) {
-    let chartOrder;
-    if (cloudDropdown == "AWS") {
-      let awsData =
-        graphFormat && graphFormat.chartOrder && graphFormat?.chartOrder?.AWS;
-      delete awsData?.[title];
-      chartOrder = { AWS: awsData, Azure: graphFormat?.chartOrder?.Azure };
-    }
-    if (cloudDropdown == "Azure") {
-      let azureData =
-        graphFormat && graphFormat.chartOrder && graphFormat?.chartOrder?.Azure;
-      delete azureData?.[title];
-      chartOrder = { Azure: azureData, AWS: graphFormat?.chartOrder?.AWS };
-    }
-    let data = { ...graphFormat, chartOrder: chartOrder };
-    await unpinGraphAPI(graphFormat?.id, data).then(getGraphFormat);
-  }
+  // async function unpinGraph(title: any) {
+  //   let chartOrder;
+  //   if (cloudDropdown == "AWS") {
+  //     let awsData =
+  //       graphFormat && graphFormat.chartOrder && graphFormat?.chartOrder?.AWS;
+  //     delete awsData?.[title];
+  //     chartOrder = { AWS: awsData, Azure: graphFormat?.chartOrder?.Azure };
+  //   }
+  //   if (cloudDropdown == "Azure") {
+  //     let azureData =
+  //       graphFormat && graphFormat.chartOrder && graphFormat?.chartOrder?.Azure;
+  //     delete azureData?.[title];
+  //     chartOrder = { Azure: azureData, AWS: graphFormat?.chartOrder?.AWS };
+  //   }
+  //   let data = { ...graphFormat, chartOrder: chartOrder };
+  //   await unpinGraphAPI(graphFormat?.id, data).then(getGraphFormat);
+  // }
 
-  async function pinGraph(title: any) {
-    let chartOrder;
-    if (cloudDropdown == "AWS") {
-      let azureData =
-        graphFormat?.chartOrder && graphFormat?.chartOrder.Azure
-          ? graphFormat?.chartOrder.Azure
-          : {};
-      let AWSData =
-        graphFormat?.chartOrder && graphFormat?.chartOrder.AWS
-          ? graphFormat?.chartOrder?.AWS
-          : {};
-      AWSData[title] = true;
-      chartOrder = { AWS: AWSData, Azure: azureData };
-    }
-    if (cloudDropdown == "Azure") {
-      let azureData =
-        graphFormat?.chartOrder && graphFormat?.chartOrder.Azure
-          ? graphFormat?.chartOrder.Azure
-          : {};
-      let AWSData =
-        graphFormat?.chartOrder && graphFormat?.chartOrder.AWS
-          ? graphFormat?.chartOrder?.AWS
-          : {};
-      azureData[title] = true;
-      chartOrder = { Azure: azureData, AWS: AWSData };
-    }
-    let data = { ...graphFormat, chartOrder: chartOrder };
-    await unpinGraphAPI(graphFormat?.id, data).then(getGraphFormat);
-  }
+  // async function pinGraph(title: any) {
+  //   let chartOrder;
+  //   if (cloudDropdown == "AWS") {
+  //     let azureData =
+  //       graphFormat?.chartOrder && graphFormat?.chartOrder.Azure
+  //         ? graphFormat?.chartOrder.Azure
+  //         : {};
+  //     let AWSData =
+  //       graphFormat?.chartOrder && graphFormat?.chartOrder.AWS
+  //         ? graphFormat?.chartOrder?.AWS
+  //         : {};
+  //     AWSData[title] = true;
+  //     chartOrder = { AWS: AWSData, Azure: azureData };
+  //   }
+  //   if (cloudDropdown == "Azure") {
+  //     let azureData =
+  //       graphFormat?.chartOrder && graphFormat?.chartOrder.Azure
+  //         ? graphFormat?.chartOrder.Azure
+  //         : {};
+  //     let AWSData =
+  //       graphFormat?.chartOrder && graphFormat?.chartOrder.AWS
+  //         ? graphFormat?.chartOrder?.AWS
+  //         : {};
+  //     azureData[title] = true;
+  //     chartOrder = { Azure: azureData, AWS: AWSData };
+  //   }
+  //   let data = { ...graphFormat, chartOrder: chartOrder };
+  //   await unpinGraphAPI(graphFormat?.id, data).then(getGraphFormat);
+  // }
   return (
     <div className="mt-4 h-auto flex flex-wrap gap-4">
       {/* pinned graphs and table  */}
-      {res &&
+      {/* {res &&
         res.Graph &&
         res.Graph?.map((e: any, i: any) => {
           if (
@@ -873,95 +905,124 @@ function ReportsCard({
             e.PieChart &&
             e.PieChart.data &&
             Array.isArray(e.PieChart.data) &&
-            graphFormat?.chartOrder?.[cloud]?.[e.PieChart.title] &&
+            // graphFormat?.chartOrder?.[cloud]?.[e.PieChart.title] &&
             selectedReports
               .map((item: any) => item.value)
               ?.includes(e.PieChart.title)
           ) {
             return (
-              <div key={i} className="card w-1/2">
+              <div
+                key={i}
+                className="card w-1/2"
+                style={{
+                  borderRadius: "16px",
+                  border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                  fontFamily: `"Oxygen",sans-serif`,
+                }}
+              >
                 <span
                   className="flex justify-end cursor-pointer"
-                  onClick={() => unpinGraph(e.PieChart.title)}
+                  // onClick={() => unpinGraph(e.PieChart.title)}
                 >
-                  <BsPinAngleFill />
-                </span>
+                  {/* <BsPinAngleFill /> */}
+      {/* </span>
                 <PieChartComponent id={i} data={e.PieChart} />
-              </div>
-            );
+              </div> */}
+      {/* );
           } else if (
             e &&
             e.LineChart &&
             e.LineChart.data &&
             Array.isArray(e.LineChart.data) &&
-            graphFormat?.chartOrder?.[cloud]?.[e.LineChart.title] &&
+            // graphFormat?.chartOrder?.[cloud]?.[e.LineChart.title] &&
             selectedReports
               .map((item: any) => item.value)
               ?.includes(e.LineChart.title)
           ) {
-            return (
-              <div
+            return ( */}
+      {/* <div
                 key={i}
                 className={
                   e.LineChart.series?.data?.length >= 20
                     ? "card !min-w-full"
                     : "card"
                 }
+                style={{
+                  borderRadius: "16px",
+                  border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                  fontFamily: `"Oxygen",sans-serif`,
+                }}
               >
                 <span
                   className="flex justify-end cursor-pointer"
-                  onClick={() => unpinGraph(e.LineChart.title)}
+                  // onClick={() => unpinGraph(e.LineChart.title)}
                 >
-                  <BsPinAngleFill />
-                </span>
+                  {/* <BsPinAngleFill /> */}
+      {/* </span>
                 <LineChartComponent id={i} data={e.LineChart} />
               </div>
-            );
-          } else if (
+            ); */}
+      {/* } else if (
             e &&
             e.BarGraph &&
             e.BarGraph.data &&
             Array.isArray(e.BarGraph.data) &&
-            graphFormat?.chartOrder?.[cloud]?.[e.BarGraph.title] &&
+            // graphFormat?.chartOrder?.[cloud]?.[e.BarGraph.title] &&
             selectedReports
               .map((item: any) => item.value)
               ?.includes(e.BarGraph.title)
           ) {
-            return (
-              <div key={i} className="card">
+            return ( */}
+      {/* <div
+                key={i}
+                className="card"
+                style={{
+                  borderRadius: "16px",
+                  border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                  fontFamily: `"Oxygen",sans-serif`,
+                }}
+              >
                 <span
                   className="flex justify-end cursor-pointer"
-                  onClick={() => unpinGraph(e.BarGraph.title)}
+                  // onClick={() => unpinGraph(e.BarGraph.title)}
                 >
-                  <BsPinAngleFill />
-                </span>
+                  {/* <BsPinAngleFill /> */}
+      {/* </span>
                 <BarGraph id={i} date={timePeriod} data={e.BarGraph} />
               </div>
             );
           }
-        })}
+        })} */}
 
-      {res &&
+      {/* {res &&
         res.Table &&
         res.Table?.map((e: any, i: any) => {
           if (
-            graphFormat.chartOrder?.[cloud]?.[e.title] &&
+            // graphFormat.chartOrder?.[cloud]?.[e.title] &&
             selectedReports.map((item: any) => item.value)?.includes(e.title)
           )
             return (
               <>
-                <div key={i} className="card">
+                <div
+                  key={i}
+                  className="card"
+                  style={{
+                    borderRadius: "16px",
+                    border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                    fontFamily: `"Oxygen",sans-serif`,
+                  }}
+                >
                   <span
                     className="flex justify-end cursor-pointer"
-                    onClick={() => unpinGraph(e.title)}
+                    // onClick={() => unpinGraph(e.title)}
                   >
-                    <BsPinAngleFill />
-                  </span>
+                    {/* <BsPinAngleFill /> */}
+      {/* </span>
                   <Table data={e} />
                 </div>
               </>
             );
-        })}
+        })} */}
 
       {/* unpinned graphs and table  */}
       {res &&
@@ -973,18 +1034,26 @@ function ReportsCard({
             e.PieChart &&
             e.PieChart.data &&
             Array.isArray(e.PieChart.data) &&
-            !graphFormat.chartOrder?.[cloud]?.[e.PieChart.title] &&
+            // !graphFormat.chartOrder?.[cloud]?.[e.PieChart.title] &&
             selectedReports
               .map((item: any) => item.value)
               ?.includes(e.PieChart.title)
           ) {
             return (
-              <div key={i} className="card w-1/2">
+              <div
+                key={i}
+                className="card w-1/2 max-h-[550px]"
+                style={{
+                  borderRadius: "16px",
+                  border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                  fontFamily: `"Oxygen",sans-serif`,
+                }}
+              >
                 <span
                   className="flex justify-end cursor-pointer"
-                  onClick={() => pinGraph(e.PieChart.title)}
+                  // onClick={() => pinGraph(e.PieChart.title)}
                 >
-                  <BsPinAngle />
+                  {/* <BsPinAngle /> */}
                 </span>
                 <PieChartComponent id={i} data={e.PieChart} />
               </div>
@@ -994,7 +1063,7 @@ function ReportsCard({
             e.LineChart &&
             e.LineChart.data &&
             Array.isArray(e.LineChart.data) &&
-            !graphFormat.chartOrder?.[cloud]?.[e.LineChart.title] &&
+            // !graphFormat.chartOrder?.[cloud]?.[e.LineChart.title] &&
             selectedReports
               .map((item: any) => item.value)
               ?.includes(e.LineChart.title)
@@ -1004,15 +1073,20 @@ function ReportsCard({
                 key={i}
                 className={
                   e.LineChart.series?.data?.length >= 20
-                    ? "card !min-w-full overflow-y-auto"
-                    : "card w-1/2 overflow-y-auto"
+                    ? "card !min-w-full overflow-y-auto max-h-[550px]"
+                    : "card w-1/2 overflow-y-auto max-h-[550px]"
                 }
+                style={{
+                  borderRadius: "16px",
+                  border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                  fontFamily: `"Oxygen",sans-serif`,
+                }}
               >
                 <span
                   className="flex justify-end cursor-pointer"
-                  onClick={() => pinGraph(e.LineChart.title)}
+                  // onClick={() => pinGraph(e.LineChart.title)}
                 >
-                  <BsPinAngle />
+                  {/* <BsPinAngle /> */}
                 </span>
                 <LineChartComponent id={i} data={e.LineChart} />
               </div>
@@ -1022,18 +1096,26 @@ function ReportsCard({
             e.BarGraph &&
             e.BarGraph.data &&
             Array.isArray(e.BarGraph.data) &&
-            !graphFormat.chartOrder?.[cloud]?.[e.BarGraph.title] &&
+            // !graphFormat.chartOrder?.[cloud]?.[e.BarGraph.title] &&
             selectedReports
               .map((item: any) => item.value)
               ?.includes(e.BarGraph.title)
           ) {
             return (
-              <div key={i} className="card">
+              <div
+                key={i}
+                className="card max-h-[550px]"
+                style={{
+                  borderRadius: "16px",
+                  border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                  fontFamily: `"Oxygen",sans-serif`,
+                }}
+              >
                 <span
                   className="flex justify-end cursor-pointer"
-                  onClick={() => pinGraph(e.BarGraph.title)}
+                  // onClick={() => pinGraph(e.BarGraph.title)}
                 >
-                  <BsPinAngle />
+                  {/* <BsPinAngle /> */}
                 </span>
                 <BarGraph id={i} date={timePeriod} data={e.BarGraph} />
               </div>
@@ -1045,17 +1127,25 @@ function ReportsCard({
         res.Table &&
         res.Table?.map((e: any, i: any) => {
           if (
-            !graphFormat.chartOrder?.[cloud]?.[e.title] &&
+            // !graphFormat.chartOrder?.[cloud]?.[e.title] &&
             selectedReports.map((item: any) => item.value)?.includes(e.title)
           )
             return (
               <>
-                <div key={i} className="card">
+                <div
+                  key={i}
+                  className="card max-h-[550px]"
+                  style={{
+                    borderRadius: "16px",
+                    border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                    fontFamily: `"Oxygen",sans-serif`,
+                  }}
+                >
                   <span
                     className="flex justify-end cursor-pointer"
-                    onClick={() => pinGraph(e.title)}
+                    // onClick={() => pinGraph(e.title)}
                   >
-                    <BsPinAngle />
+                    {/* <BsPinAngle /> */}
                   </span>
                   <Table data={e} />
                 </div>

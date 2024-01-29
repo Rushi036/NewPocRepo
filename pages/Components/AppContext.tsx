@@ -10,7 +10,7 @@ const AppContext = createContext<{
   timeEnd: any;
   toggleTimeEnd: (timeEnd: any) => void;
   authenticated: boolean;
-  toggleAuthenticated: () => void;
+  toggleAuthenticated: (isAuth: any) => void;
   cloud: any;
   toggleCloud: (cloud: any) => void;
 }>({
@@ -23,7 +23,7 @@ const AppContext = createContext<{
   timeEnd: moment().format("YYYY-MM-DDTHH:mm:ss"),
   toggleTimeEnd: (timeEnd) => {},
   authenticated: false,
-  toggleAuthenticated: () => {},
+  toggleAuthenticated: (isAuth) => {},
   cloud: "AWS",
   toggleCloud: (cloud: any) => {},
 });
@@ -37,9 +37,11 @@ export const AppContextProvider: React.FC<any> = ({ children }: any) => {
   const toggleState = () => {
     setState(!state);
   };
-  const toggleAuthenticated = () => {
-    setAuthenticated(!authenticated);
+  const toggleAuthenticated = (isAuth: any) => {
+    // console.log('dskjjk')
+    setAuthenticated(isAuth);
   };
+  // console.log("jhejfehjh")
   const toggleEstimateCalc = () => {
     setEstimateCalc((prevState) => !prevState);
   };
