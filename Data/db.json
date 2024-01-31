@@ -442,14 +442,15 @@
         "AWS": {}
       }
     }
-    
   ],
   "topology_table_data": [
     {
       "title": "topo1",
       "bu": "Grasim PnF",
       "bu_id": "7",
-      "cloud_server": ["AWS"],
+      "cloud_server": [
+        "AWS"
+      ],
       "status": "Approved By User",
       "created_date": "25/09/2023",
       "topology_id": 1,
@@ -468,7 +469,9 @@
       "title": "topo1",
       "bu": "Grasim Chemical",
       "bu_id": "1",
-      "cloud_server": ["AWS"],
+      "cloud_server": [
+        "AWS"
+      ],
       "status": "Approved By User",
       "created_date": "27/09/2023",
       "topology_id": 2,
@@ -487,7 +490,9 @@
       "title": "h",
       "bu": "Grasim PnF",
       "bu_id": "7",
-      "cloud_server": ["Azure"],
+      "cloud_server": [
+        "Azure"
+      ],
       "status": "Approved By User",
       "created_date": "25/09/2023",
       "topology_id": 6,
@@ -510,7 +515,10 @@
       "title": "j",
       "bu": "Grasim PnF",
       "bu_id": "7",
-      "cloud_server": ["AWS", "Azure"],
+      "cloud_server": [
+        "AWS",
+        "Azure"
+      ],
       "status": "Draft",
       "created_date": "25/09/2023",
       "topology_id": 7,
@@ -533,7 +541,9 @@
       "title": "q",
       "bu": "Grasim PnF",
       "bu_id": "7",
-      "cloud_server": ["AWS"],
+      "cloud_server": [
+        "AWS"
+      ],
       "status": "Draft",
       "created_date": "25/09/2023",
       "topology_id": 8,
@@ -548,7 +558,9 @@
       "title": "demo",
       "bu": "Siddharth Nalwaya",
       "bu_id": null,
-      "cloud_server": ["AWS"],
+      "cloud_server": [
+        "AWS"
+      ],
       "status": "Draft",
       "created_date": "23/10/2023",
       "topology_id": 9,
@@ -563,7 +575,9 @@
       "title": "a",
       "bu": "Bhuwan Phuloria",
       "bu_id": "4",
-      "cloud_server": ["AWS"],
+      "cloud_server": [
+        "AWS"
+      ],
       "status": "Draft",
       "created_date": "04/12/2023",
       "topology_id": 10,
@@ -579,9 +593,13 @@
     {
       "bu_id": "7",
       "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
-      "node_details": ["Server"],
+      "node_details": [
+        "Server"
+      ],
       "title": "topo1",
-      "cloud_server": ["AWS"],
+      "cloud_server": [
+        "AWS"
+      ],
       "business_sponser": "hvhv",
       "server_owner": "vhv",
       "application_owner": "hhv",
@@ -592,9 +610,13 @@
     {
       "bu_id": "1",
       "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
-      "node_details": ["Server"],
+      "node_details": [
+        "Server"
+      ],
       "title": "topo1",
-      "cloud_server": ["AWS"],
+      "cloud_server": [
+        "AWS"
+      ],
       "business_sponser": "g",
       "server_owner": "gvhg",
       "application_owner": "vu",
@@ -605,9 +627,13 @@
     {
       "bu_id": "1",
       "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
-      "node_details": ["Server"],
+      "node_details": [
+        "Server"
+      ],
       "title": "topoAwsAzure",
-      "cloud_server": ["Azure"],
+      "cloud_server": [
+        "Azure"
+      ],
       "business_sponser": "jvjnv",
       "server_owner": "vhjv",
       "application_owner": "jvhjv",
@@ -618,9 +644,13 @@
     {
       "bu_id": "7",
       "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
-      "node_details": ["Server"],
+      "node_details": [
+        "Server"
+      ],
       "title": "q",
-      "cloud_server": ["AWS"],
+      "cloud_server": [
+        "AWS"
+      ],
       "business_sponser": "q",
       "server_owner": "q",
       "application_owner": "q",
@@ -631,9 +661,13 @@
     {
       "bu_id": "7",
       "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
-      "node_details": ["Server"],
+      "node_details": [
+        "Server"
+      ],
       "title": "demo",
-      "cloud_server": ["AWS"],
+      "cloud_server": [
+        "AWS"
+      ],
       "business_sponser": "demo",
       "server_owner": "demo",
       "application_owner": "demo",
@@ -644,9 +678,13 @@
     {
       "bu_id": "7",
       "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
-      "node_details": ["Server"],
+      "node_details": [
+        "Server"
+      ],
       "title": "h",
-      "cloud_server": ["Azure"],
+      "cloud_server": [
+        "Azure"
+      ],
       "business_sponser": "q",
       "server_owner": "q",
       "application_owner": "q",
@@ -657,9 +695,14 @@
     {
       "bu_id": "7",
       "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
-      "node_details": ["Server"],
+      "node_details": [
+        "Server"
+      ],
       "title": "j",
-      "cloud_server": ["AWS", "Azure"],
+      "cloud_server": [
+        "AWS",
+        "Azure"
+      ],
       "business_sponser": "b",
       "server_owner": "jhb",
       "application_owner": "hb",
@@ -670,9 +713,13 @@
     {
       "bu_id": "7",
       "flowChart": "{\"nodes\":[{\"width\":100,\"height\":148,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":349.39864864864865,\"y\":112.14864864864866,\"zoom\":0.652027027027027}}",
-      "node_details": ["Server"],
+      "node_details": [
+        "Server"
+      ],
       "title": "q",
-      "cloud_server": ["AWS"],
+      "cloud_server": [
+        "AWS"
+      ],
       "business_sponser": "q",
       "server_owner": "q",
       "application_owner": "q",
@@ -683,9 +730,13 @@
     {
       "bu_id": null,
       "flowChart": "{\"nodes\":[{\"width\":100,\"height\":120,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":299.75,\"y\":107.25,\"zoom\":0.825}}",
-      "node_details": ["Server"],
+      "node_details": [
+        "Server"
+      ],
       "title": "demo",
-      "cloud_server": ["AWS"],
+      "cloud_server": [
+        "AWS"
+      ],
       "business_sponser": "demo",
       "server_owner": "demo",
       "application_owner": "demo",
@@ -696,9 +747,13 @@
     {
       "bu_id": "4",
       "flowChart": "{\"nodes\":[{\"width\":100,\"height\":124,\"id\":\"0\",\"type\":\"selectorNode\",\"data\":{\"label\":\"Node\",\"Path\":{\"Name\":\"Server\",\"Path\":\"/network_icons/server.png\"}},\"position\":{\"x\":0,\"y\":50},\"positionAbsolute\":{\"x\":0,\"y\":50}}],\"edges\":[],\"viewport\":{\"x\":385.0887096774194,\"y\":105.83870967741936,\"zoom\":0.7782258064516129}}",
-      "node_details": ["Server"],
+      "node_details": [
+        "Server"
+      ],
       "title": "a",
-      "cloud_server": ["AWS"],
+      "cloud_server": [
+        "AWS"
+      ],
       "business_sponser": "a",
       "server_owner": "a",
       "application_owner": "a",
@@ -745,35 +800,51 @@
   ],
   "network_icons": [
     {
+      "id": 1,
       "Name": "Database",
       "Path": "/network_icons/database.png",
       "SubCategory": [
-        { "Name": "Database 1", "Path": "/network_icons/database.png" },
-        { "Name": "Database 2", "Path": "/network_icons/database.png" },
-        { "Name": "Database 3", "Path": "/network_icons/database.png" }
+        {
+          "Name": "Database 1",
+          "Path": "/network_icons/database.png"
+        },
+        {
+          "Name": "Database 2",
+          "Path": "/network_icons/database.png"
+        },
+        {
+          "Name": "Database 3",
+          "Path": "/network_icons/database.png"
+        }
       ]
     },
     {
+      "id": 2,
       "Name": "App Load Balancer",
       "Path": "/network_icons/appLoadBalancer.png"
     },
     {
+      "id": 3,
       "Name": "RDMS",
       "Path": "/network_icons/rdms.png"
     },
     {
+      "id": 4,
       "Name": "Server",
       "Path": "/network_icons/server.png"
     },
     {
+      "id": 5,
       "Name": "Storage",
       "Path": "/network_icons/storage1.png"
     },
     {
+      "id": 6,
       "Name": "Container",
       "Path": "/network_icons/container2.png"
     },
     {
+      "id": 7,
       "Name": "VNET",
       "Path": "/network_icons/vnet.png"
     }

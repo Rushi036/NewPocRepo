@@ -67,8 +67,8 @@ const addTopology = () => {
   };
   const [serverData, setServerData] = useState<any>(sd);
   const router = useRouter();
-  const [nodes, setNodes] = useState<any>(null);
-  const [currentNode, setCurrentNode] = useState<any>(0);
+  const [cloud, setCloud] = useState<any>(null);
+  const [topology, setTopology] = useState<any>(null);
   const [open, setOpen] = useState(false);
   const [role, setRole] = useState<any>(false);
   const bothCloud = ["AWS", "Azure"];
@@ -118,7 +118,7 @@ const addTopology = () => {
           cloud_server: selectedClouds,
           business_sponser: businessSponser,
           server_owner: serverOwner,
-          application_owner: applicationOwner,
+          application_owner: applicationOwner,  
           resource_owner: resourceOwner,
           selected_environment: selectedEnvironment,
         };
@@ -206,7 +206,7 @@ const addTopology = () => {
 
   useEffect(() => {
     setRole(sessionStorage.getItem("userRole"));
-  }, []);
+  },[]);
 
   function setData(e: any) {
     e.preventDefault();
@@ -282,12 +282,7 @@ const addTopology = () => {
       router.push("/page/Assets");
     });
   }
-  // console.log("serverdata",serverData)
-
-  function saveTopology2() {
-    // alert('hi');
-    setNextForm(true);
-  }
+// console.log("serverdata",serverData)
   return (
     <>
       <div className="text-xl px-4 border-b-2 border-slate-400 pb-2 flex items-center">
@@ -298,7 +293,141 @@ const addTopology = () => {
         <span className="ml-2">Add Topology</span>
       </div>
       <div className="flex flex-row overflow-hidden w-full relative">
-        {nextForm && nodes && (
+        <form
+          className={!nextForm ? "relative overflow-hidden w-full" : "hidden"}
+        >
+          <div className={loading ? "loader" : "hidden"}></div>
+          <ToastContainer />
+          <div className="mt-4 p-2 box-border w-full bg-white">
+            <div className=" pl-4 space-y-5 pt-4">
+              <div className="flex justify-around">
+                <div className="flex w-2/6">
+                  <label htmlFor="" className="font-semibold text-base w-36">
+                    Topology Name :
+                  </label>
+                  <input
+                    type="text"
+                    onChange={(e) => setTopologyTitle(e.target.value)}
+                    required
+                    className="border-slate-600 border-b-2 ml-2 rounded w-1/2"
+                  />
+                </div>
+                <div className="flex w-2/6">
+                  <label htmlFor="" className="font-semibold text-base w-28">
+                    Environment :
+                  </label>
+                  <select
+                    onChange={handleEnvironmentChange}
+                    value={selectedEnvironment}
+                    required
+                    className="border-slate-600 border-b-2 ml-2 rounded p-0.5 w-1/2"
+                  >
+                    <option value="" disabled>
+                      Select Environment
+                    </option>
+                    <option value="Production">Production</option>
+                    <option value="Test">Test</option>
+                    <option value="Development">Development</option>
+                    <option value="UAT">UAT</option>
+                  </select>
+                </div>
+                <div className="flex w-2/6">
+                  <label htmlFor="" className="font-semibold text-base w-36">
+                    Application Owner :
+                  </label>
+                  <input
+                    type="text"
+                    onChange={(e) => setApplicationOwner(e.target.value)}
+                    required
+                    className="border-slate-600 border-b-2 rounded ml-2  w-1/2"
+                  />
+                </div>
+              </div>
+              <div className="flex justify-around">
+                <div className="flex w-2/6">
+                  <label htmlFor="" className="font-semibold text-base w-36">
+                    Business Sponsor :
+                  </label>
+                  <input
+                    type="text"
+                    onChange={(e) => setbusinessSponser(e.target.value)}
+                    required
+                    className="border-slate-600 border-b-2 rounded ml-2 w-1/2"
+                  />
+                </div>
+                <div className="flex w-2/6">
+                  <label htmlFor="" className="font-semibold text-base w-28">
+                    Server Owner :
+                  </label>
+                  <input
+                    type="text"
+                    onChange={(e) => setServerOwner(e.target.value)}
+                    required
+                    className="border-slate-600 border-b-2 ml-2 rounded w-1/2"
+                  />
+                </div>
+                <div className="flex w-2/6">
+                  <label htmlFor="" className="font-semibold text-base w-36">
+                    Resource Owner :
+                  </label>
+                  <input
+                    type="text"
+                    onChange={(e) => setResourceOwner(e.target.value)}
+                    required
+                    className="border-slate-600 border-b-2 rounded ml-2 w-1/2"
+                  />
+                </div>
+              </div>
+              <div className=" flex justify-center">
+                <div className="flex w-2/6">
+                  <label className="font-semibold text-base w-28">
+                    Cloud Server :
+                  </label>
+                  <div className="mx-3 flex justify-around w-1/2 ">
+                    <div className="space-x-1">
+                      <input
+                        name="checkbox1"
+                        type="checkbox"
+                        value="AWS"
+                        required
+                        onChange={handleCheckboxChange}
+                        checked={selectedClouds.includes("AWS")}
+                      />
+                      <label htmlFor="checkbox1 " className="font-semibold">
+                        AWS
+                      </label>
+                    </div>
+                    <div className="space-x-1">
+                      <input
+                        name="checkbox2"
+                        type="checkbox"
+                        value="Azure"
+                        onChange={handleCheckboxChange}
+                        checked={selectedClouds.includes("Azure")}
+                      />
+                      <label htmlFor="checkbox2" className="font-semibold">
+                        AZURE
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="relative overflow-hidden">
+              <Topology setRfInstance={setRfInstance} editable={true} />
+            </div>
+            <div className="mt-4 flex justify-end">
+              <button
+                type="submit"
+                onClick={saveTopology}
+                className="bg-red-700 text-white px-6 py-1 rounded "
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        </form>
+        {nextForm && (
           <form className={"overflow-hidden w-full z-10"}>
             <ToastContainer />
             <div className={loading ? "loader" : "hidden"}></div>
@@ -306,7 +435,7 @@ const addTopology = () => {
               <div className="form-inputs px-2 space-y-5">
                 <div className="flex justify-evenly pt-4">
                   <h1 className="text-xl font-semibold border-b-2 border-slate-600">
-                    Additional Info - {nodes[currentNode].data.label}
+                    Additional Info - {allNodes}
                   </h1>
                   {/* <div className="flex items-center pb-2">
                     <label
@@ -795,189 +924,18 @@ const addTopology = () => {
                 </div>
               </div>
 
-              <div className="mt-4 flex justify-between">
-                {currentNode == 0 ? (
-                  <button
-                    onClick={() => setNextForm(false)}
-                    className="bg-blue-700 text-white px-6 py-1 rounded "
-                  >
-                    Edit topology
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => setCurrentNode(currentNode - 1)}
-                    className="bg-red-700 text-white px-6 py-1 rounded "
-                  >
-                    Back
-                  </button>
-                )}
-                {currentNode < nodes.length-1 ? (
-                  <button
-                    onClick={() => setCurrentNode(currentNode + 1)}
-                    className="bg-red-700 text-white px-6 py-1 rounded "
-                  >
-                    Next
-                  </button>
-                ) : (
-                  <button
-                    type="submit"
-                    onClick={setData}
-                    className="bg-green-700 text-white px-6 py-1 rounded "
-                  >
-                    Save
-                  </button>
-                )}
+              <div className="mt-4 flex justify-end">
+                <button
+                  type="submit"
+                  onClick={setData}
+                  className="bg-red-700 text-white px-6 py-1 rounded "
+                >
+                  Save
+                </button>
               </div>
             </div>
           </form>
         )}
-        <div
-          className={
-            !nextForm
-              ? "mt-4 p-2 box-border w-full bg-white"
-              : "mt-4 p-2 box-border w-[10rem] bg-white"
-          }
-        >
-          <form
-            className={!nextForm ? "relative overflow-hidden w-full" : "hidden"}
-          >
-            <div className={loading ? "loader" : "hidden"}></div>
-            <ToastContainer />
-            <div className=" pl-4 space-y-5 pt-4">
-              <div className="flex justify-around">
-                <div className="flex w-2/6">
-                  <label htmlFor="" className="font-semibold text-base w-36">
-                    Topology Name :
-                  </label>
-                  <input
-                    type="text"
-                    onChange={(e) => setTopologyTitle(e.target.value)}
-                    required
-                    className="border-slate-600 border-b-2 ml-2 rounded w-1/2"
-                  />
-                </div>
-                <div className="flex w-2/6">
-                  <label htmlFor="" className="font-semibold text-base w-28">
-                    Environment :
-                  </label>
-                  <select
-                    onChange={handleEnvironmentChange}
-                    value={selectedEnvironment}
-                    required
-                    className="border-slate-600 border-b-2 ml-2 rounded p-0.5 w-1/2"
-                  >
-                    <option value="" disabled>
-                      Select Environment
-                    </option>
-                    <option value="Production">Production</option>
-                    <option value="Test">Test</option>
-                    <option value="Development">Development</option>
-                    <option value="UAT">UAT</option>
-                  </select>
-                </div>
-                <div className="flex w-2/6">
-                  <label htmlFor="" className="font-semibold text-base w-36">
-                    Application Owner :
-                  </label>
-                  <input
-                    type="text"
-                    onChange={(e) => setApplicationOwner(e.target.value)}
-                    required
-                    className="border-slate-600 border-b-2 rounded ml-2  w-1/2"
-                  />
-                </div>
-              </div>
-              <div className="flex justify-around">
-                <div className="flex w-2/6">
-                  <label htmlFor="" className="font-semibold text-base w-36">
-                    Business Sponsor :
-                  </label>
-                  <input
-                    type="text"
-                    onChange={(e) => setbusinessSponser(e.target.value)}
-                    required
-                    className="border-slate-600 border-b-2 rounded ml-2 w-1/2"
-                  />
-                </div>
-                <div className="flex w-2/6">
-                  <label htmlFor="" className="font-semibold text-base w-28">
-                    Server Owner :
-                  </label>
-                  <input
-                    type="text"
-                    onChange={(e) => setServerOwner(e.target.value)}
-                    required
-                    className="border-slate-600 border-b-2 ml-2 rounded w-1/2"
-                  />
-                </div>
-                <div className="flex w-2/6">
-                  <label htmlFor="" className="font-semibold text-base w-36">
-                    Resource Owner :
-                  </label>
-                  <input
-                    type="text"
-                    onChange={(e) => setResourceOwner(e.target.value)}
-                    required
-                    className="border-slate-600 border-b-2 rounded ml-2 w-1/2"
-                  />
-                </div>
-              </div>
-              <div className=" flex justify-center">
-                <div className="flex w-2/6">
-                  <label className="font-semibold text-base w-28">
-                    Cloud Server :
-                  </label>
-                  <div className="mx-3 flex justify-around w-1/2 ">
-                    <div className="space-x-1">
-                      <input
-                        name="checkbox1"
-                        type="checkbox"
-                        value="AWS"
-                        required
-                        onChange={handleCheckboxChange}
-                        checked={selectedClouds.includes("AWS")}
-                      />
-                      <label htmlFor="checkbox1 " className="font-semibold">
-                        AWS
-                      </label>
-                    </div>
-                    <div className="space-x-1">
-                      <input
-                        name="checkbox2"
-                        type="checkbox"
-                        value="Azure"
-                        onChange={handleCheckboxChange}
-                        checked={selectedClouds.includes("Azure")}
-                      />
-                      <label htmlFor="checkbox2" className="font-semibold">
-                        AZURE
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </form>
-          <div className="relative overflow-hidden">
-            <Topology
-              setRfInstance={setRfInstance}
-              editable={!nextForm}
-              setNodes={setNodes}
-              node={currentNode}
-            />
-          </div>
-          <div className="mt-4 flex justify-end">
-            {!nextForm && (
-              <button
-                // type="submit"
-                onClick={saveTopology2}
-                className="bg-red-700 text-white px-6 py-1 rounded "
-              >
-                Next
-              </button>
-            )}
-          </div>
-        </div>
       </div>
     </>
   );

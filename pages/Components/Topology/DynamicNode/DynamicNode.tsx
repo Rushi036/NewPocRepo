@@ -79,10 +79,10 @@ const memoTopo = (data: any) => {
     <>
       {/* {data.id === "0" ? "" : <Handle type="target" position={Position.Left} />} */}
       <Handle type="target" position={Position.Left} />
-      <div className="custom-node">
+      <div className="custom-node min-h-[100px] w-[100px]">
         {/* {data.id === "0" ? <button onClick={()=>setDialogOpen(true)}>+</button> : <button onClick={onDelete}>x</button>} */}
-        <img height={100} width={100} src={data.data?.Path?.Path} alt="" />
-        <p>{data.data?.Path?.Name}</p>
+        <img height={100} width={100} className="aspect-square object-contain" src={data.data?.Path?.Path} alt="" />
+        <p className="text-[10px] mb-1">{data.data?.Path?.Name}</p>
       </div>
       <Handle type="source" position={Position.Top} id="a" />
       <Handle type="source" position={Position.Right} id="b" />

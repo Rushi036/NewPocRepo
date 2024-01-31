@@ -124,7 +124,7 @@ function SimpleFloatingEdge({
               </button>
             </div>
           ) : (
-            <div onClick={onEdgeClick}>{labelTag || <FaEdit />}</div>
+            <div className="bg-white px-1" onClick={onEdgeClick}>{labelTag || <FaEdit />}</div>
           )}
         </div>
       </EdgeLabelRenderer>

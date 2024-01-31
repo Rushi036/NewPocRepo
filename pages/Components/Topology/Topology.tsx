@@ -15,6 +15,7 @@ import ReactFlow, {
   Controls,
   ControlButton,
   MarkerType,
+  useViewport,
 } from "reactflow";
 import DynamicNode from "./DynamicNode/DynamicNode";
 import "reactflow/dist/style.css";
@@ -61,8 +62,8 @@ import ResizableNode from "./ResizableNode";
 //   },
 // ];
 
-let selectedNode: any = null;
-let selectedSubNode: any = null;
+// let selectedNode: any = null;
+// let selectedSubNode: any = null;
 
 const proOptions = { hideAttribution: true };
 let id = 1;
@@ -91,9 +92,16 @@ const AddNodeOnEdgeDrop = (props: any) => {
     }),
     []
   );
+  const reactFlowRef: any = useRef();
+
+  const onResize = () => {
+    reactFlowRef.current.fitView();
+  };
   const reactFlowWrapper = useRef<any>(null);
   const connectingNodeId = useRef(null);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const { fitView } = useReactFlow();
+  const { x, y, zoom } = useViewport();
   const onConnect = useCallback(
     (params: any) => setEdges((eds: any) => addEdge(params, eds)),
     []
@@ -113,16 +121,14 @@ const AddNodeOnEdgeDrop = (props: any) => {
     }),
     [curveLine, dashedLine]
   );
-  const flowKey = "example-flow";
-  const [rfInstance, setRfInstance] = useState<any>(null);
-
+  // const flowKey = "example-flow";
+  // const [rfInstance, setRfInstance] = useState<any>(null);
+  const onLoad = (reactFlowInstance: any) => {
+    fitView();
+  };
   const onConnectStart = useCallback((_: any, { nodeId }: any) => {
     connectingNodeId.current = nodeId;
   }, []);
-
-  useEffect(() => {
-    console.log("nodes", nodes);
-  }, [nodes]);
 
   const onConnectEnd = useCallback(
     (event: any) => {
@@ -135,7 +141,7 @@ const AddNodeOnEdgeDrop = (props: any) => {
         let newNode: any = {
           id,
           type:
-            props.network_icons[selectedNode].Name == "Container"
+            props.network_icons[props.selectedNode].Name == "Container"
               ? "resizableNode"
               : "selectorNode",
           // we are removing the half of the node width (75) to center the new node
@@ -147,19 +153,18 @@ const AddNodeOnEdgeDrop = (props: any) => {
           data: {
             id: id,
             nodes: [],
-            label:
-              props.network_icons[selectedNode].Name == "Container"
-                ? `Container`
-                : `Node`,
-            Path: props.network_icons[selectedNode].SubCategory
-              ? props.network_icons[selectedNode].SubCategory[selectedSubNode]
-              : props.network_icons[selectedNode],
+            label: props.network_icons[props.selectedNode].Name,
+            Path: props.network_icons[props.selectedNode].SubCategory
+              ? props.network_icons[props.selectedNode].SubCategory[
+                  props.selectedSubNode
+                ]
+              : props.network_icons[props.selectedNode],
           },
         };
 
         // newNode.data.nodes = [...nodes, newNode];
         newNode.data.nodes =
-          props.network_icons[selectedNode].Name == "Container"
+          props.network_icons[props.selectedNode].Name == "Container"
             ? [newNode]
             : [];
 
@@ -182,7 +187,7 @@ const AddNodeOnEdgeDrop = (props: any) => {
         );
       }
     },
-    [project]
+    [project, props.selectedNode, props.selectedSubNode]
   );
 
   // const onRestore = useCallback(() => {
@@ -205,12 +210,12 @@ const AddNodeOnEdgeDrop = (props: any) => {
     const resetFlow = async () => {
       const x = 0,
         y = 0,
-        zoom = 1;
-      setViewport({ x, y, zoom });
+        zoomDefault = 1;
+      setViewport({ x, y, zoom: zoomDefault });
       setNodes([]);
       setEdges([]);
-      selectedNode = null;
-      selectedSubNode = null;
+      props.setSelectedNode(null);
+      props.setSelectedSubNode(null);
       props.setSubNode(null);
       props.setNode(null);
       props.setInitialNodes(null);
@@ -219,88 +224,162 @@ const AddNodeOnEdgeDrop = (props: any) => {
     resetFlow();
   }, [setEdges, setNodes, setViewport]);
 
-  // console.log(props.topology)
-  // useEffect(() => {
-  //   props.topology && onRestore();
-  // }, [props.topology]);
+  useEffect(() => {
+    if (!props.editable) {
+      props.setNodes(nodes);
+    }
+  }, [props.editable]);
+
+  useEffect(() => {
+    const resetFlow = async () => {
+      const reactFlowContainer: any = document.querySelector(
+        ".react-flow__container"
+      );
+      if (!props.editable) {
+        const allCustomNodes:any = document.querySelectorAll('.custom-node');
+        const widthCustomNode:any = allCustomNodes[props.node].offsetWidth;
+        const heightCustomNode:any = allCustomNodes[props.node].offsetHeight;
+        const zoomDefault = 1;
+        const xDefault =
+            nodes[props.node].position.x *-1 + (widthCustomNode/6.5) + 5,
+          yDefault = nodes[props.node].position.y *-1 + (heightCustomNode/6.5);
+
+        setViewport({ x: xDefault, y: yDefault, zoom: zoomDefault });
+        reactFlowContainer.classList.add('transition-transform')
+        reactFlowContainer.classList.add('ease-in-out')
+        reactFlowContainer.classList.add('duration-[1s]')
+        reactFlowContainer.classList.add('delay-0')
+      } else {
+        setTimeout(() => {
+          let x: any = document.querySelector(".react-flow__controls-fitview");
+          x?.click();
+        }, 0);
+        reactFlowContainer.classList.remove("transition-transform");
+        reactFlowContainer.classList.remove("ease-in-out");
+        reactFlowContainer.classList.remove("duration-[1s]");
+        reactFlowContainer.classList.remove("delay-0");
+      }
+    };
+    resetFlow();
+  }, [props.editable, props.node]);
+
 
   return (
-    <div className="wrapper relative" ref={reactFlowWrapper}>
-      {/* <button onClick={onSave}>save</button> */}
-      {/* <button className="z-30 absolute top-0 left-10" onClick={onRestore}>
-        Restore
-      </button> */}
-      <div className="flex gap-2 absolute p-2 justify-between w-full">
-        <button
-          className=" z-20 left-1 px-2 py-1 bg-slate-300 border border-slate-400 rounded-lg"
-          onClick={onReset}
-        >
-          Reset
-        </button>
-        <div className="flex gap-2">
-          <div
-            className="select-none cursor-pointer z-20 left-1 px-2 py-1 bg-slate-300 border border-slate-400 rounded-lg flex justify-center items-center"
-            onClick={() => {
-              setCurveLine(!curveLine);
-            }}
-          >
-            {curveLine ? <PiWaveSine /> : <PiWaveSquareLight />}
-          </div>
-          <div
-            className="select-none cursor-pointer z-20 left-1 px-2 py-1 bg-slate-300 border border-slate-400 rounded-lg flex justify-center items-center"
-            onClick={() => {
-              setDashedLine(!dashedLine);
-            }}
-          >
-            {dashedLine ? <AiOutlineDash /> : <BsDashLg />}
-          </div>
-          {!props.fullScreen && (
+    <>
+      <div className="wrapper relative" ref={reactFlowWrapper}>
+        {props.editable && (
+          <div className="flex gap-2 absolute p-2 justify-between w-full">
             <button
               className=" z-20 left-1 px-2 py-1 bg-slate-300 border border-slate-400 rounded-lg"
-              onClick={() => {
-                props.setFullScreen(true);
-              }}
+              onClick={onReset}
             >
-              <MdFullscreen />
+              Reset
             </button>
-          )}
-          {props.fullScreen && (
-            <button
-              className=" z-20 left-1 px-2 py-1 bg-slate-300 border border-slate-400 rounded-lg"
-              onClick={() => {
-                props.setFullScreen(false);
-              }}
-            >
-              <MdFullscreenExit />
-            </button>
-          )}
-        </div>
+            <div className="flex gap-2">
+              <div
+                className="select-none cursor-pointer z-20 left-1 px-2 py-1 bg-slate-300 border border-slate-400 rounded-lg flex justify-center items-center"
+                onClick={() => {
+                  setCurveLine(!curveLine);
+                }}
+              >
+                {curveLine ? <PiWaveSine /> : <PiWaveSquareLight />}
+              </div>
+              <div
+                className="select-none cursor-pointer z-20 left-1 px-2 py-1 bg-slate-300 border border-slate-400 rounded-lg flex justify-center items-center"
+                onClick={() => {
+                  setDashedLine(!dashedLine);
+                }}
+              >
+                {dashedLine ? <AiOutlineDash /> : <BsDashLg />}
+              </div>
+              {!props.fullScreen && (
+                <button
+                  className=" z-20 left-1 px-2 py-1 bg-slate-300 border border-slate-400 rounded-lg"
+                  onClick={() => {
+                    props.setFullScreen(true);
+                  }}
+                >
+                  <MdFullscreen />
+                </button>
+              )}
+              {props.fullScreen && (
+                <button
+                  className=" z-20 left-1 px-2 py-1 bg-slate-300 border border-slate-400 rounded-lg"
+                  onClick={() => {
+                    props.setFullScreen(false);
+                  }}
+                >
+                  <MdFullscreenExit />
+                </button>
+              )}
+            </div>
+          </div>
+        )}
+        {props.editable ? (
+          <ReactFlow
+            nodes={nodes}
+            edges={edges}
+            nodeTypes={nodeTypes}
+            onLoad={onLoad}
+            onResize={onResize}
+            onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+            onConnect={onConnect}
+            onConnectStart={onConnectStart}
+            onConnectEnd={onConnectEnd}
+            onInit={props.setRfInstance}
+            proOptions={proOptions}
+            edgeTypes={edgeTypes}
+            fitView
+            fitViewOptions={fitViewOptions}
+            edgesUpdatable={true}
+            edgesFocusable={true}
+            nodesDraggable={true}
+            nodesConnectable={true}
+            nodesFocusable={true}
+            // draggable={true}
+            panOnDrag={true}
+            elementsSelectable={true}
+            zoomOnDoubleClick={false}
+          >
+            <Controls></Controls>
+          </ReactFlow>
+        ) : (
+          <ReactFlow
+            nodes={nodes}
+            edges={edges}
+            nodeTypes={nodeTypes}
+            // onNodesChange={onNodesChange}
+            // onEdgesChange={onEdgesChange}
+            // onConnect={onConnect}
+            // onConnectStart={onConnectStart}
+            // onConnectEnd={onConnectEnd}
+            onInit={props.setRfInstance}
+            proOptions={proOptions}
+            edgeTypes={edgeTypes}
+            fitView
+            fitViewOptions={fitViewOptions}
+            edgesUpdatable={false}
+            edgesFocusable={false}
+            nodesDraggable={false}
+            nodesConnectable={false}
+            nodesFocusable={false}
+            draggable={false}
+            panOnDrag={false}
+            elementsSelectable={false}
+            zoomOnDoubleClick={false}
+          ></ReactFlow>
+        )}
       </div>
-
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        nodeTypes={nodeTypes}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-        onConnectStart={onConnectStart}
-        onConnectEnd={onConnectEnd}
-        onInit={props.setRfInstance}
-        proOptions={proOptions}
-        edgeTypes={edgeTypes}
-        fitView
-        fitViewOptions={fitViewOptions}
-      >
-        <Controls></Controls>
-      </ReactFlow>
-    </div>
+    </>
   );
 };
 function Topology(props: any) {
   const [fullScreen, setFullScreen] = useState<any>(false);
   const [network_icons, setNetworkIcons] = useState<any>(null);
   const [initialNodes, setInitialNodes] = useState<any>(null);
+  const [selectedNode, setSelectedNode] = useState<any>(null);
+  const [selectedSubNode, setSelectedSubNode] = useState<any>(null);
   const [Node, setNode] = useState(selectedNode);
   const [subNode, setSubNode] = useState(selectedSubNode);
 
@@ -326,10 +405,7 @@ function Topology(props: any) {
             id: "0",
             nodes: [],
             setNodes: setNode,
-            label:
-              network_icons[selectedNode].Name == "Container"
-                ? `Container`
-                : `Node`,
+            label: network_icons[selectedNode].Name,
             Path: network_icons[selectedNode].SubCategory
               ? network_icons[selectedNode].SubCategory[selectedSubNode]
               : network_icons[selectedNode],
@@ -346,12 +422,20 @@ function Topology(props: any) {
     <>
       <div
         className={
-          fullScreen
-            ? "topology-editor !fixed !top-0 !left-0 !w-[100vw] !h-[100vh] !z-[10000] !bg-white !m-0 p-4"
-            : "topology-editor relative"
+          props.editable
+            ? fullScreen
+              ? "topology-editor !fixed !top-0 !left-0 !w-[100vw] !h-[100vh] !z-[10000] !bg-white !m-0 p-4"
+              : "topology-editor relative"
+            : "topology-editor relative !m-0"
         }
       >
-        <div className="creator z-10">
+        <div
+          className={
+            props.editable
+              ? "creator z-10"
+              : "creator z-10 h-fit min-h-[152px] !m-0 !w-[152px]"
+          }
+        >
           {network_icons && initialNodes ? (
             <>
               <AddNodeOnEdgeDrop
@@ -364,83 +448,124 @@ function Topology(props: any) {
                 fullScreen={fullScreen}
                 setNode={setNode}
                 setSubNode={setSubNode}
+                editable={props.editable}
+                setNodes={props.setNodes}
+                node={props.node}
+                setSelectedNode={setSelectedNode}
+                selectedNode={selectedNode}
+                setSelectedSubNode={setSelectedSubNode}
+                selectedSubNode={selectedSubNode}
               />
             </>
           ) : (
             <></>
           )}
         </div>
-        <div
-          className={
-            fullScreen
-              ? "editor-options min-h-[50vh] h-[calc(100vh-2rem)] overflow-y-auto"
-              : "editor-options min-h-[50vh] h-fit max-h-[60vh] overflow-y-auto"
-          }
-        >
-          {props.editable && (
-            <div className="modal" style={{ display: "contents" }}>
-              <ul>
-                {network_icons &&
-                  network_icons.map((x: any, i: any) => {
-                    return (
-                      <li
-                        onClick={() => {
-                          if (
-                            x.Name == "Container" &&
-                            (selectedNode || selectedSubNode)
-                          ) {
-                            selectedNode = i;
-                            setNode(i);
-                          } else if (x.Name != "Container") {
-                            selectedNode = i;
-                            setNode(i);
-                          }
-                        }}
-                        key={i}
-                        className={
-                          x.Name == "Container"
-                            ? selectedNode || selectedSubNode
-                              ? Node === i && !x?.SubCategory
-                                ? "selected-node flex !flex-col"
-                                : "flex !flex-col"
-                              : " bg-slate-300 rounded-xl border border-slate-400 grayscale flex !flex-col "
-                            : Node === i && !x?.SubCategory
-                            ? "selected-node flex !flex-col"
-                            : "flex !flex-col "
-                        }
-                      >
-                        <div className="flex gap-2">
-                          <img src={x.Path} /> <p>{x.Name}</p>
-                        </div>
-                        <div className={"flex flex-col"}>
-                          {x?.SubCategory?.map((y: any, j: any) => {
-                            return (
-                              <div
-                                key={j}
-                                onClick={() => {
-                                  selectedSubNode = j;
-                                  setSubNode(j);
-                                }}
-                                className={
-                                  Node === i && subNode === j
-                                    ? "selected-node flex gap-2 ml-3 my-1 p-1"
-                                    : "flex gap-2 ml-3 my-1 p-1"
-                                }
-                              >
-                                <img key={j} src={y.Path} /> <p>{y.Name}</p>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </li>
-                    );
-                  })}
-              </ul>
-            </div>
-          )}
-        </div>
+        {props.editable && (
+          <NetworkMenu
+            fullScreen={fullScreen}
+            network_icons={network_icons}
+            setNode={setNode}
+            Node={Node}
+            subNode={subNode}
+            setSubNode={setSubNode}
+            setSelectedNode={setSelectedNode}
+            selectedNode={selectedNode}
+            setSelectedSubNode={setSelectedSubNode}
+            selectedSubNode={selectedSubNode}
+          />
+        )}
       </div>
     </>
+  );
+}
+
+function NetworkMenu({
+  fullScreen,
+  network_icons,
+  setNode,
+  setSubNode,
+  subNode,
+  selectedSubNode,
+  selectedNode,
+  setSelectedSubNode,
+  setSelectedNode,
+  Node,
+}: any) {
+  return (
+    <div
+      className={
+        fullScreen
+          ? "editor-options min-h-[50vh] h-[calc(100vh-2rem)] overflow-y-auto"
+          : "editor-options min-h-[50vh] h-fit max-h-[60vh] overflow-y-auto"
+      }
+    >
+      <div className="modal" style={{ display: "contents" }}>
+        <ul>
+          {network_icons &&
+            network_icons.map((x: any, i: any) => {
+              return (
+                <li
+                  onClick={() => {
+                    if (
+                      x.Name == "Container" &&
+                      (selectedNode || selectedSubNode)
+                    ) {
+                      {
+                        setSelectedNode(i);
+                        setNode(i);
+                      }
+                    } else if (x.Name != "Container") {
+                      {
+                        setSelectedNode(i);
+                        setNode(i);
+                      }
+                    }
+                  }}
+                  key={i}
+                  className={
+                    x.Name == "Container"
+                      ? selectedNode || selectedSubNode
+                        ? Node === i && !x?.SubCategory
+                          ? "selected-node flex !flex-col"
+                          : "flex !flex-col"
+                        : " bg-slate-300 rounded-xl border border-slate-400 grayscale flex !flex-col "
+                      : Node === i && !x?.SubCategory
+                      ? "selected-node flex !flex-col"
+                      : "flex !flex-col "
+                  }
+                >
+                  <div className="flex gap-2">
+                    <img src={x.Path} /> <p>{x.Name}</p>
+                  </div>
+                  <div className={"flex flex-col"}>
+                    {x?.SubCategory?.map((y: any, j: any) => {
+                      return (
+                        <div
+                          key={j}
+                          onClick={() => {
+                            {
+                              setSelectedSubNode(j);
+                              setSubNode(j);
+                            }
+                          }}
+                          className={
+                            Node === i && subNode === j
+                              ? "selected-node flex gap-2 ml-3 my-1 p-1"
+                              : "flex gap-2 ml-3 my-1 p-1"
+                          }
+                        >
+                          <img key={j} src={y.Path} /> <p>{y.Name}</p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </li>
+              );
+            })}
+        </ul>
+      </div>
+    </div>
   );
 }
 
