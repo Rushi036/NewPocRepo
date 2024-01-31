@@ -1566,7 +1566,7 @@ const UserManagement = () => {
     createUserAndSubscription(formData).then((data) =>
       console.log("resp", data)
     );
-    // console.log("payload", formData);
+    console.log("payload", formData);
   };
 
   const handleEditUpload = () => {

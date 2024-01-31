@@ -11,6 +11,7 @@ const LineChartComponent = (props: any) => {
   const chartContainer = useRef(null);
   // const props : any = {}
   console.log("linechart props", props);
+
   useEffect(() => {
     HighchartsExporting(Highcharts);
     HighchartsExportData(Highcharts);
@@ -54,7 +55,6 @@ const LineChartComponent = (props: any) => {
                     month: "short",
                     day: "2-digit",
                   });
-
               return [formattedDate, x[1]];
             });
           return { name: e.name, data: changedData };
@@ -135,9 +135,14 @@ const LineChartComponent = (props: any) => {
                   ["Cost", "cost"].some((substring) =>
                     chartTitle.includes(substring)
                   ) ||
-                  ["Cost(₹)", "Cost($)", "cost(₹)", "cost($)"].some(
-                    (substring) => yAxisText.includes(substring)
-                  )
+                  [
+                    "Cost(₹)",
+                    "Cost($)",
+                    "cost(₹)",
+                    "cost($)",
+                    "Azure(₹)",
+                    "AWS($)",
+                  ].some((substring) => yAxisText.includes(substring))
                 ) {
                   return (
                     '<span style="color:' +

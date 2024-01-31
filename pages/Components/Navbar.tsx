@@ -23,16 +23,16 @@ const Navbar = () => {
   };
 
   const handleSignOutClick = async () => {
-    setSignOutModalOpen(true);
+    // setSignOutModalOpen(true);
 
-    // try {
-    //   await instance.logoutPopup();
-    //   router.push("/");
-    //   sessionStorage.clear();
-    //   localStorage.clear();
-    // } catch (error) {
-    //   console.log("Logout error", error);
-    // }
+    try {
+      await instance.logoutPopup();
+      router.push("/");
+      sessionStorage.clear();
+      localStorage.clear();
+    } catch (error) {
+      console.log("Logout error", error);
+    }
   };
 
   const handleSignOutConfirm = () => {

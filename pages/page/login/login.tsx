@@ -142,10 +142,10 @@ const Login = () => {
             alt="Logo"
             className="mx-auto mb-4"
           />
-          <br></br>
-          <h1 className="text-xl font-bold pb-4 leading-tight tracking-tight text-gray-900 ">
-            Sign in to your account
-          </h1>
+          {/* <br></br> */}
+          {/* <h1 className="text-xl font-bold pb-4 leading-tight tracking-tight text-gray-900 "> */}
+            {/* Sign in to your account */}
+          {/* </h1> */}
           {/* <form className="md:space-y-4 w-full" onSubmit={handleSubmit}>
             <div className="mb-4">
               <i className="fa fa-envelope icon"></i>
@@ -187,7 +187,7 @@ const Login = () => {
             </button>
           </form> */}
           <button
-            className="flex flex-row-reverse items-center p-1 btn join-item rounded-none bg-white text-black border-2 "
+            className="flex flex-row-reverse items-center p-1 px-3 btn join-item bg-white text-black border-2 rounded-md"
             onClick={handleSignIn}
           >
             Sign In with Microsoft

@@ -104,7 +104,7 @@ const Reports = () => {
               }}
             >
               <div className="flex justify-between w-full items-center">
-                <div className="">
+                <div className="w-fit">
                   <p
                     className=""
                     style={{
@@ -118,8 +118,13 @@ const Reports = () => {
                     Previous Monthly consumption
                   </p>
                 </div>
-                <div className="mr-4">
-                  <TollIcon style={{ fontSize: "40px", color: "#7B62CA" }} />
+                <div className="mr-2 mt-2">
+                  <img
+                    src="/monthCloudCons.png"
+                    className=" h-10 w-13"
+                    alt="cloudgateway"
+                  />
+                  {/* <TollIcon style={{ fontSize: "40px", color: "#7B62CA" }} /> */}
                 </div>
               </div>
 
@@ -270,8 +275,13 @@ const Reports = () => {
                     Previous Week consumption
                   </p>
                 </div>
-                <div className="mr-4">
-                  <TollIcon style={{ fontSize: "40px", color: "#7B62CA" }} />
+                <div className="mr-2 mt-2">
+                  <img
+                    src="/weeklyCloudCons.png"
+                    className=" h-10 w-13"
+                    alt="cloudgateway"
+                  />
+                  {/* <TollIcon style={{ fontSize: "40px", color: "#7B62CA" }} /> */}
                 </div>
               </div>
 
@@ -420,8 +430,13 @@ const Reports = () => {
                     Cost Governance
                   </p>
                 </div>
-                <div className="mr-4">
-                  <TollIcon style={{ fontSize: "40px", color: "#7B62CA" }} />
+                <div className="mr-2 mt-2">
+                  <img
+                    src="/costGovernence.png"
+                    className=" h-10 w-13"
+                    alt="cloudgateway"
+                  />
+                  {/* <TollIcon style={{ fontSize: "40px", color: "#7B62CA" }} /> */}
                 </div>
               </div>
 
@@ -681,8 +696,13 @@ const Reports = () => {
                     Cloud Assets
                   </p>
                 </div>
-                <div className="mr-4">
-                  <TollIcon style={{ fontSize: "40px", color: "#7B62CA" }} />
+                <div className="mr-2 mt-2">
+                  <img
+                    src="/cloudAssets.png"
+                    className=" h-10 w-13"
+                    alt="cloudgateway"
+                  />
+                  {/* <TollIcon style={{ fontSize: "40px", color: "#7B62CA" }} /> */}
                 </div>
               </div>
 
@@ -749,8 +769,13 @@ const Reports = () => {
                       ABG Secure Cloud Gateway Cost
                     </p>
                   </div>
-                  <div className="mr-4">
-                    <TollIcon style={{ fontSize: "40px", color: "#7B62CA" }} />
+                  <div className="mr-2 mt-2">
+                    <img
+                      src="/cloudGateway.png"
+                      className=" h-10 w-13"
+                      alt="cloudgateway"
+                    />
+                    {/* <TollIcon style={{ fontSize: "40px", color: "#7B62CA" }} /> */}
                   </div>
                 </div>
 
@@ -773,7 +798,7 @@ const Reports = () => {
             </Link>
           </div>
 
-          <div className="w-full md:w-[45%] h-[150px] flex justify-center items-center mb-4">
+          <div className="w-full md:w-[45%] h-[160px] flex justify-center items-center mb-4">
             <Link
               className="w-full flex justify-center items-center h-full"
               href={{
@@ -794,7 +819,7 @@ const Reports = () => {
                 >
                   <div className="w-[4px] h-full absolute left-0 top-0"></div>
                   <div className="flex justify-between w-full items-center">
-                    <div className="">
+                    <div className="w-[75%]">
                       <p
                         className=""
                         style={{
@@ -808,10 +833,13 @@ const Reports = () => {
                         Forecast and Recommendation
                       </p>
                     </div>
-                    <div className="mr-4">
-                      <TollIcon
-                        style={{ fontSize: "40px", color: "#7B62CA" }}
+                    <div className="mr-2 mt-2 w-[17%]">
+                      <img
+                        src="/forecastAndRecomm.png"
+                        className=" h-10 w-13"
+                        alt="cloudgateway"
                       />
+                      {/* <TollIcon style={{ fontSize: "40px", color: "#7B62CA" }} /> */}
                     </div>
                   </div>
 
@@ -853,7 +881,7 @@ const Reports = () => {
             </Link>
           </div>
 
-          <div className="w-full md:w-[55%] h-[150px] flex justify-center items-center mb-4">
+          <div className="w-full md:w-[55%] h-[160px] flex justify-center items-center mb-4">
             <Link
               className="w-full flex justify-center items-center h-full"
               href={{
@@ -887,8 +915,13 @@ const Reports = () => {
                       Cloud Managed Services Cost
                     </p>
                   </div>
-                  <div className="mr-4">
-                    <TollIcon style={{ fontSize: "40px", color: "#7B62CA" }} />
+                  <div className="mr-2 mt-2">
+                    <img
+                      src="/managedService.png"
+                      className=" h-10 w-13"
+                      alt="cloudgateway"
+                    />
+                    {/* <TollIcon style={{ fontSize: "40px", color: "#7B62CA" }} /> */}
                   </div>
                 </div>
 
@@ -981,17 +1014,17 @@ const Reports = () => {
                               className="bg-white"
                               style={{ width: "100px", textAlign: "right" }}
                             >
-                            {res.Metric &&
-                                res.Metric[6] &&
-                                res?.Metric[6]?.value
-                                  ? new Intl.NumberFormat("en-IN", {
-                                      style: "currency",
-                                      currency: "INR",
-                                    }).format(
-                                      res?.Metric[6]?.value?.Azure +
-                                        res?.Metric[6]?.value?.AWS
-                                    )
-                                  : ""}
+                              {res.Metric &&
+                              res.Metric[6] &&
+                              res?.Metric[6]?.value
+                                ? new Intl.NumberFormat("en-IN", {
+                                    style: "currency",
+                                    currency: "INR",
+                                  }).format(
+                                    res?.Metric[6]?.value?.Azure +
+                                      res?.Metric[6]?.value?.AWS
+                                  )
+                                : ""}
                             </td>
                           </tr>
                         )}
@@ -1004,7 +1037,7 @@ const Reports = () => {
         </div>
         <div
           key={121}
-          className="relative card h-[296px] shadow-md hover:shadow-lg border border-gray-800 "
+          className="relative card h-[306px] shadow-md hover:shadow-lg border border-gray-800 "
           style={{
             borderRadius: "16px",
             border: "0.5px solid rgba(0, 0, 0, 0.6)",
