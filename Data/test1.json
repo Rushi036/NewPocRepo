@@ -1,20 +1,28 @@
 {
-  "Graph": [
-    {
-      "BarGraph": {
-        "type": "column",
-        "stacking": true, //if stacking required
-        "categories": ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan"],
-        "data": [
+  "BarGraph": {
+      "type": "column",
+      "stacking": "true",
+      "categories": [
+          "Nov",
+          "Dec",
+          "Jan",
+          "Feb"
+      ],
+      "data": [
           {
-            "name": "ABMCPL - New Subscription",
-            "data": [1741.92, 2123.56, 2210.25, null, null, null, null]
+              "name": "Central-Logging",
+              "data": [
+                  4.83,
+                  39.06,
+                  100.82,
+                  7.59
+              ]
           }
-        ],
-        "xAxis": "",
-        "yAxis": "Cost(₹)",
-        "title": "Monthly Disk Consumption"
-      }
-    }
-  ]
+      ],
+      "xAxis": "",
+      "yAxis": "Cost(₹)",
+      "title": " Application Wise Total Cost",
+      "firstHeader": "Month",
+      "secondHeader": "Cost(₹)"
+  }
 }

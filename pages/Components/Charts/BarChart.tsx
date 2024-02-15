@@ -6,6 +6,7 @@ import HighchartsExporting from "highcharts/modules/exporting";
 import HighchartsExportData from "highcharts/modules/export-data";
 import HighchartsAccessibility from "highcharts/modules/accessibility";
 const BarGraph = (props: any) => {
+  console.log("props in bargraph", props);
   const chartContainer = useRef(null);
   useEffect(() => {
     HighchartsExporting(Highcharts);
@@ -17,6 +18,16 @@ const BarGraph = (props: any) => {
     if (chartContainer.current) {
       const firstHead = props && props.data && props.data.firstHeader;
       const secHead = props && props.data && props.data.secondHeader;
+      // console.log("data in bargraph",props.data.data)
+      const newData =
+        props.data &&
+        props.data.data &&
+        props.data.data.map((series: any, index: any) => {
+          return {
+            ...series,
+            color: series.name == "Forecasted Cost" && "#00008B",
+          };
+        });
       const options: any = {
         chart: {
           // height: (9 / 16 * 100) + '%',
@@ -121,7 +132,7 @@ const BarGraph = (props: any) => {
             },
           },
         },
-        series: props?.data?.data || [], //name should be sent here and it will come from the api
+        series: newData || [], //name should be sent here and it will come from the api
         exporting: {
           showTable: false,
           csv: {

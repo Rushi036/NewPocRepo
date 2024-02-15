@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsVariablePie from "highcharts/modules/variable-pie";
 import NoDataToDisplay from "highcharts/modules/no-data-to-display";
@@ -9,6 +9,38 @@ import HighchartsAccessibility from "highcharts/modules/accessibility";
 // Initialize Highcharts modules
 
 const ChartComponent = (props: any) => {
+  const chartRef = useRef(null);
+  const tableRef = useRef(null);
+  // console.log("props", props.data.data);
+  const [openTable, setOpenTable] = useState(false);
+  const [openTableId, setOpenTableID] = useState<any>();
+  const openTableForId = (id: any) => {
+    setOpenTableID(id);
+    setOpenTable(true);
+  };
+  const closeTableForId = (id: any) => {
+    setOpenTableID(id);
+    setOpenTable(false);
+  };
+  // function convertData(originalData:any) {
+  //   console.log("data for conversion", originalData);
+  //   const convertedData = {
+  //     id: props.id,
+  //     data: {
+  //       title: originalData.title,
+  //       data: originalData.data.map(([account, cost]:any) => ({
+  //         account,
+  //         cost,
+  //       })),
+  //       firstHeader: originalData.firstHeader,
+  //       secondHeader: originalData.secondHeader,
+  //     },
+  //     height: originalData.height,
+  //     legendEnabled: originalData.legendEnabled,
+  //   };
+
+  //   return convertedData;
+  // }
   useEffect(() => {
     HighchartsExporting(Highcharts);
     HighchartsExportData(Highcharts);
@@ -17,8 +49,11 @@ const ChartComponent = (props: any) => {
     NoDataToDisplay(Highcharts);
   }, []);
   useEffect(() => {
-    // console.log(props.data.data);
     if (props?.data) {
+      // const d = convertData(props.data);
+      // console.log("converted data", d);
+      const ids = props.id;
+      console.log("data in pie", props.data);
       const firstHead = props && props.data && props.data.firstHeader;
       const secHead = props && props.data && props.data.secondHeader;
       const options: any = {
@@ -176,6 +211,28 @@ const ChartComponent = (props: any) => {
         ],
         exporting: {
           showTable: false,
+          // buttons: {
+          //   contextButton: {
+          //     menuItems: [
+          //       "downloadPNG",
+          //       "downloadJPEG",
+          //       "downloadPDF",
+          //       "downloadSVG",
+          //       "separator",
+          //       "downloadXLS",
+          //       "downloadCSV",
+          //       {
+          //         text: !openTable ? "View Data Table" : "HideDataTable", // Custom text for the menu item
+          //         onclick: function () {
+          //           !openTable
+          //             ? openTableForId(props.id)
+          //             : closeTableForId(props.id);
+          //           // setOpenTable(true);
+          //         },
+          //       },
+          //     ],
+          //   },
+          // },
           csv: {
             columnHeaderFormatter: function (item: any, key: any) {
               if (!item || item instanceof Highcharts.Axis) {
@@ -196,14 +253,39 @@ const ChartComponent = (props: any) => {
 
       Highcharts.chart("container-" + props.id, options);
     }
-  }, [props.data]); // Empty dependency array ensures the effect runs once after initial render
+  }, [props.data, openTable, props.id]);
   const containerStyle = {
     height: props.height || "500px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
   };
-  return <div id={"container-" + props.id} style={containerStyle} />;
+  return (
+    <div>
+      <div id={"container-" + props.id} style={containerStyle} />
+      <div ref={tableRef}>
+        {/* only id needs different for each chart */}
+        {/* {props.data && openTable && openTableId == props.id && (
+          <table>
+            <thead>
+              <tr>
+                <th>{props.data.firstHeader}</th>
+                <th>{props.data.secondHeader}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {props.data.data.map((row: any, index: any) => (
+                <tr key={index}>
+                  <td>{row[0]}</td>
+                  <td>{row[1]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )} */}
+      </div>
+    </div>
+  );
 };
 
 export default ChartComponent;

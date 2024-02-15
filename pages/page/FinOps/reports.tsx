@@ -166,7 +166,10 @@ const Reports = () => {
                               style: "currency",
                               currency: "USD",
                             }).format(res?.Metric[0]?.value?.AWS)
-                          : new Intl.NumberFormat("en-IN", {
+                          : res.Metric &&
+                            res.Metric[0] &&
+                            res?.Metric[0]?.value &&
+                            new Intl.NumberFormat("en-IN", {
                               style: "currency",
                               currency: "INR",
                             }).format(res?.Metric[0]?.value?.AWS)}
@@ -324,7 +327,10 @@ const Reports = () => {
                               style: "currency",
                               currency: "USD",
                             }).format(res?.Metric[1]?.value?.AWS)
-                          : new Intl.NumberFormat("en-IN", {
+                          : res.Metric &&
+                            res.Metric[1] &&
+                            res?.Metric[1]?.value &&
+                            new Intl.NumberFormat("en-IN", {
                               style: "currency",
                               currency: "INR",
                             }).format(res?.Metric[1]?.value?.AWS)}
@@ -484,7 +490,10 @@ const Reports = () => {
                                   style: "currency",
                                   currency: "USD",
                                 }).format(res?.Metric[3]?.value?.aws)
-                              : new Intl.NumberFormat("en-IN", {
+                              : res.Metric &&
+                                res.Metric[3] &&
+                                res?.Metric[3]?.value &&
+                                new Intl.NumberFormat("en-IN", {
                                   style: "currency",
                                   currency: "INR",
                                 }).format(res?.Metric[3]?.value?.aws)}
@@ -587,7 +596,10 @@ const Reports = () => {
                                   style: "currency",
                                   currency: "USD",
                                 }).format(res?.Metric[4]?.value?.aws)
-                              : new Intl.NumberFormat("en-IN", {
+                              : res.Metric &&
+                                res.Metric[4] &&
+                                res?.Metric[4]?.value &&
+                                new Intl.NumberFormat("en-IN", {
                                   style: "currency",
                                   currency: "INR",
                                 }).format(res?.Metric[4]?.value?.aws)}
@@ -861,7 +873,7 @@ const Reports = () => {
                       : ""}
                   </span> */}
                     <span>
-                      Azure - ₹
+                      {/* Azure - ₹ */}
                       {/* {res.Metric && res.Metric[1] && res.Metric[1].value
                       ? res?.Metric[1]?.value?.Azure
                       : ""} */}
@@ -963,7 +975,10 @@ const Reports = () => {
                                 style: "currency",
                                 currency: "USD",
                               }).format(res?.Metric[6]?.value?.AWS)
-                            : new Intl.NumberFormat("en-IN", {
+                            : res.Metric &&
+                              res.Metric[6] &&
+                              res?.Metric[6]?.value &&
+                              new Intl.NumberFormat("en-IN", {
                                 style: "currency",
                                 currency: "INR",
                               }).format(res?.Metric[6]?.value?.AWS)}

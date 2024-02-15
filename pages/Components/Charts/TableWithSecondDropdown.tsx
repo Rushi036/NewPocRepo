@@ -125,7 +125,19 @@ const TableWithSecondDropdown = (cloud: any) => {
       });
     }
   }, [secondDropdownValue]);
-
+  const shouldFormatAsIndianStandard = (header: string): boolean => {
+    const keywords = [
+      "Cost",
+      "cost",
+      "$",
+      "₹",
+      "charges",
+      "Charges",
+      "($)",
+      "(₹)",
+    ];
+    return keywords.some((keyword) => header.includes(keyword));
+  };
   // console.log("totalrows", totalRows);
   //   data && data.Table && data.Table.data && console.log("data table in second", data.Table.data.length);
   //   console.log("firstdropdowndata", firstdropDowndata);
@@ -207,7 +219,11 @@ const TableWithSecondDropdown = (cloud: any) => {
                             >
                               View
                             </button>
+                          ) : shouldFormatAsIndianStandard(item[0]) ? (
+                            // If true, format the number using Indian standard
+                            parseFloat(item[1]).toLocaleString("en-IN")
                           ) : (
+                            // Otherwise, display the item as is
                             item[1]
                           )}
                         </td>

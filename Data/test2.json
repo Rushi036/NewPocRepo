@@ -1,24 +1,27 @@
 {
-  "businessName": "test",
-  "userName": "test",
-  "adid": "test@gmail.com",
-  "role": "BE",
-  "type": "Owner",
-  "status": "active",
-  "businessLogo": "Common.jpg",
-  "subscriptions": [
-      {
-          "subsAccName": "test",
-          "subsAccId": "test",
-          "cloud": "AWS",
-          "ownerADID": "test@gmail.com",
-          "contactADID": [
-              {
-                  "name": "test",
-                  "adid": "test@gmail.com"
-              }
-          ],
-          "status": "active"
-      }
-  ]
+    "BarGraph": {
+        "title": "Monthly Consumption Other Services",
+        "type": "column",
+        "stacking": "false",
+        "categories": [
+            "Nov",
+            "Dec",
+            "Jan",
+            "Feb"
+        ],
+        "data": [
+            {
+                "data": [
+                    811.43,
+                    1168.41,
+                    1962.07,
+                    132.74
+                ]
+            }
+        ],
+        "xAxis": "",
+        "yAxis": "Cost($)",
+        "firstHeader": "Month",
+        "secondHeader": "Cost($)"
+    }
 }

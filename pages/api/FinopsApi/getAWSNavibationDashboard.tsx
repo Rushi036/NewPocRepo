@@ -2,7 +2,7 @@ import { finopsServerBaseUrl } from "@/const";
 import { useState } from "react";
 
 export const allInOneAwsAzureCloud = async (gte: any, lte: any) => {
-  console.log(gte, lte);
+  // console.log(gte, lte);
   let retData: any;
   let adid = sessionStorage.getItem("userEmail");
   let body = {

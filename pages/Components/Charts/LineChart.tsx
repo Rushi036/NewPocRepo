@@ -10,7 +10,7 @@ import HighchartsAccessibility from "highcharts/modules/accessibility";
 const LineChartComponent = (props: any) => {
   const chartContainer = useRef(null);
   // const props : any = {}
-  console.log("linechart props", props);
+  // console.log("linechart props", props);
 
   useEffect(() => {
     HighchartsExporting(Highcharts);
@@ -23,7 +23,7 @@ const LineChartComponent = (props: any) => {
     if (chartContainer.current) {
       const firstHead = props && props.data && props.data.firstHeader;
       const secHead = props && props.data && props.data.secondHeader;
-      console.log(firstHead, secHead);
+      // console.log(firstHead, secHead);
       const newData =
         props &&
         props.data &&
@@ -57,9 +57,17 @@ const LineChartComponent = (props: any) => {
                   });
               return [formattedDate, x[1]];
             });
-          return { name: e.name, data: changedData };
+          return {
+            name: e.name,
+            data: changedData,
+            color:
+              (e.name == "Forecasted Cost" ||
+                e.name == "Forecast Cost Trend " ||
+                e.name == "Forecast Cost Trend") &&
+              "#00008B ",
+          };
         });
-      console.log("newdata", newData);
+      // console.log("newdata", newData);
       // console.log("headaer", secHead);
       const options: any = {
         chart: {

@@ -236,6 +236,41 @@ const NTable = (cloudGatewayData: any) => {
     // console.log("-1-1-1")
     setSearchInput(e.target.value);
   };
+  const shouldFormatAsIndianStandard = (header: string): boolean => {
+    const keywords = [
+      "Cost",
+      "cost",
+      "$",
+      "₹",
+      "charges",
+      "Charges",
+      "($)",
+      "(₹)",
+    ];
+    return keywords.some((keyword) => header.includes(keyword));
+  };
+  const keywords = [
+    "Cost",
+    "cost",
+    "$",
+    "₹",
+    "charges",
+    "Charges",
+    "($)",
+    "(₹)",
+  ];
+  const shouldFormat = (header: string) => {
+    return keywords.some((keyword) => header.includes(keyword));
+  };
+
+  const formatIndianCurrency = (value: string) => {
+    const formattedValue = parseFloat(value).toLocaleString("en-IN", {
+      style: "currency",
+      currency: "INR",
+    });
+    return formattedValue;
+  };
+
   return (
     <>
       {cloudGatewayData && (
@@ -300,14 +335,17 @@ const NTable = (cloudGatewayData: any) => {
                           rowData.map((item: any, index: any) =>
                             item[0] !== "NestedTableData" ? (
                               <td className="px-auto py-2" key={index}>
-                                {item[1]}
+                                {shouldFormatAsIndianStandard(item[0])
+                                  ? // If true, format the number using Indian standard
+                                    parseFloat(item[1]).toLocaleString("en-IN")
+                                  : // Otherwise, display the item as is
+                                    item[1]}
                               </td>
                             ) : (
                               ""
                             )
                           )}
                       </tr>
-
                       {/* Nested table logic */}
                       <tr key={rowIndex + 1000}>
                         {rowData &&
@@ -327,7 +365,9 @@ const NTable = (cloudGatewayData: any) => {
                                     <tr>
                                       {item[1]?.headers?.map(
                                         (data: any, thindex: any) => (
-                                          <th key={thindex}>{data}</th>
+                                          <th key={thindex}>
+                                            {data}
+                                          </th>
                                         )
                                       )}
                                     </tr>
@@ -337,7 +377,11 @@ const NTable = (cloudGatewayData: any) => {
                                       (data: any, thindex: any) => (
                                         <tr key={thindex}>
                                           {data?.map((row: any, index: any) => (
-                                            <td key={index}>{row[1]}</td>
+                                            <td key={index}>
+                                              {shouldFormat(row[0])
+                                                ? formatIndianCurrency(row[1])
+                                                : row[1]}
+                                            </td>
                                           ))}
                                         </tr>
                                       )
@@ -350,6 +394,7 @@ const NTable = (cloudGatewayData: any) => {
                             )
                           )}
                       </tr>
+                      
                     </>
                   ))}
                 {(currentData && currentData?.length === 0) ||

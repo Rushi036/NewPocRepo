@@ -94,7 +94,7 @@ const TableWithDropdown = (cloud: any, type: any) => {
     // setLoader(true);
     if (cloud.type == "firstDropdown" && cloud.cloud) {
       GetAllResourceTypes(cloud.cloud).then((data: any) => {
-        console.log("first data", data.data);
+        // console.log("first data", data.data);
 
         data && data.data && setfirstDropDowndata(data.data);
         data &&
@@ -119,7 +119,7 @@ const TableWithDropdown = (cloud: any, type: any) => {
       }
     }
   }, [cloud.cloud, cloud.type]);
-  console.log("firstdropdownndata", firstdropDowndata);
+  // console.log("firstdropdownndata", firstdropDowndata);
 
   useEffect(() => {
     if (firstDropdownValue) {
@@ -143,7 +143,19 @@ const TableWithDropdown = (cloud: any, type: any) => {
       });
     }
   }, [firstDropdownValue]);
-
+  const shouldFormatAsIndianStandard = (header: string): boolean => {
+    const keywords = [
+      "Cost",
+      "cost",
+      "$",
+      "₹",
+      "charges",
+      "Charges",
+      "($)",
+      "(₹)",
+    ];
+    return keywords.some(keyword => header.includes(keyword));
+  };
   //   console.log("seconddropdowndata", secdropDowndata);
   // data && data.Table && console.log("data table", data.Table);
   //   console.log("firstdropdowndata", firstdropDowndata);
@@ -226,7 +238,13 @@ const TableWithDropdown = (cloud: any, type: any) => {
                               View
                             </button>
                           ) : (
-                            item[1]
+                            shouldFormatAsIndianStandard(item[0]) ? (
+                              // If true, format the number using Indian standard
+                              parseFloat(item[1]).toLocaleString("en-IN")
+                            ) : (
+                              // Otherwise, display the item as is
+                              item[1]
+                            )
                           )}
                         </td>
                       ))}

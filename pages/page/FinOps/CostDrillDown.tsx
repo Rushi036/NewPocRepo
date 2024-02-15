@@ -386,10 +386,7 @@ function MetricCards({ cloud, subscId, res, isOpen, setIsOpen }: any) {
                           style: "currency",
                           currency: "INR",
                         }).format(res.Metric[i].value)
-                      : new Intl.NumberFormat("en-US", {
-                          style: "currency",
-                          currency: "USD",
-                        }).format(res.Metric[i].value)}
+                      : res.Metric[i].value}
                   </span>
                 </div>
 
@@ -1117,7 +1114,19 @@ function ReportsCard({
                 >
                   {/* <BsPinAngle /> */}
                 </span>
-                <BarGraph id={i} date={timePeriod} data={e.BarGraph} />
+                <BarGraph
+                  id={i}
+                  date={timePeriod}
+                  data={e.BarGraph}
+                  legendEnabled={
+                    e.BarGraph.title == "Monthly Consumption Other Services" ||
+                    "Monthly Disk Consumption" ||
+                    "Monthly PaaS Consumption" ||
+                    "Monthly VM Consumption"
+                      ? false
+                      : true
+                  }
+                />
               </div>
             );
           }

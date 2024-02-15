@@ -10,6 +10,8 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=Oxygen&display=swap"
           rel="stylesheet"
         />
+        {/* <base href="https://dice.adityabirla.com/pi/finops/" /> */}
+        {/* <base href="http://localhost:3001" /> */}
       </Head>
       <body>
         <Main />

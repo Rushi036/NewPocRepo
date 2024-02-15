@@ -1,0 +1,47 @@
+{
+    "title": "Top Cost Drivers by Account - AWS",
+    "data": [
+        {
+            "account": "ABMCPL",
+            "cost": 60405.74
+        },
+        {
+            "account": "BIRLA MANAGEMENT CENTRE SERVICES LIMITED",
+            "cost": 49653.68
+        },
+        {
+            "account": "Rishi Jethva",
+            "cost": 24785.73
+        },
+        {
+            "account": "GIT-SharedServices-AWS",
+            "cost": 21916.12
+        },
+        {
+            "account": "Applause ABG",
+            "cost": 17932.15
+        },
+        {
+            "account": "ABG_B2B_Commerce_Pivot-Prod",
+            "cost": 16127.91
+        },
+        {
+            "account": "ABG Thai Chemicals",
+            "cost": 15031.14
+        },
+        {
+            "account": "Grasim Kolkata",
+            "cost": 12465.26
+        },
+        {
+            "account": "ABG_B2B_Commerce-AWS",
+            "cost": 11993.2
+        },
+        {
+            "account": "Thai_Acrylic_Fibre_Overseas_Spinning-AWS",
+            "cost": 10241
+        }
+    ],
+    "firstHeader": "Accounts",
+    "secondHeader": "Cost($)"
+}

@@ -41,7 +41,19 @@ const Table = ({ data }: any) => {
 
     setFilteredData(filtered);
   }, [data?.data, searchInput]);
-
+  const shouldFormatAsIndianStandard = (header: string): boolean => {
+    const keywords = [
+      "Cost",
+      "cost",
+      "$",
+      "₹",
+      "charges",
+      "Charges",
+      "($)",
+      "(₹)",
+    ];
+    return keywords.some((keyword) => header.includes(keyword));
+  };
   return (
     <>
       <div className="items-center pb-4 px-4">
@@ -97,6 +109,8 @@ const Table = ({ data }: any) => {
                         >
                           View
                         </button>
+                      ) : shouldFormatAsIndianStandard(item[0]) ? (
+                        parseFloat(item[1]).toLocaleString("en-IN")
                       ) : (
                         item[1]
                       )}
