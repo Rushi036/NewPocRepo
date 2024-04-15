@@ -122,24 +122,29 @@ const Dashboard = () => {
         </div>
 
         <div className="w-[25%] h-[130px] flex justify-center items-center mb-4">
-          <div
-            className="cursor-pointer  hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md"
-            style={{
-              borderRadius: "16px",
-              border: "0.5px solid rgba(0, 0, 0, 0.6)",
-              background:
-                "linear-gradient(162deg, rgba(123, 98, 202, 0.11) 11.36%, rgba(123, 98, 202, 0.00) 36.6%), #ffffff",
-              fontFamily: `"Oxygen",sans-serif`,
-            }}
-          >
-            {/* <div className="w-[4px] h-full bg-purple-400 absolute left-0 top-0"></div> */}
-            <p className="text-black font-bold text-lg">
-              Active Service Request
-            </p>
-            <div className="flex flex-col">
-              <span>Coming Soon...</span>
+          <Link
+          className="w-full flex justify-center items-center h-full"
+          href={"/page/CloudProjects/request"}>
+            <div
+              className="cursor-pointer  hover:shadow-lg relative m-2 p-2 pl-4 bg-white rounded-lg w-full h-full flex gap-2 justify-start overflow-hidden items-start flex-col shadow-md"
+              style={{
+                borderRadius: "16px",
+                border: "0.5px solid rgba(0, 0, 0, 0.6)",
+                background:
+                  "linear-gradient(162deg, rgba(123, 98, 202, 0.11) 11.36%, rgba(123, 98, 202, 0.00) 36.6%), #ffffff",
+                fontFamily: `"Oxygen",sans-serif`,
+              }}
+            >
+              {/* <div className="w-[4px] h-full bg-purple-400 absolute left-0 top-0"></div> */}
+              <p className="text-black font-bold text-lg">
+                Cloud Projects
+              </p>
+              <div className="flex flex-col">
+                <span>• Self Service Request</span>
+              </div>
             </div>
-          </div>
+
+          </Link>
         </div>
       </div>
     </>

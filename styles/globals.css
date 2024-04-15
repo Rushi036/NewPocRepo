@@ -447,3 +447,11 @@ span.MuiTabs-indicator.css-10d9dml-MuiTabs-indicator {
     transform: rotateZ(360deg);
   }
 }
+
+.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-active {
+  color: rgb(255, 94, 0) !important;
+}
+
+.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-completed {
+  color: rgb(255, 94, 0) !important;
+}

@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import Login from "./page/login/login";
 import BLayout from "./Components/bLayout";
 import { AppContextProvider } from "./Components/AppContext";
+// import Login from "./page/login/jsonLogin";
 
 const inter = Inter({ subsets: ["latin"] });
 

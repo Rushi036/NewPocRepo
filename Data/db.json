@@ -182,6 +182,13 @@
       "email": "gopi.arumugam-v@adityabirla.com",
       "password": "jASGvxZa",
       "role": "BE"
+    },
+    {
+      "id": 17,
+      "name": "Abhishek Ainapur",
+      "email": "abhishek.ainapur-v@adityabirla.com",
+      "password": "abg@123",
+      "role": "ADMIN"
     }
   ],
   "topology_table_data": [

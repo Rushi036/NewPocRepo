@@ -9,7 +9,8 @@ export const baseURL = "http://localhost:8000/";                            //Fo
 // export const finopsServerBaseUrl = "http://10.47.98.164:9201"               //For API on Dev
 
 // export const finopsServerBaseUrl = "https://10.47.128.23:5613"           //For API on Prod
-export const finopsServerBaseUrl = "https://pi.adityabirla.com:5613"; //For API on Prod
+export const finopsServerBaseUrl = "https://pi.adityabirla.com:5613";
+// export const finopsServerBaseUrl = "https://75c1-103-79-102-191.ngrok-free.app/docs"; //For API on Prod
 
 // export const finopsServerBaseUrl = "http://localhost:9201"                     //For API on Local
 
