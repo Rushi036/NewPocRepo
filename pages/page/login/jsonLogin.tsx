@@ -72,6 +72,7 @@ const Login = () => {
           sessionStorage.setItem("userName", fetchedData.data.userName);
           sessionStorage.setItem("userEmail", fetchedData.data.adId);
           sessionStorage.setItem("businessLogo", fetchedData.data.businessLogo);
+          sessionStorage.setItem("businessName",fetchedData.data.businessName);
           // router.push("/page/Dashboard");
         } else {
           window.alert("User Not Found!!");
@@ -103,6 +104,7 @@ const Login = () => {
               "businessLogo",
               fetchedData.data.businessLogo
             );
+            sessionStorage.setItem("businessName",fetchedData.data.businessName);
             router.push("/page/Dashboard");
           } else {
             window.alert("User Not Found!!");

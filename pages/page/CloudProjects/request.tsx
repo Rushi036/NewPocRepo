@@ -1,7 +1,14 @@
+"use client"
 import { Stepper,Step,StepLabel, Input, dialogClasses} from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import React, { use, useEffect, useState } from "react";
+import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
+// import InfoOutlinedIcon from '@mui/icons-material/InfoRounded';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import Tooltip from '@mui/material/Tooltip';
+import React, {useEffect, useState } from "react";
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 import { Truculenta } from "next/font/google";
 import { fetchSubcriptions } from "@/pages/api/ActiveServiceRequestApis/apis";
 import { fetchUsers, raiseRequest, fetchCloudServiceSheet,updateRequest} from "@/pages/api/ActiveServiceRequestApis/apis";
@@ -10,10 +17,18 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { finopsServerBaseUrl } from "@/const";
 
-function request()
+
+
+function Request()
 {
+
+    // state for stroring the user role
+    const [userRole,setUserRole] = useState<any>('');
     // state for opening and closing the modal
     const [isOpen, setIsOpen] = useState(false);
+
+    // state for openeing and closing the upload document for admin for uploading the document
+    const [isUploadOpen, setIsUploadOpen] = useState(false);
 
     // state for opening and closing view request info modal
     const [isViewOpen,setIsViewOpen] = useState(false);
@@ -39,6 +54,9 @@ function request()
 
     const [currentPage, setCurrentPage] = useState<any>(1);
     const [itemsPerPage] = useState<any>(5);
+
+    // states setting loading on and off
+    const [isLoading,setIsLoading] = useState<any>(false);
 
     // filtering the data based on search query
     const filteredData = 
@@ -172,7 +190,210 @@ function request()
     const [ZPAVPNOnboarding,setZPAVPNOnboarding] = useState<zPAVPNOnboarding>({
       excelFile:[] = new Array(1)
     })
+
+
+    // state for the storing design document and more
+    interface CloudDocuments {
+      requestId?:string,
+      designDocument:{name:string,fileString:string},
+      anotherDocument:{name:string,fileString:string},
+      comment:string
+    }
+
+    const [adminCloudDocuments,setAdminCloudDocuments] = useState<CloudDocuments>({
+      requestId:"",
+      designDocument:{name:"",fileString:""},
+      anotherDocument:{name:"",fileString:""},
+      comment:""
+    });
+
+    // function for getting extension of the file
+    const handleAdminFileDonwload = (fileName:any,fileString:any) =>
+    {
+      const fileParts = fileName.split('.').pop();
+
+      switch(fileParts)
+      {
+        case "xlsx":
+          // function to be invoked for xlsx
+          convertStringToExcelFile(fileString,fileName);
+        break;
+
+        case "xlsm":
+          // function to be invoked for xlsm
+          convertStringToXLSMFile(fileString,fileName);
+        break;
+
+        case "pdf":
+          //function to be invoked for pdf
+        break;
+      }
+    }
   
+
+    // function to change the state of cloudDocments
+    const handleAdminCloudDocuments = (e:any) =>
+    {
+      const {name,value} = e.target;
+
+      setAdminCloudDocuments((prevData)=>({
+        ...prevData,
+        [name]: value
+      }))
+    }
+
+    // function to handle the upload documents of admin cloud documents
+    const handleFileUploadAdminCloudDocuments = (e:any) =>
+    {
+      
+      const name = e.target.name;
+      const selectedFile = e.target.files && e.target.files[0];
+      const fileName = selectedFile && selectedFile.name;
+
+      if(selectedFile)
+      {
+        console.log("converting");
+        let base64String: any;
+        const reader = new FileReader();
+        reader.onload = () => {
+            base64String = reader.result?.toString().split(',')[1];
+
+            let object = {name:fileName,fileString:base64String}
+            console.log(base64String);
+
+            setAdminCloudDocuments((prevData)=>({
+              ...prevData,
+              [name]: object
+            }))
+          
+        };
+        reader.readAsDataURL(selectedFile);
+      }
+      
+    }
+
+    const closeAdminDocumentModal = () =>
+    {
+      setIsUploadOpen(false);
+      const obj:CloudDocuments = 
+      {
+        requestId:"",
+        designDocument:{name:"",fileString:""},
+        anotherDocument:{name:"",fileString:""},
+        comment:""
+      }
+
+      setAdminCloudDocuments(obj);
+    }
+
+    // function to send/save/upload admin added documents
+    const saveAdminCloudDocument = async () =>
+    {
+      
+      let data = {...adminCloudDocuments};
+      let id = data.requestId;
+      delete data.requestId;
+
+      try
+      {
+        let response = await fetch(`http://192.168.2.102:1010/api/uploadDocument/${id}`,
+          {
+            method: "PUT",
+            body:JSON.stringify({adminCloudDocuments:data}),
+            headers: {
+              "Content-Type": "application/json",
+          },
+          }
+        );
+
+        if(response.status == 200)
+        {
+          let data = await response.json();
+          // show toast here
+          console.log(data);
+          // console.log(data.message);
+
+          // getting new data after upload
+          await fetchCloudServiceSheetTable();
+
+          toast.success(data.message, 
+          {
+            position: "bottom-right",
+            autoClose: 2000,
+          });
+
+          
+        }
+        else
+        {
+          toast.error("Some error occured, try again", 
+          {
+            position: "bottom-right",
+            autoClose: 2000,
+          });
+        }
+
+      }
+      catch(e)
+      {
+        toast.error("Some error occured, try again", 
+        {
+          position: "bottom-right",
+          autoClose: 2000,
+        });
+      }
+      finally
+      {
+        closeAdminDocumentModal();
+      }
+    }
+
+    // function to handle accept or reject from the business user
+    const sendApproval = async (requestId:any,status:any) =>
+    {
+      try
+      {
+        const response = await fetch(`http://192.168.2.102:1010/api/${requestId}/status?status=${status}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            }
+          }
+        );
+
+        if(response.status == 200)
+        {
+          let data = await response.json();
+
+          // getting new data after upload
+          await fetchRequestByRequestId(requestId);
+          await fetchCloudServiceSheetTable();
+
+          toast.success(data.message, 
+          {
+            position: "bottom-right",
+            autoClose: 2000,
+          });
+        }
+        else
+        {
+          toast.error("Some error occured, try again", 
+          {
+            position: "bottom-right",
+            autoClose: 2000,
+          });
+        }
+      }
+      catch(e)
+      {
+        toast.error("Some error occured, try again", 
+          {
+            position: "bottom-right",
+            autoClose: 2000,
+          });
+      }
+    }
   
     // funcion to change state of intomation gathering change
     const handleInformationGatheringChange = (e: any) =>
@@ -741,11 +962,12 @@ function request()
 
     },[informationGathering.cspSelection]);
 
-    // function for sending data using fetch
+    // function for sending data using fetch for raise request module
     async function handleSaveAll()
     {
       let body: any;
       body = {}
+      body.adId = sessionStorage.getItem("userEmail");
       body.informationGathering = informationGathering;
       body.informationGathering.subsAccId = informationGathering.subscriptionName;
 
@@ -805,6 +1027,7 @@ function request()
       console.log(sessionStorage.getItem('userRole'));
       let name = sessionStorage.getItem("userName");
       let businessName = sessionStorage.businessName;
+      setUserRole(sessionStorage.getItem('userRole'));
 
       setInformationGathering((prevData) => ({
         ...prevData,
@@ -824,12 +1047,12 @@ function request()
     },[]);
 
 
-    // function to update status of request
+    // function to update status of request (not in use currently)
     async function updateStatus(requestId:any,status:any)
     {
       try
       { 
-        let response = await fetch(`http://localhost:1010/api/${requestId}/status?status=${status}`,
+        let response = await fetch(`http://192.168.2.102:1010/api/${requestId}/status?status=${status}`,
         {
           method: "PATCH",
           headers: {
@@ -876,7 +1099,7 @@ function request()
     {
       try
       {
-        let response = await fetch(`http://localhost:1010/api/createRequest`,
+        let response = await fetch(`http://192.168.2.102:1010/api/createRequest`,
         {
           method: "POST",
           headers: {
@@ -913,11 +1136,12 @@ function request()
         let adid = sessionStorage.getItem("userEmail");
         try
         {
-          let response = await fetch(`http://localhost:1010/api/getRequestDataInTable/${adid}`);
+          let response = await fetch(`http://192.168.2.102:1010/api/getRequestDataInTable/${adid}`);
           
           if(response.status == 200)
           {
             let data = await response.json();
+            console.log(data[0].table.data);
             console.log(data);
             setTableData(data[0].table); 
             setTableArray(data[0].table.data.reverse());
@@ -938,7 +1162,8 @@ function request()
     {
       try
       {
-        let response = await fetch(`http://localhost:1010//api/getRequestByRequestId/${requestId}`);
+        setIsLoading(true);
+        let response = await fetch(`http://192.168.2.102:1010//api/getRequestByRequestId/${requestId}`);
         if(response.status == 200)
         {
           let data = await response.json();
@@ -949,13 +1174,27 @@ function request()
         else if(response.status == 404)
         {
           console.log("error");
+          toast.error("Some error occured, try again", 
+          {
+            position: "bottom-right",
+            autoClose: 2000,
+          });
           return false;
         }
       }
       catch(e)
       {
         console.log(e);
+        toast.error("Some error occured, try again", 
+        {
+          position: "bottom-right",
+          autoClose: 2000,
+        });
         return false;
+      }
+      finally
+      {
+        setIsLoading(false);
       }
 
       return false;
@@ -1034,6 +1273,43 @@ function request()
       }
     }
 
+    // funtcion for downloading the file uploaded
+    const handleDownload = (base64String:any,fileName:any) => {
+      try {
+        const extension = fileName.split('.').pop()?.toLowerCase() || 'bin';
+        const contentType = getContentType(extension);
+        
+        const binaryData = atob(base64String);
+        const blob = new Blob([binaryData], { type: contentType });
+        const url = window.URL.createObjectURL(blob);
+        
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', fileName);
+        
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } catch (error) {
+        console.error('Error downloading file:', error);
+        // setErrorMessage('Failed to download file.');
+      }
+    };
+
+
+    const getContentType = (extension: string) => 
+    {
+      const contentTypeMap: { [key: string]: string } = {
+        txt: 'text/plain',
+        pdf: 'application/pdf',
+        jpg: 'image/jpeg',
+        png: 'image/png',
+        // Add more mappings as needed
+      };
+  
+      return contentTypeMap[extension] || 'application/octet-stream';
+    };
+
   
     let dailogClass: any;
 
@@ -1094,7 +1370,7 @@ function request()
 
             
             <div className="items-center pb-4 px-4 ">
-                <div className="relative overflow-x-auto mt-6 rounded-md">
+              <div className="relative overflow-x-auto mt-6 rounded-md">
                     <table className="w-full text-sm text-center text-gray-800">
                         <thead
                             className="text-xs text-white uppercase "
@@ -1111,6 +1387,12 @@ function request()
                             <th scope="col" className="px-auto py-3">
                               Type of Request
                             </th>
+                            {
+                              userRole == "ADMIN" &&
+                              <th scope="col" className="px-auto py-3">
+                                Business Name
+                              </th>
+                            }
                             <th scope="col" className="px-auto py-3">
                               Description
                             </th>
@@ -1137,28 +1419,30 @@ function request()
                                   <tr key={index} className="bg-white border-b text-center">
                                     <td className="px-auto py-3">{index  + 1}</td>
                                     <td className="px-auto py-3">{element[1]}</td>
-                                    <td className="px-auto py-3">{element[2]}</td>
-                                    <td className="px-auto py-3">{element[3]}</td>
-
-                                    {
-                                    sessionStorage.getItem("userRole") == 'ADMIN' ? 
-                                    <td className="px-auto py-3">
-                                      <select 
-                                      className="bg-inherit"
-                                      value={element[4]}
-                                      onChange={(e)=>{updateStatus(element[0],e.target.value)}}
-                                      >
-
-                                        <option value="New">New</option>
-                                        <option value="Hold">Hold</option>
-                                        <option value="Close">Close</option>
-                                      </select>
-                                    </td> 
-                                    : 
-                                    <td className="px-auto py-3">{element[4]}</td>
+                                    { 
+                                      userRole == 'ADMIN' && 
+                                      <td className="px-auto py-3">{element[2]}</td>
                                     }
+                                    <td className="px-auto py-3">{element[3]}</td>
+                                    <td className="px-auto py-3">{element[4]}</td>
+                                    <td className="px-auto py-3">{element[5]}</td>
+                            
 
-                                    <td className="px-auto py-3"><VisibilityIcon onClick={()=>{openViewDilaog(element[0])}}/></td>
+                                    <td className="px-auto py-3 flex justify-center items-center gap-4 cursor-pointer">
+                                      <VisibilityIcon onClick={()=>{openViewDilaog(element[0])}}/>
+
+                                      {
+                                        userRole == 'ADMIN' &&
+                                        <DriveFolderUploadIcon onClick={()=>
+                                          {
+                                            setIsUploadOpen(true); 
+                                            setAdminCloudDocuments((prevData:any)=>({
+                                            ...prevData,
+                                            requestId:element[0]
+                                          }))
+                                        }}/>
+                                      }
+                                    </td>
                                   </tr>
                                 )
                               }
@@ -1199,9 +1483,105 @@ function request()
                       </button>
                     </div>
 
-                </div>
+              </div>
             </div>
 
+            {/* loader */}
+            {
+              isLoading &&
+              <div className="fixed inset-0 z-[100] flex justify-center items-center bg-black bg-opacity-50">
+                <Box sx={{ display: 'flex' }}>
+                  <CircularProgress />
+                </Box>
+              </div>
+            }
+
+          
+            {/* Modal for opening the upload dialog box */}
+            
+            {
+              isUploadOpen &&
+              <div className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50">
+
+                <div className="w-[40vw] my-12 bg-white rounded-lg shadow-lg overflow-y-auto max-h-screen">
+
+                  <div
+                    className=" px-4 py-2 flex items-center justify-between"
+                    style={{
+                      background:
+                        "linear-gradient(90deg, #AF1E23 -43.96%, #F37032 112.99%)",
+                    }}
+                  >
+                    <h3 className="text-xl text-white font-bold">
+                      Upload Documents
+                    </h3>
+                    <button
+                      className="p-2 text-2xl text-white cursor-pointer"
+                      onClick={closeAdminDocumentModal}
+                    >
+                      <CloseIcon />
+                    </button>
+                  </div>
+
+
+                  <div className="my-5 mx-5">
+
+                    <label className="block text-md font-semibold mb-2">
+                      <span className="text-red-500 text-md font-bold">*</span> Design Document :
+                    </label>
+                    <input 
+                    type="file"
+                    name="designDocument"
+                    className="w-full px-4 py-2 border border-gray-300 rounded shadow"
+                    onChange={handleFileUploadAdminCloudDocuments}
+                    />
+
+                  </div>
+
+                  <div className="my-5 mx-5">
+
+                    <label className="block text-md font-semibold mb-2">
+                      <span className="text-red-500 text-md font-bold">*</span> Another Document :
+                    </label>
+                    <input 
+                    type="file"
+                    name="anotherDocument"
+                    className="w-full px-4 py-2 border border-gray-300 rounded shadow"
+                    onChange={handleFileUploadAdminCloudDocuments}
+                    />
+
+                  </div>
+
+                  <div className="my-5 mx-5">
+                    <label className="block text-md font-semibold mb-2">
+                      Comment :
+                    </label>
+                    <input 
+                      type="text"
+                      className="w-full px-4 py-2 border border-gray-300 rounded shadow"
+                      name="comment"
+                      value={adminCloudDocuments.comment}
+                      onChange={handleAdminCloudDocuments}
+                    />
+                  </div>
+
+                  <div className="px-5 py-5 w-full flex justify-end">
+                    <button 
+                    className="text-white rounded-md px-5 py-2"
+                    style={{
+                      background:
+                        "linear-gradient(90deg, #AF1E23 -43.96%, #F37032 112.99%)",
+                    }}
+                    onClick={saveAdminCloudDocument}
+                    >
+                      Upload
+                    </button>
+                  </div>
+
+                </div>
+
+              </div>
+            }
 
 
             {/* Modal rendering code */}
@@ -1335,7 +1715,7 @@ function request()
                                 <label className="text-md ml-2">Azure</label>
                               </div>
                     
-                              <div>
+                              {/* <div>
                                 <input 
                                 type="radio" 
                                 value="GCP" 
@@ -1353,7 +1733,7 @@ function request()
                                 onChange={handleInformationGatheringChange}
                                 />
                                 <label className="text-md ml-2">Oracle</label>
-                              </div>
+                              </div> */}
                     
                             </div>
                         </div>
@@ -1381,15 +1761,26 @@ function request()
                             <label className="block text-md font-semibold mb-2">
                               <span className="text-red-500 text-md font-bold">*</span> Current Mode of operation :
                             </label>
-                            <input
-                              name="currentModeOfOperation"
-                              type="text"
-                              placeholder="Type here"
-                              value={informationGathering.currentModeOfOperation}
-                              className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                              onChange={handleInformationGatheringChange}
-                              required
-                            />
+
+                            <div className="relative">
+                              <input
+                                name="currentModeOfOperation"
+                                type="text"
+                                placeholder="Type here"
+                                value={informationGathering.currentModeOfOperation}
+                                className="w-full py-2 border border-gray-300 rounded shadow px-4"
+                                onChange={handleInformationGatheringChange}
+                                required
+                              />
+
+                              <Tooltip title="Understand how existing cloud applications are currently utilized within the business operations." placement="top-end">
+                                <button className="absolute top-0 right-4 bg-transparent cursor-pointer p-2">
+                                  <InfoOutlinedIcon/>
+                                </button>
+                              </Tooltip>
+
+                            </div>
+
                           </div>
                     
                       </div>
@@ -1399,28 +1790,41 @@ function request()
                             <label className="block text-md font-semibold mb-2">
                               <span className="text-red-500 text-md font-bold">*</span> Subscription name :
                             </label>
-                            <select
-                              name="subscriptionName"
-                              placeholder="Type here"
-                              value={informationGathering.subscriptionName}
-                              className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                              onChange={handleInformationGatheringChange}
-                              required
-                            >
-                            
-                            {
-                              subs.length == 0 && <option value="" disabled>Please Select CSP</option>
-                            }
-                            {
-                              subs.length > 0 && <option value="" disabled>Select Subscription</option>
-                            }
-                            {
-                              subs && subs.map((sub:any)=>
+
+                            <div className="relative">
+                              <select
+                                name="subscriptionName"
+                                placeholder="Type here"
+                                value={informationGathering.subscriptionName}
+                                className="w-full px-4 py-2 border border-gray-300 rounded shadow"
+                                onChange={handleInformationGatheringChange}
+                                required
+                              >
+                              
+                              {/* condtional rendering based on state of subs for select option */}
                               {
-                                return <option key={sub.subsAccId} value={sub.subsAccId}>{sub.subsAccName}</option>
-                              })
-                            }
-                            </select>
+                                subs == undefined && <option value="" disabled>Please Select CSP</option>
+                              }
+                              {
+                                subs && subs.length == 0 && <option value="" disabled>Please Select CSP</option>
+                              }
+                              {
+                                subs && subs.length > 0 && <option value="" disabled>Select Subscription</option>
+                              }
+                              {
+                                subs && subs.length && subs.map((sub:any)=>
+                                {
+                                  return <option key={sub.subsAccId} value={sub.subsAccId}>{sub.subsAccName}</option>
+                                })
+                              }
+                              </select>
+                              
+                              <Tooltip title="Enter the name of the Cloud subscription associated with the deployment." placement="top-end">
+                                <button className="absolute top-0 right-4 bg-transparent cursor-pointer p-[0.4rem]">
+                                  <InfoOutlinedIcon/>
+                                </button>
+                              </Tooltip>
+                            </div>
                           
                         </div>
                           
@@ -1428,6 +1832,8 @@ function request()
                           <label className="block text-md font-semibold mb-2">
                             <span className="text-red-500 text-md font-bold">*</span> Work Description :
                           </label>
+
+                          <div className="relative">
                           <input
                             name="workDescription"
                             type="text"
@@ -1437,6 +1843,14 @@ function request()
                             onChange={handleInformationGatheringChange}
                             required
                           />
+
+                            <Tooltip title="Provide a detailed description scope of work of the projects, or activities associated with the deployment or optimization of cloud services or applications." placement="top-end">
+                              <button className="absolute top-0 right-4 bg-transparent cursor-pointer p-[0.4rem]">
+                                <InfoOutlinedIcon/>
+                              </button>
+                            </Tooltip>    
+
+                          </div>
                         </div>
                           
                       </div>
@@ -1522,15 +1936,25 @@ function request()
                             <label className="block text-md font-semibold mb-2">
                               Purpose of the application :
                             </label>
-                            <input
-                              name="purposeOfTheApplication"
-                              type="text"
-                              placeholder="Type here"
-                              value={applicationDetails.purposeOfTheApplication}
-                              className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                              onChange={handleApplicationDetailsChange}
-                              required
-                            />
+
+                            <div className="relative">
+                              <input
+                                name="purposeOfTheApplication"
+                                type="text"
+                                placeholder="Type here"
+                                value={applicationDetails.purposeOfTheApplication}
+                                className="w-full px-4 py-2 border border-gray-300 rounded shadow"
+                                onChange={handleApplicationDetailsChange}
+                                required
+                              />
+
+                              <Tooltip title="Define the primary objective or function of the application within the business context." placement="top-end">
+                                <button className="absolute top-0 right-4 p-2 bg-transparent cursor-pointer">
+                                  <InfoOutlinedIcon/>
+                                </button>
+                              </Tooltip>
+
+                            </div>
                           </div>
                         
                         
@@ -1559,22 +1983,33 @@ function request()
                               <label className="block text-md font-semibold mb-2">
                                 Application Criticality :
                               </label>
-                              <select
-                                name="applicationCriticality"
-                                value={applicationDetails.applicationCriticality}
-                                onChange={handleApplicationDetailsChange}
-                                className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                                required
-                                >
-                                  <option value="" disabled>
-                                    Select Application Criticality
-                                  </option>
-                                  <option value="Business Critical">Business Critical</option>
-                                  <option value="Mission Critical">Mission Critical</option>
-                                  <option value="Low Criticality">Low Criticality</option>
-                                  <option value="Medium Criticality">Medium Criticality</option>
-                                  <option value="High Criticality">High Criticality</option>
-                                </select>
+
+                              <div className="relative">
+                                <select
+                                  name="applicationCriticality"
+                                  value={applicationDetails.applicationCriticality}
+                                  onChange={handleApplicationDetailsChange}
+                                  className="w-full px-4 py-2 border border-gray-300 rounded shadow"
+                                  required
+                                  >
+                                    <option value="" disabled>
+                                      Select Application Criticality
+                                    </option>
+                                    <option value="Business Critical">Business Critical</option>
+                                    <option value="Mission Critical">Mission Critical</option>
+                                    <option value="Low Criticality">Low Criticality</option>
+                                    <option value="Medium Criticality">Medium Criticality</option>
+                                    <option value="High Criticality">High Criticality</option>
+                                  </select>
+
+                                  <Tooltip title="Assess the level of importance of the application to the business operations to determine prioritization and resource allocation." placement="top-end">
+                                    <button className="absolute top-0 right-4 bg-transparent cursor-pointer p-[0.4rem]">
+                                      <InfoOutlinedIcon/>
+                                    </button>
+                                  </Tooltip>
+
+                                  
+                                </div>
 
                             </div>
                         
@@ -1583,7 +2018,9 @@ function request()
                             <label className="block text-md font-semibold mb-2">
                               <span className="text-red-500 text-md font-bold">*</span> Nature of the application :
                             </label>
-                            <select
+
+                            <div className="relative">
+                              <select
                               name="natureOfTheApplication"
                               value={applicationDetails.natureOfTheApplication}
                               onChange={handleApplicationDetailsChange}
@@ -1599,6 +2036,14 @@ function request()
                                 <option value="Containerized">Containerized</option>
                                 <option value="Others">Others</option>
                               </select>
+
+                              <Tooltip title="Categorize the application based on its type or function (e.g., CRM, ERP, collaboration) for better management and resource allocation." placement="top-end">
+                                <button className="absolute top-0 right-4 bg-transparent cursor-pointer p-[0.4rem]">
+                                  <InfoOutlinedIcon/>
+                                </button>
+                              </Tooltip>
+
+                            </div>
 
                           </div>
                         
@@ -1692,19 +2137,30 @@ function request()
                             <label className="block text-md font-semibold mb-2">
                               <span className="text-red-500 text-md font-bold">*</span> Application Internet exposed :
                             </label>
-                            <select
-                              name="applicationInternetExposed"
-                              value={deploymentArchitectureOfTheApplication.applicationInternetExposed}
-                              onChange={handleDeploymentArchitectureChange}
-                              className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                              required
-                              >
-                                <option value="" disabled>
-                                  Select
-                                </option>
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-                              </select>
+
+                              <div className="relative">
+                                <select
+                                  name="applicationInternetExposed"
+                                  value={deploymentArchitectureOfTheApplication.applicationInternetExposed}
+                                  onChange={handleDeploymentArchitectureChange}
+                                  className="w-full px-4 py-2 border border-gray-300 rounded shadow"
+                                  required
+                                  >
+                                    <option value="" disabled>
+                                      Select
+                                    </option>
+                                  <option value="Yes">Yes</option>
+                                  <option value="No">No</option>
+                                </select>
+
+
+                                <Tooltip title="Confirm whether the application needs to be accessible over the internet for users outside the organization or not." placement="top-end">
+                                  <button className="absolute top-0 right-4 bg-transparent cursor-pointer p-[0.4rem]">
+                                    <InfoOutlinedIcon/>
+                                  </button>
+                                </Tooltip>
+
+                              </div>
 
                           </div>
                     
@@ -1713,24 +2169,34 @@ function request()
                             <label className="block text-md font-semibold mb-2">
                               <span className="text-red-500 text-md font-bold">*</span> Environment of application :
                             </label>
-                            <select
-                              name="environmentOfApplication"
-                              value={deploymentArchitectureOfTheApplication.environmentOfApplication}
-                              onChange={handleDeploymentArchitectureChange}
-                              className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                              required
-                              >
-                                <option value="" disabled>
-                                  Select Environment
-                                </option>
-                                <option value="Production">Production</option>
-                                <option value="Development">Development</option>
-                                <option value="Testing">Testing</option>
-                                <option value="Staging">Staging</option>
-                                <option value="UAT">UAT</option>
-                                <option value="POC">POC</option>
-                                <option value="Pilot">Pilot</option>
-                              </select>
+
+                              <div className="relative">
+                                <select
+                                name="environmentOfApplication"
+                                value={deploymentArchitectureOfTheApplication.environmentOfApplication}
+                                onChange={handleDeploymentArchitectureChange}
+                                className="w-full px-4 py-2 border border-gray-300 rounded shadow"
+                                required
+                                >
+                                  <option value="" disabled>
+                                    Select Environment
+                                  </option>
+                                  <option value="Production">Production</option>
+                                  <option value="Development">Development</option>
+                                  <option value="Testing">Testing</option>
+                                  <option value="Staging">Staging</option>
+                                  <option value="UAT">UAT</option>
+                                  <option value="POC">POC</option>
+                                  <option value="Pilot">Pilot</option>
+                                </select>
+
+                                <Tooltip title="Specify the deployment environment of the application, such as development, testing, or production, to manage resources effectively." placement="top-end">
+                                  <button className="absolute top-0 right-4 bg-transparent cursor-pointer p-[0.4rem]">
+                                    <InfoOutlinedIcon/>
+                                  </button>
+                                </Tooltip>
+
+                              </div>
                     
                           </div>
                     
@@ -1741,19 +2207,29 @@ function request()
                               </label>
                     
                               <div className="flex gap-2"> 
-                              <select
-                              name="highAvailabilityRequired"
-                              value={deploymentArchitectureOfTheApplication.highAvailabilityRequired}
-                              onChange={handleDeploymentArchitectureChange}
-                              className="w-full px-4 py-2 border border-gray-300 rounded shadow flex-1" 
-                              placeholder="Type Here"
-                              >
-                              
-                                  <option value="" disabled>Select</option>
-                                  <option value="Yes">Yes</option>
-                                  <option value="No">No</option>
-                    
-                              </select>
+
+                              <div className="relative flex-1">
+                                <select
+                                name="highAvailabilityRequired"
+                                value={deploymentArchitectureOfTheApplication.highAvailabilityRequired}
+                                onChange={handleDeploymentArchitectureChange}
+                                className="w-full px-4 py-2 border border-gray-300 rounded shadow flex-1" 
+                                placeholder="Type Here"
+                                >
+                                
+                                    <option value="" disabled>Select</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                      
+                                </select>
+
+                                <Tooltip title="Determine if the application requires high availability architecture to ensure uninterrupted access and reliability." placement="top-end">
+                                  <button className="absolute top-0 right-4 bg-transparent cursor-pointer p-[0.4rem]">
+                                    <InfoOutlinedIcon/>
+                                  </button>
+                                </Tooltip>
+
+                              </div>
                     
                               <input 
                                 type="text" 
@@ -1776,6 +2252,8 @@ function request()
                               <label className="block text-md font-semibold mb-2">
                                 Disaster Recovery Requirement :
                               </label>
+
+                              <div className="relative">
                               <input
                                 name="disasterRecoveryRequirement"
                                 type="text"
@@ -1785,6 +2263,14 @@ function request()
                                 onChange={handleDeploymentArchitectureChange}
                                 required
                               />
+
+                                <Tooltip title="Define the disaster recovery strategy or requirements for the application to mitigate risks and ensure business continuity." placement="top-end">
+                                  <button className="absolute top-0 right-4 bg-transparent cursor-pointer p-[0.4rem]">
+                                    <InfoOutlinedIcon/>
+                                  </button>
+                                </Tooltip>      
+
+                              </div>
                           </div>
                     
                           <div className="mb-3 flex-1">
@@ -1814,15 +2300,25 @@ function request()
                               <label className="block text-md font-semibold mb-2">
                                 Future Mode of Operation :
                               </label>
-                              <input
-                                name="futureModeOfOperation"
-                                type="text"
-                                placeholder="Type here"
-                                value={deploymentArchitectureOfTheApplication.futureModeOfOperation}
-                                className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                                onChange={handleDeploymentArchitectureChange}
-                                required
-                              />
+
+                              <div className="relative">
+                                <input
+                                  name="futureModeOfOperation"
+                                  type="text"
+                                  placeholder="Type here"
+                                  value={deploymentArchitectureOfTheApplication.futureModeOfOperation}
+                                  className="w-full px-4 py-2 border border-gray-300 rounded shadow"
+                                  onChange={handleDeploymentArchitectureChange}
+                                  required
+                                />
+
+                                  <Tooltip title="Outline the envisioned future state or upgrades for business applications to align with evolving business needs and technological advancements." placement="top-end">
+                                    <button className="absolute top-0 right-4 bg-transparent cursor-pointer p-[0.5rem]">
+                                      <InfoOutlinedIcon/>
+                                    </button>
+                                  </Tooltip>    
+
+                              </div>
 
                           </div>
                     
@@ -1867,14 +2363,25 @@ function request()
                               <label className="block text-md font-semibold mb-2">
                                 Attachments :
                               </label>
-                              <input
-                                name="attachments"
-                                type="file"
-                                placeholder="Type here"
 
-                                className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                                onChange={handleAttachmentChange}
-                              />
+                              <div className="relative"> 
+                                <input
+                                  name="attachments"
+                                  type="file"
+                                  placeholder="Type here"
+
+                                  className="w-full px-4 py-2 border border-gray-300 rounded shadow"
+                                  onChange={handleAttachmentChange}
+                                />
+
+                                <Tooltip title="Allow users to upload relevant documents or files related to the application for reference and documentation purposes.(Eg. Application diagram, etc)" placement="top-end">
+                                  <button className="absolute top-0 right-4 bg-transparent cursor-pointer p-[0.5rem]">
+                                    <InfoOutlinedIcon/>
+                                  </button>
+                                </Tooltip>
+
+                              </div>
+
                           </div>
                     
                         </div>
@@ -1989,26 +2496,37 @@ function request()
                               <label className="block text-md font-semibold mb-2">
                                 <span className="text-red-500 text-md font-bold">*</span> CIDR Range :
                               </label>
-                              <select
-                              name="cidrRange"
-                              value={networkInfraConnectivity.cidrRange}
-                              onChange={handleNetworkInfraConnectivityChange}
-                              className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                              required
-                              >
-                                <option value="" disabled>
-                                  Select
-                                </option>
-                                <option value="/29">/29</option>
-                                <option value="/28">/28</option>
-                                <option value="/27">/27</option>
-                                <option value="/26">/26</option>
-                                <option value="/25">/25</option>
-                                <option value="/24">/24</option>
-                                <option value="/23">/23</option>
-                                <option value="/22">/22</option>
 
-                              </select>
+                              <div className="relative">
+
+                                <select
+                                name="cidrRange"
+                                value={networkInfraConnectivity.cidrRange}
+                                onChange={handleNetworkInfraConnectivityChange}
+                                className="w-full px-4 py-2 border border-gray-300 rounded shadow"
+                                required
+                                >
+                                  <option value="" disabled>
+                                    Select
+                                  </option>
+                                  <option value="/29">/29</option>
+                                  <option value="/28">/28</option>
+                                  <option value="/27">/27</option>
+                                  <option value="/26">/26</option>
+                                  <option value="/25">/25</option>
+                                  <option value="/24">/24</option>
+                                  <option value="/23">/23</option>
+                                  <option value="/22">/22</option>
+
+                                </select>
+
+                                <Tooltip title="Specify the Classless Inter-Domain Routing (CIDR) network range for the application to control network traffic." placement="top-end">
+                                  <button className="absolute top-0 right-4 bg-transparent cursor-pointer p-[0.4rem]">
+                                    <InfoOutlinedIcon/>
+                                  </button>
+                                </Tooltip>
+
+                              </div>
 
                             </div>
 
@@ -2019,10 +2537,18 @@ function request()
                               </label>
                     
                               <a href="/fireWallChangeRequestFile.xlsm" download="fireWallChangeRequestFile.xlsm">
-                                <button 
-                                className="w-full px-4 py-2 border border-gray-300 rounded shadow"> 
-                                Download Excel Template
-                                </button>
+                                <div className="relative">
+                                  <button 
+                                  className="w-full px-4 py-2 border border-gray-300 rounded shadow"> 
+                                  Download Excel Template
+                                  </button>
+
+                                  <Tooltip title="Provide details for opening specific ports required for the application to communicate with external systems or services securely." placement="top-end">
+                                    <div className="absolute top-0 right-4 bg-transparent cursor-pointer p-[0.4rem]">
+                                      <InfoOutlinedIcon/>
+                                    </div>
+                                  </Tooltip>
+                                </div>
                               </a>
                     
                             </div>
@@ -2059,15 +2585,24 @@ function request()
                               <label className="block text-md font-semibold mb-2">
                                 <span className="text-red-500 text-md font-bold">* </span> Custom Domain URL :
                               </label>
-                              <input
-                                name="customDomainURL"
-                                type="text"
-                                placeholder="Type here"
-                                value={applicationImplementation.customDomainURL}
-                                className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                                onChange={handleApplicationImplementationChange}
-                                required
-                              />
+
+                              <div className="relative">
+                                <input
+                                  name="customDomainURL"
+                                  type="text"
+                                  placeholder="Type here"
+                                  value={applicationImplementation.customDomainURL}
+                                  className="w-full px-4 py-2 border border-gray-300 rounded shadow"
+                                  onChange={handleApplicationImplementationChange}
+                                  required
+                                />
+
+                                <Tooltip title="Define a custom domain name or URL for accessing the application to enhance branding and user experience." placement="top-end">
+                                  <button className="absolute top-0 right-4 bg-transparent cursor-pointer p-[0.4rem]">
+                                    <InfoOutlinedIcon/>
+                                  </button>
+                                </Tooltip>  
+                              </div>  
 
                           </div>
                     
@@ -2077,18 +2612,29 @@ function request()
                                 <label className="block text-md font-semibold mb-2">
                                   Apply SSL Certificate :
                                 </label>
-                                <select
-                                  name="applySSLCertificate"
-                                  placeholder="Type here"
-                                  value={applicationImplementation.applySSLCertificate}
-                                  className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                                  onChange={handleApplicationImplementationChange}
-                                  required
-                                >
-                                  <option value="" disabled>Select</option>
-                                  <option value="Yes">Yes</option>
-                                  <option value="No">No</option>
-                                </select>
+
+                                <div className="relative">
+
+                                  <select
+                                    name="applySSLCertificate"
+                                    placeholder="Type here"
+                                    value={applicationImplementation.applySSLCertificate}
+                                    className="w-full px-4 py-2 border border-gray-300 rounded shadow"
+                                    onChange={handleApplicationImplementationChange}
+                                    required
+                                  >
+                                    <option value="" disabled>Select</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                  </select>
+
+                                  <Tooltip title="Specify whether a custom SSL certificate will be provided by the user or if a cloud-managed certificate service will be utilized." placement="top-end">
+                                    <button className="absolute top-0 right-4 bg-transparent cursor-pointer p-[0.4rem]">
+                                      <InfoOutlinedIcon/>
+                                    </button>
+                                  </Tooltip>  
+
+                                </div>
 
                           </div>
                     
@@ -2126,7 +2672,14 @@ function request()
                             </label>
                     
                             <a href="/backupRequestFile.xlsx" download="backupRequestFile.xlsx">
-                            <button className="w-full px-4 py-2 border border-gray-300 rounded shadow"> Download Excel Template</button>
+                              <div className="relative">
+                                <button className="w-full px-4 py-2 border border-gray-300 rounded shadow"> Download Excel Template</button>
+                                <Tooltip title="Specify backup preferences and frequency for application data to ensure data integrity and resilience against data loss." placement="top-end">
+                                  <div className="absolute top-0 right-4 bg-transparent cursor-pointer p-[0.4rem]">
+                                    <InfoOutlinedIcon/>
+                                  </div>
+                                </Tooltip>
+                              </div>
                             </a>
                     
                         </div>
@@ -2168,7 +2721,14 @@ function request()
                               </label>
                     
                               <a href="/zpaVpnFile.xlsx" download="zpaVpnFile.xlsx">
-                              <button className="w-full px-4 py-2 border border-gray-300 rounded shadow"> Download Excel Template</button>
+                                <div className="relative">
+                                  <button className="w-full px-4 py-2 border border-gray-300 rounded shadow"> Download Excel Template</button>
+                                  <Tooltip title="Initiate the setup and onboarding process for Virtual Private Network (VPN) connections if required for secure access to the application." placement="top-end">
+                                    <div className="absolute top-0 right-4 bg-transparent cursor-pointer p-[0.4rem]">
+                                      <InfoOutlinedIcon/>
+                                    </div>
+                                  </Tooltip>
+                                </div>
                               </a>
                     
                           </div>
@@ -2261,7 +2821,7 @@ function request()
                 <div className={dailogClass}>
     
                     <div
-                      className=" px-4 py-2 flex items-center justify-between"
+                      className="px-4 py-2 flex items-center justify-between"
                       style={{
                         background:
                           "linear-gradient(90deg, #AF1E23 -43.96%, #F37032 112.99%)",
@@ -2799,13 +3359,13 @@ function request()
                   
                     
                   {
-                  requestInformation.enterpriseBackupConfiguration.excelFile[0] &&
+                  requestInformation && requestInformation.enterpriseBackupConfiguration && requestInformation.enterpriseBackupConfiguration.excelFile && requestInformation.enterpriseBackupConfiguration.excelFile[0] &&
                   <div className="text-xl pb-2 flex justify-between items-center mx-5 mt-10 font-bold">Enterprise Backup Configuration</div>
                   }
                     
 
                     {
-                      requestInformation.enterpriseBackupConfiguration.excelFile[0] && (
+                      requestInformation && requestInformation.enterpriseBackupConfiguration && requestInformation.enterpriseBackupConfiguration.excelFile && requestInformation.enterpriseBackupConfiguration.excelFile[0] && (
                       <div className="mx-3">
                       
                         <div className="my-5 mx-2 flex justify-evenly gap-10">
@@ -2855,6 +3415,86 @@ function request()
                       </div>
                     }
 
+
+
+                    {
+                    requestInformation && requestInformation.adminCloudDocuments &&
+                    <div className="text-xl pb-2 flex justify-between items-center mx-5 mt-10 font-bold">Admin Cloud Documents</div>
+                    }
+
+                    {requestInformation && requestInformation.adminCloudDocuments &&
+
+                      <>
+                        <div className="mx-3">
+
+                          <div className="my-5 mx-2 flex justify-evenly gap-10">
+
+                            <div className="mb-3 flex-1">
+                              <label className="block text-md font-semibold mb-2">Design Document</label>
+                              <button 
+                              className="w-full px-4 py-2 border border-gray-300 rounded shadow" 
+                              onClick={()=>{handleAdminFileDonwload(requestInformation.adminCloudDocuments.designDocument.name, requestInformation.adminCloudDocuments.designDocument.fileString)}}>
+                                  {requestInformation.adminCloudDocuments.designDocument.name}
+                              </button>
+                            </div>
+
+                            <div className="mb-3 flex-1">
+                              <label className="block text-md font-semibold mb-2">Another Document</label>
+                              <button  
+                              className="w-full px-4 py-2 border border-gray-300 rounded shadow"
+                              onClick={()=>{handleAdminFileDonwload(requestInformation.adminCloudDocuments.anotherDocument.name, requestInformation.adminCloudDocuments.anotherDocument.fileString)}}
+                              >
+                                {requestInformation.adminCloudDocuments.anotherDocument.name}
+                              </button>
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                        {
+                          (requestInformation && (requestInformation.status == 'Document uploaded') && (userRole == 'BE')) &&
+                          <>
+                            <div className="p-2 ml-4 text-md font-semibold">
+                              Above are the documents uploaded please verify them by accepting or rejecting
+                            </div>
+
+                            <div className="mx-5 flex gap-3">
+
+                              <div>
+                                <button 
+                                className="text-white bg-green-600 w-full px-4 py-1 rounder-sm"
+                                onClick={()=>{sendApproval(requestInformation.requestId,"Accepted")}}
+                                >Accept</button>
+                              </div>
+
+                              <div>
+                                <button 
+                                onClick={()=>{sendApproval(requestInformation.requestId,"Rejected")}}
+                                className="text-white bg-red-600 w-full px-4 py-1 rounded-sm"
+                                >Reject</button>
+                              </div>
+
+                            </div>
+                          </>
+                        }
+                      </>
+
+                    } 
+
+                    {/* close view dialog button */}
+
+                    <div className="flex justify-end">
+                      <button
+                      className="text-white p-2 rounded-lg w-24 mx-4"
+                      onClick={closeViewDialog} 
+                      style={{
+                        background:"linear-gradient(90deg, #AF1E23 -43.96%, #F37032 112.99%)",
+                      }}>
+                        Close
+                      </button>
+                    </div>
+
                   </div>
   
     
@@ -2867,4 +3507,4 @@ function request()
     )
 }
 
-export default request;
+export default Request;
