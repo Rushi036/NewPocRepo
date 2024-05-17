@@ -1,12 +1,17 @@
 import Loader from "@/pages/Components/loader";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { useAppContext } from "@/pages/Components/AppContext";
 
 const Dashboard = () => {
+
+  const {access,toggleAccess} = useAppContext();
+
   const [role, setRole] = useState<any>();
   const percent = (100 / 1500) * 100;
   useEffect(() => {
     setRole(sessionStorage.getItem("userRole"));
+    toggleAccess(sessionStorage.getItem("access"));
   }, []);
   return (
     <>
@@ -121,6 +126,8 @@ const Dashboard = () => {
           </div>
         </div>
 
+        {
+        (access == 'FinopsSSP' || access == 'SSPFinops') &&
         <div className="w-[25%] h-[130px] flex justify-center items-center mb-4">
           <Link
           className="w-full flex justify-center items-center h-full"
@@ -146,6 +153,7 @@ const Dashboard = () => {
 
           </Link>
         </div>
+        }
       </div>
     </>
   );

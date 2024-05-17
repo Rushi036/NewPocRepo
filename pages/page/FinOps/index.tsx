@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Tab, Tabs } from "@mui/material";
 import TabPanel from "@mui/lab/TabPanel";
 import TabContext from "@mui/lab/TabContext";
@@ -33,6 +33,25 @@ function FinOps() {
   // const [value1, setValue1] = useState<any>("CostDrillDown");
   const [value1, setValue1] = useState<any>(report || "CostSummary");
   const [redBg, setRedBg] = useState(false);
+
+
+  // code for access control
+  const [access, setAccess] = useState(true);
+
+  useEffect(()=>
+  {
+    if(!sessionStorage.getItem("access") || sessionStorage.getItem("access") === "SSP" )
+    {
+      console.log(sessionStorage.getItem("access"));
+      setAccess(false);
+      router.replace("/page/Errors");
+    }
+    else
+    {
+      setAccess(true);
+    }
+  },[]);
+
   // console.log("report - ",value1)
   const handleChange = (event: React.SyntheticEvent, newValue: any) => {
     router.push(`/page/FinOps?report=${newValue}`, undefined, {
@@ -66,6 +85,7 @@ function FinOps() {
   };
 
   return (
+    access &&
     <div className="Newfinops-container h-auto">
       <div className="h-auto">
         <TabContext value={value1}>

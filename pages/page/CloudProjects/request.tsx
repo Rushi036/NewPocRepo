@@ -17,10 +17,18 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { finopsServerBaseUrl } from "@/const";
 
-
+import Table from "../../Components/CloudProject/table";
+import AdminDocumentDialog from "../../Components/CloudProject/AdminDocumentDialog";
+import ViewRequest from "../../Components/CloudProject/ViewRequest";
+import FilterBox from "../../Components/CloudProject/FilterBox";
+import { useRouter } from "next/router";
 
 function Request()
 {
+
+    const router = useRouter();
+    // state for storing access to user
+    const [access,setAccess] = useState<Boolean>(false);
 
     // state for stroring the user role
     const [userRole,setUserRole] = useState<any>('');
@@ -57,6 +65,9 @@ function Request()
 
     // states setting loading on and off
     const [isLoading,setIsLoading] = useState<any>(false);
+
+    // states for buton loader
+    const [buttonLoader,setButtonLoader] = useState<any>(false);
 
     // filtering the data based on search query
     const filteredData = 
@@ -208,28 +219,30 @@ function Request()
     });
 
     // function for getting extension of the file
-    const handleAdminFileDonwload = (fileName:any,fileString:any) =>
+    const downloadFile = (fileName:any,fileString:any) =>
     {
       const fileParts = fileName.split('.').pop();
 
+      console.log(fileName);
       switch(fileParts)
       {
         case "xlsx":
-          // function to be invoked for xlsx
-          convertStringToExcelFile(fileString,fileName);
+          handleFileDownload(fileString,fileName,'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         break;
 
         case "xlsm":
-          // function to be invoked for xlsm
-          convertStringToXLSMFile(fileString,fileName);
+          handleFileDownload(fileString,fileName,'application/vnd.ms-excel.sheet.macroEnabled.12');
         break;
 
         case "pdf":
-          //function to be invoked for pdf
+          handleFileDownload(fileString,fileName,'ata:application/pdf;base64');
+        break;
+
+        case "png":
+          handleFileDownload(fileString,fileName,'ata:application/png;base64');
         break;
       }
     }
-  
 
     // function to change the state of cloudDocments
     const handleAdminCloudDocuments = (e:any) =>
@@ -272,6 +285,7 @@ function Request()
       
     }
 
+    
     const closeAdminDocumentModal = () =>
     {
       setIsUploadOpen(false);
@@ -294,6 +308,9 @@ function Request()
       let id = data.requestId;
       delete data.requestId;
 
+      // apply button loader here
+      setButtonLoader(true);
+      await sleep(1000);
       try
       {
         let response = await fetch(`http://192.168.2.102:1010/api/uploadDocument/${id}`,
@@ -344,6 +361,7 @@ function Request()
       }
       finally
       {
+        setButtonLoader(false);
         closeAdminDocumentModal();
       }
     }
@@ -394,7 +412,6 @@ function Request()
           });
       }
     }
-  
     // funcion to change state of intomation gathering change
     const handleInformationGatheringChange = (e: any) =>
     {
@@ -445,20 +462,20 @@ function Request()
     }
   
     // function to convert excel file to string
-    function converExcelToString(selectedFile:any)
-    {
-        if(selectedFile)
-        {
-          console.log("converting");
-          let base64String: any;
-          const reader = new FileReader();
-          reader.onload = () => {
-              base64String = reader.result?.toString().split(',')[1];
-              // setFileString(base64String || '');
-          };
-          reader.readAsDataURL(selectedFile);
-        }
-    }
+    // function converExcelToString(selectedFile:any)
+    // {
+    //     if(selectedFile)
+    //     {
+    //       console.log("converting");
+    //       let base64String: any;
+    //       const reader = new FileReader();
+    //       reader.onload = () => {
+    //           base64String = reader.result?.toString().split(',')[1];
+    //           // setFileString(base64String || '');
+    //       };
+    //       reader.readAsDataURL(selectedFile);
+    //     }
+    // }
   
     // function for uploading excel file (firewallChangeRequestFile)
     const handleFireWallChangeRequestFileUpload = (event:any) =>
@@ -802,7 +819,7 @@ function Request()
       let isCurrentModeOfOperation = informationGathering.currentModeOfOperation.trim();
       let iscspSelection = informationGathering.cspSelection.trim();
       let isworkDescription = informationGathering.workDescription.trim();
-      let isSubscriptionName = informationGathering.subscriptionName.trim();
+      let isSubscriptionName = informationGathering.subscriptionName;
 
       // let preferredCloudProvider = applicationDetails.preferredCloudProvider.trim();
       let isApplicationName = applicationDetails.applicationName.trim();
@@ -1046,6 +1063,26 @@ function Request()
       fetchCloudServiceSheetTable();
     },[]);
 
+    // useEffect for checking the access control
+    useEffect(()=>
+    {
+      if(sessionStorage.getItem("access") == "SSP" || sessionStorage.getItem("access") == "FinopsSSP")
+      {
+        setAccess(true);
+      }
+      else
+      {
+        setAccess(false);
+        router.replace("/page/Errors");
+      }
+    });
+
+
+    // function for stoping the exection for defined seconds important
+    function sleep(ms:any) 
+    {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
     // function to update status of request (not in use currently)
     async function updateStatus(requestId:any,status:any)
@@ -1097,6 +1134,8 @@ function Request()
     // function to create a request
     async function createRequest(data:any)
     {
+      setButtonLoader(true);
+      await sleep(1000);
       try
       {
         let response = await fetch(`http://192.168.2.102:1010/api/createRequest`,
@@ -1112,19 +1151,24 @@ function Request()
         {
           let data = await response.json();
           console.log(data);
-
           await fetchCloudServiceSheetTable();
           
           return true;
         }
         else
+        {
           return false;
+        }
 
       }
       catch(e)
       {
         console.log(e);
         return false;
+      }
+      finally
+      {
+        setButtonLoader(false);
       }
 
       return false;
@@ -1163,16 +1207,19 @@ function Request()
       try
       {
         setIsLoading(true);
+        await sleep(500);
         let response = await fetch(`http://192.168.2.102:1010//api/getRequestByRequestId/${requestId}`);
         if(response.status == 200)
         {
           let data = await response.json();
           console.log(data);
+          setIsLoading(false);
           setRequestInformation(data);
           return true;
         }
         else if(response.status == 404)
         {
+          setIsLoading(false);
           console.log("error");
           toast.error("Some error occured, try again", 
           {
@@ -1184,17 +1231,13 @@ function Request()
       }
       catch(e)
       {
-        console.log(e);
+        setIsLoading(false);
         toast.error("Some error occured, try again", 
         {
           position: "bottom-right",
           autoClose: 2000,
         });
         return false;
-      }
-      finally
-      {
-        setIsLoading(false);
       }
 
       return false;
@@ -1207,7 +1250,7 @@ function Request()
       let flag = await fetchRequestByRequestId(requestId);
 
       if(flag)
-      setIsViewOpen(true);
+        setIsViewOpen(true);
     }
 
     // function for closing the view dailog box
@@ -1217,84 +1260,85 @@ function Request()
     }
 
     // function for converting base 64 encoded string to excel file (xlsx)
-    function convertStringToExcelFile(fileString:any,name:any)
+    // function convertStringToExcelFile(fileString:any,name:any)
+    // {
+    //     console.log("invoked");
+    //     if (fileString) {
+    //         const byteCharacters = atob(fileString);
+    //         const byteNumbers = new Array(byteCharacters.length);
+    //         for (let i = 0; i < byteCharacters.length; i++) {
+    //             byteNumbers[i] = byteCharacters.charCodeAt(i);
+    //         }
+    //         const byteArray = new Uint8Array(byteNumbers);
+    //         const blob = new Blob([byteArray], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    //         const url = URL.createObjectURL(blob);
+
+    //         // Create a link element to download the Excel file
+    //         const link = document.createElement('a');
+    //         link.href = url;
+    //         link.download = name;
+    //         document.body.appendChild(link);
+    //         link.click();
+
+    //         // Clean up
+    //         URL.revokeObjectURL(url);
+    //         document.body.removeChild(link);
+    //     } else {
+    //         console.error('No file selected');
+    //     }
+    // }
+
+    // // function for converting base 64 encoded string to excel file (xlsm)
+    // function convertStringToXLSMFile(fileString:any, name:any) {
+    //   console.log("invoked");
+    //   if (fileString) {
+    //       const byteCharacters = atob(fileString);
+    //       const byteNumbers = new Array(byteCharacters.length);
+    //       for (let i = 0; i < byteCharacters.length; i++) {
+    //           byteNumbers[i] = byteCharacters.charCodeAt(i);
+    //       }
+    //       const byteArray = new Uint8Array(byteNumbers);
+    //       const blob = new Blob([byteArray], { type: 'application/vnd.ms-excel.sheet.macroEnabled.12' }); // Changed MIME type for XLSM
+    //       const url = URL.createObjectURL(blob);
+  
+    //       // Create a link element to download the Excel file
+    //       const link = document.createElement('a');
+    //       link.href = url;
+    //       link.download = name;
+    //       document.body.appendChild(link);
+    //       link.click();
+  
+    //       // Clean up
+    //       URL.revokeObjectURL(url);
+    //       document.body.removeChild(link);
+    //   } else {
+    //       console.error('No file selected');
+    //   }
+    // }
+
+    // generic function to download the file (xlsx, xlsm, pdf, png)
+    const handleFileDownload = (base64String:string, fileName:string, type:string) => 
     {
-        console.log("invoked");
-        if (fileString) {
-            const byteCharacters = atob(fileString);
-            const byteNumbers = new Array(byteCharacters.length);
-            for (let i = 0; i < byteCharacters.length; i++) {
-                byteNumbers[i] = byteCharacters.charCodeAt(i);
-            }
-            const byteArray = new Uint8Array(byteNumbers);
-            const blob = new Blob([byteArray], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-            const url = URL.createObjectURL(blob);
-
-            // Create a link element to download the Excel file
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = name;
-            document.body.appendChild(link);
-            link.click();
-
-            // Clean up
-            URL.revokeObjectURL(url);
-            document.body.removeChild(link);
-        } else {
-            console.error('No file selected');
-        }
-    }
-
-    // function for converting base 64 encoded string to excel file (xlsm)
-    function convertStringToXLSMFile(fileString:any, name:any) {
-      console.log("invoked");
-      if (fileString) {
-          const byteCharacters = atob(fileString);
-          const byteNumbers = new Array(byteCharacters.length);
-          for (let i = 0; i < byteCharacters.length; i++) {
-              byteNumbers[i] = byteCharacters.charCodeAt(i);
-          }
-          const byteArray = new Uint8Array(byteNumbers);
-          const blob = new Blob([byteArray], { type: 'application/vnd.ms-excel.sheet.macroEnabled.12' }); // Changed MIME type for XLSM
-          const url = URL.createObjectURL(blob);
-  
-          // Create a link element to download the Excel file
-          const link = document.createElement('a');
-          link.href = url;
-          link.download = name;
-          document.body.appendChild(link);
-          link.click();
-  
-          // Clean up
-          URL.revokeObjectURL(url);
-          document.body.removeChild(link);
-      } else {
-          console.error('No file selected');
+      const byteCharacters = atob(base64String);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
       }
-    }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: type});
+      const url = URL.createObjectURL(blob);
 
-    // funtcion for downloading the file uploaded
-    const handleDownload = (base64String:any,fileName:any) => {
-      try {
-        const extension = fileName.split('.').pop()?.toLowerCase() || 'bin';
-        const contentType = getContentType(extension);
-        
-        const binaryData = atob(base64String);
-        const blob = new Blob([binaryData], { type: contentType });
-        const url = window.URL.createObjectURL(blob);
-        
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', fileName);
-        
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      } catch (error) {
-        console.error('Error downloading file:', error);
-        // setErrorMessage('Failed to download file.');
-      }
-    };
+      // Create a link element to download the Excel file
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+
+      // Clean up
+      URL.revokeObjectURL(url);
+      document.body.removeChild(link);
+    } 
 
 
     const getContentType = (extension: string) => 
@@ -1319,6 +1363,7 @@ function Request()
       dailogClass = "w-full max-w-6xl mx-auto my-12 bg-white rounded-lg shadow-lg overflow-y-auto max-h-screen";
 
     return (
+        access &&
         <div className="">
 
             <div className="text-xl px-4 border-b-2 border-slate-400 pb-2 flex justify-between items-center">
@@ -1340,19 +1385,12 @@ function Request()
               />
             </div>
 
-            <div className="flex justify-between px-4 ">
-                <div className="mt-6">
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        className="border px-2 py-1 rounded-md"
-                        value={searchQuery}
-                        onChange={(e) => {
-                          setSearchQuery(e.target.value);
-                          setCurrentPage(1);
-                        }}
-                    />
-                </div>
+              <div className="flex justify-between px-4 ">
+                
+                {/* Global search for table */}
+                <FilterBox searchQuery={searchQuery} setSearchQuery={setSearchQuery} setCurrentPage={setCurrentPage}/>
+
+                {/* button for opening and the request form (stepper form) */}
                 <div className=" mt-6">
                     <button
                         onClick={() => setIsOpen(true)}
@@ -1368,226 +1406,29 @@ function Request()
 
             </div>
 
-            
-            <div className="items-center pb-4 px-4 ">
-              <div className="relative overflow-x-auto mt-6 rounded-md">
-                    <table className="w-full text-sm text-center text-gray-800">
-                        <thead
-                            className="text-xs text-white uppercase "
-                            style={{
-                              background:
-                                "linear-gradient(90deg, #AF1E23 -43.96%, #F37032 112.99%)",
-                            }}
-                        >
-
-                        <tr>
-                            <th scope="col" className="px-2 py-3">
-                              Sr.No.
-                            </th>
-                            <th scope="col" className="px-auto py-3">
-                              Type of Request
-                            </th>
-                            {
-                              userRole == "ADMIN" &&
-                              <th scope="col" className="px-auto py-3">
-                                Business Name
-                              </th>
-                            }
-                            <th scope="col" className="px-auto py-3">
-                              Description
-                            </th>
-                            <th scope="col" className="px-auto py-3">
-                              No of Services
-                            </th>
-                            <th scope="col" className="px-auto py-3">
-                              Status
-                            </th>
-                            <th scope="col" className="px-auto py-3">
-                              Action
-                            </th>
-                        </tr>
-
-                        </thead>
-                        <tbody>
-                          {
-                            currentData && currentData.length != 0 ? (currentData.map((element:any,index:any)=>
-                            {
-                              let srNo = index + 1;
-                              if((srNo > (currentPage - 1) * itemsPerPage) && (index < (currentPage * itemsPerPage)))
-                              {
-                                return (
-                                  <tr key={index} className="bg-white border-b text-center">
-                                    <td className="px-auto py-3">{index  + 1}</td>
-                                    <td className="px-auto py-3">{element[1]}</td>
-                                    { 
-                                      userRole == 'ADMIN' && 
-                                      <td className="px-auto py-3">{element[2]}</td>
-                                    }
-                                    <td className="px-auto py-3">{element[3]}</td>
-                                    <td className="px-auto py-3">{element[4]}</td>
-                                    <td className="px-auto py-3">{element[5]}</td>
-                            
-
-                                    <td className="px-auto py-3 flex justify-center items-center gap-4 cursor-pointer">
-                                      <VisibilityIcon onClick={()=>{openViewDilaog(element[0])}}/>
-
-                                      {
-                                        userRole == 'ADMIN' &&
-                                        <DriveFolderUploadIcon onClick={()=>
-                                          {
-                                            setIsUploadOpen(true); 
-                                            setAdminCloudDocuments((prevData:any)=>({
-                                            ...prevData,
-                                            requestId:element[0]
-                                          }))
-                                        }}/>
-                                      }
-                                    </td>
-                                  </tr>
-                                )
-                              }
-                              
-                            })):
-                            ( 
-                            <tr className="bg-white border-b text-center ">
-                            <td className="px-auto py-3 " colSpan={7}>
-                              No Data Found
-                            </td>
-                            </tr>
-                            )
-                          }
-                        </tbody>
-
-                    </table>
-
-                    <div className="mt-2 table-pagination w-full flex items-center justify-end gap-2">
-                      <button
-                        className="py-1 px-2 rounded border disabled:text-slate-400"
-                        onClick={() =>
-                          setCurrentPage((prevPage:any) => Math.max(prevPage - 1, 1))
-                        }
-                        disabled={currentPage === 1}
-                          >
-                          Prev
-                        </button>
-                        <span>{`Page ${currentPage} of ${totalPages}`}</span>
-                        <button
-                        className="py-1 px-2 rounded border disabled:text-slate-400"
-                        onClick={()=>
-                        {
-                          setCurrentPage((prev:any)=>prev + 1);
-                        }}
-                        disabled={currentPage === totalPages}
-                        >
-                        Next
-                      </button>
-                    </div>
-
-              </div>
-            </div>
+            {/* Table component for showing all the request */}
+            <Table userRole={userRole} currentData={currentData} itemsPerPage={itemsPerPage} currentPage={currentPage} openViewDilaog={openViewDilaog} setIsUploadOpen={setIsUploadOpen} setAdminCloudDocuments={setAdminCloudDocuments} setCurrentPage={setCurrentPage} totalPages={totalPages}/>
 
             {/* loader */}
             {
               isLoading &&
               <div className="fixed inset-0 z-[100] flex justify-center items-center bg-black bg-opacity-50">
-                <Box sx={{ display: 'flex' }}>
+                
+                <div className="flex justify-center items-center p-10 bg-white flex-col gap-4 rounded-sm">
                   <CircularProgress />
-                </Box>
+                </div>
               </div>
             }
 
           
-            {/* Modal for opening the upload dialog box */}
-            
+            {/* Modal for opening the upload dialog box for admin cloud documents*/}
+            {isUploadOpen && <AdminDocumentDialog closeAdminDocumentModal={closeAdminDocumentModal} handleFileUploadAdminCloudDocuments={handleFileUploadAdminCloudDocuments} adminCloudDocuments={adminCloudDocuments} handleAdminCloudDocuments={handleAdminCloudDocuments} saveAdminCloudDocument={saveAdminCloudDocument} buttonLoader={buttonLoader}/>}
+
+
+            {/* Stepper modal (service request modal) rendering code */}
             {
-              isUploadOpen &&
-              <div className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50">
-
-                <div className="w-[40vw] my-12 bg-white rounded-lg shadow-lg overflow-y-auto max-h-screen">
-
-                  <div
-                    className=" px-4 py-2 flex items-center justify-between"
-                    style={{
-                      background:
-                        "linear-gradient(90deg, #AF1E23 -43.96%, #F37032 112.99%)",
-                    }}
-                  >
-                    <h3 className="text-xl text-white font-bold">
-                      Upload Documents
-                    </h3>
-                    <button
-                      className="p-2 text-2xl text-white cursor-pointer"
-                      onClick={closeAdminDocumentModal}
-                    >
-                      <CloseIcon />
-                    </button>
-                  </div>
-
-
-                  <div className="my-5 mx-5">
-
-                    <label className="block text-md font-semibold mb-2">
-                      <span className="text-red-500 text-md font-bold">*</span> Design Document :
-                    </label>
-                    <input 
-                    type="file"
-                    name="designDocument"
-                    className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                    onChange={handleFileUploadAdminCloudDocuments}
-                    />
-
-                  </div>
-
-                  <div className="my-5 mx-5">
-
-                    <label className="block text-md font-semibold mb-2">
-                      <span className="text-red-500 text-md font-bold">*</span> Another Document :
-                    </label>
-                    <input 
-                    type="file"
-                    name="anotherDocument"
-                    className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                    onChange={handleFileUploadAdminCloudDocuments}
-                    />
-
-                  </div>
-
-                  <div className="my-5 mx-5">
-                    <label className="block text-md font-semibold mb-2">
-                      Comment :
-                    </label>
-                    <input 
-                      type="text"
-                      className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                      name="comment"
-                      value={adminCloudDocuments.comment}
-                      onChange={handleAdminCloudDocuments}
-                    />
-                  </div>
-
-                  <div className="px-5 py-5 w-full flex justify-end">
-                    <button 
-                    className="text-white rounded-md px-5 py-2"
-                    style={{
-                      background:
-                        "linear-gradient(90deg, #AF1E23 -43.96%, #F37032 112.99%)",
-                    }}
-                    onClick={saveAdminCloudDocument}
-                    >
-                      Upload
-                    </button>
-                  </div>
-
-                </div>
-
-              </div>
-            }
-
-
-            {/* Modal rendering code */}
-            {
-                isOpen &&
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+              isOpen &&
+              <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
             
                 <div className={dailogClass}>
     
@@ -2799,10 +2640,10 @@ function Request()
                       disabled={!validate()}
                       style={{background: (validate()) ? "linear-gradient(90deg, #AF1E23 -43.96%, #F37032 112.99%)": "	#DCDCDC"
                       }}
-                      className="text-white p-2 rounded-lg w-24 mx-2"
+                      className="text-white p-2 rounded-lg w-24 mx-2 flex justify-center item-center"
                       onClick={handleSaveAll}
                       >
-                        Save All
+                        {buttonLoader ? <CircularProgress size="1.7rem" color="inherit" /> : <p>Save All</p>}
                       </button>
                     }
     
@@ -2810,701 +2651,15 @@ function Request()
     
                 </div>
     
-            </div>
-        }
+              </div>
+            }
 
-        {/* Modal to view the request detail */}
-        {
-          isViewOpen &&
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-            
-                <div className={dailogClass}>
-    
-                    <div
-                      className="px-4 py-2 flex items-center justify-between"
-                      style={{
-                        background:
-                          "linear-gradient(90deg, #AF1E23 -43.96%, #F37032 112.99%)",
-                      }}
-                    >
-                      <h3 className="text-xl text-white font-bold">
-                        Request Information
-                      </h3>
-                      <button
-                        className="p-2 text-2xl text-white"
-                        onClick={closeViewDialog}
-                      >
-                        <CloseIcon />
-                      </button>
-                    </div>
-
-                  <div className="h-full overflow-scroll">
-    
-                    
-                    <div className="text-xl pb-2 flex justify-between items-center mx-5 mt-10 font-bold">Information Gathering</div>
-                    
-                    {
-                    <div className="mx-3">
-                    
-                      <div className="my-5 mx-2 flex justify-evenly gap-10">
-                    
-                        <div className="mb-3 flex-1">
-                          <label className="block text-md font-semibold mb-2">
-                            Name of Requester :
-                          </label>
-                          <input
-                            name="nameOfRequester"
-                            type="text"
-                            defaultValue={requestInformation.informationGatheringResponse.nameOfRequester}
-                            readOnly
-                            className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                          />
-                        </div>
-                    
-                        <div className="mb-3 flex-1">
-                    
-                            <label className="block text-md font-semibold mb-2">
-                                CSP Selection :
-                            </label>
-                    
-                            <input
-                            type="text"
-                            defaultValue={requestInformation.informationGatheringResponse.cspSelection}
-                            className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                            readOnly
-                            />
-                        </div>
-                    
-                      </div>
-                    
-                      <div className="my-5 mx-2 flex justify-evenly gap-10">
-                          <div className="mb-3 flex-1">
-                            <label className="block text-md font-semibold mb-2">
-                             Business Name :
-                            </label>
-                            <input
-                              name="businessName"
-                              type="text"
-                              defaultValue={requestInformation.informationGatheringResponse.businessName}
-                              className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                              // onChange={handleInformationGatheringChange}
-                              // required
-                              readOnly
-                            />
-                          </div>
-                    
-                          <div className="mb-3 flex-1">
-                            <label className="block text-md font-semibold mb-2">
-                              Current Mode of operation :
-                            </label>
-                            <input
-                              name="currentModeOfOperation"
-                              type="text"
-                              placeholder="Type here"
-                              defaultValue={requestInformation.informationGatheringResponse.currentModeOfOperation}
-                              className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                              // onChange={handleInformationGatheringChange}
-                              // required
-                              readOnly
-                            />
-                          </div>
-                    
-                      </div>
-                    
-                      <div className="my-5 mx-2 flex justify-evenly gap-10">
-                        <div className="mb-3 flex-1">
-                            <label className="block text-md font-semibold mb-2">
-                              Subscription name :
-                            </label>
-                            <input
-                            type="text"
-                            defaultValue={requestInformation.informationGatheringResponse.subscriptionName}
-                            className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                            readOnly
-                            />
-                          
-                        </div>
-                          
-                        <div className="mb-3 flex-1">
-                          <label className="block text-md font-semibold mb-2">
-                            Work Description :
-                          </label>
-                          <input
-                            name="workDescription"
-                            type="text"
-                            // placeholder="Type here"
-                            defaultValue={requestInformation.informationGatheringResponse.workDescription}
-                            className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                            // onChange={handleInformationGatheringChange}
-                            // required
-                            readOnly
-                          />
-                        </div>
-                          
-                      </div>
-                          
-                      <div className="my-5 mx-2 flex justify-evenly gap-10">
-                        <div className="mb-3 flex-1">
-                          <label className="block text-md font-semibold mb-2">
-                            Name of Sponser :
-                          </label>
-                          <input
-                            name="nameOfSponsor"
-                            type="text"
-                            // placeholder="Type here"
-                            defaultValue={requestInformation.informationGatheringResponse.nameOfSponsor}
-                            className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                            // onChange={handleInformationGatheringChange}
-                            // required
-                            readOnly
-                          />
-                        </div>
-                          
-                        <div className="mb-3 flex-1">
-                          
-                        </div>
-                      </div>
-                          
-                    </div>
-                    }
-                            
-                    <div className="text-xl pb-2 flex justify-between items-center mx-5 mt-10 font-bold">Application Details</div>
-                    
-                    {
-
-                      <div className="mx-3">
-                        <div className="my-5 mx-2 flex justify-evenly gap-10">
-                    
-                          <div className="mb-3 flex-1">
-                        
-                              <label className="block text-md font-semibold mb-2">
-                                Application Name :
-                              </label>
-                              <input
-                                name="applicationName"
-                                type="text"                         
-                                defaultValue={requestInformation.applicationDetails.applicationName}
-                                className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                                readOnly
-                              />
-
-                          </div>
-                        
-                          <div className="mb-3 flex-1">
-                            <label className="block text-md font-semibold mb-2">
-                              Purpose of the application :
-                            </label>
-                            <input
-                              name="purposeOfTheApplication"
-                              type="text"
-                              value={requestInformation.applicationDetails.purposeOfTheApplication}
-                              className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                              // onChange={handleApplicationDetailsChange}
-                              // required
-                              readOnly
-                            />
-                          </div>
-                        
-                        
-                        </div>
-                        
-                        <div className="my-5 mx-2 flex justify-evenly gap-10">
-                        
-
-                          <div className="mb-3 flex-1">
-
-                              <label className="block text-md font-semibold mb-2">
-                                Application Criticality :
-                              </label>
-                              <input
-                                type="text"
-                                defaultValue={requestInformation.applicationDetails.applicationCriticality}  
-                                className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                                readOnly
-                              />
-
-                            </div>
-                        
-                            <div className="mb-3 flex-1">
-                        
-                            <label className="block text-md font-semibold mb-2">
-                              Nature of the application :
-                            </label>
-                            <input
-                              type="text"
-                              defaultValue={requestInformation.applicationDetails.natureOfTheApplication}
-                              className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                              readOnly
-                            />
-
-                          </div>
-                        
-                        </div>
-                        
-
-                      </div>
-                    }
-
-                  
-                    <div className="text-xl pb-2 flex justify-between items-center mx-5 mt-10 font-bold">Deployement Architecuture of the application</div>
-                    
-                    {
-                    
-                      <div className="mx-3">
-                      
-                        <div className="my-5 mx-2 flex justify-evenly gap-10">
-                    
-                          <div className="mb-3 flex-1">
-                    
-                            <label className="block text-md font-semibold mb-2">
-                              Application Internet exposed :
-                            </label>
-                            <input
-                              type="text"
-                              defaultValue={requestInformation.deploymentArchitectureOfTheApplication.applicationInternetExposed}
-                              className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                              readOnly
-                            />
-
-                          </div>
-                    
-                          <div className="mb-3 flex-1">
-                    
-                            <label className="block text-md font-semibold mb-2">
-                              Environment of application :
-                            </label>
-                            <input
-                              type="text"
-                              defaultValue={requestInformation.deploymentArchitectureOfTheApplication.environmentOfApplication}
-                              className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                              readOnly
-                            />
-                    
-                          </div>
-                    
-                          <div className="mb-3 flex-1">
-                    
-                              <label className="block text-md font-semibold mb-2">
-                                High Availability Required :
-                              </label>
-                    
-                              <div className="flex gap-2 justify-center"> 
-
-                              <input
-                                type="text"
-                                defaultValue={requestInformation.deploymentArchitectureOfTheApplication.highAvailabilityRequired} 
-                                className="w-full px-4 py-2 border border-gray-300 rounded shadow flex-1"
-                                readOnly
-                              />
-                    
-                              <input 
-                                type="text" 
-                                name="highAvailabilityRequiredText"
-                                defaultValue={requestInformation.deploymentArchitectureOfTheApplication.highAvailabilityRequiredText}
-                                className="w-full px-4 py-2 border border-gray-300 rounded shadow flex-1" 
-                                readOnly
-                                />
-
-                              </div>
-
-                          </div>
-                    
-                        </div>
-                    
-                        <div className="my-5 mx-2 flex justify-evenly gap-10">
-                    
-                          <div className="mb-3 flex-1">
-                    
-                              <label className="block text-md font-semibold mb-2">
-                                Disaster Recovery Requirement :
-                              </label>
-                              <input
-                                name="disasterRecoveryRequirement"
-                                type="text"
-                                defaultValue={requestInformation.deploymentArchitectureOfTheApplication.disasterRecoveryRequirement}
-                                className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                                readOnly
-                              />
-                          </div>
-                    
-                          <div className="mb-3 flex-1">
-                    
-                              <label className="block text-md font-semibold mb-2">
-                                Access management :
-                              </label>
-                              <input
-                                defaultValue={requestInformation.deploymentArchitectureOfTheApplication.accessManagement}
-                                className="w-full px-4 py-2 border border-gray-300 rounded shadow" 
-                                readOnly
-                              />
-                    
-                          </div>
-                    
-                          <div className="mb-3 flex-1">
-                    
-                              <label className="block text-md font-semibold mb-2">
-                                Future Mode of Operation :
-                              </label>
-                              <input
-                                name="futureModeOfOperation"
-                                type="text"
-                                defaultValue={requestInformation.deploymentArchitectureOfTheApplication.futureModeOfOperation}
-                                className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                                readOnly
-                              />
-
-                          </div>
-                    
-                        </div>
-                    
-                        <div className="my-5 mx-2 flex justify-evenly gap-10">
-                    
-                          <div className="mb-3 flex-1">
-                            <label className="block text-md font-semibold mb-2">
-                                Virutal Network Name :
-                              </label>
-                              <input
-                                name="virtualNetworkName"
-                                type="text"
-                                defaultValue={requestInformation.deploymentArchitectureOfTheApplication.virtualNetworkName}
-                                className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                                readOnly
-                              />
-                          </div>
-                    
-                          <div className="mb-3 flex-1">
-                    
-                              <label className="block text-md font-semibold mb-2">
-                                Additional Comments :
-                              </label>
-                              <input
-                                name="additionalComments"
-                                type="text"
-                                defaultValue={requestInformation.deploymentArchitectureOfTheApplication.additionalComments}
-                                className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                                readOnly
-                              />
-
-                          </div>
-                    
-                          <div className="mb-3 flex-1">
-
-                              {/* <label className="block text-md font-semibold mb-2">
-                                Attachments :
-                              </label>
-                              <input
-                                name="attachments"
-                                type="file"
-                                defaultValue={requestInformation.deploymentArchitectureOfTheApplication.attach}
-                                className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                                onChange={handleAttachmentChange}
-                              /> */}
-                          </div>
-                    
-                        </div>
-                    
-                        <div>
-                            <label className="block text-md font-semibold mb-2 mx-2">
-                              Cloud Provisioning Excel Files:
-                            </label>
-                        </div>
-
-                        {requestInformation.deploymentArchitectureOfTheApplication.excelFile.map((element:any,index: number)=>
-                        {
-                          return <div key={index} className="mt-5 mx-2 flex justify-evenly gap-10">
-                          
-                          <div className="mb-3 flex-1">
-                              <input
-                                type="text"
-                                defaultValue={requestInformation.deploymentArchitectureOfTheApplication.excelFile[index].name} 
-                                className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                                readOnly
-                              />
-
-                          </div>
-                              
-                          <div className="mb-3 flex-1">
-                              <button 
-                                className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                                onClick={()=>{convertStringToExcelFile(requestInformation.deploymentArchitectureOfTheApplication.excelFile[index].fileString,requestInformation.deploymentArchitectureOfTheApplication.excelFile[index].name)}}
-                              >
-                                Download
-                              </button>
-                          </div>
-                            
-                        </div>
-
-                        })}
-                      
-                      </div>
-                    }
-
-
-                    <div className="text-xl pb-2 flex justify-between items-center mx-5 mt-10 font-bold">Network Infra Connectivity</div>
-                    
-
-                    {
-                      <div className="mx-3">
-                      
-                        <div className="my-5 mx-2 flex justify-evenly gap-10">
-                    
-                            <div className="mb-3 flex-1">
-
-                              <label className="block text-md font-semibold mb-2">
-                                CIDR Range :
-                              </label>
-                              <input
-                                type="text"
-                                defaultValue={requestInformation.networkInfraConnectivity.cidrRange}
-                                readOnly
-                                className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                              />
-
-                            </div>
-
-                            <div className="mb-3 flex-1">
-                    
-                              <label className="block text-md font-semibold mb-2">
-                                Port Opening Form :
-                              </label>
-                    
-                              
-                              <button 
-                              className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                              onClick={()=>{convertStringToXLSMFile(requestInformation.networkInfraConnectivity.excelFile[0].fileString,requestInformation.networkInfraConnectivity.excelFile[0].name)}}> 
-                              Download File
-                              </button>
-                            
-                            </div>
-                    
-                        </div>
-                    
-                      </div>
-                    }
-
-                  
-              
-                    <div className="text-xl pb-2 flex justify-between items-center mx-5 mt-10 font-bold">Application Implementation</div>
-                    
-
-                    {
-                      <div className="mx-3">
-                      
-                        <div className="my-5 mx-2 flex justify-evenly gap-10">
-                    
-                          <div className="mb-3 flex-1">
-                    
-                              <label className="block text-md font-semibold mb-2">
-                                Custom Domain URL :
-                              </label>
-                              <input
-                                name="customDomainURL"
-                                type="text"
-                                defaultValue={requestInformation.applicationImplementation.customDomainURL}
-                                className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                                readOnly
-                              />
-
-                          </div>
-                    
-                          <div className="mb-3 flex-1">
-                    
-
-                                <label className="block text-md font-semibold mb-2">
-                                  Apply SSL Certificate :
-                                </label>
-                                <input
-                                  name="applySSLCertificate"                             
-                                  value={requestInformation.applicationImplementation.applySSLCertificate}
-                                  className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                                  readOnly
-                                />
-
-                          </div>
-                    
-                          <div className="mb-3 flex-1">
-                                <label className="block text-md font-semibold mb-2">SSL Info</label>
-                                <input 
-                                  name="sslCertificateInfo"
-                                  className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                                  type="text"
-                                  defaultValue={requestInformation.applicationImplementation.sslCertificateInfo}
-                                  readOnly
-                                />
-                          </div>
-                    
-                    
-                          {/* <div className="mb-3 flex-1">
-
-                              <label className="block text-md font-semibold mb-2">
-                                DNS Mapping :
-                              </label>
-                              <input
-                                // name="dnsMapping"
-                                type="text"
-                                placeholder="Type here"
-                                // value={applicationImplementation.dnsMapping}
-                                className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                                onChange={handleApplicationImplementationChange}
-                                required
-                              />
-                    
-                          </div> */}
-
-                        </div>
-                        
-                      </div>
-                    }
-
-                  
-                    
-                  {
-                  requestInformation && requestInformation.enterpriseBackupConfiguration && requestInformation.enterpriseBackupConfiguration.excelFile && requestInformation.enterpriseBackupConfiguration.excelFile[0] &&
-                  <div className="text-xl pb-2 flex justify-between items-center mx-5 mt-10 font-bold">Enterprise Backup Configuration</div>
-                  }
-                    
-
-                    {
-                      requestInformation && requestInformation.enterpriseBackupConfiguration && requestInformation.enterpriseBackupConfiguration.excelFile && requestInformation.enterpriseBackupConfiguration.excelFile[0] && (
-                      <div className="mx-3">
-                      
-                        <div className="my-5 mx-2 flex justify-evenly gap-10">
-                    
-                        <div className="mb-3 flex-1 w-2/4">
-                    
-                            <label className="block text-md font-semibold mb-2">
-                            Back up Request Template :
-                            </label>
-                  
-                            <button 
-                              className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                              onClick={()=>{convertStringToExcelFile(requestInformation.enterpriseBackupConfiguration.excelFile[0].fileString,requestInformation.enterpriseBackupConfiguration.excelFile[0].name)}}> 
-                              Download Excel File
-                            </button>
-                          
-                        </div>
-              
-                      </div>
-                    
-                      </div>
-                      )
-                    }
-
-                  
-                    <div className="text-xl pb-2 flex justify-between items-center mx-5 mt-10 font-bold">ZPA VPN Onboarding</div>
-                    
-
-                    {
-                      <div className="mx-3">
-                        <div className="my-5 mx-2 flex justify-evenly gap-10">
-                    
-                          <div className="mb-3 flex-1">
-                    
-                              <label className="block text-md font-semibold mb-2">
-                              ZPA VPN Template :
-                              </label>
-                    
-                              <button 
-                              className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                              onClick={()=>{convertStringToExcelFile(requestInformation.zpavpnOnBoarding.excelFile[0].fileString,requestInformation.zpavpnOnBoarding.excelFile[0].name)}}
-                              > Download Excel File
-                              </button>
-                        
-                          </div>
-                        </div>
-                      </div>
-                    }
-
-
-
-                    {
-                    requestInformation && requestInformation.adminCloudDocuments &&
-                    <div className="text-xl pb-2 flex justify-between items-center mx-5 mt-10 font-bold">Admin Cloud Documents</div>
-                    }
-
-                    {requestInformation && requestInformation.adminCloudDocuments &&
-
-                      <>
-                        <div className="mx-3">
-
-                          <div className="my-5 mx-2 flex justify-evenly gap-10">
-
-                            <div className="mb-3 flex-1">
-                              <label className="block text-md font-semibold mb-2">Design Document</label>
-                              <button 
-                              className="w-full px-4 py-2 border border-gray-300 rounded shadow" 
-                              onClick={()=>{handleAdminFileDonwload(requestInformation.adminCloudDocuments.designDocument.name, requestInformation.adminCloudDocuments.designDocument.fileString)}}>
-                                  {requestInformation.adminCloudDocuments.designDocument.name}
-                              </button>
-                            </div>
-
-                            <div className="mb-3 flex-1">
-                              <label className="block text-md font-semibold mb-2">Another Document</label>
-                              <button  
-                              className="w-full px-4 py-2 border border-gray-300 rounded shadow"
-                              onClick={()=>{handleAdminFileDonwload(requestInformation.adminCloudDocuments.anotherDocument.name, requestInformation.adminCloudDocuments.anotherDocument.fileString)}}
-                              >
-                                {requestInformation.adminCloudDocuments.anotherDocument.name}
-                              </button>
-                            </div>
-
-                          </div>
-
-                        </div>
-
-                        {
-                          (requestInformation && (requestInformation.status == 'Document uploaded') && (userRole == 'BE')) &&
-                          <>
-                            <div className="p-2 ml-4 text-md font-semibold">
-                              Above are the documents uploaded please verify them by accepting or rejecting
-                            </div>
-
-                            <div className="mx-5 flex gap-3">
-
-                              <div>
-                                <button 
-                                className="text-white bg-green-600 w-full px-4 py-1 rounder-sm"
-                                onClick={()=>{sendApproval(requestInformation.requestId,"Accepted")}}
-                                >Accept</button>
-                              </div>
-
-                              <div>
-                                <button 
-                                onClick={()=>{sendApproval(requestInformation.requestId,"Rejected")}}
-                                className="text-white bg-red-600 w-full px-4 py-1 rounded-sm"
-                                >Reject</button>
-                              </div>
-
-                            </div>
-                          </>
-                        }
-                      </>
-
-                    } 
-
-                    {/* close view dialog button */}
-
-                    <div className="flex justify-end">
-                      <button
-                      className="text-white p-2 rounded-lg w-24 mx-4"
-                      onClick={closeViewDialog} 
-                      style={{
-                        background:"linear-gradient(90deg, #AF1E23 -43.96%, #F37032 112.99%)",
-                      }}>
-                        Close
-                      </button>
-                    </div>
-
-                  </div>
-  
-    
-                </div>
-    
-            </div>
-        }
+            {/* Modal to view the request detail */}
+            {isViewOpen && <ViewRequest dailogClass={dailogClass} closeViewDialog={closeViewDialog} requestInformation={requestInformation} downloadFile={downloadFile} sendApproval={sendApproval} userRole={userRole}/>}
             
         </div>
     )
 }
+
 
 export default Request;

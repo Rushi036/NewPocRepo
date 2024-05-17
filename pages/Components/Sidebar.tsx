@@ -10,8 +10,12 @@ import HomeIcon from "@mui/icons-material/Home";
 import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
 import GroupIcon from "@mui/icons-material/Group";
 import SettingsIcon from "@mui/icons-material/Settings";
+
+import { AppContextProvider } from "./AppContext";
 const Sidebar = () => {
   const { state, toggleState } = useAppContext();
+
+  const {access,toggleAccess} = useAppContext();
 
   const toggleStateHere = () => {
     toggleState();
@@ -23,6 +27,8 @@ const Sidebar = () => {
   useEffect(() => {
     setUrole(sessionStorage.getItem("userRole"));
     setBlogo(sessionStorage.getItem("businessLogo"));
+    toggleAccess(sessionStorage.getItem("access"));
+
   }, []);
   // Function to handle link clicks and set the active link
   const handleLinkClick = (index: any) => {
@@ -61,7 +67,7 @@ const Sidebar = () => {
         <ul className="space-y-1.5 pt-5">
           <li>
             <Link
-              href="/page/Dashboard"
+              href={access == "SSP" ? "/page/CloudProjects/request":"/page/Dashboard"}
               className={`flex items-center gap-x-3.5 py-2 px-2.5 text-base
              text-slate-700 rounded-md hover:bg-orange-100
              `}

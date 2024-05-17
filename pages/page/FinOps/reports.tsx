@@ -15,7 +15,16 @@ import "react-toastify/dist/ReactToastify.css";
 import { getCurrencyData } from "@/pages/api/getCurrency";
 import Divider from "@mui/material/Divider";
 import TollIcon from "@mui/icons-material/Toll";
+import { useRouter } from "next/router";
+
+import CircularProgress from '@mui/material/CircularProgress';
+
+
 const Reports = () => {
+
+  const router = useRouter();
+  const [access,setAccess] = useState<Boolean>(false);
+
   useEffect(() => {
     // HighchartsExporting(Highcharts);
     // HighchartsExportData(Highcharts);
@@ -40,6 +49,26 @@ const Reports = () => {
       }
     });
   }, []);
+
+  // // use effect for access control
+  useEffect(()=>
+  {
+    
+    if(!sessionStorage.getItem("access") || sessionStorage.getItem("access") === "SSP" )
+    {
+      console.log(sessionStorage.getItem("access"));
+      setAccess(false);
+      router.replace("/page/Errors");
+    }
+    else
+    {
+      setAccess(true);
+    }
+    
+
+  },[]);
+
+ 
 
   useEffect(() => {
     if (status == "404") {
@@ -67,6 +96,7 @@ const Reports = () => {
     }
   }, [status]);
   return (
+    access &&
     <>
       <ToastContainer
         position="top-right"

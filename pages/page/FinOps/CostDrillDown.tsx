@@ -33,6 +33,8 @@ const LineChartComponent = dynamic(
 function CostDrillDown() {
   // const [url, setUrl] = useState<any>();
   // const [data, setData] = useState<any>(null);
+  const router = useRouter();
+
   const { time, toggleTime } = useAppContext();
   const { timeEnd, toggleTimeEnd } = useAppContext();
   const [cloudDropdown, setCloudDropdown] = useState("Azure");
@@ -61,6 +63,22 @@ function CostDrillDown() {
     new Date(timeEnd),
   ]);
   const [titleValueCount, setTitleValueCount] = useState(0);
+
+  const [access, setAccess] = useState(false);
+
+  useEffect(()=>
+  {
+    if(!sessionStorage.getItem("access") || sessionStorage.getItem("access") === "SSP" )
+    {
+      console.log(sessionStorage.getItem("access"));
+      setAccess(false);
+      router.replace("/page/Errors");
+    }
+    else
+    {
+      setAccess(true);
+    }
+  },[]);
 
   useEffect(() => {
     // setUserADID("akash.purohit@adityabirla.com");
@@ -264,6 +282,7 @@ function CostDrillDown() {
   }
 
   return (
+    access &&
     <div className="flex justify-between w-full">
       {loader && <div className="circle-loader"></div>}
       <div className=" w-[75%]">

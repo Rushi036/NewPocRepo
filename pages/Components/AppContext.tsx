@@ -1,6 +1,8 @@
 import React, { createContext, useEffect, useState } from "react";
 import moment from "moment";
 const AppContext = createContext<{
+  access:string
+  toggleAccess: (access:any) => void;
   state: boolean;
   toggleState: () => void;
   estimateCalc: boolean;
@@ -14,6 +16,8 @@ const AppContext = createContext<{
   cloud: any;
   toggleCloud: (cloud: any) => void;
 }>({
+  access:"",
+  toggleAccess:()=> {},
   state: false,
   toggleState: () => {},
   estimateCalc: false,
@@ -29,10 +33,16 @@ const AppContext = createContext<{
 });
 
 export const AppContextProvider: React.FC<any> = ({ children }: any) => {
+  const [access,setAccess] = useState('');
   const [state, setState] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
   const [estimateCalc, setEstimateCalc] = useState(false);
   const [cloud, setCloud] = useState("AWS");
+
+
+  const toggleAccess = (access:any) => {
+    setAccess(access);
+  }
 
   const toggleState = () => {
     setState(!state);
@@ -66,6 +76,8 @@ export const AppContextProvider: React.FC<any> = ({ children }: any) => {
   return (
     <AppContext.Provider
       value={{
+        access,
+        toggleAccess,
         state,
         toggleState,
         estimateCalc,

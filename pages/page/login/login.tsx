@@ -73,6 +73,10 @@ const Login = () => {
           sessionStorage.setItem("userEmail", fetchedData.data.adId);
           sessionStorage.setItem("businessLogo", fetchedData.data.businessLogo);
           sessionStorage.setItem("businessName",fetchedData.data.businessName);
+          let access = fetchedData.data.access.toString().replaceAll(',','')
+          sessionStorage.setItem("access",access);
+
+          access == 'SSP' ? router.push("/CloudProjects/request") : router.push("/page/Dashboard");
           // router.push("/page/Dashboard");
         } else {
           window.alert("User Not Found!!");

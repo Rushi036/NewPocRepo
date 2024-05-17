@@ -20,11 +20,27 @@ const CostSummary = () => {
     new Date(time),
     new Date(timeEnd),
   ]);
+
+
   const [resp, setRes] = useState<any>(null);
   const router = useRouter();
   const { report, cloud }: any = router.query;
   const [cloudValue, setCloudValue] = useState(cloud || "CloudGateway");
   const today = moment();
+  const [access, setAccess] = useState(false);
+
+  useEffect(()=>{
+    if(!sessionStorage.getItem("access") || sessionStorage.getItem("access") === "SSP" ){
+      console.log(sessionStorage.getItem("access"));
+      setAccess(false);
+      router.replace("/page/Errors");
+    }
+    else{
+      setAccess(true);
+    }
+  },[]);
+  
+
   const financialYearStartMonth = 3;
   let financialYearStart;
   let financialYearEnd;
@@ -236,6 +252,7 @@ const CostSummary = () => {
   // }
   // resp && console.log("response", resp);
   return (
+    access &&
     <>
       {loader && <div className="circle-loader"></div>}
       {true && (
