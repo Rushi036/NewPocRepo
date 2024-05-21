@@ -16,3 +16,5 @@ export const finopsServerBaseUrl = "https://pi.adityabirla.com:5613";
 
 // "start": "next start -p 5612",                                           //For Prod
 // "start": "next start"                                                   //For local and dev
+
+export const javaServerBaseUrl = "http://localhost:1010/api";
